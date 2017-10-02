@@ -11,7 +11,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
 		stage.setTitle("EMSystem");
-		BorderPane root = FXMLLoader.load(getClass().getResource("Layout.fxml"));
+		BorderPane root = FXMLLoader.load(getClass().getResource("Login.fxml"));
 		Scene scene = new Scene(root, 300, 200);
 		stage.setScene(scene);
 		stage.show();
