@@ -26,9 +26,4 @@ public class LoginController {
 
     }
 
-    @FXML
-    void txf_iusr(ActionEvent event) {
-
-    }
-
 }

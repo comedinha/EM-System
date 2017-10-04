@@ -12,7 +12,7 @@
       <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="328.0" BorderPane.alignment="CENTER">
          <children>
             <Label text="Usuário:" />
-            <TextField fx:id="txf_usr" onAction="#txf_iusr" />
+            <TextField fx:id="txf_usr" />
             <Label text="Senha:" />
             <TextField fx:id="txf_pass" onAction="#txf_ipass" />
             <Button fx:id="btn_enter" mnemonicParsing="false" onAction="#btn_enterClick" text="Entrar" />
