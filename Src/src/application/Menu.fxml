@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 
-
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/9">
+<BorderPane xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MenuController">
    <center>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="325.0" spacing="5.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" prefHeight="90.0" text="Pagamento" />
-            <Button mnemonicParsing="false" prefHeight="90.0" text="Comandas" />
-            <Button mnemonicParsing="false" prefHeight="90.0" text="Produtos" />
-            <Button mnemonicParsing="false" prefHeight="90.0" text="Funcionários" />
+            <Button mnemonicParsing="false" onAction="#btn_cpagamento" prefHeight="90.0" text="Pagamento" />
+            <Button mnemonicParsing="false" onAction="#btn_ccomanda" prefHeight="90.0" text="Comandas" />
+            <Button mnemonicParsing="false" onAction="#btn_cproduto" prefHeight="90.0" text="Produtos" />
+            <Button mnemonicParsing="false" onAction="#btn_cfuncionario" prefHeight="90.0" text="Funcionários" />
          </children>
       </HBox>
    </center>
@@ -24,11 +24,14 @@
         <menus>
           <Menu mnemonicParsing="false" text="Arquivo">
             <items>
-                  <MenuItem mnemonicParsing="false" text="Configurações" />
-              <MenuItem mnemonicParsing="false" text="Close" />
+                  <MenuItem mnemonicParsing="false" onAction="#mni_cconfiguracoes" text="Configurações" />
+              <MenuItem mnemonicParsing="false" onAction="#mni_csair" text="Close" />
             </items>
           </Menu>
         </menus>
       </MenuBar>
    </top>
+   <bottom>
+      <ListView fx:id="lvw_events" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </bottom>
 </BorderPane>

@@ -3,6 +3,7 @@ package application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 public class ConfigDatabaseController {
@@ -11,13 +12,13 @@ public class ConfigDatabaseController {
     private TextField txf_sqlusr;
 
     @FXML
-    private TextField txf_sqlpass;
+    private PasswordField txf_sqlpass;
 
     @FXML
     private TextField txf_adminusr;
 
     @FXML
-    private TextField txf_adminpass;
+    private PasswordField txf_adminpass;
 
     @FXML
     private TextField txf_adminname;
@@ -35,16 +36,6 @@ public class ConfigDatabaseController {
 
     @FXML
     void btn_csqlquit(ActionEvent event) {
-
-    }
-
-    @FXML
-    void txf_cadminpass(ActionEvent event) {
-
-    }
-
-    @FXML
-    void txt_csqlpass(ActionEvent event) {
 
     }
 
