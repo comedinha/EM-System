@@ -1,22 +1,26 @@
 package valores;
 
-import bancodedados.ConectaBanco;
+import java.sql.Connection;
 import sistema.Usuario;
 
 public class Valores {
 
-	private ConectaBanco database;
+	private static Connection database;
+	private static Usuario usuario;
 
-	private Usuario usuario;
-
-	public Usuario setUsuario(Usuario usr) {
+	public static void setUsuario(Usuario usr) {
 		usuario = usr;
-		return usr;
 	}
 
-	public ConectaBanco setBanco(ConectaBanco db) {
+	public static void setBanco(Connection db) {
 		database = db;
-		return db;
 	}
 
+	public static Usuario getUsuario() {
+		return usuario;
+	}
+
+	public static Connection getConnection() {
+		return database;
+	}
 }

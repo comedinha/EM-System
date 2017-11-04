@@ -1,9 +1,9 @@
 package bancodedados;
 
+import valores.Valores;
+
 public class Login {
-
-	public Usuario login(ConectaBanco db, String usr, String pass) {
-		return null;
+	public void login(String usr, String pass) {
+		Valores.getConnection();
 	}
-
 }
