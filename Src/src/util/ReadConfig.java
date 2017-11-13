@@ -16,7 +16,6 @@ public class ReadConfig {
 			Properties p = new Properties();
 			p.load(new FileInputStream("database.ini"));
 			ConectaBanco.conectaBanco(p.getProperty("DBtype"), p.getProperty("DBaddr"), p.getProperty("DBport"), p.getProperty("DBuser"), p.getProperty("DBpassword"));
-			p.list(System.out);
 		} catch (FileNotFoundException e) {
 			ConfigDatabase(stage);
 		} catch (Exception e) {

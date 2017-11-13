@@ -22,7 +22,7 @@
       <VBox alignment="CENTER_LEFT" prefHeight="243.0" prefWidth="227.0" BorderPane.alignment="CENTER">
          <children>
             <Label text="Type:" />
-            <ComboBox fx:id="txf_sqltype" prefWidth="150.0" />
+            <ComboBox fx:id="txf_sqltype" prefWidth="150.0"/>
             <Label text="Host:" />
             <TextField fx:id="txf_sqlhost" />
             <Label text="Port:" />
