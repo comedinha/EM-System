@@ -1,4 +1,4 @@
-package valores;
+package util;
 
 import java.sql.Connection;
 import sistema.Usuario;

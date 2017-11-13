@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ConfigDatabaseController">
+<BorderPane xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ConfigDatabaseController">
    <center>
       <VBox alignment="CENTER_LEFT" prefHeight="284.0" prefWidth="227.0" BorderPane.alignment="CENTER">
          <children>

@@ -1,4 +1,4 @@
-package bancodedados;
+package dao;
 
 public class Usuario {
 

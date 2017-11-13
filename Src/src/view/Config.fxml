@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 
 
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/9" fx:controller="application.ConfigController">
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/9" fx:controller="controller.ConfigController">
    <center>
       <VBox prefHeight="91.0" prefWidth="242.0" spacing="10.0" BorderPane.alignment="CENTER">
          <padding>

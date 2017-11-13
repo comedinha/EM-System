@@ -1,10 +1,10 @@
-package bancodedados;
+package dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-import valores.Valores;
+import util.Valores;
 
 public class ConectaBanco {
 

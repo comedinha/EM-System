@@ -1,6 +1,6 @@
-package bancodedados;
+package dao;
 
-import valores.Valores;
+import util.Valores;
 
 public class Login {
 	public void login(String usr, String pass) {
