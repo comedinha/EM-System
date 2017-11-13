@@ -7,11 +7,9 @@ import util.Valores;
 
 public class ConectaBanco {
 
-	public static void conectaBanco() throws SQLException {
-		String url = "jdbc:postgresql://localhost:5432/EMSystem";
-		String usuario = "postgres";
-		String senha = "comedinhabruno1";
-		Valores.setBanco(DriverManager.getConnection(url, usuario, senha));
+	public static void conectaBanco(String type, String addr, String port, String usr, String pass) throws SQLException {
+		String url = "jdbc:" +  type + "://"+ addr +":"+ port +"/EMSystem";
+		Valores.setBanco(DriverManager.getConnection(url, usr, pass));
 	}
 
 	public static void desconectaBanco() throws SQLException {

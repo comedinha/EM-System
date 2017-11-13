@@ -1,21 +1,23 @@
 package dao;
 
-public class Produto {
+import java.sql.SQLException;
 
-	public void getProdutos() {
-
+public class Produto implements IConnector {
+	@Override
+	public void inserir() throws SQLException {
+		// TODO Auto-generated method stub
+		
 	}
 
-	public void criaProduto() {
-
+	@Override
+	public void atualizar() throws SQLException {
+		// TODO Auto-generated method stub
+		
 	}
 
-	public void getProduto(int id) {
-
+	@Override
+	public void get(int i) throws SQLException {
+		// TODO Auto-generated method stub
+		
 	}
-
-	public void salvaProduto(int id) {
-
-	}
-
 }

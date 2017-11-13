@@ -1,21 +1,23 @@
 package dao;
 
-public class Pagamento {
+import java.sql.SQLException;
 
-	public void getPagamentos() {
-
+public class Pagamento implements IConnector {
+	@Override
+	public void inserir() throws SQLException {
+		// TODO Auto-generated method stub
+		
 	}
 
-	public void criaPagamento() {
-
+	@Override
+	public void atualizar() throws SQLException {
+		// TODO Auto-generated method stub
+		
 	}
 
-	public void editaPagamento(int id) {
-
+	@Override
+	public void get(int i) throws SQLException {
+		// TODO Auto-generated method stub
+		
 	}
-
-	public int getPagamento(int id) {
-		return 0;
-	}
-
 }

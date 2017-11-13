@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
@@ -10,26 +11,33 @@
 <?import javafx.scene.layout.VBox?>
 
 <BorderPane xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ConfigDatabaseController">
-   <center>
-      <VBox alignment="CENTER_LEFT" prefHeight="284.0" prefWidth="227.0" BorderPane.alignment="CENTER">
+   <top>
+      <Label prefHeight="1.0" prefWidth="207.0" text="Cuidado! Contate um admin para isso." textAlignment="CENTER" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </BorderPane.margin>
+      </Label>
+   </top>
+   <bottom>
+      <VBox alignment="CENTER_LEFT" prefHeight="243.0" prefWidth="227.0" BorderPane.alignment="CENTER">
          <children>
-            <Label text="SQLUser:" />
+            <Label text="Type:" />
+            <ComboBox fx:id="txf_sqltype" prefWidth="150.0" />
+            <Label text="Host:" />
+            <TextField fx:id="txf_sqlhost" />
+            <Label text="Port:" />
+            <TextField fx:id="txf_sqlport" />
+            <Label text="User:" />
             <TextField fx:id="txf_sqlusr" />
-            <Label text="SQLPass:" />
+            <Label text="Pass:" />
             <PasswordField fx:id="txf_sqlpass" />
-            <Label text="Admin Username:" />
-            <TextField fx:id="txf_adminusr" />
-            <Label text="Admin Pass:" />
-            <PasswordField fx:id="txf_adminpass" />
-            <Label text="Admin Name:" />
-            <TextField fx:id="txf_adminname" />
-            <HBox alignment="CENTER_LEFT" prefHeight="37.0" prefWidth="207.0" spacing="5.0">
+            <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="127.0" spacing="5.0">
                <children>
                   <Button fx:id="btn_sqlok" mnemonicParsing="false" onAction="#btn_csqlok" text="OK" />
                   <Button fx:id="btn_sqlquit" mnemonicParsing="false" onAction="#btn_csqlquit" text="Sair" />
                </children>
                <VBox.margin>
-                  <Insets />
+                  <Insets top="10.0" />
                </VBox.margin>
             </HBox>
          </children>
@@ -37,5 +45,5 @@
             <Insets bottom="10.0" left="10.0" right="10.0" />
          </padding>
       </VBox>
-   </center>
+   </bottom>
 </BorderPane>

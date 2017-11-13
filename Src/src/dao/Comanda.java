@@ -1,21 +1,23 @@
 package dao;
 
-public class Comanda {
+import java.sql.SQLException;
 
-	public void getComanda(int id) {
-
+public class Comanda implements IConnector {
+	@Override
+	public void inserir() throws SQLException {
+		// TODO Auto-generated method stub
+		
 	}
 
-	public void getComandas() {
-
+	@Override
+	public void atualizar() throws SQLException {
+		// TODO Auto-generated method stub
+		
 	}
 
-	public int addComanda() {
-		return 0;
+	@Override
+	public void get(int i) throws SQLException {
+		// TODO Auto-generated method stub
+		
 	}
-
-	public void editComanda(int id) {
-
-	}
-
 }

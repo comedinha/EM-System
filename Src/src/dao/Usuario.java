@@ -1,17 +1,23 @@
 package dao;
 
-public class Usuario {
+import java.sql.SQLException;
 
-	public void criaUsuario(ConectaBanco db, String usr, String pass, int func) {
-
+public class Usuario implements IConnector {
+	@Override
+	public void inserir() throws SQLException {
+		// TODO Auto-generated method stub
+		
 	}
 
-	public void getUsuario() {
-
+	@Override
+	public void atualizar() throws SQLException {
+		// TODO Auto-generated method stub
+		
 	}
 
-	public void getUsuarios() {
-
+	@Override
+	public void get(int i) throws SQLException {
+		// TODO Auto-generated method stub
+		
 	}
-
 }
