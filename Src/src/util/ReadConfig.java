@@ -1,12 +1,17 @@
 package util;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.util.Optional;
 import java.util.Properties;
 
 import dao.ConectaBanco;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -16,11 +21,22 @@ public class ReadConfig {
 			Properties p = new Properties();
 			p.load(new FileInputStream("database.ini"));
 			ConectaBanco.conectaBanco(p.getProperty("DBtype"), p.getProperty("DBaddr"), p.getProperty("DBport"), p.getProperty("DBuser"), p.getProperty("DBpassword"));
-		} catch (FileNotFoundException e) {
-			ConfigDatabase(stage);
 		} catch (Exception e) {
-			System.out.println("Erro:" + e);
-			ConfigDatabase(stage);
+			Alert alert = new Alert(AlertType.ERROR, "Mensagem de erro: " + e.getMessage());
+			alert.setTitle("Caixa de avisos!");
+			alert.setHeaderText("Notamos que seu banco apresentou algum problema.\n"
+	    			+ "Somente continue um administrador deste programa.\n");
+
+			ButtonType buttonConfirm = new ButtonType("Continuar", ButtonData.OK_DONE);
+			ButtonType buttonCancel = new ButtonType("Cancelar", ButtonData.CANCEL_CLOSE);
+			alert.getButtonTypes().setAll(buttonConfirm, buttonCancel);
+
+			Optional<ButtonType> result = alert.showAndWait();
+			if (result.get() == buttonConfirm) {
+				ConfigDatabase(stage);
+			} else if (result.get() == buttonCancel) {
+				Platform.exit();
+			}
 		}
 	}
 
