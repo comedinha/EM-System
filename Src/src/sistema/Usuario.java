@@ -7,7 +7,11 @@ public class Usuario {
 	private int funcao;
 
 	public String getNome() {
-		return null;
+		return nome;
+	}
+
+	public int getFuncao() {
+		return funcao;
 	}
 
 	public void criaUsuario(String usr, String pass) {

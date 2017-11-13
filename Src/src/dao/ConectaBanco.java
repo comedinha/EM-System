@@ -1,6 +1,5 @@
 package dao;
 
-import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
@@ -8,23 +7,14 @@ import util.Valores;
 
 public class ConectaBanco {
 
-	public void conectaBanco() {
+	public static void conectaBanco() throws SQLException {
 		String url = "jdbc:postgresql://localhost:5432/EMSystem";
 		String usuario = "postgres";
 		String senha = "comedinhabruno1";
-		try {
-			Valores.setBanco(DriverManager.getConnection(url, usuario, senha));
-		} catch (SQLException e) {
-			System.out.println("Problemas na conexao com a fonte de dados"	+ e.toString());
-		}
+		Valores.setBanco(DriverManager.getConnection(url, usuario, senha));
 	}
 
-	public void desconectaBanco() {
-		try {
-			Valores.getConnection().close();
-		} catch (SQLException e) {
-			System.out.println("Problemas na conexao com a fonte de dados"	+ e.toString());
-		}
+	public static void desconectaBanco() throws SQLException {
+		Valores.getConnection().close();
 	}
-
 }

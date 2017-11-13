@@ -12,8 +12,13 @@ public class Valores {
 		usuario = usr;
 	}
 
-	public static void setBanco(Connection db) {
-		database = db;
+	public static boolean setBanco(Connection db) {
+		if (db != null) {
+			database = db;
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public static Usuario getUsuario() {

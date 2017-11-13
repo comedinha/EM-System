@@ -1,5 +1,8 @@
 package application;
 	
+import java.sql.SQLException;
+
+import dao.ConectaBanco;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
@@ -12,7 +15,12 @@ public class Main extends Application {
 	public void start(Stage stage) throws Exception {
 		stage.setTitle("EMSystem");
 		BorderPane root = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
-		Scene scene = new Scene(root, 300, 200);
+		try {
+			ConectaBanco.conectaBanco();
+		} catch (SQLException e) {
+			root = FXMLLoader.load(getClass().getResource("/view/ConfigDatabase.fxml"));
+		}
+		Scene scene = new Scene(root);
 		stage.setScene(scene);
 		stage.show();
 	}
