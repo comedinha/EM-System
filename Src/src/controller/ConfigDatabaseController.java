@@ -9,8 +9,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
@@ -66,7 +71,13 @@ public class ConfigDatabaseController {
 			file.append("DBpassword=" + txf_sqlpass.getText() + "\n");
 			file.close();
 
-			Platform.exit();
+			((Node) event.getSource()).getScene().getWindow().hide();
+			Stage stage = new Stage();
+			stage.setTitle("SQLConfig");
+			BorderPane root = FXMLLoader.load(getClass().getResource("/view/Funcionario.fxml"));
+			Scene scene = new Scene(root);
+			stage.setScene(scene);
+			stage.show();
 		} catch (Exception e) {
 			Alert alert = new Alert(AlertType.ERROR, e.getMessage());
 			alert.setTitle("Caixa de avisos!");

@@ -37,6 +37,7 @@ public class ReadConfig {
 			} else if (result.get() == buttonCancel) {
 				Platform.exit();
 			}
+			return;
 		}
 	}
 

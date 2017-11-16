@@ -20,4 +20,8 @@ public class Usuario implements IConnector {
 		// TODO Auto-generated method stub
 		
 	}
+
+	public boolean verificaUsuarios() {
+		return true;
+	}
 }
