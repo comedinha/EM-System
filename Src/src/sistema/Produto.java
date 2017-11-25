@@ -1,13 +1,15 @@
 package sistema;
 
 public class Produto {
-
-	public void getProduto() {
-
+	
+	public void adicionaProduto(int id, String nome, float valor, int qtde) {
+		dao.Produto cadastro = new dao.Produto();
+		
+		cadastro.inserir(id, nome, valor, qtde);
 	}
 
-	public void adicionaProduto() {
-
+	public void getProduto() {
+		
 	}
 
 	public void editaProduto() {
