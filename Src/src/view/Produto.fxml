@@ -36,7 +36,8 @@
               <columns>
                 <TableColumn fx:id="tb_id" prefWidth="75.0" text="ID" />
                 <TableColumn fx:id="tb_nome" prefWidth="75.0" text="Nome" />
-                  <TableColumn fx:id="tb_valor" prefWidth="75.0" text="Valor" />
+                <TableColumn fx:id="tb_valor" prefWidth="75.0" text="Valor" />
+                  <TableColumn fx:id="tb_quantidade" prefWidth="75.0" text="Quantidade" />
               </columns>
             </TableView>
          </children>

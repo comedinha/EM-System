@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import sistema.TableViewProduto;
 
 public class ProdutoController {
 
@@ -19,25 +20,30 @@ public class ProdutoController {
     private Button btm_buscar;
 
     @FXML
-    private TableView<?> tableView;
+    private TableView<TableViewProduto> tableView;
 
     @FXML
-    private TableColumn<?, ?> tb_id;
+    private TableColumn<TableViewProduto, Integer> tb_id;
 
     @FXML
-    private TableColumn<?, ?> tb_nome;
+    private TableColumn<TableViewProduto, String> tb_nome;
 
     @FXML
-    private TableColumn<?, ?> tb_valor;
+    private TableColumn<TableViewProduto, Float> tb_valor;
+    
+    @FXML
+    private TableColumn<TableViewProduto, Integer> tb_quantidade;
+    
+    
 
     @FXML
     void buscar(ActionEvent event) {
-
+    	
     }
 
     @FXML
     void novoProduto(ActionEvent event) {
-
+    	
     }
 
 }

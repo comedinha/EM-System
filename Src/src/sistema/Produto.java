@@ -11,6 +11,10 @@ public class Produto {
 	public void getProduto() {
 		
 	}
+	
+	public void getAllProduto() {
+		
+	}
 
 	public void editaProduto() {
 
