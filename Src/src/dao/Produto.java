@@ -2,7 +2,10 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import com.sun.corba.se.impl.ior.GenericTaggedComponent;
 
 import util.Valores;
 
@@ -28,13 +31,20 @@ public class Produto {
 
 	@Override
 	public void atualizar() throws SQLException {
-		
+		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
-	public void get(int i) throws SQLException {
-		// TODO Auto-generated method stub
+	//@Override
+	public ResultSet getAll() throws SQLException {
+		String sql = "SELECT * FROM Produto"; 
+		PreparedStatement statement;
+		ResultSet result;
 		
+		statement = Valores.getConnection().prepareStatement(sql);
+		
+		result = statement.executeQuery();
+		
+		return result;
 	}
 }
