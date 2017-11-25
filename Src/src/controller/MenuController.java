@@ -2,40 +2,50 @@ package controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.ListView;
+import javafx.scene.control.Button;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import sistema.TableViewProduto;
 
 public class MenuController {
 
     @FXML
-    private ListView<?> lvw_events;
+    private Button btn_novoProduto;
 
     @FXML
-    void btn_ccomanda(ActionEvent event) {
-
-    }
+    private RadioButton cho_prodid;
 
     @FXML
-    void btn_cfuncionario(ActionEvent event) {
-
-    }
+    private RadioButton cho_prodnome;
 
     @FXML
-    void btn_cpagamento(ActionEvent event) {
-
-    }
+    private RadioButton cho_prodvlr;
 
     @FXML
-    void btn_cproduto(ActionEvent event) {
-
-    }
+    private TextField txf_prodbusca;
 
     @FXML
-    void mni_cconfiguracoes(ActionEvent event) {
-
-    }
+    private Button btn_prodbuscar;
 
     @FXML
-    void mni_csair(ActionEvent event) {
+    private TableView<TableViewProduto> tableProd;
+
+    @FXML
+    private TableColumn<TableViewProduto, Integer> tb_prodid;
+
+    @FXML
+    private TableColumn<TableViewProduto, String> tb_prodnome;
+
+    @FXML
+    private TableColumn<TableViewProduto, Float> tb_prodvlr;
+
+    @FXML
+    private TableColumn<TableViewProduto, Integer> tb_prodquant;
+
+    @FXML
+    void novoProduto(ActionEvent event) {
 
     }
 

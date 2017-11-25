@@ -126,25 +126,25 @@
                      <items>
                         <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0">
                            <children>
-                              <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="105.0" text="Adicionar" />
+                              <Button fx:id="btn_novoProduto" mnemonicParsing="false" onAction="#novoProduto" prefHeight="25.0" prefWidth="105.0" text="Adicionar" />
                               <Separator prefWidth="200.0" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Busca" textAlignment="CENTER" wrappingWidth="82.41015625" />
-                              <RadioButton mnemonicParsing="false" text="ID" />
-                              <RadioButton mnemonicParsing="false" text="Nome" />
-                              <RadioButton mnemonicParsing="false" text="Valor" />
-                              <TextField />
-                              <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="93.0" text="Buscar" />
+                              <RadioButton fx:id="cho_prodid" mnemonicParsing="false" text="ID" />
+                              <RadioButton fx:id="cho_prodnome" mnemonicParsing="false" text="Nome" />
+                              <RadioButton fx:id="cho_prodvlr" mnemonicParsing="false" text="Valor" />
+                              <TextField fx:id="txf_prodbusca" />
+                              <Button fx:id="btn_prodbuscar" mnemonicParsing="false" prefHeight="25.0" prefWidth="93.0" text="Buscar" />
                            </children>
                            <padding>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </padding>
                         </VBox>
-                        <TableView prefHeight="200.0" prefWidth="200.0">
+                        <TableView fx:id="tableProd" prefHeight="200.0" prefWidth="200.0">
                           <columns>
-                            <TableColumn prefWidth="75.0" text="ID" />
-                            <TableColumn prefWidth="75.0" text="Nome" />
-                              <TableColumn prefWidth="75.0" text="Valor" />
-                              <TableColumn prefWidth="75.0" text="Quantidade" />
+                            <TableColumn fx:id="tb_prodid" prefWidth="75.0" text="ID" />
+                            <TableColumn fx:id="tb_prodnome" prefWidth="75.0" text="Nome" />
+                              <TableColumn fx:id="tb_prodvlr" prefWidth="75.0" text="Valor" />
+                              <TableColumn fx:id="tb_prodquant" prefWidth="75.0" text="Quantidade" />
                           </columns>
                         </TableView>
                      </items>

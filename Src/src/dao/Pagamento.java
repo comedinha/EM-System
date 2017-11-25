@@ -20,4 +20,10 @@ public class Pagamento implements IConnector {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void getAll() throws SQLException {
+		// TODO Auto-generated method stub
+		
+	}
 }

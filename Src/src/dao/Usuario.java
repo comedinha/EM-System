@@ -14,6 +14,7 @@ public class Usuario implements IConnector {
 		// TODO Auto-generated method stub
 		
 	}
+	
 
 	@Override
 	public void get(int i) throws SQLException {
@@ -23,5 +24,11 @@ public class Usuario implements IConnector {
 
 	public boolean verificaUsuarios() {
 		return true;
+	}
+
+	@Override
+	public void getAll() throws SQLException {
+		// TODO Auto-generated method stub
+		
 	}
 }
