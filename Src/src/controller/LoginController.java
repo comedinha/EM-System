@@ -18,4 +18,9 @@ public class LoginController {
 
     }
 
+    @FXML
+    void btn_leaveClick(ActionEvent event) {
+
+    }
+
 }
