@@ -48,9 +48,6 @@ public class MenuController implements Initializable {
     private TableColumn<TableViewProduto, Float> tb_prodvlr;
 
     @FXML
-    private TableColumn<TableViewProduto, Integer> tb_prodquant;
-
-    @FXML
     void novoProduto(ActionEvent event) {
 
     }
@@ -67,8 +64,6 @@ public class MenuController implements Initializable {
         		new PropertyValueFactory<>("nome"));
         tb_prodvlr.setCellValueFactory(
         		new PropertyValueFactory<>("valor"));
-        tb_prodquant.setCellValueFactory(
-        		new PropertyValueFactory<>("quantidade"));
         
         Produto p = new Produto();
         try {

@@ -24,7 +24,7 @@ public class Produto {
 	}
 
 	public ResultSet getAll() throws SQLException {
-		String sql = "SELECT * FROM Produto"; 
+		String sql = "SELECT * FROM produto"; 
 
 		PreparedStatement statement = Valores.getConnection().prepareStatement(sql);
 		ResultSet result = statement.executeQuery();

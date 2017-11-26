@@ -26,7 +26,7 @@ public class Produto {
 		
 		while(result.next()) {			
 			ol.add(new TableViewProduto(result.getInt(1), result.getString(2),
-					result.getFloat(3),	result.getInt(4)));
+					result.getFloat(3)));
 		}
 	
 		return ol;
@@ -41,14 +41,12 @@ public class Produto {
     	private final SimpleIntegerProperty id;
     	private final SimpleStringProperty nome;
     	private final SimpleFloatProperty valor;
-    	private final SimpleIntegerProperty quantidade;
     	
 
-    	public TableViewProduto(int id, String nome, float valor, int quantidade) {
+    	public TableViewProduto(int id, String nome, float valor) {
     		this.id = new SimpleIntegerProperty(id);
     		this.nome = new SimpleStringProperty(nome);
     		this.valor = new SimpleFloatProperty(valor);
-    		this.quantidade = new SimpleIntegerProperty(quantidade);
     	}
 
     	public int getId() {
@@ -59,10 +57,7 @@ public class Produto {
     	}
     	public float getValor() {
     		return valor.get();
-    	}
-    	public int getQuantidade() {
-    		return quantidade.get();
-    	}    		
+    	}   		
     }
 
 }
