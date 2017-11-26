@@ -22,7 +22,7 @@ CREATE TABLE pagamento (
 );
 
 CREATE TABLE produto (
-	produtoId int PRIMARY KEY NOT NULL,
+	produtoId SERIAL PRIMARY KEY NOT NULL,
 	nome varchar(30),
 	valor numeric(5,2)
 );

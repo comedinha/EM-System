@@ -22,10 +22,10 @@
             <TextField fx:id="txf_nickname" />
             <Label text="Senha:" />
             <PasswordField fx:id="txf_password" />
-            <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="127.0" spacing="5.0">
+            <HBox alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="127.0" spacing="5.0">
                <children>
                   <Button fx:id="btn_funcok" mnemonicParsing="false" onAction="#btn_funcok" text="OK" />
-                  <Button fx:id="btn_funcquit" mnemonicParsing="false" onAction="#btn_funcquit" text="Sair" />
+                  <Button fx:id="btn_funcquit" mnemonicParsing="false" onAction="#btn_funcquit" text="Cancelar" />
                </children>
                <VBox.margin>
                   <Insets top="10.0" />

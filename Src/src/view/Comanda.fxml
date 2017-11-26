@@ -2,40 +2,93 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.SplitMenuButton?>
-<?import javafx.scene.control.TreeTableColumn?>
-<?import javafx.scene.control.TreeTableView?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
 
-<BorderPane xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PagamentoController">
+<BorderPane prefHeight="472.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PagamentoController">
    <center>
-      <VBox prefHeight="174.0" prefWidth="282.0" spacing="10.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="276.0" prefWidth="479.0" BorderPane.alignment="CENTER">
          <children>
-            <TreeTableView prefHeight="200.0" prefWidth="200.0">
+            <TableView prefHeight="272.0" prefWidth="450.0">
               <columns>
-                <TreeTableColumn prefWidth="29.0" text="ID" />
-                <TreeTableColumn prefWidth="109.0" text="Nome" />
-                  <TreeTableColumn prefWidth="87.0" text="Valor" />
+                <TableColumn prefWidth="19.0" text="ID" />
+                <TableColumn prefWidth="73.0" text="Descrição" />
+                  <TableColumn prefWidth="73.0" text="Quantidade" />
+                  <TableColumn prefWidth="64.0" text="Valor Ind." />
+                  <TableColumn prefWidth="68.0" text="Valor Total" />
+                  <TableColumn prefWidth="74.0" text="Valor Pago" />
+                  <TableColumn prefWidth="75.0" text="Data" />
               </columns>
-            </TreeTableView>
-            <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+            </TableView>
+            <HBox alignment="CENTER" prefHeight="62.0" prefWidth="450.0" spacing="20.0">
                <children>
-                  <SplitMenuButton mnemonicParsing="false" text="Meio de pagamento">
-                    <items>
-                      <MenuItem mnemonicParsing="false" text="Dinheiro" />
-                      <MenuItem mnemonicParsing="false" text="Cartão" />
-                    </items>
-                  </SplitMenuButton>
-                  <Button mnemonicParsing="false" text="Pagar" />
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Total a pagar" />
+                        <TextArea prefHeight="37.0" prefWidth="61.0" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Total pago" />
+                        <TextArea prefHeight="37.0" prefWidth="61.0" />
+                     </children>
+                  </VBox>
                </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
             </HBox>
+            <GridPane prefHeight="105.0" prefWidth="450.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="199.0" minWidth="10.0" prefWidth="118.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="386.0" minWidth="10.0" prefWidth="312.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Garçom:" textAlignment="CENTER" wrappingWidth="116.021484375" GridPane.rowIndex="1" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Meio de Pagamento:" textAlignment="CENTER" wrappingWidth="116.00390625" GridPane.rowIndex="2" />
+                  <ChoiceBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <ChoiceBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </GridPane>
+         </children>
+      </VBox>
+   </center>
+   <top>
+      <HBox alignment="CENTER" prefHeight="40.0" prefWidth="479.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="342.0" text="Adicionar Produto" />
+         </children>
+      </HBox>
+   </top>
+   <bottom>
+      <HBox alignment="CENTER_RIGHT" prefHeight="36.0" prefWidth="450.0" spacing="10.0" BorderPane.alignment="CENTER">
+         <children>
+            <CheckBox mnemonicParsing="false" text="Finalizar" />
+            <Button mnemonicParsing="false" text="Salvar" />
+            <Button mnemonicParsing="false" text="Cancelar" />
          </children>
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding>
-      </VBox>
-   </center>
+      </HBox>
+   </bottom>
 </BorderPane>

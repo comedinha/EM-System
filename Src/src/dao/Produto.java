@@ -6,14 +6,18 @@ import java.sql.SQLException;
 import util.Valores;
 
 public class Produto {
-	public void inserir (int id, String nome, float valor, int qtde) throws Exception {
-		String sql = "INSERT INTO produto VALUES (?, ?, ?, ?)";
+	public void inserir (int id, String nome, float valor) throws Exception {
+		String sql = "INSERT INTO produto (nome, valor, produtoid) VALUES (?, ?, ?)";
+		if (id == 0)
+			sql = "INSERT INTO produto (nome, valor) VALUES (?, ?)";
 
 		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
-		ps.setInt(1, id);
-		ps.setString(2, nome);
-		ps.setFloat(3, valor);
-		ps.setInt(4, qtde);
+		ps.setString(1, nome);
+		ps.setFloat(2, valor);
+
+		if (id != 0)
+			ps.setInt(3, id);
+
 		ps.executeUpdate();
 	}	
 

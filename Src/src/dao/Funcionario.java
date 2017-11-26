@@ -10,7 +10,7 @@ import util.Valores;
 public class Funcionario implements IConnector {
 	public static void inserir(int funcao, String nome, String username, String password) throws Exception {
 		Crypto cr = new Crypto();
-		String sql = "INSERT INTO funcionario(username, password, nome, funcaoid)"
+		String sql = "INSERT INTO funcionario (username, password, nome, funcaoid)"
 				+ " VALUES (?, ?, ?, ?)";
 
 		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);	
