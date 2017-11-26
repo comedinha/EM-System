@@ -1,12 +1,12 @@
 package controller;
 
 import javafx.event.ActionEvent;
-import sistema.Produto;
+import system.Produto;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
-public class CadastraProdutoController {
+public class ProdutoController {
 
     @FXML
     private TextField txf_id;

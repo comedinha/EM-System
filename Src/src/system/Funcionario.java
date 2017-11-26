@@ -1,34 +1,34 @@
-package sistema;
+package system;
 
-public class Usuario {
+public class Funcionario {
 
 	private static String nome;
 	private static int funcionarioId;
 	private static int funcao;
 
 	public String getNome() {
-		return Usuario.nome;
+		return nome;
 	}
 
 	public int getId() {
-		return Usuario.funcionarioId;
+		return funcionarioId;
 	}
 
 	public int getFuncao() {
-		return Usuario.funcao;
+		return funcao;
 	}
 
-	public Usuario(String nome, int id, int funcao) {
-		Usuario.nome = nome;
-		Usuario.funcionarioId = id;
-		Usuario.funcao = funcao;
+	public Funcionario(String nome, int id, int funcao) {
+		Funcionario.nome = nome;
+		Funcionario.funcionarioId = id;
+		Funcionario.funcao = funcao;
 	}
 
 	public void criaUsuario(int func, String nome, String usr, String pass) throws Exception {
-		dao.Usuario.inserir(1, nome, usr, pass);
+		dao.Funcionario.inserir(1, nome, usr, pass);
 	}
 
 	public static boolean login(String usr, String pass) throws Exception {
-		return dao.Usuario.login(usr, pass);
+		return dao.Funcionario.login(usr, pass);
 	}
 }

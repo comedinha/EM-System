@@ -2,15 +2,15 @@ package util;
 
 import java.sql.Connection;
 
-import sistema.Usuario;
+import system.Funcionario;
 
 public class Valores {
 
 	private static Connection database;
-	private static Usuario usuario;
+	private static Funcionario funcionario;
 
-	public static void setUsuario(Usuario usr) {
-		usuario = usr;
+	public static void setFuncionario(Funcionario funcionario) {
+		Valores.funcionario = funcionario;
 	}
 
 	public static boolean setBanco(Connection db) {
@@ -22,8 +22,8 @@ public class Valores {
 		}
 	}
 
-	public static Usuario getUsuario() {
-		return usuario;
+	public static Funcionario getUsuario() {
+		return funcionario;
 	}
 
 	public static Connection getConnection() {

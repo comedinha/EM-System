@@ -1,6 +1,6 @@
 package controller;
 
-import dao.Usuario;
+import dao.Funcionario;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -41,7 +41,7 @@ public class FuncionarioController {
     	String usuario = txf_nickname.getText();
     	String senha = txf_password.getText();
 
-    	Usuario.inserir(func, nome, usuario, senha);
+    	Funcionario.inserir(func, nome, usuario, senha);
     	Platform.exit();
     }
 

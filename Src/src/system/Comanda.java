@@ -1,4 +1,4 @@
-package sistema;
+package system;
 
 public class Comanda {
 

@@ -11,7 +11,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import sistema.Usuario;
+import system.Funcionario;
 
 public class LoginController {
 
@@ -26,7 +26,7 @@ public class LoginController {
 
     @FXML
     void btn_enterClick(ActionEvent event) throws Exception {
-    	if (Usuario.login(txf_usr.getText(), txf_pass.getText())) {
+    	if (Funcionario.login(txf_usr.getText(), txf_pass.getText())) {
 	    	((Node) event.getSource()).getScene().getWindow().hide();
 			Stage stage = new Stage();
 			stage.setTitle("EMSystem Menu");
