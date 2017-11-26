@@ -6,14 +6,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import util.Crypto;
 import util.Valores;
 
 public class ConectaBanco {
 	public static void conectaBanco(String type, String addr, String port, String usr, String pass, Boolean checkFunc) throws Exception {
 		String url = "jdbc:" +  type + "://"+ addr +":"+ port +"/EMSystem";
-		Connection con = DriverManager.getConnection(url, usr, pass);
+		Crypto cr = new Crypto();
+		Connection con = DriverManager.getConnection(url, usr, cr.decrypt(pass));
 		if (checkFunc && !nullCheck(con))
-			throw new Exception("Funcionario não existe.");
+			throw new Exception("Nenhum funcionário existente.");
 		Valores.setBanco(con);
 	}
 

@@ -1,7 +1,6 @@
 package controller;
 
-import java.io.IOException;
-
+import dao.Usuario;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,14 +21,16 @@ public class LoginController {
     private PasswordField txf_pass;
 
     @FXML
-    void btn_enterClick(ActionEvent event) throws IOException {
-    	((Node) event.getSource()).getScene().getWindow().hide();
-		Stage stage = new Stage();
-		stage.setTitle("EMSystem Menu");
-		BorderPane root = FXMLLoader.load(getClass().getResource("/view/Menu.fxml"));
-		Scene scene = new Scene(root);
-		stage.setScene(scene);
-		stage.show();
+    void btn_enterClick(ActionEvent event) throws Exception {
+    	if (Usuario.login(txf_usr.getText(), txf_pass.getText())) {
+	    	((Node) event.getSource()).getScene().getWindow().hide();
+			Stage stage = new Stage();
+			stage.setTitle("EMSystem Menu");
+			BorderPane root = FXMLLoader.load(getClass().getResource("/view/Menu.fxml"));
+			Scene scene = new Scene(root);
+			stage.setScene(scene);
+			stage.show();
+    	}
     }
 
     @FXML

@@ -9,7 +9,7 @@ import javafx.collections.ObservableList;
 
 public class Produto {
 	
-	public void adicionaProduto(int id, String nome, float valor, int qtde) {
+	public void adicionaProduto(int id, String nome, float valor, int qtde) throws Exception {
 		dao.Produto cadastro = new dao.Produto();
 		
 		cadastro.inserir(id, nome, valor, qtde);

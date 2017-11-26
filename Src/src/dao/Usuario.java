@@ -1,28 +1,35 @@
 package dao;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import util.Crypto;
 import util.Valores;
 
 public class Usuario implements IConnector {
-	public static void inserir(int funcao, String nome, String username, String password) {
-		PreparedStatement ps;
-		Connection conn = Valores.getConnection();
+	public static void inserir(int funcao, String nome, String username, String password) throws Exception {
+		Crypto cr = new Crypto();
 		String sql = "INSERT INTO funcionario VALUES (DEFAULT, ?, ?, ?, ?)";
-		
-		try {
-			ps = conn.prepareStatement(sql);
-			ps.setString(1, nome);
-			ps.setString(2, username);
-			ps.setString(3, password);
-			ps.setInt(4, funcao);
-			ps.executeUpdate();
-			
-		} catch(SQLException erro) {
-			System.out.println("Problemas na conexao com o banco de dados"	+ erro.toString());
-		}
+
+		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
+		ps.setString(1, nome);
+		ps.setString(2, username);
+		ps.setString(3, cr.encrypt(password));
+		ps.setInt(4, funcao);
+		ps.executeUpdate();
+	}
+
+	public static boolean login(String username, String password) throws Exception {
+		Crypto cr = new Crypto();
+		String sql = "SELECT * FROM funcionario WHERE username = ? AND password = ?"; 
+
+		PreparedStatement statement = Valores.getConnection().prepareStatement(sql);
+		statement.setString(1, username);
+		statement.setString(2, cr.encrypt(password));
+
+		ResultSet result = statement.executeQuery();
+		return result != null;
 	}
 
 	@Override

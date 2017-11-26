@@ -24,7 +24,7 @@ public class CadastraProdutoController {
     private Button btn_cadastrar;
 
     @FXML
-    void cadastrar(ActionEvent event) {
+    void cadastrar(ActionEvent event) throws Exception {
     	Produto produto = new Produto();
     	int id = Integer.parseInt(txf_id.getText());
     	String nome = txf_nome.getText();

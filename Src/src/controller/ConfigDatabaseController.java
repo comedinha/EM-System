@@ -16,6 +16,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import util.Crypto;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
@@ -61,14 +62,17 @@ public class ConfigDatabaseController {
     @FXML
     void btn_csqlok(ActionEvent event) throws SQLException {
 		try {
-			ConectaBanco.conectaBanco(txf_sqltype.getValue(), txf_sqlhost.getText(), txf_sqlport.getText(), txf_sqlusr.getText(), txf_sqlpass.getText(), false);
+			Crypto cr = new Crypto();
+			String encryptPass = cr.encrypt(txf_sqlpass.getText());
+			System.out.println(encryptPass);
+			ConectaBanco.conectaBanco(txf_sqltype.getValue(), txf_sqlhost.getText(), txf_sqlport.getText(), txf_sqlusr.getText(), encryptPass, false);
 
 			FileWriter file = new FileWriter("database.ini");
 			file.append("DBtype=" + txf_sqltype.getValue() + "\n");
 			file.append("DBaddr=" + txf_sqlhost.getText() + "\n");
 			file.append("DBport=" + txf_sqlport.getText() + "\n");
 			file.append("DBuser=" + txf_sqlusr.getText() + "\n");
-			file.append("DBpassword=" + txf_sqlpass.getText() + "\n");
+			file.append("DBpassword=" + encryptPass + "\n");
 			file.close();
 
 			((Node) event.getSource()).getScene().getWindow().hide();

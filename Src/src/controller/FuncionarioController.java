@@ -30,13 +30,14 @@ public class FuncionarioController {
     private Button btn_funcquit;
 
     @FXML
-    void btn_funcok(ActionEvent event) {
-    	int id = 1;
+    void btn_funcok(ActionEvent event) throws Exception {
+    	int func = 1;
     	String nome = txf_username.getText();
     	String usuario = txf_nickname.getText();
     	String senha = txf_password.getText();
 
-    	Usuario.inserir(id, nome, usuario, senha);
+    	Usuario.inserir(func, nome, usuario, senha);
+    	Platform.exit();
     }
 
     @FXML
