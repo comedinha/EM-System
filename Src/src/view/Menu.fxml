@@ -133,9 +133,8 @@
                         <TableView fx:id="tableProd" prefHeight="200.0" prefWidth="200.0">
                           <columns>
                             <TableColumn fx:id="tb_prodid" prefWidth="75.0" text="ID" />
-                            <TableColumn fx:id="tb_prodnome" prefWidth="75.0" text="Nome" />
-                              <TableColumn fx:id="tb_prodvlr" prefWidth="75.0" text="Valor" />
-                              <TableColumn fx:id="tb_prodquant" prefWidth="75.0" text="Quantidade" />
+                            <TableColumn fx:id="tb_prodnome" prefWidth="177.0" text="Nome" />
+                              <TableColumn fx:id="tb_prodvlr" minWidth="2.0" prefWidth="89.0" text="Valor" />
                           </columns>
                         </TableView>
                      </items>
