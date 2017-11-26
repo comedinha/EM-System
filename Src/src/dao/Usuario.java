@@ -13,9 +13,9 @@ public class Usuario implements IConnector {
 		String sql = "INSERT INTO funcionario VALUES (DEFAULT, ?, ?, ?, ?)";
 
 		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
-		ps.setString(1, nome);
-		ps.setString(2, username);
-		ps.setString(3, cr.encrypt(password));
+		ps.setString(1, username);
+		ps.setString(2, cr.encrypt(password));
+		ps.setString(3, nome);
 		ps.setInt(4, funcao);
 		ps.executeUpdate();
 	}

@@ -1,6 +1,5 @@
 package controller;
 
-import dao.Usuario;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,6 +10,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import sistema.Usuario;
 
 public class LoginController {
 

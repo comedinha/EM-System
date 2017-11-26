@@ -18,7 +18,7 @@ public class Usuario {
 		dao.Usuario.inserir(1, nome, usr, pass);
 	}
 
-	public boolean login(String usr, String pass) throws Exception {
+	public static boolean login(String usr, String pass) throws Exception {
 		return dao.Usuario.login(usr, pass);
 	}
 }

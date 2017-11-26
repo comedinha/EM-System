@@ -64,7 +64,6 @@ public class ConfigDatabaseController {
 		try {
 			Crypto cr = new Crypto();
 			String encryptPass = cr.encrypt(txf_sqlpass.getText());
-			System.out.println(encryptPass);
 			ConectaBanco.conectaBanco(txf_sqltype.getValue(), txf_sqlhost.getText(), txf_sqlport.getText(), txf_sqlusr.getText(), encryptPass, false);
 
 			FileWriter file = new FileWriter("database.ini");
