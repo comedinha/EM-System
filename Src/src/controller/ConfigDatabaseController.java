@@ -24,7 +24,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 public class ConfigDatabaseController {
-	ObservableList<String> txf_sqltypeList = FXCollections
+	ObservableList<String> cb_sqltypeList = FXCollections
 			.observableArrayList("postgresql");
 
 	@FXML
@@ -50,7 +50,7 @@ public class ConfigDatabaseController {
 
     @FXML
     private void initialize() {
-    	txf_sqltype.setItems(txf_sqltypeList);
+    	txf_sqltype.setItems(cb_sqltypeList);
     	txf_sqltype.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
     		if (newValue.toString() == "postgresql") {
     			txf_sqlhost.setText("localhost");
@@ -81,7 +81,10 @@ public class ConfigDatabaseController {
 			BorderPane root = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
 			if (!ConectaBanco.verificaGerente(Valores.getConnection())) {
 				stage.setTitle("SQLConfig");
-				root = FXMLLoader.load(getClass().getResource("/view/Funcionario.fxml"));
+				FXMLLoader funcionarioLoader = new FXMLLoader(getClass().getResource("/view/Funcionario.fxml"));
+				root = funcionarioLoader.load();
+				FuncionarioController controller = funcionarioLoader.<FuncionarioController>getController();
+				controller.cadastroInicial();
 			}
 			Scene scene = new Scene(root);
 			stage.setScene(scene);
