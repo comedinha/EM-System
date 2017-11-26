@@ -1,5 +1,13 @@
 package system;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 public class Funcionario {
 
 	private static String nome;
@@ -31,4 +39,34 @@ public class Funcionario {
 	public static boolean login(String usr, String pass) throws Exception {
 		return dao.Funcionario.login(usr, pass);
 	}
+
+	public static ObservableList<TableViewFuncionario> getAllFuncionario() throws SQLException {
+		ResultSet result = new dao.Funcionario().getAll();
+		ObservableList<TableViewFuncionario> ol = FXCollections.observableArrayList();
+		
+		while(result.next()) {			
+			ol.add(new TableViewFuncionario(result.getInt(1), result.getString(2)));
+		}
+	
+		return ol;
+	}
+
+	public static class TableViewFuncionario {
+    	private final SimpleIntegerProperty id;
+    	private final SimpleStringProperty nome;
+    	
+
+    	public TableViewFuncionario(int id, String nome) {
+    		this.id = new SimpleIntegerProperty(id);
+    		this.nome = new SimpleStringProperty(nome);
+    	}
+
+    	public int getId() {
+    		return id.get();
+    	}
+
+    	public String getNome() {
+    		return nome.get();
+    	}		
+    }
 }

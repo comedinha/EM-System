@@ -80,7 +80,7 @@ public class ConfigDatabaseController {
 			stage.setTitle("EMSystem Login");
 			BorderPane root = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
 			if (!ConectaBanco.verificaGerente(Valores.getConnection())) {
-				stage.setTitle("SQLConfig");
+				stage.setTitle("Adicionar Gerente");
 				FXMLLoader funcionarioLoader = new FXMLLoader(getClass().getResource("/view/Funcionario.fxml"));
 				root = funcionarioLoader.load();
 				FuncionarioController controller = funcionarioLoader.<FuncionarioController>getController();

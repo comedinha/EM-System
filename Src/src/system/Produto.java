@@ -20,7 +20,7 @@ public class Produto {
 		
 	}
 	
-	public ObservableList<TableViewProduto> getAllProduto() throws SQLException {
+	public static ObservableList<TableViewProduto> getAllProduto() throws SQLException {
 		ResultSet result = new dao.Produto().getAll();
 		ObservableList<TableViewProduto> ol = FXCollections.observableArrayList();
 		
