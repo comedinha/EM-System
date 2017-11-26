@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
+<BorderPane xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
    <center>
       <VBox alignment="CENTER_LEFT" prefHeight="135.0" prefWidth="328.0" BorderPane.alignment="CENTER">
          <children>
@@ -19,6 +19,11 @@
             <PasswordField fx:id="txf_pass" />
             <HBox alignment="TOP_RIGHT" prefHeight="20.0" prefWidth="308.0" spacing="10.0">
                <children>
+                  <Label fx:id="lbl_erro" prefHeight="17.0" prefWidth="201.0">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Label>
                   <Button mnemonicParsing="false" onAction="#btn_enterClick" text="Entrar" />
                   <Button mnemonicParsing="false" onAction="#btn_leaveClick" text="Sair" />
                </children>

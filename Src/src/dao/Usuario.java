@@ -10,9 +10,10 @@ import util.Valores;
 public class Usuario implements IConnector {
 	public static void inserir(int funcao, String nome, String username, String password) throws Exception {
 		Crypto cr = new Crypto();
-		String sql = "INSERT INTO funcionario VALUES (DEFAULT, ?, ?, ?, ?)";
+		String sql = "INSERT INTO funcionario(username, password, nome, funcaoid)"
+				+ " VALUES (?, ?, ?, ?)";
 
-		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
+		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);	
 		ps.setString(1, username);
 		ps.setString(2, cr.encrypt(password));
 		ps.setString(3, nome);
@@ -29,7 +30,8 @@ public class Usuario implements IConnector {
 		statement.setString(2, cr.encrypt(password));
 
 		ResultSet result = statement.executeQuery();
-		return result != null;
+		
+		return result.next();
 	}
 
 	@Override

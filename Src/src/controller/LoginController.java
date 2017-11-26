@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -19,6 +20,9 @@ public class LoginController {
 
     @FXML
     private PasswordField txf_pass;
+    
+    @FXML
+    private Label lbl_erro;
 
     @FXML
     void btn_enterClick(ActionEvent event) throws Exception {
@@ -30,6 +34,8 @@ public class LoginController {
 			Scene scene = new Scene(root);
 			stage.setScene(scene);
 			stage.show();
+    	} else {
+    		lbl_erro.setText("Nome de Usuario ou senha incorreta");
     	}
     }
 

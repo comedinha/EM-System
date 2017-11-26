@@ -1,5 +1,5 @@
 CREATE TABLE funcionario (
-	funcionarioId int PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	funcionarioId SERIAL PRIMARY KEY NOT NULL,
 	username varchar(15) UNIQUE,
 	password varchar(30),
 	nome varchar(50),
