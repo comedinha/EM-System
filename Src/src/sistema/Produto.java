@@ -3,12 +3,9 @@ package sistema;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import javafx.beans.property.SimpleFloatProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
+import controller.MenuController.TableViewProduto;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import viewTableModel.TableViewProduto;
 
 public class Produto {
 	
@@ -25,7 +22,7 @@ public class Produto {
 	public ObservableList<TableViewProduto> getAllProduto() throws SQLException {
 		dao.Produto produtoBD = new dao.Produto();
 		ResultSet result = produtoBD.getAll();
-		ObservableList<TableViewProduto> ol = ObservableList<TableViewProduto>();
+		ObservableList<TableViewProduto> ol = FXCollections.observableArrayList();
 		int i = 0;
 		
 		while(result.next()) {			
