@@ -20,12 +20,12 @@ public class ReadConfig {
 		try {
 			Properties p = new Properties();
 			p.load(new FileInputStream("database.ini"));
-			ConectaBanco.conectaBanco(p.getProperty("DBtype"), p.getProperty("DBaddr"), p.getProperty("DBport"), p.getProperty("DBuser"), p.getProperty("DBpassword"));
+			ConectaBanco.conectaBanco(p.getProperty("DBtype"), p.getProperty("DBaddr"), p.getProperty("DBport"), p.getProperty("DBuser"), p.getProperty("DBpassword"), true);
 		} catch (Exception e) {
 			Alert alert = new Alert(AlertType.ERROR, "Mensagem de erro: " + e.getMessage());
 			alert.setTitle("Caixa de avisos!");
 			alert.setHeaderText("Notamos que seu banco apresentou algum problema.\n"
-	    			+ "Somente continue um administrador deste programa.\n");
+	    			+ "Somente continue se for um administrador deste programa.\n");
 
 			ButtonType buttonConfirm = new ButtonType("Continuar", ButtonData.OK_DONE);
 			ButtonType buttonCancel = new ButtonType("Cancelar", ButtonData.CANCEL_CLOSE);

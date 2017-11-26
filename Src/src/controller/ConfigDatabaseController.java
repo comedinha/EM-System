@@ -61,7 +61,7 @@ public class ConfigDatabaseController {
     @FXML
     void btn_csqlok(ActionEvent event) throws SQLException {
 		try {
-			ConectaBanco.conectaBanco(txf_sqltype.getValue(), txf_sqlhost.getText(), txf_sqlport.getText(), txf_sqlusr.getText(), txf_sqlpass.getText());
+			ConectaBanco.conectaBanco(txf_sqltype.getValue(), txf_sqlhost.getText(), txf_sqlport.getText(), txf_sqlusr.getText(), txf_sqlpass.getText(), false);
 
 			FileWriter file = new FileWriter("database.ini");
 			file.append("DBtype=" + txf_sqltype.getValue() + "\n");
