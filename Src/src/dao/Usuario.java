@@ -1,12 +1,28 @@
 package dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import util.Valores;
+
 public class Usuario implements IConnector {
-	@Override
-	public void inserir() throws SQLException {
-		// TODO Auto-generated method stub
+	public static void inserir(int funcao, String nome, String username, String password) {
+		PreparedStatement ps;
+		Connection conn = Valores.getConnection();
+		String sql = "INSERT INTO funcionario VALUES (DEFAULT, ?, ?, ?, ?)";
 		
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, nome);
+			ps.setString(2, username);
+			ps.setString(3, password);
+			ps.setInt(4, funcao);
+			ps.executeUpdate();
+			
+		} catch(SQLException erro) {
+			System.out.println("Problemas na conexao com o banco de dados"	+ erro.toString());
+		}
 	}
 
 	@Override
@@ -20,10 +36,6 @@ public class Usuario implements IConnector {
 	public void get(int i) throws SQLException {
 		// TODO Auto-generated method stub
 		
-	}
-
-	public boolean verificaUsuarios() {
-		return true;
 	}
 
 	@Override

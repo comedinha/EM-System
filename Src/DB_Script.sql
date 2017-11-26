@@ -1,14 +1,9 @@
-CREATE TABLE funcao (
-	funcaoId int PRIMARY KEY NOT NULL,
-	funcao_desc varchar(20) NOT NULL
-);
-
 CREATE TABLE funcionario (
-	funcionarioId int PRIMARY KEY NOT NULL,
+	funcionarioId int PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	username varchar(15) UNIQUE,
 	password varchar(30),
 	nome varchar(50),
-	funcaoId int REFERENCES funcao(funcaoId) ON DELETE NO ACTION ON UPDATE CASCADE
+	funcaoId int
 );
 
 CREATE TABLE comanda(
