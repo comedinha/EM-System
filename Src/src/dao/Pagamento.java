@@ -1,5 +1,6 @@
 package dao;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Pagamento implements IConnector {
@@ -16,7 +17,8 @@ public class Pagamento implements IConnector {
 	}
 
 	@Override
-	public void getAll() throws SQLException {
+	public ResultSet getAll() throws SQLException {
+		return null;
 		// TODO Auto-generated method stub
 		
 	}

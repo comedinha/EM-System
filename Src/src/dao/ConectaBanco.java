@@ -14,7 +14,7 @@ public class ConectaBanco {
 		String url = "jdbc:" +  type + "://"+ addr +":"+ port +"/EMSystem";
 		Crypto cr = new Crypto();
 		Connection con = DriverManager.getConnection(url, usr, cr.decrypt(pass));
-		if (checkFunc && !nullCheck(con))
+		if (checkFunc && !verificaGerente(con))
 			throw new Exception("Nenhum funcionário existente.");
 		Valores.setBanco(con);
 	}
@@ -23,7 +23,7 @@ public class ConectaBanco {
 		Valores.getConnection().close();
 	}
 
-	public static boolean nullCheck(Connection con) throws SQLException {
+	public static boolean verificaGerente(Connection con) throws SQLException {
 		String checkSql = "SELECT * FROM funcionario WHERE funcaoid = 1";
 		PreparedStatement stmt = con.prepareStatement(checkSql);
 		ResultSet rs =  stmt.executeQuery();

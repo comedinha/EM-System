@@ -30,8 +30,13 @@ public class Usuario implements IConnector {
 		statement.setString(2, cr.encrypt(password));
 
 		ResultSet result = statement.executeQuery();
-		
-		return result.next();
+
+		if (result.next()) {
+			Valores.setUsuario(new sistema.Usuario(result.getString("nome"), result.getInt("funcionarioId"), result.getInt("funcaoid")));
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
@@ -48,8 +53,11 @@ public class Usuario implements IConnector {
 	}
 
 	@Override
-	public void getAll() throws SQLException {
-		// TODO Auto-generated method stub
-		
+	public ResultSet getAll() throws SQLException {
+		String sql = "SELECT * FROM funcionario"; 
+
+		PreparedStatement statement = Valores.getConnection().prepareStatement(sql);
+		ResultSet result = statement.executeQuery();
+		return result;
 	}
 }

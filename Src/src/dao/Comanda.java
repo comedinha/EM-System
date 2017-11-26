@@ -1,5 +1,6 @@
 package dao;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Comanda implements IConnector {
@@ -12,11 +13,11 @@ public class Comanda implements IConnector {
 	@Override
 	public void get(int i) throws SQLException {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
-	public void getAll() throws SQLException {
+	public ResultSet getAll() throws SQLException {
+		return null;
 		// TODO Auto-generated method stub
 		
 	}

@@ -17,6 +17,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import util.Crypto;
+import util.Valores;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
@@ -76,8 +77,12 @@ public class ConfigDatabaseController {
 
 			((Node) event.getSource()).getScene().getWindow().hide();
 			Stage stage = new Stage();
-			stage.setTitle("SQLConfig");
-			BorderPane root = FXMLLoader.load(getClass().getResource("/view/Funcionario.fxml"));
+			stage.setTitle("EMSystem Login");
+			BorderPane root = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
+			if (!ConectaBanco.verificaGerente(Valores.getConnection())) {
+				stage.setTitle("SQLConfig");
+				root = FXMLLoader.load(getClass().getResource("/view/Funcionario.fxml"));
+			}
 			Scene scene = new Scene(root);
 			stage.setScene(scene);
 			stage.show();

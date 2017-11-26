@@ -2,16 +2,26 @@ package sistema;
 
 public class Usuario {
 
-	private String nome;
-
-	private int funcao;
+	private static String nome;
+	private static int funcionarioId;
+	private static int funcao;
 
 	public String getNome() {
-		return nome;
+		return Usuario.nome;
+	}
+
+	public int getId() {
+		return Usuario.funcionarioId;
 	}
 
 	public int getFuncao() {
-		return funcao;
+		return Usuario.funcao;
+	}
+
+	public Usuario(String nome, int id, int funcao) {
+		Usuario.nome = nome;
+		Usuario.funcionarioId = id;
+		Usuario.funcao = funcao;
 	}
 
 	public void criaUsuario(int func, String nome, String usr, String pass) throws Exception {
