@@ -29,13 +29,11 @@ public class Produto {
 	}	
 
 
-	@Override
 	public void atualizar() throws SQLException {
 		// TODO Auto-generated method stub
 		
 	}
 
-	//@Override
 	public ResultSet getAll() throws SQLException {
 		String sql = "SELECT * FROM Produto"; 
 		PreparedStatement statement;

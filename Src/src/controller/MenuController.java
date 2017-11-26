@@ -3,7 +3,6 @@ package controller;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -68,14 +67,25 @@ public class MenuController implements Initializable {
         tb_prodquant.setCellValueFactory(
         		new PropertyValueFactory<>("quantidade"));
         
-        
+        Produto p = new Produto();
         try {
-			tableProd.setItems(new Produto().getAllProduto());
+			tableProd.setItems(p.getAllProduto());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
     }
     
+    //codigo teste tableview
+    /*
+    private ObservableList<TableViewProduto> listp() {
+        return FXCollections.observableArrayList(
+                new TableViewProduto (1, "banana", 2, 10),
+                new TableViewProduto (2, "morango", 3, 10)
+        );
+    }
+    */
+    
+     //classe interna para servir de Modelo para a tableView produto
     public static class TableViewProduto {
     	private final SimpleIntegerProperty id;
     	private final SimpleStringProperty nome;
@@ -90,19 +100,17 @@ public class MenuController implements Initializable {
     		this.quantidade = new SimpleIntegerProperty(quantidade);
     	}
 
-    	public SimpleIntegerProperty getId() {
-    		return id;
+    	public int getId() {
+    		return id.get();
     	}
-    	public SimpleStringProperty getNome() {
-    		return nome;
+    	public String getNome() {
+    		return nome.get();
     	}
-    	public SimpleFloatProperty getValor() {
-    		return valor;
+    	public float getValor() {
+    		return valor.get();
     	}
-    	public SimpleIntegerProperty getQuantidade() {
-    		return quantidade;
-    	}
-    		
+    	public int getQuantidade() {
+    		return quantidade.get();
+    	}    		
     }
-
 }
