@@ -2,8 +2,9 @@ package sistema;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import controller.MenuController.TableViewProduto;
+import javafx.beans.property.SimpleFloatProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -20,8 +21,7 @@ public class Produto {
 	}
 	
 	public ObservableList<TableViewProduto> getAllProduto() throws SQLException {
-		dao.Produto produtoBD = new dao.Produto();
-		ResultSet result = produtoBD.getAll();
+		ResultSet result = new dao.Produto().getAll();
 		ObservableList<TableViewProduto> ol = FXCollections.observableArrayList();
 		
 		while(result.next()) {			
@@ -35,5 +35,34 @@ public class Produto {
 	public void editaProduto() {
 
 	}
+	
+	//classe interna Modelo para a tableView produto
+    public static class TableViewProduto {
+    	private final SimpleIntegerProperty id;
+    	private final SimpleStringProperty nome;
+    	private final SimpleFloatProperty valor;
+    	private final SimpleIntegerProperty quantidade;
+    	
+
+    	public TableViewProduto(int id, String nome, float valor, int quantidade) {
+    		this.id = new SimpleIntegerProperty(id);
+    		this.nome = new SimpleStringProperty(nome);
+    		this.valor = new SimpleFloatProperty(valor);
+    		this.quantidade = new SimpleIntegerProperty(quantidade);
+    	}
+
+    	public int getId() {
+    		return id.get();
+    	}
+    	public String getNome() {
+    		return nome.get();
+    	}
+    	public float getValor() {
+    		return valor.get();
+    	}
+    	public int getQuantidade() {
+    		return quantidade.get();
+    	}    		
+    }
 
 }
