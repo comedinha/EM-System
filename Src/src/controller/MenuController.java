@@ -3,9 +3,6 @@ package controller;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-import javafx.beans.property.SimpleFloatProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,6 +13,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import sistema.Produto;
+import sistema.Produto.TableViewProduto;
 
 public class MenuController implements Initializable {
 
@@ -57,6 +55,11 @@ public class MenuController implements Initializable {
 
     }
     
+    @FXML
+    void buscaProduto(ActionEvent event) {
+
+    }
+    
     public void initialize(URL location, ResourceBundle resources) {
         tb_prodid.setCellValueFactory(
         		new PropertyValueFactory<>("id"));
@@ -73,44 +76,5 @@ public class MenuController implements Initializable {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-    }
-    
-    //codigo teste tableview
-    /*
-    private ObservableList<TableViewProduto> listp() {
-        return FXCollections.observableArrayList(
-                new TableViewProduto (1, "banana", 2, 10),
-                new TableViewProduto (2, "morango", 3, 10)
-        );
-    }
-    */
-    
-     //classe interna para servir de Modelo para a tableView produto
-    public static class TableViewProduto {
-    	private final SimpleIntegerProperty id;
-    	private final SimpleStringProperty nome;
-    	private final SimpleFloatProperty valor;
-    	private final SimpleIntegerProperty quantidade;
-    	
-
-    	public TableViewProduto(int id, String nome, float valor, int quantidade) {
-    		this.id = new SimpleIntegerProperty(id);
-    		this.nome = new SimpleStringProperty(nome);
-    		this.valor = new SimpleFloatProperty(valor);
-    		this.quantidade = new SimpleIntegerProperty(quantidade);
-    	}
-
-    	public int getId() {
-    		return id.get();
-    	}
-    	public String getNome() {
-    		return nome.get();
-    	}
-    	public float getValor() {
-    		return valor.get();
-    	}
-    	public int getQuantidade() {
-    		return quantidade.get();
-    	}    		
     }
 }
