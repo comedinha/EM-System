@@ -1,4 +1,4 @@
-package sistema;
+package viewTableModel;
 
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -11,12 +11,11 @@ public static class TableViewProduto {
 	private final SimpleIntegerProperty quantidade;
 	
 
-	public TableViewProduto(SimpleIntegerProperty id, SimpleStringProperty nome, SimpleFloatProperty valor,
-			SimpleIntegerProperty quantidade) {
-		this.id = id;
-		this.nome = nome;
-		this.valor = valor;
-		this.quantidade = quantidade;
+	public TableViewProduto(int id, String nome, float valor, int quantidade) {
+		this.id = new SimpleIntegerProperty(id);
+		this.nome = new SimpleStringProperty(nome);
+		this.valor = new SimpleFloatProperty(valor);
+		this.quantidade = new SimpleIntegerProperty(quantidade);
 	}
 
 	public SimpleIntegerProperty getId() {
@@ -31,6 +30,5 @@ public static class TableViewProduto {
 	public SimpleIntegerProperty getQuantidade() {
 		return quantidade;
 	}
-	
 		
 }

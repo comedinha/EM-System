@@ -1,15 +1,21 @@
 package controller;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import sistema.TableViewProduto;
+import javafx.scene.control.cell.PropertyValueFactory;
+import sistema.Produto;
+import viewTableModel.TableViewProduto;
 
-public class MenuController {
+public class MenuController implements Initializable {
 
     @FXML
     private Button btn_novoProduto;
@@ -47,6 +53,20 @@ public class MenuController {
     @FXML
     void novoProduto(ActionEvent event) {
 
+    }
+    
+    public void initialize(URL location, ResourceBundle resources) {
+        tb_prodid.setCellValueFactory(
+        		new PropertyValueFactory<>("id"));
+        tb_prodnome.setCellValueFactory(
+        		new PropertyValueFactory<>("nome"));
+        tb_prodvlr.setCellValueFactory(
+        		new PropertyValueFactory<>("valor"));
+        tb_prodquant.setCellValueFactory(
+        		new PropertyValueFactory<>("quantidade"));
+        
+        
+        tableProd.setItems(new Produto());
     }
 
 }
