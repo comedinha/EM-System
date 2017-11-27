@@ -5,7 +5,11 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+<<<<<<< HEAD
+import javafx.collections.ObservableList;
+=======
 import javafx.beans.binding.Bindings;
+>>>>>>> 68ef003144f64107f5949e34feb4270b442b0856
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,6 +32,14 @@ import system.Funcionario;
 import system.Funcionario.TableViewFuncionario;
 
 public class MenuController implements Initializable {
+	@FXML
+    private Button btn_comandaAdd;
+
+    @FXML
+    private TextField lbl_comandaBusca;
+
+    @FXML
+    private Button btn_comandaBusca;
 
     @FXML
     private Button btn_novoProduto;
@@ -67,6 +79,8 @@ public class MenuController implements Initializable {
 
     @FXML
     private TableColumn<TableViewFuncionario, String> tb_funcnome;
+    
+    ObservableList<TableViewProduto> ol;
 
     @FXML
     void btn_addComanda(ActionEvent event) throws IOException {
@@ -105,9 +119,16 @@ public class MenuController implements Initializable {
     
     public void initialize(URL location, ResourceBundle resources) {
     	// - PRODUTO
+    	// Não editar aqui, testes pra update...
     	tb_prodid.setCellValueFactory(new PropertyValueFactory<>("id"));
     	tb_prodnome.setCellValueFactory(new PropertyValueFactory<>("nome"));
     	tb_prodvlr.setCellValueFactory(new PropertyValueFactory<>("valor"));
+<<<<<<< HEAD
+    	
+    	try {
+    		ol = Produto.getAllProduto();
+			tableProd.setItems(ol);
+=======
         try {
 			tableProd.setItems(Produto.getAllProduto());
 			tableProd.setRowFactory(
@@ -141,6 +162,7 @@ public class MenuController implements Initializable {
 			                            .otherwise((ContextMenu)null));
 			            return row;
 			        });
+>>>>>>> 68ef003144f64107f5949e34feb4270b442b0856
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -184,5 +206,20 @@ public class MenuController implements Initializable {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+    }
+    
+    @FXML
+    void btn_comandaAddOnAction(ActionEvent event) throws IOException {
+    	Stage stage = new Stage();
+		stage.setTitle("Adiciona Comanda");
+		BorderPane root = FXMLLoader.load(getClass().getResource("/view/Comanda.fxml"));
+		Scene scene = new Scene(root);
+		stage.setScene(scene);
+		stage.show();
+    }
+
+    @FXML
+    void btn_comandaBuscaOnAction(ActionEvent event) {
+
     }
 }

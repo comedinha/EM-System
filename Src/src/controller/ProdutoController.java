@@ -41,8 +41,20 @@ public class ProdutoController {
     		String nome = txf_nome.getText();
 	    	float valor = Float.parseFloat(txf_valor.getText());
 
+<<<<<<< HEAD
+    	String nome = txf_nome.getText();
+    	float valor = Float.parseFloat(txf_valor.getText());
+
+    	if(Produto.adicionaProduto(id, nome, valor)) {    		
+    		((Node) event.getSource()).getScene().getWindow().hide();
+    	} else {
+    		//alerta de erro, cadastro não concluido
+    	}
+    	
+=======
 	    	((Node) event.getSource()).getScene().getWindow().hide();
     	}
+>>>>>>> 68ef003144f64107f5949e34feb4270b442b0856
     }
 
     @FXML

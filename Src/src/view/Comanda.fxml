@@ -15,7 +15,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
+<<<<<<< HEAD
+<BorderPane prefHeight="472.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ComandaController">
+=======
 <BorderPane prefHeight="472.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ComandaController">
+>>>>>>> 68ef003144f64107f5949e34feb4270b442b0856
    <center>
       <VBox prefHeight="276.0" prefWidth="479.0" BorderPane.alignment="CENTER">
          <children>
@@ -35,13 +39,13 @@
                   <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Total a pagar" />
-                        <TextArea prefHeight="37.0" prefWidth="61.0" />
+                        <TextArea editable="false" prefHeight="37.0" prefWidth="61.0" />
                      </children>
                   </VBox>
                   <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Total pago" />
-                        <TextArea prefHeight="37.0" prefWidth="61.0" />
+                        <TextArea editable="false" prefHeight="37.0" prefWidth="61.0" />
                      </children>
                   </VBox>
                </children>
