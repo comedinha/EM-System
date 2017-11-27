@@ -6,6 +6,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import system.Produto;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 
@@ -33,12 +34,12 @@ public class ProdutoController {
     	float valor = Float.parseFloat(txf_valor.getText());
 
     	Produto.adicionaProduto(id, nome, valor);
-    	Platform.exit();
+    	((Node) event.getSource()).getScene().getWindow().hide();
     }
 
     @FXML
     void act_cancelar(ActionEvent event) {
-    	Platform.exit();
+    	((Node) event.getSource()).getScene().getWindow().hide();
     }
 
     @FXML

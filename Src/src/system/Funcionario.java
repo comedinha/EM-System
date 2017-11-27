@@ -45,7 +45,7 @@ public class Funcionario {
 		ObservableList<TableViewFuncionario> ol = FXCollections.observableArrayList();
 		
 		while(result.next()) {			
-			ol.add(new TableViewFuncionario(result.getInt(1), result.getString(2)));
+			ol.add(new TableViewFuncionario(result.getInt("funcionarioId"), result.getString("nome")));
 		}
 	
 		return ol;

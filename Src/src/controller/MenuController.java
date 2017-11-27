@@ -65,6 +65,16 @@ public class MenuController implements Initializable {
     private TableColumn<TableViewFuncionario, String> tb_funcnome;
 
     @FXML
+    void btn_addComanda(ActionEvent event) throws IOException {
+    	Stage stage = new Stage();
+		stage.setTitle("Adiciona Comanda");
+		BorderPane root = FXMLLoader.load(getClass().getResource("/view/Comanda.fxml"));
+		Scene scene = new Scene(root);
+		stage.setScene(scene);
+		stage.show();
+    }
+
+    @FXML
     void btn_addFunc(ActionEvent event) throws IOException {
     	Stage stage = new Stage();
 		stage.setTitle("Configura Funcionário");
