@@ -128,6 +128,8 @@ public class MenuController implements Initializable {
 			            final ContextMenu rowMenu = new ContextMenu();
 			            MenuItem editItem = new MenuItem("Editar");
 			            MenuItem removeItem = new MenuItem("Deletar");
+			            
+			            //atualiza item
 			            editItem.setOnAction((ActionEvent event) -> {
 							try {
 								Stage stage = new Stage();
@@ -143,9 +145,13 @@ public class MenuController implements Initializable {
 								e.printStackTrace();
 							}
 			            });
+			            
+			            //remove item
 			            removeItem.setOnAction((ActionEvent event) -> {
-			                tableView1.getItems().remove(row.getItem());
+			            	Produto.delete(row.getItem().getId());
+			                tableView1.getItems().remove(row.getItem());			                
 			            });
+			            
 			            rowMenu.getItems().addAll(editItem, removeItem);
 			            row.contextMenuProperty().bind(
 			                    Bindings.when(Bindings.isNotNull(row.itemProperty()))

@@ -24,13 +24,15 @@ CREATE TABLE pagamento (
 CREATE TABLE produto (
 	produtoId SERIAL PRIMARY KEY NOT NULL,
 	nome varchar(30),
-	valor numeric(5,2)
+	valor numeric(5,2),
+	status int default 1
 );
 
 CREATE TABLE produto_Alterado (
 	produtoId SERIAL REFERENCES produto(produtoId) ON DELETE NO ACTION ON UPDATE CASCADE,
 	data date,
-	valor numeric(5,2)
+	valor numeric(5,2),
+	status int default 1
 );
 
 CREATE TABLE produtoComanda (

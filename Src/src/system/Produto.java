@@ -32,8 +32,14 @@ public class Produto {
 		return ol;
 	}
 	
-	public void editaProduto() {
-
+	public static boolean editaProduto(int id, String nome, float valor) {
+		dao.Produto produto = new dao.Produto();
+		return produto.atualizar(id, nome, valor);
+	}
+	
+	public static boolean delete(int id) {
+		dao.Produto produto = new dao.Produto();
+		return produto.delete(id);
 	}
 	
 	//classe interna Modelo para a tableView produto

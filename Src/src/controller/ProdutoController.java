@@ -44,6 +44,12 @@ public class ProdutoController {
     		id = Integer.parseInt(txf_id.getText());
     		String nome = txf_nome.getText();
 	    	float valor = Float.parseFloat(txf_valor.getText());
+	    	
+	    	if(Produto.editaProduto(id, nome, valor)) {
+	    		((Node) event.getSource()).getScene().getWindow().hide();
+	    	} else {
+	    		//alerta de erro
+	    	}
     	}
     	Valores.getController().refresh(1);
     }
