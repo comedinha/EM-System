@@ -17,10 +17,11 @@ import javafx.stage.Stage;
 import util.Valores;
 
 public class FuncionarioController {
+	private int mode = 0;
 	private int type = 0;
 	private boolean inicial = false;
 	ObservableList<String> cb_cargoselection = FXCollections
-			.observableArrayList("Gerente", "Funcionario");
+			.observableArrayList("Gerente", "Funcionário");
 
     @FXML
     private ComboBox<String> txf_cargo;
@@ -42,12 +43,16 @@ public class FuncionarioController {
 
     @FXML
     void btn_funcok(ActionEvent event) throws Exception {
-    	int func = type;
-    	String nome = txf_username.getText();
-    	String usuario = txf_nickname.getText();
-    	String senha = txf_password.getText();
-
-    	Funcionario.inserir(func, nome, usuario, senha);
+    	if (mode == 0) {
+	    	int func = type;
+	    	String nome = txf_username.getText();
+	    	String usuario = txf_nickname.getText();
+	    	String senha = txf_password.getText();
+	
+	    	Funcionario.inserir(func, nome, usuario, senha);
+    	} else if (mode == 1) {
+    		
+    	}
     	((Node) event.getSource()).getScene().getWindow().hide();
     	if (inicial) {
     		Stage stage = new Stage();
@@ -72,7 +77,7 @@ public class FuncionarioController {
     	txf_cargo.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
     		if (newValue.toString() == "Gerente") {
     			type = 1;
-    		} else if (newValue.toString() == "Funcionario") {
+    		} else if (newValue.toString() == "Funcionário") {
     			type = 2;
     		}
     	});
@@ -84,10 +89,12 @@ public class FuncionarioController {
     	txf_cargo.setDisable(true);
     }
 
-    void editaFuncionario(int id, String nome) {
+    void editaFuncionario(int id, String nome, String username, String cargo) {
     	type = id;
+    	mode = 1;
+    	txf_cargo.setValue(cargo);
+    	txf_cargo.setDisable(true);
     	txf_username.setText(Integer.toString(id));
-    	txf_nickname.setText("");
-    	txf_password.setText("");
+    	txf_nickname.setText(username);
     }
 }

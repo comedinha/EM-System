@@ -76,6 +76,12 @@ public class MenuController implements Initializable {
 
     @FXML
     private TableColumn<TableViewFuncionario, String> tb_funcnome;
+
+    @FXML
+    private TableColumn<TableViewFuncionario, String> tb_funclogin;
+
+    @FXML
+    private TableColumn<TableViewFuncionario, String> tb_funccargo;
     
     ObservableList<TableViewProduto> ol;
 
@@ -166,6 +172,8 @@ public class MenuController implements Initializable {
         // - FUNCIONARIO
         tb_funcid.setCellValueFactory(new PropertyValueFactory<>("id"));
         tb_funcnome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        tb_funclogin.setCellValueFactory(new PropertyValueFactory<>("login"));
+        tb_funccargo.setCellValueFactory(new PropertyValueFactory<>("cargo"));
         try {
         	tableFunc.setItems(Funcionario.getAllFuncionario());
         	tableFunc.setRowFactory(
@@ -181,7 +189,7 @@ public class MenuController implements Initializable {
 				        		FXMLLoader funcionarioLoader = new FXMLLoader(getClass().getResource("/view/Funcionario.fxml"));
 				        		BorderPane root = funcionarioLoader.load();
 								FuncionarioController controller = funcionarioLoader.<FuncionarioController>getController();
-								controller.editaFuncionario(row.getItem().getId(), row.getItem().getNome());
+								controller.editaFuncionario(row.getItem().getId(), row.getItem().getNome(), row.getItem().getLogin(), row.getItem().getCargo());
 				        		Scene scene = new Scene(root);
 				        		stage.setScene(scene);
 				        		stage.show();

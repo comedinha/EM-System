@@ -45,7 +45,7 @@ public class Funcionario {
 		ObservableList<TableViewFuncionario> ol = FXCollections.observableArrayList();
 		
 		while(result.next()) {			
-			ol.add(new TableViewFuncionario(result.getInt("funcionarioId"), result.getString("nome")));
+			ol.add(new TableViewFuncionario(result.getInt("funcionarioId"), result.getString("nome"), result.getString("username"), result.getInt("funcaoId")));
 		}
 	
 		return ol;
@@ -54,10 +54,18 @@ public class Funcionario {
 	public static class TableViewFuncionario {
     	private final SimpleIntegerProperty id;
     	private final SimpleStringProperty nome;
+    	private final SimpleStringProperty login;
+    	private final SimpleStringProperty cargo;
 
-    	public TableViewFuncionario(int id, String nome) {
+    	public TableViewFuncionario(int id, String nome, String loginname, int cargo) {
     		this.id = new SimpleIntegerProperty(id);
     		this.nome = new SimpleStringProperty(nome);
+    		this.login = new SimpleStringProperty(loginname);
+    		if (cargo == 1) {
+    			this.cargo = new SimpleStringProperty("Gerente");
+    		} else {
+    			this.cargo = new SimpleStringProperty("Funcionário");
+    		}
     	}
 
     	public int getId() {
@@ -66,6 +74,14 @@ public class Funcionario {
 
     	public String getNome() {
     		return nome.get();
-    	}		
+    	}
+
+    	public String getLogin() {
+    		return login.get();
+    	}
+
+    	public String getCargo() {
+    		return cargo.get();
+    	}
     }
 }
