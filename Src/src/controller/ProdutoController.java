@@ -1,11 +1,11 @@
 package controller;
 
-import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import system.Produto;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 
@@ -32,13 +32,17 @@ public class ProdutoController {
     	String nome = txf_nome.getText();
     	float valor = Float.parseFloat(txf_valor.getText());
 
-    	Produto.adicionaProduto(id, nome, valor);
-    	Platform.exit();
+    	if(Produto.adicionaProduto(id, nome, valor)) {    		
+    		((Node) event.getSource()).getScene().getWindow().hide();
+    	} else {
+    		//alerta de erro, cadastro não concluido
+    	}
+    	
     }
 
     @FXML
     void act_cancelar(ActionEvent event) {
-    	Platform.exit();
+    	((Node) event.getSource()).getScene().getWindow().hide();
     }
 
     @FXML

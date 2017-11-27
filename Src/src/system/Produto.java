@@ -10,10 +10,10 @@ import javafx.collections.ObservableList;
 
 public class Produto {
 	
-	public static void adicionaProduto(int id, String nome, float valor) throws Exception {
-		dao.Produto cadastro = new dao.Produto();
+	public static boolean adicionaProduto(int id, String nome, float valor) throws Exception {
+		dao.Produto produto = new dao.Produto();
 		
-		cadastro.inserir(id, nome, valor);
+		return produto.inserir(id, nome, valor);
 	}
 
 	public void getProduto() {
@@ -28,7 +28,7 @@ public class Produto {
 			ol.add(new TableViewProduto(result.getInt(1), result.getString(2),
 					result.getFloat(3)));
 		}
-	
+		
 		return ol;
 	}
 	
