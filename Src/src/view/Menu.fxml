@@ -163,6 +163,8 @@
                           <columns>
                             <TableColumn fx:id="tb_funcid" prefWidth="75.0" text="ID" />
                             <TableColumn fx:id="tb_funcnome" prefWidth="75.0" text="Nome" />
+                              <TableColumn fx:id="tb_funclogin" prefWidth="75.0" text="Login" />
+                              <TableColumn fx:id="tb_funccargo" prefWidth="75.0" text="Cargo" />
                           </columns>
                         </TableView>
                      </items>
