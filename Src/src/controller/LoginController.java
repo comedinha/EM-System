@@ -12,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import system.Funcionario;
+import util.Valores;
 
 public class LoginController {
 
@@ -30,10 +31,12 @@ public class LoginController {
 	    	((Node) event.getSource()).getScene().getWindow().hide();
 			Stage stage = new Stage();
 			stage.setTitle("EMSystem Menu");
-			BorderPane root = FXMLLoader.load(getClass().getResource("/view/Menu.fxml"));
-			Scene scene = new Scene(root);
-			stage.setScene(scene);
-			stage.show();
+			FXMLLoader menuLoader = new FXMLLoader(getClass().getResource("/view/Menu.fxml"));
+    		BorderPane root = menuLoader.load();
+    		Valores.setController(menuLoader.<MenuController>getController());
+    		Scene scene = new Scene(root);
+    		stage.setScene(scene);
+    		stage.show();
     	} else {
     		lbl_erro.setText("Nome de Usuario ou senha incorreta");
     	}

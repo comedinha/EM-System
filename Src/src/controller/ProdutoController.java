@@ -4,6 +4,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import system.Produto;
+import util.Valores;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
@@ -34,7 +35,7 @@ public class ProdutoController {
 	    	String nome = txf_nome.getText();
 	    	float valor = Float.parseFloat(txf_valor.getText());
 	
-	    	if(Produto.adicionaProduto(id, nome, valor)) {    		
+	    	if(Produto.adicionaProduto(id, nome, valor)) {
 	    		((Node) event.getSource()).getScene().getWindow().hide();
 	    	} else {
 	    		//alerta de erro, cadastro não concluido
@@ -44,6 +45,7 @@ public class ProdutoController {
     		String nome = txf_nome.getText();
 	    	float valor = Float.parseFloat(txf_valor.getText());
     	}
+    	Valores.getController().refresh(1);
     }
 
     @FXML

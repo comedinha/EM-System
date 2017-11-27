@@ -14,6 +14,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import util.Valores;
 
 public class FuncionarioController {
 	private int type = 0;
@@ -55,8 +56,9 @@ public class FuncionarioController {
 			Scene scene = new Scene(root);
 			stage.setScene(scene);
 			stage.show();
+    	} else {
+    		Valores.getController().refresh(2);
     	}
-    		
     }
 
     @FXML
@@ -84,7 +86,7 @@ public class FuncionarioController {
 
     void editaFuncionario(int id, String nome) {
     	type = id;
-    	txf_username.setText(nome);
+    	txf_username.setText(Integer.toString(id));
     	txf_nickname.setText("");
     	txf_password.setText("");
     }

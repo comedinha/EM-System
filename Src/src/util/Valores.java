@@ -2,12 +2,14 @@ package util;
 
 import java.sql.Connection;
 
+import controller.MenuController;
 import system.Funcionario;
 
 public class Valores {
 
 	private static Connection database;
 	private static Funcionario funcionario;
+	private static MenuController controller;
 
 	public static void setFuncionario(Funcionario funcionario) {
 		Valores.funcionario = funcionario;
@@ -22,11 +24,19 @@ public class Valores {
 		}
 	}
 
+	public static void setController(MenuController controller) {
+		Valores.controller = controller;
+	}
+
 	public static Funcionario getUsuario() {
 		return funcionario;
 	}
 
 	public static Connection getConnection() {
 		return database;
+	}
+
+	public static MenuController getController() {
+		return controller;
 	}
 }

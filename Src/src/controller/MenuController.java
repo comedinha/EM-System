@@ -202,4 +202,12 @@ public class MenuController implements Initializable {
     void btn_comandaBuscaOnAction(ActionEvent event) {
 
     }
+
+    void refresh(int type) throws SQLException {
+    	if (type == 1) {
+    		tableProd.setItems(Produto.getAllProduto());
+    	} else if (type == 2) {
+    		tableFunc.setItems(Funcionario.getAllFuncionario());
+    	}
+    }
 }
