@@ -1,0 +1,19 @@
+/*.tab-pane:top > .tab-header-area > .tab-header-background {
+	-fx-background-color: FFFFFF;
+}
+
+.image-hbox {
+	-fx-background-color: FFFFFF;
+}
+
+.background-general {
+	-fx-background-color: FFFFFF;
+}
+
+.tab-pane:top > .tab-header-area > .headers-region > .tab:selected:top {
+	-fx-background-color: BBBBBB;
+}
+
+.tab-pane:top > .tab-header-area > .headers-region > .tab:top {
+	-fx-background-color: AAAAAA;
+} */

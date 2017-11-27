@@ -20,15 +20,15 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane stylesheets="@Menu.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MenuController">
+<BorderPane xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MenuController">
    <center>
-      <TabPane prefHeight="520.0" prefWidth="450.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+      <TabPane prefHeight="520.0" prefWidth="450.0" stylesheets="@../css/Menu.css" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
           <Tab text="Inicio">
           <content>
           	<VBox prefHeight="472.0" prefWidth="452.0">
                      <children>
-                        <HBox prefHeight="100.0" prefWidth="200.0">
+                        <HBox prefHeight="100.0" prefWidth="200.0" styleClass="image-hbox">
                            <children>
                               <ImageView fitHeight="150.0" fitWidth="452.0" pickOnBounds="true" preserveRatio="true" />
                            </children>
@@ -239,7 +239,7 @@
       </TabPane>
    </center>
    <bottom>
-      <HBox alignment="TOP_RIGHT" prefHeight="30.0" prefWidth="450.0" BorderPane.alignment="CENTER">
+      <HBox alignment="TOP_RIGHT" prefHeight="30.0" prefWidth="450.0" styleClass="background-general" stylesheets="@../css/Menu.css" BorderPane.alignment="CENTER">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Versão: 1.0" textAlignment="CENTER">
                <HBox.margin>
