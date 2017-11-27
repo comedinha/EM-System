@@ -150,6 +150,37 @@ public class MenuController implements Initializable {
         tb_funcnome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         try {
         	tableFunc.setItems(Funcionario.getAllFuncionario());
+        	tableFunc.setRowFactory(
+			        (TableView<TableViewFuncionario> tableView1) -> {
+			            final TableRow<TableViewFuncionario> row = new TableRow<>();
+			            final ContextMenu rowMenu = new ContextMenu();
+			            MenuItem editItem = new MenuItem("Editar");
+			            MenuItem removeItem = new MenuItem("Deletar");
+			            editItem.setOnAction((ActionEvent event) -> {
+							try {
+								Stage stage = new Stage();
+				        		stage.setTitle("Edita Funcionario");
+				        		FXMLLoader funcionarioLoader = new FXMLLoader(getClass().getResource("/view/Funcionario.fxml"));
+				        		BorderPane root = funcionarioLoader.load();
+								FuncionarioController controller = funcionarioLoader.<FuncionarioController>getController();
+								controller.editaFuncionario(row.getItem().getId(), row.getItem().getNome());
+				        		Scene scene = new Scene(root);
+				        		stage.setScene(scene);
+				        		stage.show();
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+			            });
+			            removeItem.setOnAction((ActionEvent event) -> {
+			                tableView1.getItems().remove(row.getItem());
+			            });
+			            rowMenu.getItems().addAll(editItem, removeItem);
+			            row.contextMenuProperty().bind(
+			                    Bindings.when(Bindings.isNotNull(row.itemProperty()))
+			                            .then(rowMenu)
+			                            .otherwise((ContextMenu)null));
+			            return row;
+			        });
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

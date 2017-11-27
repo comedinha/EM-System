@@ -81,4 +81,11 @@ public class FuncionarioController {
     	txf_cargo.setValue("Gerente");
     	txf_cargo.setDisable(true);
     }
+
+    void editaFuncionario(int id, String nome) {
+    	type = id;
+    	txf_username.setText(nome);
+    	txf_nickname.setText("");
+    	txf_password.setText("");
+    }
 }

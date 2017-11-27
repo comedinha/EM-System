@@ -54,7 +54,6 @@ public class Funcionario {
 	public static class TableViewFuncionario {
     	private final SimpleIntegerProperty id;
     	private final SimpleStringProperty nome;
-    	
 
     	public TableViewFuncionario(int id, String nome) {
     		this.id = new SimpleIntegerProperty(id);
