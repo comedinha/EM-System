@@ -5,17 +5,25 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.CustomMenuItem;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import system.Produto;
@@ -106,6 +114,22 @@ public class MenuController implements Initializable {
     	tb_prodvlr.setCellValueFactory(new PropertyValueFactory<>("valor"));
         try {
 			tableProd.setItems(Produto.getAllProduto());
+			tableProd.setRowFactory(
+			        (TableView<TableViewProduto> tableView1) -> {
+			            final TableRow<TableViewProduto> row = new TableRow<>();
+			            final ContextMenu rowMenu = new ContextMenu();
+			            MenuItem editItem = new MenuItem("Editar");
+			            MenuItem removeItem = new MenuItem("Deletar");
+			            removeItem.setOnAction((ActionEvent event) -> {
+			                tableView1.getItems().remove(row.getItem());
+			            });
+			            rowMenu.getItems().addAll(editItem, removeItem);
+			            row.contextMenuProperty().bind(
+			                    Bindings.when(Bindings.isNotNull(row.itemProperty()))
+			                            .then(rowMenu)
+			                            .otherwise((ContextMenu)null));
+			            return row;
+			        });
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
