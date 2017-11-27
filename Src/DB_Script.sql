@@ -28,7 +28,7 @@ CREATE TABLE produto (
 );
 
 CREATE TABLE produto_Alterado (
-	produtoId int REFERENCES produto(produtoId) ON DELETE NO ACTION ON UPDATE CASCADE,
+	produtoId SERIAL REFERENCES produto(produtoId) ON DELETE NO ACTION ON UPDATE CASCADE,
 	data date,
 	valor numeric(5,2)
 );

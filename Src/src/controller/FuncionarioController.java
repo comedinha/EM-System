@@ -1,18 +1,23 @@
 package controller;
 
 import dao.Funcionario;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 
 public class FuncionarioController {
 	private int type = 0;
+	private boolean inicial = false;
 	ObservableList<String> cb_cargoselection = FXCollections
 			.observableArrayList("Gerente", "Funcionario");
 
@@ -42,12 +47,21 @@ public class FuncionarioController {
     	String senha = txf_password.getText();
 
     	Funcionario.inserir(func, nome, usuario, senha);
-    	Platform.exit();
+    	((Node) event.getSource()).getScene().getWindow().hide();
+    	if (inicial) {
+    		Stage stage = new Stage();
+    		stage.setTitle("EMSystem Login");
+			BorderPane root = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
+			Scene scene = new Scene(root);
+			stage.setScene(scene);
+			stage.show();
+    	}
+    		
     }
 
     @FXML
     void btn_funcquit(ActionEvent event) {
-    	Platform.exit();
+    	((Node) event.getSource()).getScene().getWindow().hide();
     }
 
     @FXML
@@ -63,7 +77,15 @@ public class FuncionarioController {
     }
 
     void cadastroInicial() {
+    	inicial = true;
     	txf_cargo.setValue("Gerente");
     	txf_cargo.setDisable(true);
+    }
+
+    void editaFuncionario(int id, String nome) {
+    	type = id;
+    	txf_username.setText(nome);
+    	txf_nickname.setText("");
+    	txf_password.setText("");
     }
 }
