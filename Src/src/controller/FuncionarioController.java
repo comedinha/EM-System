@@ -1,6 +1,6 @@
 package controller;
 
-import dao.Funcionario;
+import system.Funcionario;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,6 +19,7 @@ import util.Valores;
 public class FuncionarioController {
 	private int mode = 0;
 	private int type = 0;
+	private int id;
 	private boolean inicial = false;
 	ObservableList<String> cb_cargoselection = FXCollections
 			.observableArrayList("Gerente", "Funcion√°rio");
@@ -43,15 +44,23 @@ public class FuncionarioController {
 
     @FXML
     void btn_funcok(ActionEvent event) throws Exception {
+    	//mode 0 = insirir novo funcionario
     	if (mode == 0) {
 	    	int func = type;
 	    	String nome = txf_username.getText();
 	    	String usuario = txf_nickname.getText();
 	    	String senha = txf_password.getText();
 	
-	    	Funcionario.inserir(func, nome, usuario, senha);
+	    	Funcionario.criaUsuario(func, nome, usuario, senha);
+	    	//mode 1 = editar funcionario j· existente
     	} else if (mode == 1) {
-    		
+    		String nome = txf_username.getText();
+	    	String usuario = txf_nickname.getText();
+	    	String senha = txf_password.getText();
+	    	
+    		if(!Funcionario.editaFuncionario(id, usuario, nome, senha)) {
+    			//Erro ao editar
+    		}
     	}
     	((Node) event.getSource()).getScene().getWindow().hide();
     	if (inicial) {
@@ -90,11 +99,11 @@ public class FuncionarioController {
     }
 
     void editaFuncionario(int id, String nome, String username, String cargo) {
-    	type = id;
+    	this.id = id;
     	mode = 1;
     	txf_cargo.setValue(cargo);
     	txf_cargo.setDisable(true);
-    	txf_username.setText(Integer.toString(id));
+    	txf_username.setText(nome);
     	txf_nickname.setText(username);
     }
 }

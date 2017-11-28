@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-
 import javafx.collections.ObservableList;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
@@ -122,7 +121,6 @@ public class MenuController implements Initializable {
     
     public void initialize(URL location, ResourceBundle resources) {
     	// - PRODUTO
-    	// N�o editar aqui, testes pra update...
     	tb_prodid.setCellValueFactory(new PropertyValueFactory<>("id"));
     	tb_prodnome.setCellValueFactory(new PropertyValueFactory<>("nome"));
     	tb_prodvlr.setCellValueFactory(new PropertyValueFactory<>("valor"));
@@ -154,7 +152,9 @@ public class MenuController implements Initializable {
 			            
 			            //remove item
 			            removeItem.setOnAction((ActionEvent event) -> {
-			            	Produto.delete(row.getItem().getId());
+			            	if (!Produto.delete(row.getItem().getId())) {
+			            		//Erro ao remover
+			            	}
 			                tableView1.getItems().remove(row.getItem());			                
 			            });
 			            
@@ -180,9 +180,11 @@ public class MenuController implements Initializable {
 			        (TableView<TableViewFuncionario> tableView1) -> {
 			            final TableRow<TableViewFuncionario> row = new TableRow<>();
 			            final ContextMenu rowMenu = new ContextMenu();
-			            MenuItem editItem = new MenuItem("Editar");
-			            MenuItem removeItem = new MenuItem("Deletar");
-			            editItem.setOnAction((ActionEvent event) -> {
+			            MenuItem editFuncionario = new MenuItem("Editar");
+			            MenuItem removeFuncionario = new MenuItem("Deletar");
+			            
+			            //Edita Funcionario
+			            editFuncionario.setOnAction((ActionEvent event) -> {
 							try {
 								Stage stage = new Stage();
 				        		stage.setTitle("Edita Funcionario");
@@ -197,10 +199,19 @@ public class MenuController implements Initializable {
 								e.printStackTrace();
 							}
 			            });
-			            removeItem.setOnAction((ActionEvent event) -> {
-			                tableView1.getItems().remove(row.getItem());
+			            
+			            //Remove Funcionario
+			            removeFuncionario.setOnAction((ActionEvent event) -> {
+			            	try {
+								if (!Funcionario.removeFuncionario(row.getItem().getId(), 
+										row.getItem().getCargo())) {
+									//ERRO AO REMOVER FUNCIONARIO
+								} else {	
+					                tableView1.getItems().remove(row.getItem());
+								}
+							} catch (SQLException e) {}
 			            });
-			            rowMenu.getItems().addAll(editItem, removeItem);
+			            rowMenu.getItems().addAll(editFuncionario, removeFuncionario);
 			            row.contextMenuProperty().bind(
 			                    Bindings.when(Bindings.isNotNull(row.itemProperty()))
 			                            .then(rowMenu)

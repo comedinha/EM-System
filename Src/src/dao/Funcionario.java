@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import util.Crypto;
 import util.Valores;
 
-public class Funcionario implements IConnector {
+public class Funcionario {
 	public static void inserir(int funcao, String nome, String username, String password) throws Exception {
 		Crypto cr = new Crypto();
 		String sql = "INSERT INTO funcionario (username, password, nome, funcaoid)"
@@ -39,25 +39,70 @@ public class Funcionario implements IConnector {
 		return false;
 	}
 
-	@Override
-	public void atualizar() throws SQLException {
-		// TODO Auto-generated method stub
+	public boolean update(int id, String username, String nome, String password) {
+		try {
+			Crypto cr = new Crypto();
+			password = cr.encrypt(password);
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
 		
+		String sql = "UPDATE funcionario SET username = ?, password = ?, nome = ?"
+				+ " WHERE funcionarioId = ?";
+		
+		try {
+			PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
+			ps.setString(1, username);
+			ps.setString(2, password);
+			ps.setString(3, nome);
+			ps.setInt(4, id);
+			
+			ps.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			//ERRO AO ATUALIZAR
+			return false;
+		}
 	}
 	
-
-	@Override
-	public void get(int i) throws SQLException {
+	public void get(int i){
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public ResultSet getAll() throws SQLException {
 		String sql = "SELECT * FROM funcionario"; 
 
-		PreparedStatement statement = Valores.getConnection().prepareStatement(sql);
-		ResultSet result = statement.executeQuery();
+		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
+		ResultSet result = ps.executeQuery();
 		return result;
+	}
+	
+	public ResultSet getGerente(int id) {
+		String sql = "SELECT funcionarioId FROM funcionario WHERE funcionarioId != ?";
+		try {
+			PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
+			ps.setInt(1, id);
+			ResultSet result = ps.executeQuery();
+			return result;
+		} catch(SQLException e) {
+			System.out.println("ERRO!!!");
+			ResultSet result = null;
+			return result;
+			//ERRO, não sei oq retorna :(
+		}
+	}
+	
+	public boolean delete(int id) {
+		String sql = "DELETE FROM funcionario WHERE funcionarioId = ?";
+		
+		try {
+			PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
+			ps.setInt(1, id);
+			ps.executeUpdate();	
+			return true;
+		} catch(SQLException e) {
+			return false;
+		}
 	}
 }

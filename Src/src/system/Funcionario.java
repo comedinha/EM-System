@@ -13,6 +13,12 @@ public class Funcionario {
 	private static String nome;
 	private static int funcionarioId;
 	private static int funcao;
+	
+	public Funcionario(String nome, int id, int funcao) {
+		Funcionario.nome = nome;
+		Funcionario.funcionarioId = id;
+		Funcionario.funcao = funcao;
+	}
 
 	public String getNome() {
 		return nome;
@@ -26,13 +32,7 @@ public class Funcionario {
 		return funcao;
 	}
 
-	public Funcionario(String nome, int id, int funcao) {
-		Funcionario.nome = nome;
-		Funcionario.funcionarioId = id;
-		Funcionario.funcao = funcao;
-	}
-
-	public void criaUsuario(int func, String nome, String usr, String pass) throws Exception {
+	public static void criaUsuario(int func, String nome, String usr, String pass) throws Exception {
 		dao.Funcionario.inserir(1, nome, usr, pass);
 	}
 
@@ -49,6 +49,28 @@ public class Funcionario {
 		}
 	
 		return ol;
+	}
+	
+	public static boolean editaFuncionario(int id, String username, String nome, String password) {
+		dao.Funcionario funcionario = new dao.Funcionario();
+		return funcionario.update(id, username, nome, password);
+	}
+	
+	public static boolean removeFuncionario(int id, String cargo) throws SQLException {
+		dao.Funcionario funcionario = new dao.Funcionario();
+		
+		if (!cargo.equals("Gerente")) {
+			return funcionario.delete(id);
+		} else {
+			ResultSet result = funcionario.getGerente(id);
+			if(result.next()) {				
+				return funcionario.delete(id);
+			} else {
+				System.out.println("Teste gerente");
+				//ERRO DE NÂO EXISTIR OUTRO GERENTE
+				return false;
+			}
+		}
 	}
 
 	public static class TableViewFuncionario {
