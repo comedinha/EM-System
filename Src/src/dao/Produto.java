@@ -51,7 +51,7 @@ public class Produto {
 		ResultSet result = statement.executeQuery();
 		return result;
 	}
-	
+
 	public boolean delete(int id) {
 		String sql = "UPDATE produto SET status=0 WHERE produtoid=?";
 		

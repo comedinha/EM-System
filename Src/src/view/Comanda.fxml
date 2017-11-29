@@ -7,6 +7,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -76,9 +77,10 @@
       </VBox>
    </center>
    <top>
-      <HBox alignment="CENTER" prefHeight="40.0" prefWidth="479.0" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER" prefHeight="40.0" prefWidth="479.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="342.0" text="Adicionar Produto" />
+            <TextField fx:id="txf_produto" prefHeight="25.0" prefWidth="306.0" />
+            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="117.0" text="Adicionar Produto" />
          </children>
       </HBox>
    </top>

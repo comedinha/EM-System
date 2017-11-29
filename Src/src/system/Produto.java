@@ -16,15 +16,22 @@ public class Produto {
 		return produto.inserir(id, nome, valor);
 	}
 
-	public void getProduto() {
-		
+	public static ObservableList<String> getProdutoNome() throws SQLException {
+		ResultSet result = new dao.Produto().getAll();
+		ObservableList<String> ol = FXCollections.observableArrayList();
+
+		while (result.next()) {
+			ol.add(result.getInt(1) + " - " + result.getString(2));
+		}
+
+		return ol;
 	}
 	
 	public static ObservableList<TableViewProduto> getAllProduto() throws SQLException {
 		ResultSet result = new dao.Produto().getAll();
 		ObservableList<TableViewProduto> ol = FXCollections.observableArrayList();
 		
-		while(result.next()) {			
+		while (result.next()) {
 			ol.add(new TableViewProduto(result.getInt(1), result.getString(2),
 					result.getFloat(3)));
 		}
