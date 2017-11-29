@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
@@ -18,12 +19,14 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import system.Produto;
 import system.Produto.TableViewProduto;
+import util.Valores;
 import system.Funcionario;
 import system.Funcionario.TableViewFuncionario;
 
@@ -170,6 +173,20 @@ public class MenuController implements Initializable {
 		stage.show();
     }
 
+    @FXML
+    void btn_desconecta(ActionEvent event) throws IOException {
+    	((Node) event.getSource()).getScene().getWindow().hide();
+    	Valores.setController(null);
+    	Valores.setFuncionario(null);
+    	Stage stage = new Stage();
+		stage.setTitle("EMSystem Login");
+		BorderPane root = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
+		Scene scene = new Scene(root);
+		stage.getIcons().add(new Image("file:icone.png"));
+		stage.setScene(scene);
+		stage.show();
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resource) {
     	iniciaInicio();
@@ -189,10 +206,17 @@ public class MenuController implements Initializable {
     }
 
     private void iniciaComanda() {
-    	
+
     }
 
     private void iniciaProduto() {
+    	//Botões de Busca
+    	ToggleGroup group = new ToggleGroup();
+    	cho_prodid.setSelected(true);
+    	cho_prodid.setToggleGroup(group);
+    	cho_prodnome.setToggleGroup(group);
+    	cho_prodvlr.setToggleGroup(group);
+
     	tb_prodid.setCellValueFactory(new PropertyValueFactory<>("id"));
     	tb_prodnome.setCellValueFactory(new PropertyValueFactory<>("nome"));
     	tb_prodvlr.setCellValueFactory(new PropertyValueFactory<>("valor"));
@@ -205,7 +229,7 @@ public class MenuController implements Initializable {
 			            MenuItem editItem = new MenuItem("Editar");
 			            MenuItem removeItem = new MenuItem("Deletar");
 			            
-			            //atualiza item
+			            //Atualizar Produtos
 			            editItem.setOnAction((ActionEvent event) -> {
 							try {
 								Stage stage = new Stage();
@@ -223,7 +247,7 @@ public class MenuController implements Initializable {
 							}
 			            });
 			            
-			            //remove item
+			            //Remover Produtos
 			            removeItem.setOnAction((ActionEvent event) -> {
 			            	if (!Produto.delete(row.getItem().getId())) {
 			            		//Erro ao remover
@@ -244,6 +268,12 @@ public class MenuController implements Initializable {
     }
 
     private void iniciaFuncionario() {
+    	//Botões de Busca
+    	ToggleGroup group = new ToggleGroup();
+    	cho_funcid.setSelected(true);
+    	cho_funcid.setToggleGroup(group);
+    	cho_funcnome.setToggleGroup(group);
+
     	tb_funcid.setCellValueFactory(new PropertyValueFactory<>("id"));
         tb_funcnome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         tb_funclogin.setCellValueFactory(new PropertyValueFactory<>("login"));
@@ -257,11 +287,11 @@ public class MenuController implements Initializable {
 			            MenuItem editFuncionario = new MenuItem("Editar");
 			            MenuItem removeFuncionario = new MenuItem("Deletar");
 			            
-			            //Edita Funcionario
+			            //Editar Funcionários
 			            editFuncionario.setOnAction((ActionEvent event) -> {
 							try {
 								Stage stage = new Stage();
-				        		stage.setTitle("Edita Funcionario");
+				        		stage.setTitle("Edita Funcionário");
 				        		FXMLLoader funcionarioLoader = new FXMLLoader(getClass().getResource("/view/Funcionario.fxml"));
 				        		BorderPane root = funcionarioLoader.load();
 								FuncionarioController controller = funcionarioLoader.<FuncionarioController>getController();
@@ -275,7 +305,7 @@ public class MenuController implements Initializable {
 							}
 			            });
 			            
-			            //Remove Funcionario
+			            //Remover Funcionários
 			            removeFuncionario.setOnAction((ActionEvent event) -> {
 			            	try {
 								if (!Funcionario.removeFuncionario(row.getItem().getId(), 

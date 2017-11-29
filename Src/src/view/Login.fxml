@@ -26,7 +26,7 @@
                         <Insets />
                      </HBox.margin>
                   </Label>
-                  <Button mnemonicParsing="false" onAction="#btn_enterClick" text="Entrar" />
+                  <Button fx:id="btn_enter" mnemonicParsing="false" onAction="#btn_enterClick" text="Entrar" />
                   <Button mnemonicParsing="false" onAction="#btn_leaveClick" text="Sair" />
                </children>
                <VBox.margin>

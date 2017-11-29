@@ -51,9 +51,9 @@ public class Funcionario {
 		return ol;
 	}
 	
-	public static boolean editaFuncionario(int id, String username, String nome, String password) {
+	public static boolean editaFuncionario(int id, String nome, String login, String password) throws Exception {
 		dao.Funcionario funcionario = new dao.Funcionario();
-		return funcionario.update(id, username, nome, password);
+		return funcionario.update(id, nome, login, password);
 	}
 	
 	public static boolean removeFuncionario(int id, String cargo) throws SQLException {
@@ -67,7 +67,7 @@ public class Funcionario {
 				return funcionario.delete(id);
 			} else {
 				System.out.println("Teste gerente");
-				//ERRO DE NÂO EXISTIR OUTRO GERENTE
+				//ERRO DE Nï¿½O EXISTIR OUTRO GERENTE
 				return false;
 			}
 		}

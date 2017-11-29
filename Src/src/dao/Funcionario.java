@@ -8,13 +8,13 @@ import util.Crypto;
 import util.Valores;
 
 public class Funcionario {
-	public static void inserir(int funcao, String nome, String username, String password) throws Exception {
+	public static void inserir(int funcao, String nome, String login, String password) throws Exception {
 		Crypto cr = new Crypto();
 		String sql = "INSERT INTO funcionario (username, password, nome, funcaoid)"
 				+ " VALUES (?, ?, ?, ?)";
 
 		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);	
-		ps.setString(1, username);
+		ps.setString(1, login);
 		ps.setString(2, cr.encrypt(password));
 		ps.setString(3, nome);
 		ps.setInt(4, funcao);
@@ -39,35 +39,30 @@ public class Funcionario {
 		return false;
 	}
 
-	public boolean update(int id, String username, String nome, String password) {
-		try {
+	public boolean update(int id, String nome, String login, String password) throws Exception {
+		//ELE PARA ELE MESMO D√Å ERRO.
+		String sql = "UPDATE funcionario SET username = ?, nome = ?, password = ?"
+				+ " WHERE funcionarioId = ?";
+		if (password.isEmpty())
+			sql = "UPDATE funcionario SET username = ?, nome = ?"
+					+ " WHERE funcionarioId = ?";
+
+		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
+		ps.setString(1, login);
+		if (!password.isEmpty()) {
 			Crypto cr = new Crypto();
 			password = cr.encrypt(password);
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
 		
-		String sql = "UPDATE funcionario SET username = ?, password = ?, nome = ?"
-				+ " WHERE funcionarioId = ?";
-		
-		try {
-			PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
-			ps.setString(1, username);
 			ps.setString(2, password);
 			ps.setString(3, nome);
 			ps.setInt(4, id);
-			
-			ps.executeUpdate();
-			return true;
-		} catch (SQLException e) {
-			//ERRO AO ATUALIZAR
-			return false;
+		} else {
+			ps.setString(2, nome);
+			ps.setInt(3, id);
 		}
-	}
-	
-	public void get(int i){
-		// TODO Auto-generated method stub
-		
+			
+		ps.executeUpdate();
+		return true;
 	}
 
 	public ResultSet getAll() throws SQLException {
@@ -78,31 +73,21 @@ public class Funcionario {
 		return result;
 	}
 	
-	public ResultSet getGerente(int id) {
+	public ResultSet getGerente(int id) throws SQLException {
 		String sql = "SELECT funcionarioId FROM funcionario WHERE funcionarioId != ?";
-		try {
-			PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
-			ps.setInt(1, id);
-			ResultSet result = ps.executeQuery();
-			return result;
-		} catch(SQLException e) {
-			System.out.println("ERRO!!!");
-			ResultSet result = null;
-			return result;
-			//ERRO, n„o sei oq retorna :(
-		}
+		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
+		ps.setInt(1, id);
+		ResultSet result = ps.executeQuery();
+
+		return result;
 	}
 	
-	public boolean delete(int id) {
+	public boolean delete(int id) throws SQLException {
 		String sql = "DELETE FROM funcionario WHERE funcionarioId = ?";
 		
-		try {
-			PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
-			ps.setInt(1, id);
-			ps.executeUpdate();	
-			return true;
-		} catch(SQLException e) {
-			return false;
-		}
+		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
+		ps.setInt(1, id);
+		ps.executeUpdate();	
+		return true;
 	}
 }
