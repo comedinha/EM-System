@@ -169,9 +169,30 @@ public class MenuController implements Initializable {
 		stage.setScene(scene);
 		stage.show();
     }
-    
-    public void initialize(URL location, ResourceBundle resources) {
-    	// - PRODUTO
+
+    @Override
+    public void initialize(URL url, ResourceBundle resource) {
+    	iniciaInicio();
+    	iniciaFinanc();
+    	iniciaComanda();
+    	iniciaProduto();
+    	iniciaFuncionario();
+    	iniciaConfig();
+    }
+
+    private void iniciaInicio() {
+    	
+    }
+
+    private void iniciaFinanc() {
+    	
+    }
+
+    private void iniciaComanda() {
+    	
+    }
+
+    private void iniciaProduto() {
     	tb_prodid.setCellValueFactory(new PropertyValueFactory<>("id"));
     	tb_prodnome.setCellValueFactory(new PropertyValueFactory<>("nome"));
     	tb_prodvlr.setCellValueFactory(new PropertyValueFactory<>("valor"));
@@ -220,9 +241,10 @@ public class MenuController implements Initializable {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+    }
 
-        // - FUNCIONARIO
-        tb_funcid.setCellValueFactory(new PropertyValueFactory<>("id"));
+    private void iniciaFuncionario() {
+    	tb_funcid.setCellValueFactory(new PropertyValueFactory<>("id"));
         tb_funcnome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         tb_funclogin.setCellValueFactory(new PropertyValueFactory<>("login"));
         tb_funccargo.setCellValueFactory(new PropertyValueFactory<>("cargo"));
@@ -274,6 +296,10 @@ public class MenuController implements Initializable {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+    }
+
+    private void iniciaConfig() {
+    	
     }
 
     void refresh(int type) throws SQLException {
