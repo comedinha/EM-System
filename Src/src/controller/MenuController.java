@@ -11,7 +11,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
@@ -30,16 +29,43 @@ import system.Funcionario.TableViewFuncionario;
 
 public class MenuController implements Initializable {
 	@FXML
-    private Button btn_comandaAdd;
+    private TextField lbl_finbuscade;
 
     @FXML
-    private TextField lbl_comandaBusca;
+    private TextField lbl_finbuscaate;
 
     @FXML
-    private Button btn_comandaBusca;
+    private TableView<?> tableFinanc;
 
     @FXML
-    private Button btn_novoProduto;
+    private TableColumn<?, ?> tb_financid;
+
+    @FXML
+    private TableColumn<?, ?> tb_financfunc;
+
+    @FXML
+    private TableColumn<?, ?> tb_financdata;
+
+    @FXML
+    private TableColumn<?, ?> tb_financperm;
+
+    @FXML
+    private TableColumn<?, ?> tb_financvlr;
+
+    @FXML
+    private TextField txf_comandaBusca;
+
+    @FXML
+    private TableView<?> tableComand;
+
+    @FXML
+    private TableColumn<?, ?> tb_comandid;
+
+    @FXML
+    private TableColumn<?, ?> tb_comanddata;
+
+    @FXML
+    private TableColumn<?, ?> tb_comandvlr;
 
     @FXML
     private RadioButton cho_prodid;
@@ -54,9 +80,6 @@ public class MenuController implements Initializable {
     private TextField txf_prodbusca;
 
     @FXML
-    private Button btn_prodbuscar;
-
-    @FXML
     private TableView<TableViewProduto> tableProd;
 
     @FXML
@@ -67,6 +90,15 @@ public class MenuController implements Initializable {
 
     @FXML
     private TableColumn<TableViewProduto, Float> tb_prodvlr;
+
+    @FXML
+    private RadioButton cho_funcid;
+
+    @FXML
+    private RadioButton cho_funcnome;
+
+    @FXML
+    private TextField txf_funcbusca;
 
     @FXML
     private TableView<TableViewFuncionario> tableFunc;
@@ -84,6 +116,26 @@ public class MenuController implements Initializable {
     private TableColumn<TableViewFuncionario, String> tb_funccargo;
     
     ObservableList<TableViewProduto> ol;
+
+    @FXML
+    void act_financbusca(ActionEvent event) {
+    	tableFinanc.setItems(null);
+    }
+
+    @FXML
+    void act_comandbusca(ActionEvent event) {
+    	tableComand.setItems(null);
+    }
+
+    @FXML
+    void act_funcbusca(ActionEvent event) {
+    	tableFunc.setItems(null);
+    }
+
+    @FXML
+    void act_prodbusca(ActionEvent event) {
+    	tableProd.setItems(null);
+    }
 
     @FXML
     void btn_addComanda(ActionEvent event) throws IOException {
@@ -116,11 +168,6 @@ public class MenuController implements Initializable {
 		stage.getIcons().add(new Image("file:icone.png"));
 		stage.setScene(scene);
 		stage.show();
-    }
-    
-    @FXML
-    void buscaProduto(ActionEvent event) {
-
     }
     
     public void initialize(URL location, ResourceBundle resources) {
@@ -227,11 +274,6 @@ public class MenuController implements Initializable {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-    }
-
-    @FXML
-    void btn_comandaBuscaOnAction(ActionEvent event) {
-
     }
 
     void refresh(int type) throws SQLException {
