@@ -51,8 +51,9 @@
             </HBox>
             <GridPane prefHeight="105.0" prefWidth="450.0">
               <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="199.0" minWidth="10.0" prefWidth="118.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="386.0" minWidth="10.0" prefWidth="312.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="199.0" minWidth="10.0" prefWidth="156.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="386.0" minWidth="10.0" prefWidth="180.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="386.0" minWidth="10.0" prefWidth="96.0" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints />
@@ -64,6 +65,8 @@
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Meio de Pagamento:" textAlignment="CENTER" wrappingWidth="116.00390625" GridPane.rowIndex="2" />
                   <ChoiceBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <ChoiceBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Button mnemonicParsing="false" text="Pagamento" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                  <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="77.0" text="Desconto" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                </children>
                <padding>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

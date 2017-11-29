@@ -1,19 +1,24 @@
-/*.tab-pane:top > .tab-header-area > .tab-header-background {
-	-fx-background-color: FFFFFF;
+/* .tab-pane:top > .tab-header-area > .tab-header-background {
+	-fx-background-color: #9F5000;
 }
 
 .image-hbox {
-	-fx-background-color: FFFFFF;
+	-fx-background-color: #E0CB69;
 }
 
 .background-general {
-	-fx-background-color: FFFFFF;
+	-fx-background-color: #9F5000;
+}
+
+.text-box .content {
+    -fx-background-color: #E6D586;
 }
 
 .tab-pane:top > .tab-header-area > .headers-region > .tab:selected:top {
-	-fx-background-color: BBBBBB;
+	-fx-background-color: #E0CB69;
+	-fx-border-radius: 3;
 }
 
 .tab-pane:top > .tab-header-area > .headers-region > .tab:top {
-	-fx-background-color: AAAAAA;
+	-fx-background-color: #E0CB69;
 } */
