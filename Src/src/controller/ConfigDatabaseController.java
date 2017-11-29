@@ -14,6 +14,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import util.Crypto;
@@ -87,6 +88,7 @@ public class ConfigDatabaseController {
 				controller.cadastroInicial();
 			}
 			Scene scene = new Scene(root);
+			stage.getIcons().add(new Image("file:icone.png"));
 			stage.setScene(scene);
 			stage.show();
 		} catch (Exception e) {

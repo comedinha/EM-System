@@ -20,6 +20,7 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import system.Produto;
@@ -90,6 +91,7 @@ public class MenuController implements Initializable {
 		stage.setTitle("Adiciona Comanda");
 		BorderPane root = FXMLLoader.load(getClass().getResource("/view/Comanda.fxml"));
 		Scene scene = new Scene(root);
+		stage.getIcons().add(new Image("file:icone.png"));
 		stage.setScene(scene);
 		stage.show();
     }
@@ -100,6 +102,7 @@ public class MenuController implements Initializable {
 		stage.setTitle("Configura Funcionário");
 		BorderPane root = FXMLLoader.load(getClass().getResource("/view/Funcionario.fxml"));
 		Scene scene = new Scene(root);
+		stage.getIcons().add(new Image("file:icone.png"));
 		stage.setScene(scene);
 		stage.show();
     }
@@ -110,6 +113,7 @@ public class MenuController implements Initializable {
 		stage.setTitle("Adiciona Produto");
 		BorderPane root = FXMLLoader.load(getClass().getResource("/view/Produto.fxml"));
 		Scene scene = new Scene(root);
+		stage.getIcons().add(new Image("file:icone.png"));
 		stage.setScene(scene);
 		stage.show();
     }
@@ -140,9 +144,10 @@ public class MenuController implements Initializable {
 				        		stage.setTitle("Edita Produto");
 				        		FXMLLoader produtoLoader = new FXMLLoader(getClass().getResource("/view/Produto.fxml"));
 				        		BorderPane root = produtoLoader.load();
-								ProdutoController controller = produtoLoader.<ProdutoController>getController();
+				        		ProdutoController controller = produtoLoader.<ProdutoController>getController();
 								controller.editaProduto(row.getItem().getId(), row.getItem().getNome(), row.getItem().getValor());
 				        		Scene scene = new Scene(root);
+				        		stage.getIcons().add(new Image("file:icone.png"));
 				        		stage.setScene(scene);
 				        		stage.show();
 							} catch (IOException e) {
@@ -193,6 +198,7 @@ public class MenuController implements Initializable {
 								FuncionarioController controller = funcionarioLoader.<FuncionarioController>getController();
 								controller.editaFuncionario(row.getItem().getId(), row.getItem().getNome(), row.getItem().getLogin(), row.getItem().getCargo());
 				        		Scene scene = new Scene(root);
+				        		stage.getIcons().add(new Image("file:icone.png"));
 				        		stage.setScene(scene);
 				        		stage.show();
 							} catch (IOException e) {

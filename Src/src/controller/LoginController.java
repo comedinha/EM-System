@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import system.Funcionario;
@@ -35,6 +36,7 @@ public class LoginController {
     		BorderPane root = menuLoader.load();
     		Valores.setController(menuLoader.<MenuController>getController());
     		Scene scene = new Scene(root);
+    		stage.getIcons().add(new Image("file:icone.png"));
     		stage.setScene(scene);
     		stage.show();
     	} else {
