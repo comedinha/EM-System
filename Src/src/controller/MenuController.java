@@ -1,6 +1,7 @@
 package controller;
 
 import java.net.URL;
+import java.util.Calendar;
 import java.util.ResourceBundle;
 
 import javafx.beans.InvalidationListener;
@@ -14,6 +15,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
@@ -26,13 +28,14 @@ import util.Stages;
 import util.Valores;
 import system.Funcionario;
 import system.Funcionario.TableViewFuncionario;
+import java.time.LocalDate;
 
 public class MenuController implements Initializable {
 	@FXML
-    private TextField lbl_finbuscade;
+    private DatePicker dt_finbuscade;
 
     @FXML
-    private TextField lbl_finbuscaate;
+    private DatePicker dt_finbuscaate;
 
     @FXML
     private TableView<?> tableFinanc;
@@ -143,11 +146,11 @@ public class MenuController implements Initializable {
     }
 
     private void iniciaInicio() {
-    	
     }
 
     private void iniciaFinanc() {
-    	
+    	dt_finbuscade.setValue(LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), 1));
+    	dt_finbuscaate.setValue(LocalDate.now());
     }
 
     private void iniciaComanda() {
