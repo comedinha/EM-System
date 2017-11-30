@@ -111,21 +111,6 @@ public class MenuController implements Initializable {
     }
 
     @FXML
-    void act_buscaComanda(ActionEvent event) {
-
-    }
-
-    @FXML
-    void act_buscaFuncionario(ActionEvent event) {
-
-    }
-
-    @FXML
-    void act_buscaProduto(ActionEvent event) {
-
-    }
-
-    @FXML
     void btn_addComanda(ActionEvent event) throws IOException {
     	Stage stage = new Stage();
 		stage.setTitle("Adiciona Comanda");
@@ -370,6 +355,7 @@ public class MenuController implements Initializable {
     		txf_prodbusca.setText(txf_prodbusca.getText());
     	} else if (type == 2) {
     		tableFunc.setItems(Funcionario.getAllFuncionario());
+    		txf_funcbusca.setText(txf_funcbusca.getText());
     	}
     }
 }
