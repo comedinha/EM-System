@@ -1,7 +1,6 @@
 package system;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -16,8 +15,8 @@ public class Produto {
 		return produto.inserir(id, nome, valor);
 	}
 
-	public static ObservableList<String> getProdutoNome() throws SQLException {
-		ResultSet result = new dao.Produto().getAll();
+	public static ObservableList<String> getProdutoNome() throws Exception {
+		ResultSet result = dao.Produto.getAll();
 		ObservableList<String> ol = FXCollections.observableArrayList();
 
 		while (result.next()) {
@@ -27,8 +26,8 @@ public class Produto {
 		return ol;
 	}
 	
-	public static ObservableList<TableViewProduto> getAllProduto() throws SQLException {
-		ResultSet result = new dao.Produto().getAll();
+	public static ObservableList<TableViewProduto> getAllProduto() throws Exception {
+		ResultSet result = dao.Produto.getAll();
 		ObservableList<TableViewProduto> ol = FXCollections.observableArrayList();
 		
 		while (result.next()) {
@@ -39,12 +38,12 @@ public class Produto {
 		return ol;
 	}
 	
-	public static boolean editaProduto(int id, String nome, float valor) {
+	public static boolean editaProduto(int id, String nome, float valor) throws Exception {
 		dao.Produto produto = new dao.Produto();
 		return produto.atualizar(id, nome, valor);
 	}
 	
-	public static boolean delete(int id) {
+	public static boolean delete(int id) throws Exception {
 		dao.Produto produto = new dao.Produto();
 		return produto.delete(id);
 	}

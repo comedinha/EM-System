@@ -2,7 +2,6 @@ package dao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import util.Crypto;
 import util.Valores;
@@ -79,28 +78,31 @@ public class Funcionario {
 		return true;
 	}
 
-	public ResultSet getAll() throws SQLException {
+	public static ResultSet getAll() throws Exception {
 		String sql = "SELECT * FROM funcionario"; 
 
 		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
+
 		ResultSet result = ps.executeQuery();
 		return result;
 	}
 	
-	public ResultSet getGerente(int id) throws SQLException {
+	public ResultSet getGerente(int id) throws Exception {
 		String sql = "SELECT funcionarioId FROM funcionario WHERE funcionarioId != ?";
+
 		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
 		ps.setInt(1, id);
-		ResultSet result = ps.executeQuery();
 
+		ResultSet result = ps.executeQuery();
 		return result;
 	}
 	
-	public boolean delete(int id) throws SQLException {
+	public boolean delete(int id) throws Exception {
 		String sql = "DELETE FROM funcionario WHERE funcionarioId = ?";
 		
 		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
 		ps.setInt(1, id);
+
 		ps.executeUpdate();	
 		return true;
 	}

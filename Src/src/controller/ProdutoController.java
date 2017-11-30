@@ -4,6 +4,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import system.Produto;
+import util.Stages;
 import util.Valores;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -26,32 +27,36 @@ public class ProdutoController {
     private TextField txf_id;
 
     @FXML
-    void act_cadastro(ActionEvent event) throws Exception {
-    	int id = 0;
-    	if (type == 0) {
-	    	if (!txf_id.isDisable() && !txf_id.getText().isEmpty())
+    void act_cadastro(ActionEvent event) {
+    	try {
+	    	int id = 0;
+	    	if (type == 0) {
+		    	if (!txf_id.isDisable() && !txf_id.getText().isEmpty())
+		    		id = Integer.parseInt(txf_id.getText());
+		
+		    	String nome = txf_nome.getText();
+		    	float valor = Float.parseFloat(txf_valor.getText());
+		
+		    	if(Produto.adicionaProduto(id, nome, valor)) {
+		    		((Node) event.getSource()).getScene().getWindow().hide();
+		    	} else {
+		    		throw new Exception("Erro no cadastro!");
+		    	}
+	    	} else if (type == 1) {
 	    		id = Integer.parseInt(txf_id.getText());
-	
-	    	String nome = txf_nome.getText();
-	    	float valor = Float.parseFloat(txf_valor.getText());
-	
-	    	if(Produto.adicionaProduto(id, nome, valor)) {
-	    		((Node) event.getSource()).getScene().getWindow().hide();
-	    	} else {
-	    		//alerta de erro, cadastro não concluido
+	    		String nome = txf_nome.getText();
+		    	float valor = Float.parseFloat(txf_valor.getText());
+		    	
+		    	if(Produto.editaProduto(id, nome, valor)) {
+		    		((Node) event.getSource()).getScene().getWindow().hide();
+		    	} else {
+		    		throw new Exception("Erro na edição!");
+		    	}
 	    	}
-    	} else if (type == 1) {
-    		id = Integer.parseInt(txf_id.getText());
-    		String nome = txf_nome.getText();
-	    	float valor = Float.parseFloat(txf_valor.getText());
-	    	
-	    	if(Produto.editaProduto(id, nome, valor)) {
-	    		((Node) event.getSource()).getScene().getWindow().hide();
-	    	} else {
-	    		//alerta de erro
-	    	}
+	    	Valores.getController().refresh(1);
+    	} catch (Exception e) {
+    		Stages.novoAlerta(e.getMessage(), "", true);
     	}
-    	Valores.getController().refresh(1);
     }
 
     @FXML

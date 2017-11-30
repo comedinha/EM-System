@@ -10,7 +10,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import system.Funcionario;
@@ -24,22 +23,23 @@ public class LoginController implements Initializable {
 
     @FXML
     private PasswordField txf_pass;
-    
-    @FXML
-    private Label lbl_erro;
 
     @FXML
     private Button btn_enter;
 
     @FXML
-    void btn_enterClick(ActionEvent event) throws Exception {
-    	if (Funcionario.login(txf_usr.getText(), txf_pass.getText())) {
-	    	((Node) event.getSource()).getScene().getWindow().hide();
-	    	Stages st = new Stages();
-	    	FXMLLoader menuLoader = st.novoStage("EMSystem Menu", "Menu");
-    		Valores.setController(menuLoader.<MenuController>getController());
-    	} else {
-    		lbl_erro.setText("Nome de Usuario ou senha incorreta");
+    void btn_enterClick(ActionEvent event) {
+    	try {
+    		if (Funcionario.login(txf_usr.getText(), txf_pass.getText())) {
+			    ((Node) event.getSource()).getScene().getWindow().hide();
+			    Stages st = new Stages();
+			    FXMLLoader menuLoader = st.novoStage("EMSystem Menu", "Menu");
+		    	Valores.setController(menuLoader.<MenuController>getController());
+    		} else {
+    			throw new Exception("Usuário ou senha incorreto.");
+    		}
+    	} catch (Exception e) {
+    		Stages.novoAlerta(e.getMessage(), "", true);
     	}
     }
 

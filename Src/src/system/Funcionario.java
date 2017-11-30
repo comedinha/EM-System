@@ -1,7 +1,6 @@
 package system;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -40,8 +39,8 @@ public class Funcionario {
 		return dao.Funcionario.login(usr, pass);
 	}
 
-	public static ObservableList<TableViewFuncionario> getAllFuncionario() throws SQLException {
-		ResultSet result = new dao.Funcionario().getAll();
+	public static ObservableList<TableViewFuncionario> getAllFuncionario() throws Exception {
+		ResultSet result = dao.Funcionario.getAll();
 		ObservableList<TableViewFuncionario> ol = FXCollections.observableArrayList();
 		
 		while(result.next()) {			
@@ -55,7 +54,7 @@ public class Funcionario {
 		return dao.Funcionario.update(id, nome, login, password);
 	}
 	
-	public static boolean removeFuncionario(int id, String cargo) throws SQLException {
+	public static boolean removeFuncionario(int id, String cargo) throws Exception {
 		dao.Funcionario funcionario = new dao.Funcionario();
 		
 		if (!cargo.equals("Gerente")) {

@@ -2,49 +2,38 @@ package dao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import util.Valores;
 
 public class Produto {
-	public boolean inserir (int id, String nome, float valor) {
+	public boolean inserir (int id, String nome, float valor) throws Exception {
 		String sql = "INSERT INTO produto (nome, valor, produtoid) VALUES (?, ?, ?)";
 		if (id == 0)
 			sql = "INSERT INTO produto (nome, valor) VALUES (?, ?)";
 
 		PreparedStatement ps;
-		
-		try {
-			ps = Valores.getConnection().prepareStatement(sql);
-			ps.setString(1, nome);
-			ps.setFloat(2, valor);
+		ps = Valores.getConnection().prepareStatement(sql);
+		ps.setString(1, nome);
+		ps.setFloat(2, valor);
 
-			if (id != 0)
-				ps.setInt(3, id);
-
-			ps.executeUpdate();
-			return true;
-		} catch (SQLException e) {
-			return false;
-		}
-	}	
-
-
-	public boolean atualizar(int id, String nome, float valor) {
-		String sql = "UPDATE produto SET nome = ?, valor = ? WHERE produtoid = ?";
-		
-		try {
-			PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
-			ps.setString(1, nome);
-			ps.setFloat(2, valor);
+		if (id != 0)
 			ps.setInt(3, id);
-			ps.executeUpdate();			
-			return true;
-		} catch(SQLException e) {
-			return false;
-		}
+
+		ps.executeUpdate();
+		return true;
 	}
 
-	public ResultSet getAll() throws SQLException {
+	public boolean atualizar(int id, String nome, float valor) throws Exception {
+		String sql = "UPDATE produto SET nome = ?, valor = ? WHERE produtoid = ?";
+
+		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
+		ps.setString(1, nome);
+		ps.setFloat(2, valor);
+		ps.setInt(3, id);
+		ps.executeUpdate();			
+		return true;
+	}
+
+	public static ResultSet getAll() throws Exception {
 		String sql = "SELECT * FROM produto WHERE status=1"; 
 
 		PreparedStatement statement = Valores.getConnection().prepareStatement(sql);
@@ -52,16 +41,12 @@ public class Produto {
 		return result;
 	}
 
-	public boolean delete(int id) {
+	public boolean delete(int id) throws Exception {
 		String sql = "UPDATE produto SET status=0 WHERE produtoid=?";
 		
-		try {
-			PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
-			ps.setInt(1, id);
-			ps.executeUpdate();			
-			return true;
-		} catch(SQLException e) {
-			return false;
-		}
+		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
+		ps.setInt(1, id);
+		ps.executeUpdate();			
+		return true;
 	}
 }

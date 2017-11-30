@@ -21,11 +21,6 @@
             <PasswordField fx:id="txf_pass" />
             <HBox alignment="TOP_RIGHT" prefHeight="20.0" prefWidth="308.0" spacing="10.0">
                <children>
-                  <Label fx:id="lbl_erro" prefHeight="17.0" prefWidth="201.0">
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </Label>
                   <Button fx:id="btn_enter" mnemonicParsing="false" onAction="#btn_enterClick" text="Entrar" />
                   <Button mnemonicParsing="false" onAction="#btn_leaveClick" text="Sair" />
                </children>

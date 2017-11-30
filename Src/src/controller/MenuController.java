@@ -1,8 +1,6 @@
 package controller;
 
-import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import javafx.beans.InvalidationListener;
@@ -108,30 +106,30 @@ public class MenuController implements Initializable {
     }
 
     @FXML
-    void btn_addComanda(ActionEvent event) throws IOException {
+    void btn_addComanda(ActionEvent event) {
     	Stages st = new Stages();
     	st.novoStage("Adicionar Comanda", "Comanda");
     }
 
     @FXML
-    void btn_addFunc(ActionEvent event) throws IOException {
+    void btn_addFunc(ActionEvent event) {
     	Stages st = new Stages();
     	st.novoStage("Adicionar Funcionário", "Funcionario");
     }
 
     @FXML
-    void btn_addProd(ActionEvent event) throws IOException {
+    void btn_addProd(ActionEvent event) {
     	Stages st = new Stages();
     	st.novoStage("Adicionar Produto", "Produto");
     }
 
     @FXML
-    void btn_desconecta(ActionEvent event) throws IOException {
-    	((Node) event.getSource()).getScene().getWindow().hide();
-    	Valores.setController(null);
-    	Valores.setFuncionario(null);
-    	Stages st = new Stages();
-    	st.novoStage("EMSystem Login", "Login");
+    void btn_desconecta(ActionEvent event) {
+	    ((Node) event.getSource()).getScene().getWindow().hide();
+	    Valores.setController(null);
+	    Valores.setFuncionario(null);
+	    Stages st = new Stages();
+	    st.novoStage("EMSystem Login", "Login");
     }
 
     @Override
@@ -175,8 +173,8 @@ public class MenuController implements Initializable {
     					Stages st = new Stages();
         		    	FXMLLoader produtoLoader = st.novoStage("Edita Produto", "Produto");
         		    	produtoLoader.<ProdutoController>getController().editaProduto(row.getItem().getId(), row.getItem().getNome(), row.getItem().getValor());
-    				} catch (IOException e) {
-    					e.printStackTrace();
+    				} catch (Exception e) {
+    					Stages.novoAlerta(e.getMessage(), "", true);
     				}
     			});
 
@@ -184,11 +182,11 @@ public class MenuController implements Initializable {
     			removeItem.setOnAction((ActionEvent event) -> {
     				try {
 	    				if (!Produto.delete(row.getItem().getId())) {
-	    					//Erro ao remover
+	    					throw new Exception("Erro ao remover produto!");
 	    				}
 	    				refresh(1);
     				} catch (Exception e) {
-    					//
+    					Stages.novoAlerta(e.getMessage(), "", true);
     				}
     			});
 
@@ -221,13 +219,13 @@ public class MenuController implements Initializable {
     						}
     					}
     					tableProd.setItems(tableItems);
-    				} catch (Exception ex) {
-    					//Erro na Busca
+    				} catch (Exception e) {
+    					Stages.novoAlerta(e.getMessage(), "", true);
     				}
     			}
     		});
     	} catch (Exception e) {
-    		e.printStackTrace();
+    		Stages.novoAlerta(e.getMessage(), "", true);
     	}
     }
 
@@ -251,8 +249,8 @@ public class MenuController implements Initializable {
         				Stages st = new Stages();
         		    	FXMLLoader menuLoader = st.novoStage("Edita Funcionário", "Funcionario");
         				menuLoader.<FuncionarioController>getController().editaFuncionario(row.getItem().getId(), row.getItem().getNome(), row.getItem().getLogin(), row.getItem().getCargo());
-        			} catch (IOException e) {
-        				e.printStackTrace();
+        			} catch (Exception e) {
+        				Stages.novoAlerta(e.getMessage(), "", true);
         			}
         		});
 
@@ -260,11 +258,11 @@ public class MenuController implements Initializable {
         		removeFuncionario.setOnAction((ActionEvent event) -> {
         			try {
         				if (!Funcionario.removeFuncionario(row.getItem().getId(), row.getItem().getCargo())) {
-        					//ERRO AO REMOVER FUNCIONARIO
+        					throw new Exception("Erro ao remover funcionário");
         				}
         				refresh(2);
-        			} catch (SQLException e) {
-        				// ERRO
+        			} catch (Exception e) {
+        				Stages.novoAlerta(e.getMessage(), "", true);
         			}
         		});
         		rowMenu.getItems().addAll(editFuncionario, removeFuncionario);
@@ -296,13 +294,13 @@ public class MenuController implements Initializable {
         					}
         				}
         				tableFunc.setItems(tableItems);
-        			} catch (Exception ex) {
-        				//Erro na Busca
+        			} catch (Exception e) {
+        				Stages.novoAlerta(e.getMessage(), "", true);
         			}
         		}
         	});
         } catch (Exception e) {
-        	e.printStackTrace();
+        	Stages.novoAlerta(e.getMessage(), "", true);
         }
     }
 
@@ -310,13 +308,17 @@ public class MenuController implements Initializable {
     	
     }
 
-    void refresh(int type) throws SQLException {
-    	if (type == 1) {
-    		tableProd.setItems(Produto.getAllProduto());
-    		txf_prodbusca.setText(txf_prodbusca.getText());
-    	} else if (type == 2) {
-    		tableFunc.setItems(Funcionario.getAllFuncionario());
-    		txf_funcbusca.setText(txf_funcbusca.getText());
+    void refresh(int type) throws Exception {
+    	try {
+	    	if (type == 1) {
+	    		tableProd.setItems(Produto.getAllProduto());
+	    		txf_prodbusca.setText(txf_prodbusca.getText());
+	    	} else if (type == 2) {
+	    		tableFunc.setItems(Funcionario.getAllFuncionario());
+	    		txf_funcbusca.setText(txf_funcbusca.getText());
+	    	}
+    	} catch (Exception e) {
+    		throw new Exception("Erro ao atualizar tabelas.");
     	}
     }
 }

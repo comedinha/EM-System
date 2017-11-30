@@ -17,6 +17,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import util.Stages;
 import util.Valores;
 
 public class FuncionarioController {
@@ -25,8 +26,7 @@ public class FuncionarioController {
 	private boolean inicial = false;
 	private String oldName;
 
-	ObservableList<String> cb_cargoselection = FXCollections
-			.observableArrayList("Gerente", "Funcionário");
+	ObservableList<String> cb_cargoselection = FXCollections.observableArrayList("Gerente", "Funcionário");
 
     @FXML
     private ComboBox<String> txf_cargo;
@@ -47,37 +47,41 @@ public class FuncionarioController {
     private PasswordField txf_password;
 
     @FXML
-    void btn_funcok(ActionEvent event) throws Exception {
-    	String nome = txf_name.getText();
-    	String login = txf_login.getText();
-    	String senha = txf_password.getText();
+    void btn_funcok(ActionEvent event) {
+    	try {
+	    	String nome = txf_name.getText();
+	    	String login = txf_login.getText();
+	    	String senha = txf_password.getText();
+	
+	    	if (senha.isEmpty() && cb_senha.isSelected()) {
+	    		throw new Exception("Insira uma senha!");
+	    	}
 
-    	if (senha.isEmpty() && cb_senha.isSelected()) {
-    		//ERRO SENHA VAZIA
-    		return;
-    	}
-    	//mode 0 = insirir novo funcionario
-    	//mode 1 = editar funcionario
-    	if (mode == 0) {
-	    	Funcionario.criaUsuario(type, nome, login, senha);
-    	} else if (mode == 1) {
-    		if (login == oldName)
-        		login = null;
-
-    		if (!Funcionario.editaFuncionario(type, nome, login, senha)) {
-    			//Erro ao editar
-    		}
-    	}
-    	((Node) event.getSource()).getScene().getWindow().hide();
-    	if (inicial) {
-    		Stage stage = new Stage();
-    		stage.setTitle("EMSystem Login");
-			BorderPane root = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
-			Scene scene = new Scene(root);
-			stage.setScene(scene);
-			stage.show();
-    	} else {
-    		Valores.getController().refresh(2);
+	    	//mode 0 = insirir novo funcionario
+	    	//mode 1 = editar funcionario
+	    	if (mode == 0) {
+		    	Funcionario.criaUsuario(type, nome, login, senha);
+	    	} else if (mode == 1) {
+	    		if (login == oldName)
+	        		login = null;
+	
+	    		if (!Funcionario.editaFuncionario(type, nome, login, senha)) {
+	    			throw new Exception("Erro ao editar funcionário!");
+	    		}
+	    	}
+	    	((Node) event.getSource()).getScene().getWindow().hide();
+	    	if (inicial) {
+	    		Stage stage = new Stage();
+	    		stage.setTitle("EMSystem Login");
+				BorderPane root = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
+				Scene scene = new Scene(root);
+				stage.setScene(scene);
+				stage.show();
+	    	} else {
+	    		Valores.getController().refresh(2);
+	    	}
+    	} catch (Exception e) {
+    		Stages.novoAlerta(e.getMessage(), "", true);
     	}
     }
 
