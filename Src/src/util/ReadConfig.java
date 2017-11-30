@@ -6,13 +6,10 @@ import java.util.Properties;
 
 import dao.ConectaBanco;
 import javafx.application.Platform;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar.ButtonData;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 public class ReadConfig {
@@ -42,10 +39,7 @@ public class ReadConfig {
 	}
 
 	public void ConfigDatabase(Stage stage) throws Exception {
-		stage.setTitle("SQLConfig");
-		BorderPane root = FXMLLoader.load(getClass().getResource("/view/ConfigDatabase.fxml"));
-		Scene scene = new Scene(root);
-		stage.setScene(scene);
-		stage.show();
+		Stages st = new Stages();
+    	st.novoStage("EMSystem SQLConfig", "ConfigDatabase");
 	}
 }

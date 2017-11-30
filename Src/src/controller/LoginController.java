@@ -9,15 +9,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
 import system.Funcionario;
+import util.Stages;
 import util.Valores;
 
 public class LoginController implements Initializable {
@@ -38,15 +35,9 @@ public class LoginController implements Initializable {
     void btn_enterClick(ActionEvent event) throws Exception {
     	if (Funcionario.login(txf_usr.getText(), txf_pass.getText())) {
 	    	((Node) event.getSource()).getScene().getWindow().hide();
-			Stage stage = new Stage();
-			stage.setTitle("EMSystem Menu");
-			FXMLLoader menuLoader = new FXMLLoader(getClass().getResource("/view/Menu.fxml"));
-    		BorderPane root = menuLoader.load();
+	    	Stages st = new Stages();
+	    	FXMLLoader menuLoader = st.novoStage("EMSystem Menu", "Menu");
     		Valores.setController(menuLoader.<MenuController>getController());
-    		Scene scene = new Scene(root);
-    		stage.getIcons().add(new Image("file:icone.png"));
-    		stage.setScene(scene);
-    		stage.show();
     	} else {
     		lbl_erro.setText("Nome de Usuario ou senha incorreta");
     	}

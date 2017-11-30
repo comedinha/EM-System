@@ -11,13 +11,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.image.Image;
-import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
 import util.Crypto;
+import util.Stages;
 import util.Valores;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -77,20 +74,14 @@ public class ConfigDatabaseController {
 			file.close();
 
 			((Node) event.getSource()).getScene().getWindow().hide();
-			Stage stage = new Stage();
-			stage.setTitle("EMSystem Login");
-			BorderPane root = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
 			if (!ConectaBanco.verificaGerente(Valores.getConnection())) {
-				stage.setTitle("Adicionar Gerente");
-				FXMLLoader funcionarioLoader = new FXMLLoader(getClass().getResource("/view/Funcionario.fxml"));
-				root = funcionarioLoader.load();
-				FuncionarioController controller = funcionarioLoader.<FuncionarioController>getController();
-				controller.cadastroInicial();
+				Stages st = new Stages();
+		    	FXMLLoader funcionarioLoader = st.novoStage("Adicionar Gerente", "Funcionario");
+				funcionarioLoader.<FuncionarioController>getController().cadastroInicial();
+			} else {
+				Stages st = new Stages();
+		    	st.novoStage("EMSystem Login", "Login");
 			}
-			Scene scene = new Scene(root);
-			stage.getIcons().add(new Image("file:icone.png"));
-			stage.setScene(scene);
-			stage.show();
 		} catch (Exception e) {
 			Alert alert = new Alert(AlertType.ERROR, e.getMessage());
 			alert.setTitle("Caixa de avisos!");

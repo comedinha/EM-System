@@ -15,7 +15,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
@@ -23,11 +22,9 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
 import system.Produto;
 import system.Produto.TableViewProduto;
+import util.Stages;
 import util.Valores;
 import system.Funcionario;
 import system.Funcionario.TableViewFuncionario;
@@ -112,35 +109,20 @@ public class MenuController implements Initializable {
 
     @FXML
     void btn_addComanda(ActionEvent event) throws IOException {
-    	Stage stage = new Stage();
-		stage.setTitle("Adiciona Comanda");
-		BorderPane root = FXMLLoader.load(getClass().getResource("/view/Comanda.fxml"));
-		Scene scene = new Scene(root);
-		stage.getIcons().add(new Image("file:icone.png"));
-		stage.setScene(scene);
-		stage.show();
+    	Stages st = new Stages();
+    	st.novoStage("Adicionar Comanda", "Comanda");
     }
 
     @FXML
     void btn_addFunc(ActionEvent event) throws IOException {
-    	Stage stage = new Stage();
-		stage.setTitle("Configura Funcionário");
-		BorderPane root = FXMLLoader.load(getClass().getResource("/view/Funcionario.fxml"));
-		Scene scene = new Scene(root);
-		stage.getIcons().add(new Image("file:icone.png"));
-		stage.setScene(scene);
-		stage.show();
+    	Stages st = new Stages();
+    	st.novoStage("Adicionar Funcionário", "Funcionario");
     }
 
     @FXML
     void btn_addProd(ActionEvent event) throws IOException {
-    	Stage stage = new Stage();
-		stage.setTitle("Adiciona Produto");
-		BorderPane root = FXMLLoader.load(getClass().getResource("/view/Produto.fxml"));
-		Scene scene = new Scene(root);
-		stage.getIcons().add(new Image("file:icone.png"));
-		stage.setScene(scene);
-		stage.show();
+    	Stages st = new Stages();
+    	st.novoStage("Adicionar Produto", "Produto");
     }
 
     @FXML
@@ -148,13 +130,8 @@ public class MenuController implements Initializable {
     	((Node) event.getSource()).getScene().getWindow().hide();
     	Valores.setController(null);
     	Valores.setFuncionario(null);
-    	Stage stage = new Stage();
-		stage.setTitle("EMSystem Login");
-		BorderPane root = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
-		Scene scene = new Scene(root);
-		stage.getIcons().add(new Image("file:icone.png"));
-		stage.setScene(scene);
-		stage.show();
+    	Stages st = new Stages();
+    	st.novoStage("EMSystem Login", "Login");
     }
 
     @Override
@@ -186,7 +163,7 @@ public class MenuController implements Initializable {
 
     	try {
     		tableProd.setItems(Produto.getAllProduto());
-    		tableProd.setRowFactory((TableView<TableViewProduto> tableView1) -> {
+    		tableProd.setRowFactory((TableView<TableViewProduto> tableProduto) -> {
     			final TableRow<TableViewProduto> row = new TableRow<>();
     			final ContextMenu rowMenu = new ContextMenu();
     			MenuItem editItem = new MenuItem("Editar");
@@ -195,16 +172,9 @@ public class MenuController implements Initializable {
     			//Atualizar Produtos
     			editItem.setOnAction((ActionEvent event) -> {
     				try {
-    					Stage stage = new Stage();
-    					stage.setTitle("Edita Produto");
-    					FXMLLoader produtoLoader = new FXMLLoader(getClass().getResource("/view/Produto.fxml"));
-    					BorderPane root = produtoLoader.load();
-    					ProdutoController controller = produtoLoader.<ProdutoController>getController();
-    					controller.editaProduto(row.getItem().getId(), row.getItem().getNome(), row.getItem().getValor());
-    					Scene scene = new Scene(root);
-    					stage.getIcons().add(new Image("file:icone.png"));
-    					stage.setScene(scene);
-    					stage.show();
+    					Stages st = new Stages();
+        		    	FXMLLoader produtoLoader = st.novoStage("Edita Produto", "Produto");
+        		    	produtoLoader.<ProdutoController>getController().editaProduto(row.getItem().getId(), row.getItem().getNome(), row.getItem().getValor());
     				} catch (IOException e) {
     					e.printStackTrace();
     				}
@@ -212,8 +182,13 @@ public class MenuController implements Initializable {
 
     			//Remover Produtos
     			removeItem.setOnAction((ActionEvent event) -> {
-    				if (!Produto.delete(row.getItem().getId())) {
-    					//Erro ao remover
+    				try {
+	    				if (!Produto.delete(row.getItem().getId())) {
+	    					//Erro ao remover
+	    				}
+	    				refresh(1);
+    				} catch (Exception e) {
+    					//
     				}
     			});
 
@@ -264,7 +239,7 @@ public class MenuController implements Initializable {
 
         try {
         	tableFunc.setItems(Funcionario.getAllFuncionario());
-        	tableFunc.setRowFactory((TableView<TableViewFuncionario> tableView1) -> {
+        	tableFunc.setRowFactory((TableView<TableViewFuncionario> tableFuncionario) -> {
         		final TableRow<TableViewFuncionario> row = new TableRow<>();
         		final ContextMenu rowMenu = new ContextMenu();
         		MenuItem editFuncionario = new MenuItem("Editar");
@@ -273,16 +248,9 @@ public class MenuController implements Initializable {
         		//Editar Funcionários
         		editFuncionario.setOnAction((ActionEvent event) -> {
         			try {
-        				Stage stage = new Stage();
-        				stage.setTitle("Edita Funcionário");
-        				FXMLLoader funcionarioLoader = new FXMLLoader(getClass().getResource("/view/Funcionario.fxml"));
-        				BorderPane root = funcionarioLoader.load();
-        				FuncionarioController controller = funcionarioLoader.<FuncionarioController>getController();
-        				controller.editaFuncionario(row.getItem().getId(), row.getItem().getNome(), row.getItem().getLogin(), row.getItem().getCargo());
-        				Scene scene = new Scene(root);
-        				stage.getIcons().add(new Image("file:icone.png"));
-        				stage.setScene(scene);
-        				stage.show();
+        				Stages st = new Stages();
+        		    	FXMLLoader menuLoader = st.novoStage("Edita Funcionário", "Funcionario");
+        				menuLoader.<FuncionarioController>getController().editaFuncionario(row.getItem().getId(), row.getItem().getNome(), row.getItem().getLogin(), row.getItem().getCargo());
         			} catch (IOException e) {
         				e.printStackTrace();
         			}
@@ -294,6 +262,7 @@ public class MenuController implements Initializable {
         				if (!Funcionario.removeFuncionario(row.getItem().getId(), row.getItem().getCargo())) {
         					//ERRO AO REMOVER FUNCIONARIO
         				}
+        				refresh(2);
         			} catch (SQLException e) {
         				// ERRO
         			}
