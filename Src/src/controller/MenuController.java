@@ -1,7 +1,6 @@
 package controller;
 
 import java.net.URL;
-import java.util.Calendar;
 import java.util.ResourceBundle;
 
 import javafx.beans.InvalidationListener;
@@ -17,11 +16,13 @@ import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.BorderPane;
 import system.Produto;
 import system.Produto.TableViewProduto;
 import util.Stages;
@@ -31,6 +32,9 @@ import system.Funcionario.TableViewFuncionario;
 import java.time.LocalDate;
 
 public class MenuController implements Initializable {
+	@FXML
+    private Tab ab_financeiro;
+
 	@FXML
     private DatePicker dt_finbuscade;
 
@@ -71,6 +75,9 @@ public class MenuController implements Initializable {
     private TableColumn<?, ?> tb_comandvlr;
 
     @FXML
+    private Tab ab_produtos;
+
+    @FXML
     private TextField txf_prodbusca;
 
     @FXML
@@ -84,6 +91,9 @@ public class MenuController implements Initializable {
 
     @FXML
     private TableColumn<TableViewProduto, Float> tb_prodvlr;
+
+    @FXML
+    private Tab ab_funcionarios;
 
     @FXML
     private TextField txf_funcbusca;
@@ -102,6 +112,9 @@ public class MenuController implements Initializable {
 
     @FXML
     private TableColumn<TableViewFuncionario, String> tb_funccargo;
+
+    @FXML
+    private BorderPane bd_configsistema;
 
     @FXML
     void act_BuscaFinanceiro(ActionEvent event) {
@@ -138,10 +151,21 @@ public class MenuController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resource) {
     	iniciaInicio();
-    	iniciaFinanc();
+    	if (Valores.getUsuario().getFuncao() == 1) {
+    		iniciaFinanc();
+    	} else {
+    		ab_financeiro.setDisable(true);
+    	}
     	iniciaComanda();
-    	iniciaProduto();
-    	iniciaFuncionario();
+    	if (Valores.getUsuario().getFuncao() == 1) {
+	    	iniciaProduto();
+	    	iniciaFuncionario();
+    	} else {
+    		ab_funcionarios.setDisable(true);
+    		ab_produtos.setDisable(true);
+    		bd_configsistema.setDisable(true);
+    		bd_configsistema.setVisible(false);
+    	}
     	iniciaConfig();
     }
 
@@ -261,6 +285,7 @@ public class MenuController implements Initializable {
         		removeFuncionario.setOnAction((ActionEvent event) -> {
         			try {
         				if (!Funcionario.removeFuncionario(row.getItem().getId(), row.getItem().getCargo())) {
+        					refresh(2);
         					throw new Exception("Erro ao remover funcionário");
         				}
         				refresh(2);
