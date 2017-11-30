@@ -52,8 +52,7 @@ public class Funcionario {
 	}
 	
 	public static boolean editaFuncionario(int id, String nome, String login, String password) throws Exception {
-		dao.Funcionario funcionario = new dao.Funcionario();
-		return funcionario.update(id, nome, login, password);
+		return dao.Funcionario.update(id, nome, login, password);
 	}
 	
 	public static boolean removeFuncionario(int id, String cargo) throws SQLException {

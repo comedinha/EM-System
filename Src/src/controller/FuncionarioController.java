@@ -23,6 +23,8 @@ public class FuncionarioController {
 	private int mode = 0;
 	private int type = 0;
 	private boolean inicial = false;
+	private String oldName;
+
 	ObservableList<String> cb_cargoselection = FXCollections
 			.observableArrayList("Gerente", "Funcionário");
 
@@ -47,7 +49,7 @@ public class FuncionarioController {
     @FXML
     void btn_funcok(ActionEvent event) throws Exception {
     	String nome = txf_name.getText();
-    	String usuario = txf_login.getText();
+    	String login = txf_login.getText();
     	String senha = txf_password.getText();
 
     	if (senha.isEmpty() && cb_senha.isSelected()) {
@@ -56,10 +58,13 @@ public class FuncionarioController {
     	}
     	//mode 0 = insirir novo funcionario
     	//mode 1 = editar funcionario
-    	if (mode == 0) {	
-	    	Funcionario.criaUsuario(type, nome, usuario, senha);
+    	if (mode == 0) {
+	    	Funcionario.criaUsuario(type, nome, login, senha);
     	} else if (mode == 1) {
-    		if(!Funcionario.editaFuncionario(type, nome, usuario, senha)) {
+    		if (login == oldName)
+        		login = null;
+
+    		if (!Funcionario.editaFuncionario(type, nome, login, senha)) {
     			//Erro ao editar
     		}
     	}
@@ -109,13 +114,14 @@ public class FuncionarioController {
     	txf_cargo.setDisable(true);
     }
 
-    void editaFuncionario(int id, String nome, String username, String cargo) {
+    void editaFuncionario(int id, String nome, String login, String cargo) {
     	mode = 1;
     	txf_cargo.setValue(cargo);
     	txf_cargo.setDisable(true);
 
     	txf_name.setText(nome);
-    	txf_login.setText(username);
+    	txf_login.setText(login);
+    	oldName = login;
 
     	cb_senha.setDisable(false);
     	cb_senha.setSelected(false);
