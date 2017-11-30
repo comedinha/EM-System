@@ -183,81 +183,77 @@ public class MenuController implements Initializable {
     	tb_prodid.setCellValueFactory(new PropertyValueFactory<>("id"));
     	tb_prodnome.setCellValueFactory(new PropertyValueFactory<>("nome"));
     	tb_prodvlr.setCellValueFactory(new PropertyValueFactory<>("valor"));
-        try {
-			tableProd.setItems(Produto.getAllProduto());
-			tableProd.setRowFactory(
-			        (TableView<TableViewProduto> tableView1) -> {
-			            final TableRow<TableViewProduto> row = new TableRow<>();
-			            final ContextMenu rowMenu = new ContextMenu();
-			            MenuItem editItem = new MenuItem("Editar");
-			            MenuItem removeItem = new MenuItem("Deletar");
-			            
-			            //Atualizar Produtos
-			            editItem.setOnAction((ActionEvent event) -> {
-							try {
-								Stage stage = new Stage();
-				        		stage.setTitle("Edita Produto");
-				        		FXMLLoader produtoLoader = new FXMLLoader(getClass().getResource("/view/Produto.fxml"));
-				        		BorderPane root = produtoLoader.load();
-				        		ProdutoController controller = produtoLoader.<ProdutoController>getController();
-								controller.editaProduto(row.getItem().getId(), row.getItem().getNome(), row.getItem().getValor());
-				        		Scene scene = new Scene(root);
-				        		stage.getIcons().add(new Image("file:icone.png"));
-				        		stage.setScene(scene);
-				        		stage.show();
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
-			            });
-			            
-			            //Remover Produtos
-			            removeItem.setOnAction((ActionEvent event) -> {
-			            	if (!Produto.delete(row.getItem().getId())) {
-			            		//Erro ao remover
-			            	}
-			                tableView1.getItems().remove(row.getItem());			                
-			            });
-			            
-			            rowMenu.getItems().addAll(editItem, removeItem);
-			            row.contextMenuProperty().bind(
-			                    Bindings.when(Bindings.isNotNull(row.itemProperty()))
-			                            .then(rowMenu)
-			                            .otherwise((ContextMenu)null));
-			            return row;
-			        });
+
+    	try {
+    		tableProd.setItems(Produto.getAllProduto());
+    		tableProd.setRowFactory((TableView<TableViewProduto> tableView1) -> {
+    			final TableRow<TableViewProduto> row = new TableRow<>();
+    			final ContextMenu rowMenu = new ContextMenu();
+    			MenuItem editItem = new MenuItem("Editar");
+    			MenuItem removeItem = new MenuItem("Deletar");
+
+    			//Atualizar Produtos
+    			editItem.setOnAction((ActionEvent event) -> {
+    				try {
+    					Stage stage = new Stage();
+    					stage.setTitle("Edita Produto");
+    					FXMLLoader produtoLoader = new FXMLLoader(getClass().getResource("/view/Produto.fxml"));
+    					BorderPane root = produtoLoader.load();
+    					ProdutoController controller = produtoLoader.<ProdutoController>getController();
+    					controller.editaProduto(row.getItem().getId(), row.getItem().getNome(), row.getItem().getValor());
+    					Scene scene = new Scene(root);
+    					stage.getIcons().add(new Image("file:icone.png"));
+    					stage.setScene(scene);
+    					stage.show();
+    				} catch (IOException e) {
+    					e.printStackTrace();
+    				}
+    			});
+
+    			//Remover Produtos
+    			removeItem.setOnAction((ActionEvent event) -> {
+    				if (!Produto.delete(row.getItem().getId())) {
+    					//Erro ao remover
+    				}
+    			});
+
+    			rowMenu.getItems().addAll(editItem, removeItem);
+    			row.contextMenuProperty().bind(Bindings.when(Bindings.isNotNull(row.itemProperty())).then(rowMenu).otherwise((ContextMenu)null));
+    			return row;
+    		});
 
 			//Busca
-			txf_prodbusca.textProperty().addListener(new InvalidationListener() {
-	            @Override
-	            public void invalidated(Observable observable) {
-	            	try {
-		                if(txf_prodbusca.textProperty().get().isEmpty()) {
-		                	tableProd.setItems(Produto.getAllProduto());
-		                    return;
-		                }
-	
-		                ObservableList<TableViewProduto> tableItems = FXCollections.observableArrayList();
-		                ObservableList<TableColumn<TableViewProduto, ?>> cols = tableProd.getColumns();
-		                for(int i = 0; i < Produto.getAllProduto().size(); i++) {
-		                    for(int j = 0; j < cols.size(); j++) {
-		                        TableColumn<TableViewProduto, ?> col = cols.get(j);
-		                        String cellValue = col.getCellData(Produto.getAllProduto().get(i)).toString();
-		                        cellValue = cellValue.toLowerCase();
-		                        if(cellValue.contains(txf_prodbusca.textProperty().get().toLowerCase())) {
-		                            tableItems.add(Produto.getAllProduto().get(i));
-		                            break;
-		                        }                     
-		                    }
-		                }
-		                tableProd.setItems(tableItems);
-	            	} catch (Exception ex) {
-	            		//Erro na Busca
-	            	}
-	            }
-	    	});
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+    		txf_prodbusca.textProperty().addListener(new InvalidationListener() {
+    			@Override
+    			public void invalidated(Observable observable) {
+    				try {
+    					if(txf_prodbusca.textProperty().get().isEmpty()) {
+    						tableProd.setItems(Produto.getAllProduto());
+    						return;
+    					}
+
+    					ObservableList<TableViewProduto> tableItems = FXCollections.observableArrayList();
+    					ObservableList<TableColumn<TableViewProduto, ?>> cols = tableProd.getColumns();
+    					for (int i = 0; i < Produto.getAllProduto().size(); i++) {
+    						for (int j = 0; j < cols.size(); j++) {
+    							TableColumn<TableViewProduto, ?> col = cols.get(j);
+    							String cellValue = col.getCellData(Produto.getAllProduto().get(i)).toString();
+    							cellValue = cellValue.toLowerCase();
+    							if(cellValue.contains(txf_prodbusca.textProperty().get().toLowerCase())) {
+    								tableItems.add(Produto.getAllProduto().get(i));
+    								break;
+    							}                     
+    						}
+    					}
+    					tableProd.setItems(tableItems);
+    				} catch (Exception ex) {
+    					//Erro na Busca
+    				}
+    			}
+    		});
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
     }
 
     private void iniciaFuncionario() {
@@ -265,84 +261,80 @@ public class MenuController implements Initializable {
         tb_funcnome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         tb_funclogin.setCellValueFactory(new PropertyValueFactory<>("login"));
         tb_funccargo.setCellValueFactory(new PropertyValueFactory<>("cargo"));
+
         try {
         	tableFunc.setItems(Funcionario.getAllFuncionario());
-        	tableFunc.setRowFactory(
-			        (TableView<TableViewFuncionario> tableView1) -> {
-			            final TableRow<TableViewFuncionario> row = new TableRow<>();
-			            final ContextMenu rowMenu = new ContextMenu();
-			            MenuItem editFuncionario = new MenuItem("Editar");
-			            MenuItem removeFuncionario = new MenuItem("Deletar");
-			            
-			            //Editar Funcionários
-			            editFuncionario.setOnAction((ActionEvent event) -> {
-							try {
-								Stage stage = new Stage();
-				        		stage.setTitle("Edita Funcionário");
-				        		FXMLLoader funcionarioLoader = new FXMLLoader(getClass().getResource("/view/Funcionario.fxml"));
-				        		BorderPane root = funcionarioLoader.load();
-								FuncionarioController controller = funcionarioLoader.<FuncionarioController>getController();
-								controller.editaFuncionario(row.getItem().getId(), row.getItem().getNome(), row.getItem().getLogin(), row.getItem().getCargo());
-				        		Scene scene = new Scene(root);
-				        		stage.getIcons().add(new Image("file:icone.png"));
-				        		stage.setScene(scene);
-				        		stage.show();
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
-			            });
-			            
-			            //Remover Funcionários
-			            removeFuncionario.setOnAction((ActionEvent event) -> {
-			            	try {
-								if (!Funcionario.removeFuncionario(row.getItem().getId(), 
-										row.getItem().getCargo())) {
-									//ERRO AO REMOVER FUNCIONARIO
-								} else {	
-					                tableView1.getItems().remove(row.getItem());
-								}
-							} catch (SQLException e) {}
-			            });
-			            rowMenu.getItems().addAll(editFuncionario, removeFuncionario);
-			            row.contextMenuProperty().bind(
-			                    Bindings.when(Bindings.isNotNull(row.itemProperty()))
-			                            .then(rowMenu)
-			                            .otherwise((ContextMenu)null));
-			            return row;
-			        });
+        	tableFunc.setRowFactory((TableView<TableViewFuncionario> tableView1) -> {
+        		final TableRow<TableViewFuncionario> row = new TableRow<>();
+        		final ContextMenu rowMenu = new ContextMenu();
+        		MenuItem editFuncionario = new MenuItem("Editar");
+        		MenuItem removeFuncionario = new MenuItem("Deletar");
+
+        		//Editar Funcionários
+        		editFuncionario.setOnAction((ActionEvent event) -> {
+        			try {
+        				Stage stage = new Stage();
+        				stage.setTitle("Edita Funcionário");
+        				FXMLLoader funcionarioLoader = new FXMLLoader(getClass().getResource("/view/Funcionario.fxml"));
+        				BorderPane root = funcionarioLoader.load();
+        				FuncionarioController controller = funcionarioLoader.<FuncionarioController>getController();
+        				controller.editaFuncionario(row.getItem().getId(), row.getItem().getNome(), row.getItem().getLogin(), row.getItem().getCargo());
+        				Scene scene = new Scene(root);
+        				stage.getIcons().add(new Image("file:icone.png"));
+        				stage.setScene(scene);
+        				stage.show();
+        			} catch (IOException e) {
+        				e.printStackTrace();
+        			}
+        		});
+
+        		//Remover Funcionários
+        		removeFuncionario.setOnAction((ActionEvent event) -> {
+        			try {
+        				if (!Funcionario.removeFuncionario(row.getItem().getId(), row.getItem().getCargo())) {
+        					//ERRO AO REMOVER FUNCIONARIO
+        				}
+        			} catch (SQLException e) {
+        				// ERRO
+        			}
+        		});
+        		rowMenu.getItems().addAll(editFuncionario, removeFuncionario);
+        		row.contextMenuProperty().bind(Bindings.when(Bindings.isNotNull(row.itemProperty())).then(rowMenu).otherwise((ContextMenu)null));
+        		return row;
+        	});
 
         	//Busca
-			txf_funcbusca.textProperty().addListener(new InvalidationListener() {
-	            @Override
-	            public void invalidated(Observable observable) {
-	            	try {
-		                if(txf_funcbusca.textProperty().get().isEmpty()) {
-		                	tableFunc.setItems(Funcionario.getAllFuncionario());
-		                    return;
-		                }
-	
-		                ObservableList<TableViewFuncionario> tableItems = FXCollections.observableArrayList();
-		                ObservableList<TableColumn<TableViewFuncionario, ?>> cols = tableFunc.getColumns();
-		                for (int i = 0; i < Funcionario.getAllFuncionario().size(); i++) {
-		                    for (int j = 0; j < cols.size(); j++) {
-		                        TableColumn<TableViewFuncionario, ?> col = cols.get(j);
-		                        String cellValue = col.getCellData(Funcionario.getAllFuncionario().get(i)).toString();
-		                        cellValue = cellValue.toLowerCase();
-		                        if(cellValue.contains(txf_funcbusca.textProperty().get().toLowerCase())) {
-		                            tableItems.add(Funcionario.getAllFuncionario().get(i));
-		                            break;
-		                        }                     
-		                    }
-		                }
-		                tableFunc.setItems(tableItems);
-	            	} catch (Exception ex) {
-	            		//Erro na Busca
-	            	}
-	            }
-	    	});
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+        	txf_funcbusca.textProperty().addListener(new InvalidationListener() {
+        		@Override
+        		public void invalidated(Observable observable) {
+        			try {
+        				if(txf_funcbusca.textProperty().get().isEmpty()) {
+        					tableFunc.setItems(Funcionario.getAllFuncionario());
+        					return;
+        				}
+
+        				ObservableList<TableViewFuncionario> tableItems = FXCollections.observableArrayList();
+        				ObservableList<TableColumn<TableViewFuncionario, ?>> cols = tableFunc.getColumns();
+        				for (int i = 0; i < Funcionario.getAllFuncionario().size(); i++) {
+        					for (int j = 0; j < cols.size(); j++) {
+        						TableColumn<TableViewFuncionario, ?> col = cols.get(j);
+        						String cellValue = col.getCellData(Funcionario.getAllFuncionario().get(i)).toString();
+        						cellValue = cellValue.toLowerCase();
+        						if(cellValue.contains(txf_funcbusca.textProperty().get().toLowerCase())) {
+        							tableItems.add(Funcionario.getAllFuncionario().get(i));
+        							break;
+        						}                     
+        					}
+        				}
+        				tableFunc.setItems(tableItems);
+        			} catch (Exception ex) {
+        				//Erro na Busca
+        			}
+        		}
+        	});
+        } catch (Exception e) {
+        	e.printStackTrace();
+        }
     }
 
     private void iniciaConfig() {
