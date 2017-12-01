@@ -13,7 +13,7 @@ public class Comanda {
 		return dao.Comanda.novaComanda(mesa);
 	}
 	
-	public static ObservableList<TableViewComandaLista> getComandaAll() throws SQLException {
+	public static ObservableList<TableViewComandaLista> getAllComanda() throws SQLException {
 		ResultSet result = dao.Comanda.getAllComandas();
 		ObservableList<TableViewComandaLista> ol = FXCollections.observableArrayList();
 		
