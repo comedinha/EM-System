@@ -228,6 +228,36 @@ public class MenuController implements Initializable {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+
+    	//Busca
+		txf_comandaBusca.textProperty().addListener(new InvalidationListener() {
+			@Override
+			public void invalidated(Observable observable) {
+				try {
+					if(txf_comandaBusca.textProperty().get().isEmpty()) {
+						tableComand.setItems(Comanda.getComandaAll());
+						return;
+					}
+
+					ObservableList<TableViewComandaLista> tableItems = FXCollections.observableArrayList();
+					ObservableList<TableColumn<TableViewComandaLista, ?>> cols = tableComand.getColumns();
+					for (int i = 0; i < Comanda.getComandaAll().size(); i++) {
+						for (int j = 0; j < cols.size(); j++) {
+							TableColumn<TableViewComandaLista, ?> col = cols.get(j);
+							String cellValue = col.getCellData(Comanda.getComandaAll().get(i)).toString();
+							cellValue = cellValue.toLowerCase();
+							if(cellValue.contains(txf_comandaBusca.textProperty().get().toLowerCase())) {
+								tableItems.add(Comanda.getComandaAll().get(i));
+								break;
+							}
+						}
+					}
+					tableComand.setItems(tableItems);
+				} catch (Exception e) {
+					Stages.novoAlerta(e.getMessage(), "", true);
+				}
+			}
+		});
     }
 
     private void iniciaProduto() {
@@ -292,7 +322,7 @@ public class MenuController implements Initializable {
     							if(cellValue.contains(txf_prodbusca.textProperty().get().toLowerCase())) {
     								tableItems.add(Produto.getAllProduto().get(i));
     								break;
-    							}                     
+    							}
     						}
     					}
     					tableProd.setItems(tableItems);
@@ -368,7 +398,7 @@ public class MenuController implements Initializable {
         						if(cellValue.contains(txf_funcbusca.textProperty().get().toLowerCase())) {
         							tableItems.add(Funcionario.getAllFuncionario().get(i));
         							break;
-        						}                     
+        						}
         					}
         				}
         				tableFunc.setItems(tableItems);

@@ -11,7 +11,7 @@ CREATE TABLE comanda(
 	data date,
 	mesa varchar(15),
 	valorPago numeric(5,2) DEFAULT 0,
-	status int DEFAULT 0
+	status int DEFAULT 0,
 	primary key (comandaId, data)
 );
 
@@ -20,8 +20,9 @@ CREATE TABLE pagamento (
 	valor int,
 	data date,
 	funcionarioId int,
-	comandaId int REFERENCES comanda(comandaId) ON DELETE NO ACTION ON UPDATE CASCADE
-	dataComanda int REFERENCES comanda(data) ON DELETE NO ACTION ON UPDATE CASCADE
+	comandaId int,
+	dataComanda date,
+    foreign key (comandaId, dataComanda) references comanda(comandaId, data) ON DELETE NO ACTION ON UPDATE CASCADE
 );
 
 CREATE TABLE produto (
@@ -40,9 +41,10 @@ CREATE TABLE produto_Alterado (
 
 CREATE TABLE produtoComanda (
 	produtoId int REFERENCES produto(produtoId) ON DELETE NO ACTION ON UPDATE CASCADE,
-	comandaId int REFERENCES comanda(comandaId) ON DELETE CASCADE ON UPDATE CASCADE,
-	dataComanda int REFERENCES comanda(data) ON DELETE NO ACTION ON UPDATE CASCADE,
+	comandaId int,
+	dataComanda date,
 	quantidade int DEFAULT 1,
 	valorPago numeric(5,2) DEFAULT 0,
-	PRIMARY KEY(produtoId, comandaId)
+	PRIMARY KEY(produtoId, comandaId),
+    foreign key (comandaId, dataComanda) references comanda(comandaId, data) ON DELETE NO ACTION ON UPDATE CASCADE
 );
