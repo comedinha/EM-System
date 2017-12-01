@@ -85,7 +85,7 @@ public class ComandaController implements Initializable {
 	@FXML
 	private void btnCancelar(ActionEvent event) throws SQLException {
 		if(editMode) {
-			//n�o sei oq fazer
+			//não sei oq fazer
 		} else {
 			Comanda.delete(idComanda);
 		}

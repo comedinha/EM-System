@@ -42,7 +42,7 @@ import java.time.LocalDate;
 
 public class MenuController implements Initializable {
 	@FXML
-    private WizardPane ẃp_tip1;
+    private WizardPane wp_tip1;
 
 	@FXML
     private TextArea ta_txtinicio;

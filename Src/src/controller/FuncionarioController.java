@@ -21,9 +21,8 @@ public class FuncionarioController {
 	private int mode = 0;
 	private int type = 0;
 	private boolean inicial = false;
-	private String oldName;
 
-	ObservableList<String> cb_cargoselection = FXCollections.observableArrayList("Gerente", "Usuário");
+	ObservableList<String> cb_cargoselection = FXCollections.observableArrayList("Gerente", "Usuario");
 
     @FXML
     private ComboBox<String> txf_cargo;
@@ -50,6 +49,10 @@ public class FuncionarioController {
 	    	String login = txf_login.getText();
 	    	String senha = txf_password.getText();
 	
+	    	if (nome.isEmpty())
+    			throw new Exception("Insira um nome!");
+	    	if (login.isEmpty())
+	    		throw new Exception("Insira um login!");
 	    	if (senha.isEmpty() && cb_senha.isSelected()) {
 	    		throw new Exception("Insira uma senha!");
 	    	}
@@ -59,9 +62,6 @@ public class FuncionarioController {
 	    	if (mode == 0) {
 		    	Funcionario.criaUsuario(type, nome, login, senha);
 	    	} else if (mode == 1) {
-	    		if (login == oldName)
-	        		login = null;
-	
 	    		if (!Funcionario.editaFuncionario(type, nome, login, senha)) {
 	    			throw new Exception("Erro ao editar funcionário!");
 	    		}
@@ -88,6 +88,7 @@ public class FuncionarioController {
     	if (Valores.getConnection() == null)
     		Platform.exit();
 
+    	txf_cargo.setValue("Usuário");
     	cb_senha.setDisable(true);
     	cb_senha.setSelected(true);
     	cb_senha.selectedProperty().addListener((ChangeListener<? super Boolean>) new ChangeListener<Boolean>() {
@@ -101,7 +102,7 @@ public class FuncionarioController {
     	txf_cargo.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
     		if (newValue.toString() == "Gerente") {
     			type = 1;
-    		} else if (newValue.toString() == "Usuário") {
+    		} else if (newValue.toString() == "Usuario") {
     			type = 2;
     		}
     	});
@@ -121,7 +122,6 @@ public class FuncionarioController {
 
     	txf_name.setText(nome);
     	txf_login.setText(login);
-    	oldName = login;
 
     	cb_senha.setDisable(false);
     	cb_senha.setSelected(false);

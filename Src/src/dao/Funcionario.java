@@ -39,39 +39,21 @@ public class Funcionario {
 	}
 
 	public static boolean update(int id, String nome, String login, String password) throws Exception {
-		String sql = "UPDATE funcionario SET username = ?, ";
-		if (login.isEmpty())
-			sql = "UPDATE funcionario SET ";
+		String sql = "UPDATE funcionario SET username = ?, nome = ?";
+		if (!password.isEmpty())
+			sql += ", password = ? WHERE funcionarioId = ?";
+		else
+			sql += " WHERE funcionarioId = ?";
 
-		PreparedStatement ps;
+		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
+		ps.setString(1, login);
+		ps.setString(2, nome);
 		if (!password.isEmpty()) {
-			sql += "nome = ?, password = ? WHERE funcionarioId = ?";
-			ps = Valores.getConnection().prepareStatement(sql);
 			Crypto cr = new Crypto();
-			password = cr.encrypt(password);
-
-			if (!login.isEmpty()) {
-				ps.setString(1, login);
-				ps.setString(2, nome);
-				ps.setString(3, password);
-				ps.setInt(4, id);
-			} else {
-				ps.setString(1, nome);
-				ps.setString(2, password);
-				ps.setInt(3, id);
-			}
+			ps.setString(3, cr.encrypt(password));
+			ps.setInt(4, id);
 		} else {
-			sql += "nome = ? WHERE funcionarioId = ?";
-			ps = Valores.getConnection().prepareStatement(sql);
-
-			if (!login.isEmpty()) {
-				ps.setString(1, login);
-				ps.setString(2, nome);
-				ps.setInt(3, id);
-			} else {
-				ps.setString(1, nome);
-				ps.setInt(2, id);
-			}
+			ps.setInt(3, id);
 		}
 			
 		ps.executeUpdate();
