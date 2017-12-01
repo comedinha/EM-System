@@ -1,13 +1,9 @@
 package controller;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
@@ -16,7 +12,7 @@ import system.Funcionario;
 import util.Stages;
 import util.Valores;
 
-public class LoginController implements Initializable {
+public class LoginController {
 
     @FXML
     private TextField txf_usr;
@@ -48,8 +44,8 @@ public class LoginController implements Initializable {
     	Platform.exit();
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resource) {
+    @FXML
+    public void initialize() {
     	btn_enter.setDefaultButton(true);
     }
 }

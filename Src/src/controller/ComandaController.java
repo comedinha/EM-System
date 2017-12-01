@@ -1,14 +1,11 @@
 package controller;
 
-import java.net.URL;
 import java.sql.SQLException;
-import java.util.ResourceBundle;
 import org.controlsfx.control.textfield.TextFields;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
@@ -22,8 +19,8 @@ import system.Produto;
 import util.Stages;
 import util.Valores;
 
-public class ComandaController implements Initializable {	
-	static int idComanda; 
+public class ComandaController {
+	static int idComanda;
 	boolean editMode = false; //variavel pra ver se esta editando a comanda
 	
     @FXML
@@ -97,8 +94,8 @@ public class ComandaController implements Initializable {
 		((Node) event.getSource()).getScene().getWindow().hide();
 	}
 
-	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
+	@FXML
+	public void initialize() {
 		if (Valores.getConnection() == null || Valores.getUsuario() == null || Valores.getController() == null)
     		Platform.exit();
 

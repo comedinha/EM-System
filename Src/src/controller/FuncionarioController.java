@@ -1,11 +1,10 @@
 package controller;
 
 import system.Funcionario;
+import system.Funcionario.FuncionarioEnum;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -19,14 +18,11 @@ import util.Valores;
 
 public class FuncionarioController {
 	private int mode = 0;
-	private int type = 0;
 	private int id = 0;
 	private boolean inicial = false;
 
-	ObservableList<String> cb_cargoselection = FXCollections.observableArrayList("Gerente", "Usuario");
-
     @FXML
-    private ComboBox<String> txf_cargo;
+    private ComboBox<FuncionarioEnum> txf_cargo;
 
     @FXML
     private TextField txf_name;
@@ -61,7 +57,7 @@ public class FuncionarioController {
 	    	//mode 0 = insirir novo funcionario
 	    	//mode 1 = editar funcionario
 	    	if (mode == 0) {
-		    	Funcionario.criaUsuario(type, nome, login, senha);
+		    	Funcionario.criaUsuario(txf_cargo.getValue().getValor(), nome, login, senha);
 	    	} else if (mode == 1) {
 	    		if (!Funcionario.editaFuncionario(id, nome, login, senha)) {
 	    			throw new Exception("Erro ao editar funcionário!");
@@ -89,7 +85,6 @@ public class FuncionarioController {
     	if (Valores.getConnection() == null)
     		Platform.exit();
 
-    	txf_cargo.setValue("Usuário");
     	cb_senha.setDisable(true);
     	cb_senha.setSelected(true);
     	cb_senha.selectedProperty().addListener((ChangeListener<? super Boolean>) new ChangeListener<Boolean>() {
@@ -99,27 +94,21 @@ public class FuncionarioController {
             }
         });
 
-    	txf_cargo.setItems(cb_cargoselection);
-    	txf_cargo.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-    		if (newValue.toString() == "Gerente") {
-    			type = 1;
-    		} else if (newValue.toString() == "Usuario") {
-    			type = 2;
-    		}
-    	});
+    	txf_cargo.getItems().addAll(FuncionarioEnum.values());
+    	txf_cargo.setValue(FuncionarioEnum.Usuário);
     }
 
     void cadastroInicial() {
     	inicial = true;
 
-    	txf_cargo.setValue("Gerente");
+    	txf_cargo.setValue(FuncionarioEnum.Gerente);
     	txf_cargo.setDisable(true);
     }
 
     void editaFuncionario(int id, String nome, String login, String cargo) {
     	mode = 1;
     	this.id = id;
-    	txf_cargo.setValue(cargo);
+    	txf_cargo.setValue(FuncionarioEnum.valueOf(cargo));
     	txf_cargo.setDisable(true);
 
     	txf_name.setText(nome);

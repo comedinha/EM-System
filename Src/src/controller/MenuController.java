@@ -1,8 +1,6 @@
 package controller;
 
-import java.net.URL;
 import java.sql.SQLException;
-import java.util.ResourceBundle;
 
 import org.controlsfx.control.PropertySheet;
 import org.controlsfx.dialog.WizardPane;
@@ -16,7 +14,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.DatePicker;
@@ -37,10 +34,11 @@ import util.Valores;
 import system.Comanda;
 import system.Configuracao;
 import system.Funcionario;
+import system.Funcionario.FuncionarioEnum;
 import system.Funcionario.TableViewFuncionario;
 import java.time.LocalDate;
 
-public class MenuController implements Initializable {
+public class MenuController {
 	@FXML
     private WizardPane wp_tip1;
 
@@ -177,8 +175,8 @@ public class MenuController implements Initializable {
     		System.out.println(Configuracao.configDataGetValue(key));
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resource) {
+    @FXML
+    public void initialize() {
     	if (Valores.getConnection() == null || Valores.getUsuario() == null)
     		Platform.exit();
 
@@ -204,12 +202,7 @@ public class MenuController implements Initializable {
     }
 
     private void iniciaInicio() {
-    	String cargo = "Gerente";
-    	if (Valores.getUsuario().getFuncao() != 1) {
-    		cargo = "Usuário";
-    	}
-
-    	ta_txtinicio.setText(String.format(ta_txtinicio.getText(), Valores.getUsuario().getNome(), cargo, null));
+    	ta_txtinicio.setText(String.format(ta_txtinicio.getText(), Valores.getUsuario().getNome(), FuncionarioEnum.get(Valores.getUsuario().getFuncao()), null));
     }
 
     private void iniciaFinanc() {

@@ -1,6 +1,8 @@
 package system;
 
 import java.sql.ResultSet;
+import java.util.HashMap;
+import java.util.Map;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -79,11 +81,7 @@ public class Funcionario {
     		this.id = new SimpleIntegerProperty(id);
     		this.nome = new SimpleStringProperty(nome);
     		this.login = new SimpleStringProperty(loginname);
-    		if (cargo == 1) {
-    			this.cargo = new SimpleStringProperty("Gerente");
-    		} else {
-    			this.cargo = new SimpleStringProperty("Usuario");
-    		}
+    		this.cargo = new SimpleStringProperty(FuncionarioEnum.get(cargo).toString());
     	}
 
     	public int getId() {
@@ -102,4 +100,40 @@ public class Funcionario {
     		return cargo.get();
     	}
     }
+
+	public enum FuncionarioEnum {
+		Gerente(1), Usuário(2);
+
+		private static final Map<Integer, FuncionarioEnum> lookup = new HashMap<Integer, FuncionarioEnum>();
+	    static {
+	        for (FuncionarioEnum d : FuncionarioEnum.values()) {
+	            lookup.put(d.getValor(), d);
+	        }
+	    }
+
+		private final int value;
+		FuncionarioEnum(int value) {
+			this.value = value;
+		}
+
+		public int getValor() {
+			return value;
+		}
+
+		public static FuncionarioEnum get(int id) {
+	        return lookup.get(id);
+	    }
+
+		@Override
+		public String toString() {
+			switch (value) {
+				case 1 :
+					return "Gerente";
+				case 2 :
+					return "Usuário";
+				default :
+					return "Error";
+			}
+		}
+	}
 }

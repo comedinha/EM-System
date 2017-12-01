@@ -13,8 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-
-<BorderPane prefHeight="175.0" prefWidth="265.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/9.0.1">
+<BorderPane prefHeight="175.0" prefWidth="265.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PagamentoController">
    <center>
       <VBox prefHeight="150.0" prefWidth="260.0" BorderPane.alignment="CENTER">
          <children>
@@ -23,18 +22,18 @@
                   <VBox prefHeight="50.0" prefWidth="110.0">
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Valor a pagar:" />
-                        <TextField />
+                        <TextField fx:id="tf_valorpagar" editable="false" />
                      </children>
                   </VBox>
                   <VBox prefHeight="50.0" prefWidth="110.0">
                      <children>
                         <HBox prefHeight="100.0" prefWidth="200.0">
                            <children>
-                              <CheckBox mnemonicParsing="false" />
+                              <CheckBox fx:id="chb_valorsec" mnemonicParsing="false" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Valor" />
                            </children>
                         </HBox>
-                        <TextField />
+                        <TextField fx:id="tf_valorsec" disable="true" />
                      </children>
                   </VBox>
                </children>
@@ -47,13 +46,13 @@
                   <VBox prefHeight="50.0" prefWidth="110.0">
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Meio de pagamento:" />
-                        <ChoiceBox prefWidth="150.0" />
+                        <ChoiceBox fx:id="cb_meioPagamento" prefWidth="150.0" />
                      </children>
                   </VBox>
                   <VBox prefHeight="50.0" prefWidth="110.0">
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="\%s em caixa:" />
-                        <TextField />
+                        <Text fx:id="txt_caixa" strokeType="OUTSIDE" strokeWidth="0.0" text="\%s em caixa:" />
+                        <TextField fx:id="tf_caixa" />
                      </children>
                   </VBox>
                </children>
@@ -75,13 +74,13 @@
                         <VBox prefHeight="50.0" prefWidth="110.0">
                            <children>
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Troco:" />
-                              <TextField />
+                              <TextField fx:id="tf_troco" editable="false" />
                            </children>
                         </VBox>
                         <HBox prefHeight="50.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1">
                            <children>
-                              <Button mnemonicParsing="false" text="Salvar" />
-                              <Button mnemonicParsing="false" text="Cancelar" />
+                              <Button mnemonicParsing="false" onAction="#btn_salvar" text="Salvar" />
+                              <Button mnemonicParsing="false" onAction="#btn_cancelar" text="Cancelar" />
                            </children>
                            <padding>
                               <Insets left="10.0" top="10.0" />
