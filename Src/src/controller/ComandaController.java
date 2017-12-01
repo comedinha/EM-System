@@ -4,6 +4,8 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 import org.controlsfx.control.textfield.TextFields;
+
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -65,17 +67,6 @@ public class ComandaController implements Initializable {
 
     @FXML
     private TextArea ta_valorPago;
-
-	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
-		txf_qtde.setText("1");
-		try {
-    		TextFields.bindAutoCompletion(txf_produto, Produto.getProdutoNome());
-    		iniciaTableView();
-    	} catch (Exception e) {
-    		Stages.novoAlerta(e.getMessage(), "", true);
-    	}		
-	}
 	
 	@FXML
 	private void addProduto(ActionEvent event) throws Exception {
@@ -85,6 +76,40 @@ public class ComandaController implements Initializable {
 		txf_qtde.setText("1");
 		reflesh();
     }
+
+	@FXML
+	private void setNomeMesa(ActionEvent event) throws SQLException {
+		Comanda.atualizarNomeMesa(txf_mesa.getText(), idComanda);
+	}
+	
+	@FXML
+	private void btnCancelar(ActionEvent event) throws SQLException {
+		if(editMode) {
+			//nï¿½o sei oq fazer
+		} else {
+			Comanda.delete(idComanda);
+		}
+	}
+	
+	@FXML
+	void btnSalvar(ActionEvent event) throws Exception {
+		Valores.getController().refresh(3);
+		((Node) event.getSource()).getScene().getWindow().hide();
+	}
+
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		if (Valores.getConnection() == null || Valores.getUsuario() == null || Valores.getController() == null)
+    		Platform.exit();
+
+		txf_qtde.setText("1");
+		try {
+    		TextFields.bindAutoCompletion(txf_produto, Produto.getProdutoNome());
+    		iniciaTableView();
+    	} catch (Exception e) {
+    		Stages.novoAlerta(e.getMessage(), "", true);
+    	}		
+	}
 	
 	private void iniciaTableView() throws Exception {
 		tc_id.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -95,26 +120,6 @@ public class ComandaController implements Initializable {
 		tc_valorTotal.setCellValueFactory(new PropertyValueFactory<>("valorTotal"));
 		
 		tv_produtos.setItems(Comanda.getAllProduto(idComanda));
-	}
-	
-	@FXML
-	private void setNomeMesa(ActionEvent event) throws SQLException {
-		Comanda.atualizarNomeMesa(txf_mesa.getText(), idComanda);
-	}
-	
-	@FXML
-	private void btnCancelar(ActionEvent event) throws SQLException {
-		if(editMode) {
-			//não sei oq fazer
-		} else {
-			Comanda.delete(idComanda);
-		}
-	}
-	
-	@FXML
-	void btnSalvar(ActionEvent event) throws Exception {
-		Valores.getController().refresh(3);
-		((Node) event.getSource()).getScene().getWindow().hide();
 	}
 	
 	static void novaComanda(int id) {

@@ -1,6 +1,7 @@
 package controller;
 
 import system.Funcionario;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -84,6 +85,9 @@ public class FuncionarioController {
 
     @FXML
     private void initialize() {
+    	if (Valores.getConnection() == null)
+    		Platform.exit();
+
     	cb_senha.setDisable(true);
     	cb_senha.setSelected(true);
     	cb_senha.selectedProperty().addListener((ChangeListener<? super Boolean>) new ChangeListener<Boolean>() {

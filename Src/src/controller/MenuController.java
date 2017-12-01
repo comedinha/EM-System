@@ -179,16 +179,19 @@ public class MenuController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resource) {
+    	if (Valores.getConnection() == null || Valores.getUsuario() == null)
+    		Platform.exit();
+
     	iniciaInicio();
-    	
+
     	if (Valores.getUsuario().getFuncao() == 1) {
     		iniciaFinanc();
     	} else {
     		ab_financeiro.setDisable(true);
     	}
-    	
+
     	iniciaComanda();
-    	
+
     	if (Valores.getUsuario().getFuncao() == 1) {
 	    	iniciaProduto();
 	    	iniciaFuncionario();
@@ -196,7 +199,7 @@ public class MenuController implements Initializable {
     		ab_funcionarios.setDisable(true);
     		ab_produtos.setDisable(true);
     	}
-    	
+
     	iniciaConfig();
     }
 
@@ -400,6 +403,7 @@ public class MenuController implements Initializable {
 	    		txf_funcbusca.setText(txf_funcbusca.getText());
 	    	} else if (type == 3) {
 	    		tableComand.setItems(Comanda.getComandaAll());
+	    		txf_comandaBusca.setText(txf_comandaBusca.getText());
 	    	}
     	} catch (Exception e) {
     		throw new Exception("Erro ao atualizar tabelas.");
