@@ -139,12 +139,8 @@ public class MenuController {
 
     @FXML
     void btn_addComanda(ActionEvent event) throws SQLException {
-    	int idComanda = Comanda.criaComanda("MESA");
     	Stages st = new Stages();
-    	
-    	FXMLLoader produtoLoader = st.novoStage("Adicionar Comanda", "Comanda");
-    	produtoLoader.<ComandaController>getController();
-		ComandaController.novaComanda(idComanda);
+    	st.novoStage("Adicionar Comanda", "Comanda");
     }
 
     @FXML

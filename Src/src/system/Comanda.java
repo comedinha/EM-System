@@ -9,8 +9,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class Comanda {
-	public static int criaComanda(String mesa) throws SQLException {
-		return dao.Comanda.novaComanda(mesa);
+	public static int criaComanda() throws SQLException {
+		return dao.Comanda.novaComanda();
 	}
 	
 	public static ObservableList<TableViewComandaLista> getAllComanda() throws SQLException {

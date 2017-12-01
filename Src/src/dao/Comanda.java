@@ -7,18 +7,17 @@ import java.sql.Statement;
 import util.Valores;
 
 public class Comanda {
-	public static int novaComanda(String mesa) throws SQLException {
+	public static int novaComanda() throws SQLException {
 		int id = -1;
-		String sql = "INSERT INTO comanda (mesa) VALUES (?)";
+		String sql = "INSERT INTO comanda";
 
 		PreparedStatement ps;
 		ps = Valores.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-		ps.setString(1, mesa);
 		ps.executeUpdate();
 		
 		ResultSet getId = ps.getGeneratedKeys();
 		getId.next();
-		id = getId.getInt(1);		
+		id = getId.getInt(1);
 		
 		return id;
 	}

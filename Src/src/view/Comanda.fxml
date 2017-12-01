@@ -68,8 +68,8 @@
                   <TextField fx:id="txf_mesa" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" promptText="Digite a mesa..." GridPane.columnIndex="1" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Garçom:" textAlignment="CENTER" wrappingWidth="55.021484375" GridPane.rowIndex="1" />
                   <ChoiceBox maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Desconto" GridPane.columnIndex="3" />
-                  <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Pagamento" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                  <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#act_addDesconto" text="Desconto" GridPane.columnIndex="3" />
+                  <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#act_addPagamento" text="Pagamento" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                </children>
             </GridPane>
          </children>
@@ -94,11 +94,11 @@
                <children>
                   <HBox prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <CheckBox mnemonicParsing="false" />
+                        <CheckBox fx:id="cb_comid" mnemonicParsing="false" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ID" />
                      </children>
                   </HBox>
-                  <TextField />
+                  <TextField fx:id="tf_comid" />
                </children>
             </VBox>
             <Separator orientation="VERTICAL" prefHeight="200.0" />
