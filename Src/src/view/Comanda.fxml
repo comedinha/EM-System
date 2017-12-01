@@ -37,13 +37,13 @@
                   <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Total a pagar" />
-                        <TextArea editable="false" prefHeight="37.0" prefWidth="61.0" />
+                        <TextArea fx:id="ta_valorTotal" editable="false" prefHeight="37.0" prefWidth="61.0" />
                      </children>
                   </VBox>
                   <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Total pago" />
-                        <TextArea editable="false" prefHeight="37.0" prefWidth="61.0" />
+                        <TextArea fx:id="ta_valorPago" editable="false" prefHeight="37.0" prefWidth="61.0" />
                      </children>
                   </VBox>
                </children>

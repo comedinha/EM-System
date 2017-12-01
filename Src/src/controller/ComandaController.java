@@ -4,7 +4,6 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 import org.controlsfx.control.textfield.TextFields;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -12,6 +11,7 @@ import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import system.Comanda;
@@ -23,7 +23,6 @@ import util.Valores;
 public class ComandaController implements Initializable {	
 	static int idComanda; 
 	boolean editMode = false; //variavel pra ver se esta editando a comanda
-	ObservableList<TableViewComandaProduto> list;
 	
     @FXML
     private TextField txf_produto;
@@ -60,6 +59,12 @@ public class ComandaController implements Initializable {
     
     @FXML
     private TextField txf_qtde;
+    
+    @FXML
+    private TextArea ta_valorTotal;
+
+    @FXML
+    private TextArea ta_valorPago;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -73,7 +78,7 @@ public class ComandaController implements Initializable {
 	}
 	
 	@FXML
-	void addProduto(ActionEvent event) throws Exception {
+	private void addProduto(ActionEvent event) throws Exception {
 		int idProduto = Integer.parseInt(txf_produto.getText().substring(0, txf_produto.getText().indexOf(' ')));
 		Comanda.addProduto(idComanda, idProduto, Integer.parseInt(txf_qtde.getText()));
 		txf_produto.clear();
@@ -89,17 +94,16 @@ public class ComandaController implements Initializable {
 		tc_valorPago.setCellValueFactory(new PropertyValueFactory<>("valorPago"));
 		tc_valorTotal.setCellValueFactory(new PropertyValueFactory<>("valorTotal"));
 		
-		list = Comanda.getAllProduto(idComanda);
-		tv_produtos.setItems(list);
+		tv_produtos.setItems(Comanda.getAllProduto(idComanda));
 	}
 	
 	@FXML
-	void setNomeMesa(ActionEvent event) throws SQLException {
+	private void setNomeMesa(ActionEvent event) throws SQLException {
 		Comanda.atualizarNomeMesa(txf_mesa.getText(), idComanda);
 	}
 	
 	@FXML
-	void btnCancelar(ActionEvent event) throws SQLException {
+	private void btnCancelar(ActionEvent event) throws SQLException {
 		if(editMode) {
 			//não sei oq fazer
 		} else {
@@ -117,8 +121,27 @@ public class ComandaController implements Initializable {
 		idComanda = id;
 	}
 	
+	private void valorTotal() {
+		float somaValor = 0;
+		
+		for(TableViewComandaProduto lista : tv_produtos.getItems())
+			somaValor += lista.getValorTotal();
+		
+		ta_valorTotal.setText(Float.toString(somaValor));
+	}
+	
+	private void valorPago() {
+		float somaValor = 0;
+		
+		for(TableViewComandaProduto lista : tv_produtos.getItems())
+			somaValor += lista.getValorPago();
+		
+		ta_valorPago.setText(Float.toString(somaValor));
+	}
+	
 	private void reflesh() throws Exception {
-		list = Comanda.getAllProduto(idComanda);
-		tv_produtos.setItems(list);
+		tv_produtos.setItems(Comanda.getAllProduto(idComanda));
+		valorTotal();
+		valorPago();
 	}
 }
