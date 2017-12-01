@@ -37,13 +37,13 @@
                   <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Total a pagar" />
-                        <TextArea editable="false" prefHeight="37.0" prefWidth="61.0" />
+                        <TextArea fx:id="ta_valorTotal" editable="false" prefHeight="37.0" prefWidth="61.0" />
                      </children>
                   </VBox>
                   <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Total pago" />
-                        <TextArea editable="false" prefHeight="37.0" prefWidth="61.0" />
+                        <TextArea fx:id="ta_valorPago" editable="false" prefHeight="37.0" prefWidth="61.0" />
                      </children>
                   </VBox>
                </children>
@@ -110,7 +110,9 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="40.0" prefWidth="450.0" spacing="10.0">
                <children>
-                  <TextField fx:id="txf_produto" prefHeight="25.0" prefWidth="306.0" />
+                  <TextField fx:id="txf_produto" prefHeight="25.0" prefWidth="226.0" />
+                  <Label text="Qtde" />
+                  <TextField fx:id="txf_qtde" prefHeight="25.0" prefWidth="41.0" />
                   <Button mnemonicParsing="false" onAction="#addProduto" prefHeight="25.0" prefWidth="117.0" text="Adicionar Produto" />
                </children>
                <VBox.margin>

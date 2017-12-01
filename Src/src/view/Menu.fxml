@@ -24,7 +24,7 @@
 <?import org.controlsfx.control.PropertySheet?>
 <?import org.controlsfx.dialog.WizardPane?>
 
-<BorderPane xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MenuController">
+<BorderPane xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MenuController">
    <center>
       <TabPane prefHeight="520.0" prefWidth="450.0" stylesheets="@../css/Menu.css" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
@@ -138,9 +138,10 @@
                         </VBox>
                         <TableView fx:id="tableComand" prefHeight="200.0" prefWidth="200.0">
                           <columns>
-                            <TableColumn fx:id="tb_comandid" prefWidth="75.0" text="ID" />
-                              <TableColumn fx:id="tb_comanddata" prefWidth="75.0" text="Data" />
-                            <TableColumn fx:id="tb_comandvlr" prefWidth="75.0" text="Valor" />
+                            <TableColumn fx:id="tb_comandId" prefWidth="75.0" text="ID" />
+                              <TableColumn fx:id="tb_comandMesa" prefWidth="75.0" text="Mesa" />
+                              <TableColumn fx:id="tb_comandData" prefWidth="75.0" text="Data" />
+                            <TableColumn fx:id="tb_comandVlr" prefWidth="75.0" text="Valor" />
                           </columns>
                         </TableView>
                      </items>

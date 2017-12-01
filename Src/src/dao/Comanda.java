@@ -25,13 +25,14 @@ public class Comanda {
 		return id;
 	}
 	
-	public static void addProduto(int comandaId, int produtoId) throws SQLException {
-		String sql = "INSERT INTO produtoComanda (comandaId, produtoId) VALUES (?, ?)";
+	public static void addProduto(int comandaId, int produtoId, int qtde) throws SQLException {
+		String sql = "INSERT INTO produtoComanda (comandaId, produtoId, quantidade) VALUES (?, ?, ?)";
 
 		PreparedStatement ps;
 		ps = Valores.getConnection().prepareStatement(sql);
 		ps.setInt(1, comandaId);
 		ps.setInt(2, produtoId);
+		ps.setInt(3, qtde);
 		ps.executeUpdate();
 	}
 	
@@ -58,15 +59,18 @@ public class Comanda {
 		// TODO Auto-generated method stub
 	}
 
-	/*public static ResultSet getAllComandas() throws SQLException {
-		// TODO Auto-generated method stub
-	}*/
+	public static ResultSet getAllComandas() throws SQLException {
+		String sql = "SELECT * FROM comanda";
+		
+		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
+		
+		return ps.executeQuery();
+	}
 	
 	public static ResultSet getAllProduto(int id) throws SQLException {
 		String sql = "SELECT * FROM produtoComanda WHERE comandaId = ?";
 
-		PreparedStatement ps;
-		ps = Valores.getConnection().prepareStatement(sql);
+		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
 		ps.setInt(1, id);
 		return ps.executeQuery();
 		

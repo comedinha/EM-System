@@ -29,6 +29,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import system.Produto;
+import system.Comanda.TableViewComandaLista;
 import system.Produto.TableViewProduto;
 import util.MeioPagamento;
 import util.Stages;
@@ -77,16 +78,19 @@ public class MenuController implements Initializable {
     private TextField txf_comandaBusca;
 
     @FXML
-    private TableView<?> tableComand;
+    private TableView<TableViewComandaLista> tableComand;
 
     @FXML
-    private TableColumn<?, ?> tb_comandid;
+    private TableColumn<TableViewComandaLista, Integer> tb_comandId;
+    
+    @FXML
+    private TableColumn<TableViewComandaLista, String> tb_comandMesa;
 
     @FXML
-    private TableColumn<?, ?> tb_comanddata;
+    private TableColumn<?, ?> tb_comandData;
 
     @FXML
-    private TableColumn<?, ?> tb_comandvlr;
+    private TableColumn<TableViewComandaLista, Float> tb_comandVlr;
 
     @FXML
     private Tab ab_produtos;
@@ -175,16 +179,16 @@ public class MenuController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resource) {
-    	if (Valores.getConnection() == null || Valores.getUsuario() == null)
-    		Platform.exit();
-
     	iniciaInicio();
+    	
     	if (Valores.getUsuario().getFuncao() == 1) {
     		iniciaFinanc();
     	} else {
     		ab_financeiro.setDisable(true);
     	}
+    	
     	iniciaComanda();
+    	
     	if (Valores.getUsuario().getFuncao() == 1) {
 	    	iniciaProduto();
 	    	iniciaFuncionario();
@@ -192,6 +196,7 @@ public class MenuController implements Initializable {
     		ab_funcionarios.setDisable(true);
     		ab_produtos.setDisable(true);
     	}
+    	
     	iniciaConfig();
     }
 
@@ -210,7 +215,16 @@ public class MenuController implements Initializable {
     }
 
     private void iniciaComanda() {
-
+    	tb_comandId.setCellValueFactory(new PropertyValueFactory<>("id"));
+    	tb_comandMesa.setCellValueFactory(new PropertyValueFactory<>("mesa"));
+    	//tb_comandData ???
+    	tb_comandVlr.setCellValueFactory(new PropertyValueFactory<>("valor"));
+    	
+    	try {
+			tableComand.setItems(Comanda.getComandaAll());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
     }
 
     private void iniciaProduto() {
@@ -384,6 +398,8 @@ public class MenuController implements Initializable {
 	    	} else if (type == 2) {
 	    		tableFunc.setItems(Funcionario.getAllFuncionario());
 	    		txf_funcbusca.setText(txf_funcbusca.getText());
+	    	} else if (type == 3) {
+	    		tableComand.setItems(Comanda.getComandaAll());
 	    	}
     	} catch (Exception e) {
     		throw new Exception("Erro ao atualizar tabelas.");
