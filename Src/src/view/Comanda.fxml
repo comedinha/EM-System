@@ -110,7 +110,9 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="40.0" prefWidth="450.0" spacing="10.0">
                <children>
-                  <TextField fx:id="txf_produto" prefHeight="25.0" prefWidth="306.0" />
+                  <TextField fx:id="txf_produto" prefHeight="25.0" prefWidth="226.0" />
+                  <Label text="Qtde" />
+                  <TextField fx:id="txf_qtde" prefHeight="25.0" prefWidth="41.0" />
                   <Button mnemonicParsing="false" onAction="#addProduto" prefHeight="25.0" prefWidth="117.0" text="Adicionar Produto" />
                </children>
                <VBox.margin>

@@ -57,10 +57,13 @@ public class ComandaController implements Initializable {
     
     @FXML
     private CheckBox checkB_finalizar;
-
+    
+    @FXML
+    private TextField txf_qtde;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		txf_qtde.setText("1");
 		try {
     		TextFields.bindAutoCompletion(txf_produto, Produto.getProdutoNome());
     		iniciaTableView();
@@ -72,8 +75,9 @@ public class ComandaController implements Initializable {
 	@FXML
 	void addProduto(ActionEvent event) throws Exception {
 		int idProduto = Integer.parseInt(txf_produto.getText().substring(0, txf_produto.getText().indexOf(' ')));
-		Comanda.addProduto(idComanda, idProduto);
+		Comanda.addProduto(idComanda, idProduto, Integer.parseInt(txf_qtde.getText()));
 		txf_produto.clear();
+		txf_qtde.setText("1");
 		reflesh();
     }
 	

@@ -37,8 +37,8 @@ public class Comanda {
 		return 0;
 	}
 	
-	public static void addProduto(int comandaId, int produtoId) throws SQLException {
-		dao.Comanda.addProduto(comandaId, produtoId);
+	public static void addProduto(int comandaId, int produtoId, int qtde) throws SQLException {
+		dao.Comanda.addProduto(comandaId, produtoId, qtde);
 	}
 	
 	public static void atualizarNomeMesa(String mesa, int id) throws SQLException {
