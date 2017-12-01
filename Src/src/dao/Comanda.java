@@ -4,18 +4,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
 import util.Valores;
 
 public class Comanda {
 	public static int novaComanda(String mesa) throws SQLException {
 		int id = -1;
-		
 		String sql = "INSERT INTO comanda (mesa) VALUES (?)";
 
 		PreparedStatement ps;
 		ps = Valores.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-		ps.setString(1, mesa);		
+		ps.setString(1, mesa);
 		ps.executeUpdate();
 		
 		ResultSet getId = ps.getGeneratedKeys();
@@ -72,8 +70,6 @@ public class Comanda {
 
 		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
 		ps.setInt(1, id);
-		return ps.executeQuery();
-		
-		
+		return ps.executeQuery();		
 	}
 }

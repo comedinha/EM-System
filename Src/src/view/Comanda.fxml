@@ -18,11 +18,7 @@
    <center>
       <VBox prefHeight="276.0" prefWidth="479.0" BorderPane.alignment="CENTER">
          <children>
-<<<<<<< HEAD
             <TableView fx:id="tv_produtos" editable="true" prefHeight="272.0" prefWidth="450.0">
-=======
-            <TableView fx:id="tv_produtos" prefHeight="329.0" prefWidth="450.0">
->>>>>>> ed8ee164d510065c61b9496503f08aedc5ee412b
               <columns>
                 <TableColumn fx:id="tc_id" prefWidth="19.0" text="ID" />
                 <TableColumn fx:id="tc_nome" prefWidth="73.0" text="Descrição" />

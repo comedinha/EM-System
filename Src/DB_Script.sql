@@ -8,7 +8,7 @@ CREATE TABLE funcionario (
 
 CREATE TABLE comanda(
 	comandaId SERIAL NOT NULL,
-	data date,
+	data date DEFAULT CURRENT_DATE,
 	mesa varchar(15),
 	valorPago numeric(8,2) DEFAULT 0,
 	status int DEFAULT 0,

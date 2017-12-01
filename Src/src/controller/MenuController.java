@@ -224,7 +224,7 @@ public class MenuController implements Initializable {
     	tb_comandVlr.setCellValueFactory(new PropertyValueFactory<>("valor"));
     	
     	try {
-			tableComand.setItems(Comanda.getComandaAll());
+			tableComand.setItems(Comanda.getAllComanda());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -235,19 +235,19 @@ public class MenuController implements Initializable {
 			public void invalidated(Observable observable) {
 				try {
 					if(txf_comandaBusca.textProperty().get().isEmpty()) {
-						tableComand.setItems(Comanda.getComandaAll());
+						tableComand.setItems(Comanda.getAllComanda());
 						return;
 					}
 
 					ObservableList<TableViewComandaLista> tableItems = FXCollections.observableArrayList();
 					ObservableList<TableColumn<TableViewComandaLista, ?>> cols = tableComand.getColumns();
-					for (int i = 0; i < Comanda.getComandaAll().size(); i++) {
+					for (int i = 0; i < Comanda.getAllComanda().size(); i++) {
 						for (int j = 0; j < cols.size(); j++) {
 							TableColumn<TableViewComandaLista, ?> col = cols.get(j);
-							String cellValue = col.getCellData(Comanda.getComandaAll().get(i)).toString();
+							String cellValue = col.getCellData(Comanda.getAllComanda().get(i)).toString();
 							cellValue = cellValue.toLowerCase();
 							if(cellValue.contains(txf_comandaBusca.textProperty().get().toLowerCase())) {
-								tableItems.add(Comanda.getComandaAll().get(i));
+								tableItems.add(Comanda.getAllComanda().get(i));
 								break;
 							}
 						}
@@ -432,7 +432,7 @@ public class MenuController implements Initializable {
 	    		tableFunc.setItems(Funcionario.getAllFuncionario());
 	    		txf_funcbusca.setText(txf_funcbusca.getText());
 	    	} else if (type == 3) {
-	    		tableComand.setItems(Comanda.getComandaAll());
+	    		tableComand.setItems(Comanda.getAllComanda());
 	    		txf_comandaBusca.setText(txf_comandaBusca.getText());
 	    	}
     	} catch (Exception e) {
