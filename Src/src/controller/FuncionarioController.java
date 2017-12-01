@@ -7,16 +7,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
 import util.Stages;
 import util.Valores;
 
@@ -71,12 +67,8 @@ public class FuncionarioController {
 	    	}
 	    	((Node) event.getSource()).getScene().getWindow().hide();
 	    	if (inicial) {
-	    		Stage stage = new Stage();
-	    		stage.setTitle("EMSystem Login");
-				BorderPane root = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
-				Scene scene = new Scene(root);
-				stage.setScene(scene);
-				stage.show();
+	    		Stages st = new Stages();
+	    		st.novoStage("EMSystem Login", "Login");
 	    	} else {
 	    		Valores.getController().refresh(2);
 	    	}

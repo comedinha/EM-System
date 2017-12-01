@@ -42,7 +42,7 @@
                      </children></VBox>
           </content>
           </Tab>
-          <Tab text="Financeiro">
+          <Tab fx:id="ab_financeiro" text="Financeiro">
           <content>
                   <SplitPane dividerPositions="0.3111111111111111" prefHeight="492.0" prefWidth="469.0">
                      <items>
@@ -115,7 +115,7 @@
                   </SplitPane>
                </content>
           </Tab>
-          <Tab text="Produtos">
+          <Tab fx:id="ab_produtos" text="Produtos">
           	<content>
                   <SplitPane dividerPositions="0.17313915857605178" prefHeight="105.0" prefWidth="607.0">
                      <items>
@@ -141,7 +141,7 @@
                   </SplitPane>
                </content>
           </Tab>
-          <Tab text="Funcionarios">
+          <Tab fx:id="ab_funcionarios" text="Funcionarios">
           	<content>
                   <SplitPane dividerPositions="0.17313915857605178" prefHeight="105.0" prefWidth="607.0">
                      <items>
@@ -200,7 +200,7 @@
                               </GridPane>
                            </center>
                         </BorderPane>
-                        <BorderPane prefHeight="200.0" prefWidth="200.0">
+                        <BorderPane fx:id="bd_configsistema" prefHeight="200.0" prefWidth="200.0">
                            <top>
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Configurações de Sistema" BorderPane.alignment="CENTER" />
                            </top>

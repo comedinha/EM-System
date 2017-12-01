@@ -32,7 +32,7 @@ public class Funcionario {
 	}
 
 	public static void criaUsuario(int func, String nome, String usr, String pass) throws Exception {
-		dao.Funcionario.inserir(1, nome, usr, pass);
+		dao.Funcionario.inserir(func, nome, usr, pass);
 	}
 
 	public static boolean login(String usr, String pass) throws Exception {
@@ -61,12 +61,10 @@ public class Funcionario {
 			return funcionario.delete(id);
 		} else {
 			ResultSet result = funcionario.getGerente(id);
-			if(result.next()) {				
+			if (result.next()) {				
 				return funcionario.delete(id);
 			} else {
-				System.out.println("Teste gerente");
-				//ERRO DE N�O EXISTIR OUTRO GERENTE
-				return false;
+				throw new Exception("Você não pode remover todos os gerentes!");
 			}
 		}
 	}
