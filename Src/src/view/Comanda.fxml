@@ -4,24 +4,25 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane prefHeight="485.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ComandaController">
+<BorderPane prefHeight="547.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ComandaController">
    <center>
       <VBox prefHeight="276.0" prefWidth="479.0" BorderPane.alignment="CENTER">
          <children>
+<<<<<<< HEAD
             <TableView fx:id="tv_produtos" editable="true" prefHeight="272.0" prefWidth="450.0">
+=======
+            <TableView fx:id="tv_produtos" prefHeight="329.0" prefWidth="450.0">
+>>>>>>> ed8ee164d510065c61b9496503f08aedc5ee412b
               <columns>
                 <TableColumn fx:id="tc_id" prefWidth="19.0" text="ID" />
                 <TableColumn fx:id="tc_nome" prefWidth="73.0" text="Descrição" />
@@ -32,7 +33,7 @@
                   <TableColumn fx:id="tc_data" prefWidth="75.0" text="Data" />
               </columns>
             </TableView>
-            <HBox alignment="CENTER" prefHeight="62.0" prefWidth="450.0" spacing="20.0">
+            <HBox alignment="CENTER" prefHeight="59.0" prefWidth="450.0" spacing="20.0">
                <children>
                   <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                      <children>
@@ -51,29 +52,12 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>
             </HBox>
-            <GridPane prefHeight="105.0" prefWidth="450.0">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="199.0" minWidth="10.0" prefWidth="156.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="386.0" minWidth="10.0" prefWidth="180.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="386.0" minWidth="10.0" prefWidth="96.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
+            <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Garçom:" textAlignment="CENTER" wrappingWidth="116.021484375" GridPane.rowIndex="1" />
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Meio de Pagamento:" textAlignment="CENTER" wrappingWidth="116.00390625" GridPane.rowIndex="2" />
-                  <ChoiceBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <ChoiceBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <Button mnemonicParsing="false" text="Pagamento" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                  <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="77.0" text="Desconto" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="133.0" text="Desconto" />
+                  <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="124.0" text="Pagamento" />
                </children>
-               <padding>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </padding>
-            </GridPane>
+            </HBox>
          </children>
       </VBox>
    </center>
@@ -90,34 +74,70 @@
       </HBox>
    </bottom>
    <top>
-      <VBox prefHeight="41.0" prefWidth="450.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="27.0" prefWidth="450.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox alignment="CENTER" prefHeight="40.0" prefWidth="450.0" spacing="10.0">
+            <HBox prefHeight="47.0" prefWidth="450.0" spacing="10.0">
                <children>
-                  <Label text="Mesa">
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin></Label>
-                  <TextField fx:id="txf_mesa" prefHeight="25.0" prefWidth="150.0">
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin></TextField>
-                  <Button mnemonicParsing="false" onAction="#setNomeMesa" text="Mesa" />
+                  <VBox prefHeight="42.0" prefWidth="50.0" spacing="1.0">
+                     <children>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <CheckBox mnemonicParsing="false" />
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ID" />
+                           </children>
+                        </HBox>
+                        <TextField prefWidth="50.0" />
+                     </children>
+                  </VBox>
+                  <HBox prefHeight="42.0" prefWidth="103.0">
+                     <children>
+                        <VBox prefHeight="200.0" prefWidth="100.0" spacing="1.0">
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Mesa:" textAlignment="CENTER" wrappingWidth="44.13671875" />
+                              <TextField fx:id="txf_mesa" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="34.0" prefWidth="100.0" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <VBox prefHeight="42.0" prefWidth="152.0" spacing="1.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Garçom:" textAlignment="CENTER" wrappingWidth="55.021484375" />
+                        <ChoiceBox prefHeight="34.0" prefWidth="150.0" />
+                     </children>
+                  </VBox>
                </children>
-               <VBox.margin>
-                  <Insets bottom="10.0" />
-               </VBox.margin>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="40.0" prefWidth="450.0" spacing="10.0">
+            <Separator prefWidth="200.0" />
+            <HBox alignment="CENTER" prefHeight="34.0" prefWidth="450.0" spacing="10.0">
                <children>
-                  <TextField fx:id="txf_produto" prefHeight="25.0" prefWidth="226.0" />
-                  <Label text="Qtde" />
-                  <TextField fx:id="txf_qtde" prefHeight="25.0" prefWidth="41.0" />
-                  <Button mnemonicParsing="false" onAction="#addProduto" prefHeight="25.0" prefWidth="117.0" text="Adicionar Produto" />
+                  <VBox prefHeight="25.0" prefWidth="212.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Digite o nome do produto:" />
+                        <TextField fx:id="txf_produto" prefHeight="25.0" prefWidth="151.0" />
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="25.0" prefWidth="67.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Quantidade:" />
+                        <TextField fx:id="txf_qtde" prefHeight="25.0" prefWidth="77.0" />
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="25.0" prefWidth="114.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" />
+                        <Button mnemonicParsing="false" onAction="#addProduto" prefHeight="25.0" prefWidth="123.0" text="Adicionar Produto" />
+                     </children>
+                  </VBox>
                </children>
                <VBox.margin>
                   <Insets bottom="5.0" />
                </VBox.margin>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
             </HBox>
          </children>
          <BorderPane.margin>

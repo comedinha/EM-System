@@ -9,16 +9,12 @@ import javafx.collections.ObservableList;
 
 public class Produto {
 	
-	public static boolean adicionaProduto(int id, String nome, float valor) throws Exception {
-		dao.Produto produto = new dao.Produto();
-		
-		return produto.inserir(id, nome, valor);
+	public static boolean adicionaProduto(int id, String nome, float valor) throws Exception {		
+		return dao.Produto.inserir(id, nome, valor);
 	}
 	
-	public static ResultSet getProduto(int id) throws Exception {
-		dao.Produto produto = new dao.Produto();
-		
-		return produto.get(id);
+	public static ResultSet getProduto(int id) throws Exception {		
+		return dao.Produto.get(id);
 	}
 
 	public static ObservableList<String> getProdutoNome() throws Exception {
@@ -45,13 +41,11 @@ public class Produto {
 	}
 	
 	public static boolean editaProduto(int id, String nome, float valor) throws Exception {
-		dao.Produto produto = new dao.Produto();
-		return produto.atualizar(id, nome, valor);
+		return dao.Produto.atualizar(id, nome, valor);
 	}
 	
 	public static boolean delete(int id) throws Exception {
-		dao.Produto produto = new dao.Produto();
-		return produto.delete(id);
+		return dao.Produto.delete(id);
 	}
 	
 	//classe interna Modelo para a tableView produto

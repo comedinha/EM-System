@@ -3,6 +3,11 @@ package controller;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+
+import org.controlsfx.control.PropertySheet;
+import org.controlsfx.dialog.WizardPane;
+
+import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
@@ -20,20 +25,28 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.BorderPane;
 import system.Produto;
 import system.Comanda.TableViewComandaLista;
 import system.Produto.TableViewProduto;
+import util.MeioPagamento;
 import util.Stages;
 import util.Valores;
 import system.Comanda;
+import system.Configuracao;
 import system.Funcionario;
 import system.Funcionario.TableViewFuncionario;
 import java.time.LocalDate;
 
 public class MenuController implements Initializable {
+	@FXML
+    private WizardPane ẃp_tip1;
+
+	@FXML
+    private TextArea ta_txtinicio;
+
 	@FXML
     private Tab ab_financeiro;
 
@@ -119,32 +132,7 @@ public class MenuController implements Initializable {
     private TableColumn<TableViewFuncionario, String> tb_funccargo;
 
     @FXML
-    private BorderPane bd_configsistema;
-    
-    @Override
-    public void initialize(URL url, ResourceBundle resource) {
-    	iniciaInicio();
-    	
-    	if (Valores.getUsuario().getFuncao() == 1) {
-    		iniciaFinanc();
-    	} else {
-    		ab_financeiro.setDisable(true);
-    	}
-    	
-    	iniciaComanda();
-    	
-    	if (Valores.getUsuario().getFuncao() == 1) {
-	    	iniciaProduto();
-	    	iniciaFuncionario();
-    	} else {
-    		ab_funcionarios.setDisable(true);
-    		ab_produtos.setDisable(true);
-    		bd_configsistema.setDisable(true);
-    		bd_configsistema.setVisible(false);
-    	}
-    	
-    	iniciaConfig();
-    }
+    private PropertySheet ps_configuracoes;
 
     @FXML
     void act_BuscaFinanceiro(ActionEvent event) {
@@ -178,11 +166,50 @@ public class MenuController implements Initializable {
 	    ((Node) event.getSource()).getScene().getWindow().hide();
 	    Valores.setController(null);
 	    Valores.setFuncionario(null);
+	    Configuracao.configDataClean();
 	    Stages st = new Stages();
 	    st.novoStage("EMSystem Login", "Login");
     }
 
+    @FXML
+    void btn_salvaConfig(ActionEvent event) {
+    	for (String key : Configuracao.configDataMapKeySet())
+    		System.out.println(Configuracao.configDataGetValue(key));
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resource) {
+    	if (Valores.getConnection() == null || Valores.getUsuario() == null)
+    		Platform.exit();
+
+    	iniciaInicio();
+
+    	if (Valores.getUsuario().getFuncao() == 1) {
+    		iniciaFinanc();
+    	} else {
+    		ab_financeiro.setDisable(true);
+    	}
+
+    	iniciaComanda();
+
+    	if (Valores.getUsuario().getFuncao() == 1) {
+	    	iniciaProduto();
+	    	iniciaFuncionario();
+    	} else {
+    		ab_funcionarios.setDisable(true);
+    		ab_produtos.setDisable(true);
+    	}
+
+    	iniciaConfig();
+    }
+
     private void iniciaInicio() {
+    	String cargo = "Gerente";
+    	if (Valores.getUsuario().getFuncao() != 1) {
+    		cargo = "Usuário";
+    	}
+
+    	ta_txtinicio.setText(String.format(ta_txtinicio.getText(), Valores.getUsuario().getNome(), cargo, null));
     }
 
     private void iniciaFinanc() {
@@ -356,7 +383,14 @@ public class MenuController implements Initializable {
     }
 
     private void iniciaConfig() {
-    	
+    	Configuracao.configDataPut("Global.Meio de Pagamento", MeioPagamento.Dinheiro);
+
+    	if (Valores.getUsuario().getFuncao() == 1) {
+    		Configuracao.configDataPut("Sistema.Permitir descontos", true);
+    	}
+
+    	for (String key : Configuracao.configDataMapKeySet())
+    		ps_configuracoes.getItems().add(new Configuracao(key));
     }
 
     void refresh(int type) throws Exception {
@@ -369,6 +403,7 @@ public class MenuController implements Initializable {
 	    		txf_funcbusca.setText(txf_funcbusca.getText());
 	    	} else if (type == 3) {
 	    		tableComand.setItems(Comanda.getComandaAll());
+	    		txf_comandaBusca.setText(txf_comandaBusca.getText());
 	    	}
     	} catch (Exception e) {
     		throw new Exception("Erro ao atualizar tabelas.");

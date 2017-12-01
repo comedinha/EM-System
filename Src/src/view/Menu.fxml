@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonType?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SplitPane?>
@@ -20,8 +21,10 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
+<?import org.controlsfx.control.PropertySheet?>
+<?import org.controlsfx.dialog.WizardPane?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MenuController">
+<BorderPane xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MenuController">
    <center>
       <TabPane prefHeight="520.0" prefWidth="450.0" stylesheets="@../css/Menu.css" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
@@ -38,7 +41,36 @@
                               </ImageView>
                            </children>
                         </HBox>
-                        <TextArea disable="true" editable="false" prefHeight="350.0" prefWidth="450.0" styleClass="text-box" />
+                        <BorderPane prefHeight="391.0" prefWidth="450.0">
+                           <center>
+                              <VBox prefHeight="394.0" prefWidth="450.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <WizardPane fx:id="ẃp_tip1" prefHeight="400.0" prefWidth="450.0" viewOrder="1.0">
+                                       <buttonTypes>
+                                          <ButtonType fx:constant="NEXT" />
+                                       </buttonTypes>
+                                       <padding>
+                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                       </padding>
+                                       <header>
+                                          <TextArea fx:id="ta_txtinicio" editable="false" prefHeight="147.0" prefWidth="430.0" text="Olá %s!&#10;&#10;Bem vindo ao EMSystem, você tem o cargo de %s.&#10;&#10;Lugares onde você tem acesso: %s&#10;&#10;Para ter uma melhor experiência você também pode fazer algumas configurações de sua preferência." wrapText="true" />
+                                       </header>
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                       <content>
+                                          <BorderPane prefHeight="200.0" prefWidth="200.0">
+                                             <top>
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Aqui temos algumas dicas" BorderPane.alignment="CENTER" />
+                                             </top>
+                                          </BorderPane>
+                                       </content>
+                                    </WizardPane>
+                                    <Separator prefWidth="200.0" />
+                                 </children>
+                              </VBox>
+                           </center>
+                        </BorderPane>
                      </children></VBox>
           </content>
           </Tab>
@@ -82,7 +114,7 @@
                                     <TableColumn fx:id="tb_financvlr" prefWidth="83.0" text="Valor" />
                                 </columns>
                               </TableView>
-                              <TextArea disable="true" editable="false" prefHeight="125.0" prefWidth="308.0" />
+                              <TextArea editable="false" prefHeight="125.0" prefWidth="308.0" />
                            </items>
                         </SplitPane>
                      </items>
@@ -171,66 +203,26 @@
           </Tab>
           <Tab text="Configurações">
                <content>
-                  <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="200.0" prefWidth="200.0">
-                     <items>
-                        <BorderPane prefHeight="200.0" prefWidth="200.0">
-                           <top>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Configurações de Usuário" BorderPane.alignment="CENTER" />
-                           </top>
-                           <bottom>
-                              <HBox alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="432.0" BorderPane.alignment="CENTER">
+                  <BorderPane prefHeight="200.0" prefWidth="200.0">
+                     <center>
+                        <PropertySheet fx:id="ps_configuracoes" BorderPane.alignment="CENTER" />
+                     </center>
+                     <bottom>
+                        <VBox prefHeight="42.0" prefWidth="450.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <HBox alignment="TOP_RIGHT" prefHeight="0.0" prefWidth="450.0">
                                  <children>
-                                    <Button mnemonicParsing="false" text="Salvar" />
+                                    <Button mnemonicParsing="false" onAction="#btn_salvaConfig" text="Salvar" />
                                  </children>
                                  <padding>
                                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                  </padding>
                               </HBox>
-                           </bottom>
-                           <center>
-                              <GridPane BorderPane.alignment="CENTER">
-                                <columnConstraints>
-                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                </columnConstraints>
-                                <rowConstraints>
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                </rowConstraints>
-                              </GridPane>
-                           </center>
-                        </BorderPane>
-                        <BorderPane fx:id="bd_configsistema" prefHeight="200.0" prefWidth="200.0">
-                           <top>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Configurações de Sistema" BorderPane.alignment="CENTER" />
-                           </top>
-                           <bottom>
-                              <HBox alignment="CENTER_RIGHT" prefHeight="40.0" prefWidth="432.0" BorderPane.alignment="CENTER">
-                                 <children>
-                                    <Button mnemonicParsing="false" text="Salvar" />
-                                 </children>
-                                 <padding>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                 </padding>
-                              </HBox>
-                           </bottom>
-                           <center>
-                              <GridPane BorderPane.alignment="CENTER">
-                                <columnConstraints>
-                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                </columnConstraints>
-                                <rowConstraints>
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                </rowConstraints>
-                              </GridPane>
-                           </center>
-                        </BorderPane>
-                     </items>
-                  </SplitPane>
+                              <Separator prefWidth="200.0" />
+                           </children>
+                        </VBox>
+                     </bottom>
+                  </BorderPane>
                </content>
           </Tab>
         </tabs>
