@@ -21,7 +21,6 @@ public class FuncionarioController {
 	private int mode = 0;
 	private int type = 0;
 	private boolean inicial = false;
-	private String oldName;
 
 	ObservableList<String> cb_cargoselection = FXCollections.observableArrayList("Gerente", "Usuário");
 
@@ -50,6 +49,10 @@ public class FuncionarioController {
 	    	String login = txf_login.getText();
 	    	String senha = txf_password.getText();
 	
+	    	if (nome.isEmpty())
+    			throw new Exception("Insira um nome!");
+	    	if (login.isEmpty())
+	    		throw new Exception("Insira um login!");
 	    	if (senha.isEmpty() && cb_senha.isSelected()) {
 	    		throw new Exception("Insira uma senha!");
 	    	}
@@ -85,6 +88,7 @@ public class FuncionarioController {
     	if (Valores.getConnection() == null)
     		Platform.exit();
 
+    	txf_cargo.setValue("Usuário");
     	cb_senha.setDisable(true);
     	cb_senha.setSelected(true);
     	cb_senha.selectedProperty().addListener((ChangeListener<? super Boolean>) new ChangeListener<Boolean>() {
@@ -118,7 +122,6 @@ public class FuncionarioController {
 
     	txf_name.setText(nome);
     	txf_login.setText(login);
-    	oldName = login;
 
     	cb_senha.setDisable(false);
     	cb_senha.setSelected(false);
