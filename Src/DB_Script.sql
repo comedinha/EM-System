@@ -7,10 +7,10 @@ CREATE TABLE funcionario (
 );
 
 CREATE TABLE comanda(
-	comandaId int PRIMARY KEY NOT NULL,
+	comandaId SERIAL PRIMARY KEY NOT NULL,
 	data date,
-	mesa int,
-	valorPago numeric(5,2)
+	mesa varchar(15),
+	valorPago numeric(5,2) DEFAULT 0
 );
 
 CREATE TABLE pagamento (
@@ -25,7 +25,7 @@ CREATE TABLE produto (
 	produtoId SERIAL PRIMARY KEY NOT NULL,
 	nome varchar(30),
 	valor numeric(5,2),
-	status int default 1
+	status int DEFAULT 1
 );
 
 CREATE TABLE produto_Alterado (
@@ -37,7 +37,8 @@ CREATE TABLE produto_Alterado (
 
 CREATE TABLE produtoComanda (
 	produtoId int REFERENCES produto(produtoId) ON DELETE NO ACTION ON UPDATE CASCADE,
-	comandaId int REFERENCES comanda(comandaId) ON DELETE NO ACTION ON UPDATE CASCADE,
-	valorPago numeric(5,2),
+	comandaId int REFERENCES comanda(comandaId) ON DELETE CASCADE ON UPDATE CASCADE,
+	quantidade int DEFAULT 1,
+	valorPago numeric(5,2) DEFAULT 0,
 	PRIMARY KEY(produtoId, comandaId)
 );

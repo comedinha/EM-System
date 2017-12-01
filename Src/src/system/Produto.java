@@ -14,6 +14,12 @@ public class Produto {
 		
 		return produto.inserir(id, nome, valor);
 	}
+	
+	public static ResultSet getProduto(int id) throws Exception {
+		dao.Produto produto = new dao.Produto();
+		
+		return produto.get(id);
+	}
 
 	public static ObservableList<String> getProdutoNome() throws Exception {
 		ResultSet result = dao.Produto.getAll();

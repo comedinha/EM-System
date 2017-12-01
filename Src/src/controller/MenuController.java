@@ -1,9 +1,8 @@
 package controller;
 
 import java.net.URL;
-import java.util.Calendar;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
-
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
@@ -26,6 +25,7 @@ import system.Produto;
 import system.Produto.TableViewProduto;
 import util.Stages;
 import util.Valores;
+import system.Comanda;
 import system.Funcionario;
 import system.Funcionario.TableViewFuncionario;
 import java.time.LocalDate;
@@ -109,9 +109,13 @@ public class MenuController implements Initializable {
     }
 
     @FXML
-    void btn_addComanda(ActionEvent event) {
+    void btn_addComanda(ActionEvent event) throws SQLException {
+    	int idComanda = Comanda.criaComanda("MESA");
     	Stages st = new Stages();
-    	st.novoStage("Adicionar Comanda", "Comanda");
+    	
+    	FXMLLoader produtoLoader = st.novoStage("Adicionar Comanda", "Comanda");
+    	produtoLoader.<ComandaController>getController();
+		ComandaController.novaComanda(idComanda);
     }
 
     @FXML
@@ -164,6 +168,7 @@ public class MenuController implements Initializable {
 
     	try {
     		tableProd.setItems(Produto.getAllProduto());
+    		
     		tableProd.setRowFactory((TableView<TableViewProduto> tableProduto) -> {
     			final TableRow<TableViewProduto> row = new TableRow<>();
     			final ContextMenu rowMenu = new ContextMenu();

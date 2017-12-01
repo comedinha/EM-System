@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import util.Valores;
 
 public class Produto {
-	public boolean inserir (int id, String nome, float valor) throws Exception {
+	public static boolean inserir (int id, String nome, float valor) throws Exception {
 		String sql = "INSERT INTO produto (nome, valor, produtoid) VALUES (?, ?, ?)";
 		if (id == 0)
 			sql = "INSERT INTO produto (nome, valor) VALUES (?, ?)";
@@ -22,7 +22,7 @@ public class Produto {
 		return true;
 	}
 
-	public boolean atualizar(int id, String nome, float valor) throws Exception {
+	public static boolean atualizar(int id, String nome, float valor) throws Exception {
 		String sql = "UPDATE produto SET nome = ?, valor = ? WHERE produtoid = ?";
 
 		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
@@ -40,8 +40,17 @@ public class Produto {
 		ResultSet result = statement.executeQuery();
 		return result;
 	}
+	
+	public static ResultSet get(int id) throws Exception {
+		String sql = "SELECT * FROM produto WHERE produtoid = ?"; 
 
-	public boolean delete(int id) throws Exception {
+		PreparedStatement statement = Valores.getConnection().prepareStatement(sql);
+		statement.setInt(1, id);
+		ResultSet result = statement.executeQuery();
+		return result;
+	}
+
+	public static boolean delete(int id) throws Exception {
 		String sql = "UPDATE produto SET status=0 WHERE produtoid=?";
 		
 		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
