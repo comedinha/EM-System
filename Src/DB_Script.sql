@@ -11,11 +11,8 @@ CREATE TABLE comanda(
 	data date,
 	mesa varchar(15),
 	valorPago numeric(5,2) DEFAULT 0,
-<<<<<<< HEAD
 	status int DEFAULT 0
-=======
 	primary key (comandaId, data)
->>>>>>> ed8ee164d510065c61b9496503f08aedc5ee412b
 );
 
 CREATE TABLE pagamento (
