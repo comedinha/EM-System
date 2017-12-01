@@ -22,7 +22,7 @@ public class FuncionarioController {
 	private int type = 0;
 	private boolean inicial = false;
 
-	ObservableList<String> cb_cargoselection = FXCollections.observableArrayList("Gerente", "Usuário");
+	ObservableList<String> cb_cargoselection = FXCollections.observableArrayList("Gerente", "Usuario");
 
     @FXML
     private ComboBox<String> txf_cargo;
@@ -102,7 +102,7 @@ public class FuncionarioController {
     	txf_cargo.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
     		if (newValue.toString() == "Gerente") {
     			type = 1;
-    		} else if (newValue.toString() == "Usuário") {
+    		} else if (newValue.toString() == "Usuario") {
     			type = 2;
     		}
     	});

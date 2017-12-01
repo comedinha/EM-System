@@ -39,25 +39,20 @@ public class Funcionario {
 	}
 
 	public static boolean update(int id, String nome, String login, String password) throws Exception {
-		String sql = "UPDATE funcionario SET username = ?, ";
+		String sql = "UPDATE funcionario SET username = ?, nome = ?";
+		if (!password.isEmpty())
+			sql += ", password = ? WHERE funcionarioId = ?";
+		else
+			sql += " WHERE funcionarioId = ?";
 
-		PreparedStatement ps;
+		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
+		ps.setString(1, login);
+		ps.setString(2, nome);
 		if (!password.isEmpty()) {
-			sql += "nome = ?, password = ? WHERE funcionarioId = ?";
-			ps = Valores.getConnection().prepareStatement(sql);
 			Crypto cr = new Crypto();
-			password = cr.encrypt(password);
-
-			ps.setString(1, login);
-			ps.setString(2, nome);
-			ps.setString(3, password);
+			ps.setString(3, cr.encrypt(password));
 			ps.setInt(4, id);
 		} else {
-			sql += "nome = ? WHERE funcionarioId = ?";
-			ps = Valores.getConnection().prepareStatement(sql);
-
-			ps.setString(1, login);
-			ps.setString(2, nome);
 			ps.setInt(3, id);
 		}
 			
