@@ -20,6 +20,7 @@ import util.Valores;
 public class FuncionarioController {
 	private int mode = 0;
 	private int type = 0;
+	private int id = 0;
 	private boolean inicial = false;
 
 	ObservableList<String> cb_cargoselection = FXCollections.observableArrayList("Gerente", "Usuario");
@@ -62,7 +63,7 @@ public class FuncionarioController {
 	    	if (mode == 0) {
 		    	Funcionario.criaUsuario(type, nome, login, senha);
 	    	} else if (mode == 1) {
-	    		if (!Funcionario.editaFuncionario(type, nome, login, senha)) {
+	    		if (!Funcionario.editaFuncionario(id, nome, login, senha)) {
 	    			throw new Exception("Erro ao editar funcionário!");
 	    		}
 	    	}
@@ -117,6 +118,7 @@ public class FuncionarioController {
 
     void editaFuncionario(int id, String nome, String login, String cargo) {
     	mode = 1;
+    	this.id = id;
     	txf_cargo.setValue(cargo);
     	txf_cargo.setDisable(true);
 
