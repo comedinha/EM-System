@@ -59,9 +59,6 @@ public class FuncionarioController {
 	    	if (mode == 0) {
 		    	Funcionario.criaUsuario(type, nome, login, senha);
 	    	} else if (mode == 1) {
-	    		if (login == oldName)
-	        		login = null;
-	
 	    		if (!Funcionario.editaFuncionario(type, nome, login, senha)) {
 	    			throw new Exception("Erro ao editar funcionário!");
 	    		}
