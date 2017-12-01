@@ -13,8 +13,16 @@ public class Comanda {
 		return dao.Comanda.novaComanda(mesa);
 	}
 	
-	public static void getComanda() {
-
+	public static ObservableList<TableViewComandaLista> getComandaAll() throws SQLException {
+		ResultSet result = dao.Comanda.getAllComandas();
+		ObservableList<TableViewComandaLista> ol = FXCollections.observableArrayList();
+		
+		while (result.next()) {			
+			ol.add(new TableViewComandaLista(result.getInt(1), result.getString(3), 
+					result.getFloat(4)));
+		}
+		
+		return ol;
 	}
 
 	public static void editaComanda(int id) {
@@ -52,7 +60,7 @@ public class Comanda {
 		return ol;
 	}
 	
-	//Classe Interna modelo Comanda	
+	//Classe Interna modelo Comanda-Prdoutos
 	public static class TableViewComandaProduto {
     	private final SimpleIntegerProperty id;
     	private final SimpleIntegerProperty qtde;
@@ -95,4 +103,27 @@ public class Comanda {
 			return valorPago.get();
 		}
     }
+	
+	//Classe Interna Modelo Lista de Comanda
+	public static class TableViewComandaLista {
+		private final SimpleIntegerProperty id;
+		private final SimpleStringProperty mesa;
+		//private final Simple????????? data
+		private final SimpleFloatProperty valor;
+		public TableViewComandaLista(int id, String mesa, float valor) {
+			this.id = new SimpleIntegerProperty(id);
+			this.mesa = new SimpleStringProperty(mesa);
+			this.valor = new SimpleFloatProperty(valor);
+		}
+		
+		public int getId() {
+			return id.get();
+		}
+		public String getMesa() {
+			return mesa.get();
+		}
+		public float getValor() {
+			return valor.get();
+		}				
+	}
 }

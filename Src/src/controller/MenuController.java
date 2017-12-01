@@ -1,10 +1,7 @@
 package controller;
 
 import java.net.URL;
-<<<<<<< HEAD
 import java.sql.SQLException;
-=======
->>>>>>> 165f4f84c4ac0b311a9c85efb3befdad87c740c5
 import java.util.ResourceBundle;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
@@ -27,6 +24,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import system.Produto;
+import system.Comanda.TableViewComandaLista;
 import system.Produto.TableViewProduto;
 import util.Stages;
 import util.Valores;
@@ -67,16 +65,19 @@ public class MenuController implements Initializable {
     private TextField txf_comandaBusca;
 
     @FXML
-    private TableView<?> tableComand;
+    private TableView<TableViewComandaLista> tableComand;
 
     @FXML
-    private TableColumn<?, ?> tb_comandid;
+    private TableColumn<TableViewComandaLista, Integer> tb_comandId;
+    
+    @FXML
+    private TableColumn<TableViewComandaLista, String> tb_comandMesa;
 
     @FXML
-    private TableColumn<?, ?> tb_comanddata;
+    private TableColumn<?, ?> tb_comandData;
 
     @FXML
-    private TableColumn<?, ?> tb_comandvlr;
+    private TableColumn<TableViewComandaLista, Float> tb_comandVlr;
 
     @FXML
     private Tab ab_produtos;
@@ -119,6 +120,31 @@ public class MenuController implements Initializable {
 
     @FXML
     private BorderPane bd_configsistema;
+    
+    @Override
+    public void initialize(URL url, ResourceBundle resource) {
+    	iniciaInicio();
+    	
+    	if (Valores.getUsuario().getFuncao() == 1) {
+    		iniciaFinanc();
+    	} else {
+    		ab_financeiro.setDisable(true);
+    	}
+    	
+    	iniciaComanda();
+    	
+    	if (Valores.getUsuario().getFuncao() == 1) {
+	    	iniciaProduto();
+	    	iniciaFuncionario();
+    	} else {
+    		ab_funcionarios.setDisable(true);
+    		ab_produtos.setDisable(true);
+    		bd_configsistema.setDisable(true);
+    		bd_configsistema.setVisible(false);
+    	}
+    	
+    	iniciaConfig();
+    }
 
     @FXML
     void act_BuscaFinanceiro(ActionEvent event) {
@@ -156,27 +182,6 @@ public class MenuController implements Initializable {
 	    st.novoStage("EMSystem Login", "Login");
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resource) {
-    	iniciaInicio();
-    	if (Valores.getUsuario().getFuncao() == 1) {
-    		iniciaFinanc();
-    	} else {
-    		ab_financeiro.setDisable(true);
-    	}
-    	iniciaComanda();
-    	if (Valores.getUsuario().getFuncao() == 1) {
-	    	iniciaProduto();
-	    	iniciaFuncionario();
-    	} else {
-    		ab_funcionarios.setDisable(true);
-    		ab_produtos.setDisable(true);
-    		bd_configsistema.setDisable(true);
-    		bd_configsistema.setVisible(false);
-    	}
-    	iniciaConfig();
-    }
-
     private void iniciaInicio() {
     }
 
@@ -186,7 +191,16 @@ public class MenuController implements Initializable {
     }
 
     private void iniciaComanda() {
-
+    	tb_comandId.setCellValueFactory(new PropertyValueFactory<>("id"));
+    	tb_comandMesa.setCellValueFactory(new PropertyValueFactory<>("mesa"));
+    	//tb_comandData ???
+    	tb_comandVlr.setCellValueFactory(new PropertyValueFactory<>("valor"));
+    	
+    	try {
+			tableComand.setItems(Comanda.getComandaAll());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
     }
 
     private void iniciaProduto() {
@@ -353,6 +367,8 @@ public class MenuController implements Initializable {
 	    	} else if (type == 2) {
 	    		tableFunc.setItems(Funcionario.getAllFuncionario());
 	    		txf_funcbusca.setText(txf_funcbusca.getText());
+	    	} else if (type == 3) {
+	    		tableComand.setItems(Comanda.getComandaAll());
 	    	}
     	} catch (Exception e) {
     		throw new Exception("Erro ao atualizar tabelas.");

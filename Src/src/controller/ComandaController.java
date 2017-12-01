@@ -18,6 +18,7 @@ import system.Comanda;
 import system.Comanda.TableViewComandaProduto;
 import system.Produto;
 import util.Stages;
+import util.Valores;
 
 public class ComandaController implements Initializable {	
 	static int idComanda; 
@@ -103,7 +104,8 @@ public class ComandaController implements Initializable {
 	}
 	
 	@FXML
-	void btnSalvar(ActionEvent event) {
+	void btnSalvar(ActionEvent event) throws Exception {
+		Valores.getController().refresh(3);
 		((Node) event.getSource()).getScene().getWindow().hide();
 	}
 	
