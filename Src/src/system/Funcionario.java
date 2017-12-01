@@ -82,7 +82,7 @@ public class Funcionario {
     		if (cargo == 1) {
     			this.cargo = new SimpleStringProperty("Gerente");
     		} else {
-    			this.cargo = new SimpleStringProperty("Funcionário");
+    			this.cargo = new SimpleStringProperty("Usuário");
     		}
     	}
 

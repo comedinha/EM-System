@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -66,6 +67,9 @@ public class ProdutoController {
 
     @FXML
     private void initialize() {
+    	if (Valores.getConnection() == null || Valores.getUsuario() == null || Valores.getController() == null)
+    		Platform.exit();
+
     	txf_id.setDisable(true);
     	chb_enableid.selectedProperty().addListener((ChangeListener<? super Boolean>) new ChangeListener<Boolean>() {
     		public void changed(ObservableValue<? extends Boolean> ov,
