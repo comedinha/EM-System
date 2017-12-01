@@ -21,7 +21,7 @@
    <center>
       <VBox prefHeight="276.0" prefWidth="479.0" BorderPane.alignment="CENTER">
          <children>
-            <TableView fx:id="tv_produtos" prefHeight="272.0" prefWidth="450.0">
+            <TableView fx:id="tv_produtos" editable="true" prefHeight="272.0" prefWidth="450.0">
               <columns>
                 <TableColumn fx:id="tc_id" prefWidth="19.0" text="ID" />
                 <TableColumn fx:id="tc_nome" prefWidth="73.0" text="Descrição" />

@@ -10,7 +10,8 @@ CREATE TABLE comanda(
 	comandaId SERIAL PRIMARY KEY NOT NULL,
 	data date,
 	mesa varchar(15),
-	valorPago numeric(5,2) DEFAULT 0
+	valorPago numeric(5,2) DEFAULT 0,
+	status int DEFAULT 0
 );
 
 CREATE TABLE pagamento (
