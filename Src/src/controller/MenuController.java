@@ -208,9 +208,9 @@ public class MenuController {
 	    	dt_finbuscaate.setValue(LocalDate.now());
 	
 	    	tb_financid.setCellValueFactory(new PropertyValueFactory<>("id"));
-	    	tb_financfunc.setCellValueFactory(new PropertyValueFactory<>("funcionario"));
+	    	//tb_financfunc.setCellValueFactory(new PropertyValueFactory<>("funcionario"));
 	    	tb_financdata.setCellValueFactory(new PropertyValueFactory<>("data"));
-	    	tb_financperm.setCellValueFactory(new PropertyValueFactory<>("permanencia"));
+	    	//tb_financperm.setCellValueFactory(new PropertyValueFactory<>("permanencia"));
 	    	tb_financvlr.setCellValueFactory(new PropertyValueFactory<>("valor"));
 
 			tableFinanc.setItems(Comanda.getAllComanda());
