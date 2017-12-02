@@ -98,7 +98,7 @@
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ID" />
                      </children>
                   </HBox>
-                  <TextField fx:id="tf_comid" />
+                  <TextField fx:id="txf_comid" />
                </children>
             </VBox>
             <Separator orientation="VERTICAL" prefHeight="200.0" />
