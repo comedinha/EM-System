@@ -92,8 +92,7 @@ public class ComandaController {
 	            }
 	        });
 			cb_comid.setSelected(false);
-			//txf_comid.setDisable(true);
-			System.out.println("asd");
+			txf_comid.setDisable(true);
 			
     		TextFields.bindAutoCompletion(txf_produto, Produto.getProdutoNome());
     		
@@ -161,6 +160,7 @@ public class ComandaController {
 			} else {
 				if (!cb_comid.isDisable()) {
 					//Criar comanda com ID especificado
+					Comanda.criaComandaId(Integer.parseInt(txf_comid.getText()));
 					cb_comid.setSelected(false);
 					cb_comid.setDisable(true);
 				}
@@ -250,7 +250,11 @@ public class ComandaController {
 				try {
 					int qtde = Comanda.getQtdePrdoutoComanda(row.getItem().getId(), Integer.valueOf(txf_comid.getText()));
 					Comanda.updateQtde(row.getItem().getId(), Integer.valueOf(txf_comid.getText()), qtde-1);
+					refresh();
 				} catch (NumberFormatException | SQLException e) {
+					e.printStackTrace();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			});
@@ -259,7 +263,11 @@ public class ComandaController {
 			removerTudo.setOnAction((ActionEvent event) -> {
 				try {
 					Comanda.removeProdutoComanda(row.getItem().getId(), Integer.valueOf(txf_comid.getText()));
+					refresh();
 				} catch (NumberFormatException | SQLException e) {
+					e.printStackTrace();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			});

@@ -16,6 +16,10 @@ public class Comanda {
 		return dao.Comanda.novaComanda();
 	}
 	
+	public static void criaComandaId(int id) throws SQLException {
+		dao.Comanda.novaComandaId(id);
+	}
+	
 	public static ObservableList<TableViewComandaLista> getAllComanda() throws SQLException {
 		ResultSet result = dao.Comanda.getAllComandas();
 		ObservableList<TableViewComandaLista> ol = FXCollections.observableArrayList();
@@ -29,7 +33,6 @@ public class Comanda {
 
 	public static float getValorPagoComanda(int id) throws SQLException {
 		ResultSet result = dao.Comanda.getValorPagoComanda(id);
-		result.next();
 		return result.getFloat(1);
 	}
 
@@ -53,7 +56,6 @@ public class Comanda {
 			ol.add(new TableViewComandaProduto(result.getInt(1), result.getString(2), 
 					result.getInt(3), result.getFloat(4), result.getFloat(5)));
 		}
-		
 		return ol;
 	}
 	

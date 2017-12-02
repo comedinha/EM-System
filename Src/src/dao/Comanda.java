@@ -8,16 +8,23 @@ import util.Valores;
 
 public class Comanda {
 	public static int novaComanda() throws SQLException {
-		int id = -1;
+		int id;
 		String sql = "INSERT INTO comanda VALUES (DEFAULT)";
 
-		PreparedStatement ps;
-		ps = Valores.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+		PreparedStatement ps = Valores.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 		ps.executeUpdate();
 		ResultSet getId = ps.getGeneratedKeys();
 		getId.next();
 		id = getId.getInt(1);
 		return id;
+	}
+	
+	public static void novaComandaId(int id) throws SQLException {
+		String sql = "INSERT INTO comanda (comandaId) VALUES (?)";
+		
+		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
+		ps.setInt(1, id);
+		ps.executeUpdate();
 	}
 	
 	public static boolean existeNaComanda(int idProduto, int idComanda) throws SQLException {

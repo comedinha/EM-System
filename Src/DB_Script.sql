@@ -10,7 +10,7 @@ CREATE TABLE funcionario (
 CREATE TABLE comanda(
 	comandaId SERIAL NOT NULL,
 	data timestamp DEFAULT CURRENT_TIMESTAMP,
-	mesa varchar(15),
+	mesa varchar(15) DEFAULT 'MESA',
 	valorPago numeric(8,2) DEFAULT 0,
 	status int DEFAULT 0,
 	primary key (comandaId, data)
