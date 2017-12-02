@@ -17,7 +17,6 @@ public class Comanda {
 		ResultSet getId = ps.getGeneratedKeys();
 		getId.next();
 		id = getId.getInt(1);
-		
 		return id;
 	}
 	
@@ -30,22 +29,31 @@ public class Comanda {
 		return ps.executeQuery().next();
 	}
 	
-	public static void updateQtde(int idProduto, int idComanda, int qtde) throws SQLException {
+	public static void updateQtde(int idProduto, int idComanda, int qtde) throws SQLException {		
+		String sql = "UPDATE produtoComanda SET quantidade = ? WHERE produtoId = ? AND comandaId = ?";
+		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
+		ps.setInt(1, qtde);
+		ps.setInt(2, idProduto);
+		ps.setInt(3, idComanda);
+		ps.executeUpdate();
+	}
+	
+	public static ResultSet getQtdeProdutoComanda(int idProduto, int idComanda) throws SQLException {
 		String sql = "SELECT quantidade FROM produtoComanda WHERE produtoId = ? AND comandaId = ?";
 		
 		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
 		ps.setInt(1, idProduto);
 		ps.setInt(2, idComanda);
-		ResultSet result = ps.executeQuery();
-		result.next();
-		int quant = result.getInt(1);
+		return ps.executeQuery();
+	}
+	
+	public static void removeProdutoComanda(int idProduto, int idComanda) throws SQLException {
+		String sql = "DELETE FROM produtoComanda WHERE produtoId = ? AND comandaId = ?";
 		
-		sql = "UPDATE produtoComanda SET quantidade = ? WHERE produtoId = ? AND comandaId = ?";
-		ps = Valores.getConnection().prepareStatement(sql);
-		ps.setInt(1, quant+qtde);
-		ps.setInt(2, idProduto);
-		ps.setInt(3, idComanda);
-		ps.executeUpdate();
+		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
+		ps.setInt(1, idProduto);
+		ps.setInt(2, idComanda);
+		ps.executeUpdate();		
 	}
 	
 	public static void addProduto(int comandaId, int produtoId, int qtde) throws SQLException {
@@ -67,6 +75,14 @@ public class Comanda {
 		ps.setString(1, mesa);
 		ps.setInt(2, id);
 		ps.executeUpdate();
+	}
+	
+	public static ResultSet getValorPagoComanda(int id) throws SQLException {
+		String sql = "SELECT valorPago FROM comanda WHERE comandaId = ?";
+		
+		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
+		ps.setInt(1, id);
+		return ps.executeQuery();
 	}
 
 	public static void get(int i) throws SQLException {

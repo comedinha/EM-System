@@ -27,8 +27,10 @@ public class Comanda {
 		return ol;
 	}
 
-	public static void editaComanda(int id) {
-
+	public static float getValorPagoComanda(int id) throws SQLException {
+		ResultSet result = dao.Comanda.getValorPagoComanda(id);
+		result.next();
+		return result.getFloat(1);
 	}
 
 	public static int finalizaComanda() {
@@ -61,6 +63,16 @@ public class Comanda {
 	
 	public static void updateQtde(int idProduto, int idComanda, int qtde) throws SQLException {
 		dao.Comanda.updateQtde(idProduto, idComanda, qtde);
+	}
+	
+	public static void removeProdutoComanda(int idProduto, int idComanda) throws SQLException {
+		dao.Comanda.removeProdutoComanda(idProduto, idComanda);
+	}
+	
+	public static int getQtdePrdoutoComanda(int idProduto, int idComanda) throws SQLException {
+		ResultSet result = dao.Comanda.getQtdeProdutoComanda(idProduto, idComanda);
+		result.next();
+		return result.getInt(1);
 	}
 	
 	//Classe Interna modelo Comanda-Prdoutos

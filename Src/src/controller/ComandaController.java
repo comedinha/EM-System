@@ -1,5 +1,7 @@
 package controller;
 
+import java.sql.SQLException;
+
 import org.controlsfx.control.textfield.TextFields;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
@@ -65,7 +67,7 @@ public class ComandaController {
     private CheckBox cb_comid;
 
     @FXML
-    private TextField tf_comid;
+    private TextField txf_comid;
     
     @FXML
     private TextField txf_qtde;
@@ -81,28 +83,30 @@ public class ComandaController {
 		try {
 			if (Valores.getConnection() == null || Valores.getUsuario() == null || Valores.getController() == null)
 	    		Platform.exit();
-	
+			
 			txf_qtde.setText("1");
 			cb_comid.selectedProperty().addListener((ChangeListener<? super Boolean>) new ChangeListener<Boolean>() {
 	    		public void changed(ObservableValue<? extends Boolean> ov,
 	                Boolean old_val, Boolean new_val) {
-	    			tf_comid.setDisable(!new_val);
+	    			txf_comid.setDisable(!new_val);
 	            }
 	        });
 			cb_comid.setSelected(false);
-			tf_comid.setDisable(true);
-
+			//txf_comid.setDisable(true);
+			System.out.println("asd");
+			
     		TextFields.bindAutoCompletion(txf_produto, Produto.getProdutoNome());
+    		
     		iniciaTableView();
     	} catch (Exception e) {
-    		Stages.novoAlerta(e.getMessage(), "", true);
+    		Stages.novoAlerta(e.getLocalizedMessage(), "", true);
     	}
 	}
 
     @FXML
     void act_addDesconto(ActionEvent event) {
     	try {
-    		if (tf_comid.getText().isEmpty())
+    		if (txf_comid.getText().isEmpty())
     			throw new Exception("Você não tem uma comanda criada.");
     		if (!cb_comid.isDisable())
     			throw new Exception("A comanda deve ter ao menos um produto.");
@@ -126,7 +130,7 @@ public class ComandaController {
     @FXML
     void act_addPagamento(ActionEvent event) {
     	try {
-    		if (tf_comid.getText().isEmpty())
+    		if (txf_comid.getText().isEmpty())
     			throw new Exception("Você não tem uma comanda criada.");
     		if (!cb_comid.isDisable())
     			throw new Exception("A comanda deve ter ao menos um produto.");
@@ -150,8 +154,8 @@ public class ComandaController {
 	@FXML
 	private void addProduto(ActionEvent event) {
 		try {
-			if (tf_comid.getText().isEmpty()) {
-				tf_comid.setText(Integer.toString(Comanda.criaComanda()));
+			if (txf_comid.getText().isEmpty()) {
+				txf_comid.setText(Integer.toString(Comanda.criaComanda()));
 				cb_comid.setSelected(false);
 				cb_comid.setDisable(true);
 			} else {
@@ -163,20 +167,18 @@ public class ComandaController {
 			}
 			
 			int idProduto = Integer.parseInt(txf_produto.getText().substring(0, txf_produto.getText().indexOf(' ')));
-			if(!Comanda.existeNaComanda(idProduto, Integer.valueOf(tf_comid.getText()))) {
-				Comanda.addProduto(Integer.valueOf(tf_comid.getText()), idProduto, Integer.parseInt(txf_qtde.getText()));
+			if(!Comanda.existeNaComanda(idProduto, Integer.valueOf(txf_comid.getText()))) {
+				Comanda.addProduto(Integer.valueOf(txf_comid.getText()), idProduto, Integer.parseInt(txf_qtde.getText()));
 				txf_produto.clear();
 				txf_qtde.setText("1");
 				refresh();
 			} else {
-				Comanda.updateQtde(idProduto, Integer.valueOf(tf_comid.getText()), Integer.parseInt(txf_qtde.getText()));
+				Comanda.updateQtde(idProduto, Integer.valueOf(txf_comid.getText()), Integer.parseInt(txf_qtde.getText()));
 				refresh();
 			}
 		} catch (Exception e) {
 			Stages.novoAlerta(e.getMessage(), "", true);
 		}
-		
-		
     }
 	
 	@FXML
@@ -196,7 +198,7 @@ public class ComandaController {
 	@FXML
 	void btnSalvar(ActionEvent event) {
 		try {
-			if (tf_comid.getText().isEmpty())
+			if (txf_comid.getText().isEmpty())
 				throw new Exception("A comanda não tem um id.\nAdicione ao menos um produto.");
 	
 			Valores.getController().refresh(3);
@@ -214,19 +216,18 @@ public class ComandaController {
 		tc_valorPago.setCellValueFactory(new PropertyValueFactory<>("valorPago"));
 		tc_valorTotal.setCellValueFactory(new PropertyValueFactory<>("valorTotal"));
 
-		if (!tf_comid.getText().isEmpty()) {
-			tv_produtos.setItems(Comanda.getAllProduto(Integer.valueOf(tf_comid.getText())));
+		if (!txf_comid.getText().isEmpty()) {
+			tv_produtos.setItems(Comanda.getAllProduto(Integer.valueOf(txf_comid.getText())));
 			cb_comid.setSelected(false);
 			cb_comid.setDisable(true);
 		}
-
+		
 		tv_produtos.setRowFactory((TableView<TableViewComandaProduto> tableProdutoComanda) -> {
 			final TableRow<TableViewComandaProduto> row = new TableRow<>();
 			final ContextMenu rowMenu = new ContextMenu();
 			MenuItem pagarProduto = new MenuItem("Pagar produto");
 			MenuItem removerUm = new MenuItem("Remover um");
 			MenuItem removerTudo = new MenuItem("Remover tudo");
-
 			//Atualizar Produtos
 			pagarProduto.setOnAction((ActionEvent event) -> {
 				try {
@@ -243,17 +244,26 @@ public class ComandaController {
 					Stages.novoAlerta(e.getMessage(), "", true);
 				}
 			});
-
+			
 			//Remover Um Produto
 			removerUm.setOnAction((ActionEvent event) -> {
-				
+				try {
+					int qtde = Comanda.getQtdePrdoutoComanda(row.getItem().getId(), Integer.valueOf(txf_comid.getText()));
+					Comanda.updateQtde(row.getItem().getId(), Integer.valueOf(txf_comid.getText()), qtde-1);
+				} catch (NumberFormatException | SQLException e) {
+					e.printStackTrace();
+				}
 			});
-
+			
 			//Remover Tudo
 			removerTudo.setOnAction((ActionEvent event) -> {
-				
+				try {
+					Comanda.removeProdutoComanda(row.getItem().getId(), Integer.valueOf(txf_comid.getText()));
+				} catch (NumberFormatException | SQLException e) {
+					e.printStackTrace();
+				}
 			});
-
+			
 			rowMenu.getItems().addAll(pagarProduto, removerUm, removerTudo);
 			row.contextMenuProperty().bind(Bindings.when(Bindings.isNotNull(row.itemProperty())).then(rowMenu).otherwise((ContextMenu)null));
 			return row;
@@ -269,24 +279,25 @@ public class ComandaController {
 		ta_valorTotal.setText(Float.toString(somaValor));
 	}
 	
-	private void valorPago() {
+	private void valorPago() throws NumberFormatException, SQLException {
 		float somaValor = 0;
 		
 		for(TableViewComandaProduto lista : tv_produtos.getItems())
 			somaValor += lista.getValorPago();
 		
+		somaValor += Comanda.getValorPagoComanda(Integer.parseInt((txf_comid.getText())));
 		ta_valorPago.setText(Float.toString(somaValor));
 	}
 	
 	private void refresh() throws Exception {
-		tv_produtos.setItems(Comanda.getAllProduto(Integer.valueOf(tf_comid.getText())));
+		tv_produtos.setItems(Comanda.getAllProduto(Integer.valueOf(txf_comid.getText())));
 		valorTotal();
 		valorPago();
 	}
 
 	public void editaComanda(int id) {
 		try {
-			tf_comid.setText(Integer.toString(id));
+			txf_comid.setText(Integer.toString(id));
 			cb_comid.setSelected(false);
 			cb_comid.setDisable(true);
 			refresh();

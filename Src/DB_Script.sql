@@ -37,7 +37,7 @@ CREATE TABLE produto_Alterado (
 	produtoId SERIAL REFERENCES produto(produtoId) ON DELETE NO ACTION ON UPDATE CASCADE,
 	data date,
 	valor numeric(8,2),
-	status int default 1
+	status int DEFAULT 1
 );
 
 CREATE TABLE produtoComanda (
