@@ -76,11 +76,11 @@ public class ConfigDatabaseController {
 			((Node) event.getSource()).getScene().getWindow().hide();
 			if (!ConectaBanco.verificaGerente(Valores.getConnection())) {
 				Stages st = new Stages();
-		    	FXMLLoader funcionarioLoader = st.novoStage("Adicionar Gerente", "Funcionario");
+		    	FXMLLoader funcionarioLoader = st.novoStage("Adicionar Gerente", "Funcionario", null);
 				funcionarioLoader.<FuncionarioController>getController().cadastroInicial();
 			} else {
 				Stages st = new Stages();
-		    	st.novoStage("EMSystem Login", "Login");
+		    	st.novoStage("EMSystem Login", "Login", null);
 			}
 		} catch (Exception e) {
 			Alert alert = new Alert(AlertType.ERROR, e.getMessage());

@@ -3,12 +3,13 @@ CREATE TABLE funcionario (
 	username varchar(15) UNIQUE,
 	password varchar(30),
 	nome varchar(50),
+	garcom int2,
 	funcaoId int
 );
 
 CREATE TABLE comanda(
 	comandaId SERIAL NOT NULL,
-	data date DEFAULT CURRENT_DATE,
+	data date DEFAULT CURRENT_TIMESTAMP,
 	mesa varchar(15),
 	valorPago numeric(8,2) DEFAULT 0,
 	status int DEFAULT 0,
@@ -18,7 +19,7 @@ CREATE TABLE comanda(
 CREATE TABLE pagamento (
 	pagamentoId SERIAL PRIMARY KEY NOT NULL,
 	valor int,
-	data date DEFAULT CURRENT_DATE,
+	data date DEFAULT CURRENT_TIMESTAMP,
 	funcionarioId int,
 	comandaId int,
 	dataComanda date,

@@ -1,7 +1,10 @@
 package system;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
+
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -18,8 +21,7 @@ public class Comanda {
 		ObservableList<TableViewComandaLista> ol = FXCollections.observableArrayList();
 		
 		while (result.next()) {			
-			ol.add(new TableViewComandaLista(result.getInt(1), result.getString(3), 
-					result.getFloat(4)));
+			ol.add(new TableViewComandaLista(result.getInt(1), result.getDate(2), result.getTime(2), result.getString(3), result.getFloat(4)));
 		}
 		
 		return ol;
@@ -121,10 +123,12 @@ public class Comanda {
 	public static class TableViewComandaLista {
 		private final SimpleIntegerProperty id;
 		private final SimpleStringProperty mesa;
-		//private final Simple????????? data
+		private final SimpleStringProperty data;
 		private final SimpleFloatProperty valor;
-		public TableViewComandaLista(int id, String mesa, float valor) {
+
+		public TableViewComandaLista(int id,  Date data, Time time, String mesa, float valor) {
 			this.id = new SimpleIntegerProperty(id);
+			this.data = new SimpleStringProperty(data.toString() + " " + time.toString());
 			this.mesa = new SimpleStringProperty(mesa);
 			this.valor = new SimpleFloatProperty(valor);
 		}
@@ -132,11 +136,17 @@ public class Comanda {
 		public int getId() {
 			return id.get();
 		}
+
 		public String getMesa() {
 			return mesa.get();
 		}
+
+		public String getData() {
+			return data.get();
+		}
+
 		public float getValor() {
 			return valor.get();
-		}				
+		}
 	}
 }

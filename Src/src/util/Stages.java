@@ -10,24 +10,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 public class Stages {
-	public FXMLLoader novoStage(String title, String dir) {
-		FXMLLoader loader = null;
-		try {
-			Stage stage = new Stage();
-			stage.setTitle(title);
-			loader = new FXMLLoader(getClass().getResource("/view/" + dir + ".fxml"));
-			BorderPane root = loader.load();
-			Scene scene = new Scene(root);
-			stage.getIcons().add(new Image("file:icone.png"));
-			stage.setScene(scene);
-			stage.show();
-		} catch (Exception e) {
-			novoAlerta(e.getMessage(), "", true);
-		}
-		return loader;
-	}
-
-	public FXMLLoader novoStageEvent(String title, String dir, Parent parent) {
+	public FXMLLoader novoStage(String title, String dir, Parent parent) {
 		FXMLLoader loader = null;
 		try {
 			Stage stage = new Stage();
@@ -38,7 +21,8 @@ public class Stages {
 			stage.getIcons().add(new Image("file:icone.png"));
 			stage.setScene(scene);
 			stage.setOnCloseRequest(e -> {
-				parent.setDisable(false);
+				if (parent != null)
+					parent.setDisable(false);
 			});
 			stage.show();
 		} catch (Exception e) {
