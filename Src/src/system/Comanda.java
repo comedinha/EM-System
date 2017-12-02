@@ -49,12 +49,9 @@ public class Comanda {
 		ResultSet result = dao.Comanda.getAllProduto(id);
 		ObservableList<TableViewComandaProduto> ol = FXCollections.observableArrayList();
 		
-		while (result.next()) {
-			ResultSet result2 = dao.Produto.get(result.getInt(1));
-			result2.next();
-			
-			ol.add(new TableViewComandaProduto(result.getInt(1), result.getInt(3), 
-					result2.getString(2), result2.getFloat(3), result.getFloat(4)));
+		while (result.next()) {			
+			ol.add(new TableViewComandaProduto(result.getInt(1), result.getString(2), 
+					result.getInt(3), result.getFloat(4), result.getFloat(5)));
 		}
 		
 		return ol;
@@ -69,7 +66,7 @@ public class Comanda {
     	private final SimpleFloatProperty valorTotal;
     	private final SimpleFloatProperty valorPago;
 		
-    	public TableViewComandaProduto(int id, int qtde, String nome, float valorIndividual,
+    	public TableViewComandaProduto(int id, String nome, int qtde, float valorIndividual,
     			float valorPago) {
 			this.id = new SimpleIntegerProperty(id);
 			this.qtde = new SimpleIntegerProperty(qtde);
