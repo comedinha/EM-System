@@ -28,10 +28,6 @@ public class Comanda {
 	public static void editaComanda(int id) {
 
 	}
-	
-	public static void delete(int id) throws SQLException {
-		dao.Comanda.delete(id);
-	}
 
 	public static int finalizaComanda() {
 		return 0;

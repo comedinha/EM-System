@@ -6,6 +6,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
@@ -14,8 +15,8 @@ import util.MeioPagamento;
 import util.Valores;
 
 public class PagamentoController {
-	ActionEvent eventComanda;
-	boolean modoDesconto = false;
+	private Parent parent;
+	private int mode = 0;
 
     @FXML
     private TextField tf_valorpagar;
@@ -40,13 +41,13 @@ public class PagamentoController {
 
     @FXML
     void btn_cancelar(ActionEvent event) {
-    	((Node) eventComanda.getSource()).getScene().getRoot().setDisable(false);
+    	parent.setDisable(false);
     	((Node) event.getSource()).getScene().getWindow().hide();
     }
 
     @FXML
     void btn_salvar(ActionEvent event) {
-    	((Node) eventComanda.getSource()).getScene().getRoot().setDisable(false);
+    	parent.setDisable(false);
     	((Node) event.getSource()).getScene().getWindow().hide();
     }
 
@@ -65,18 +66,25 @@ public class PagamentoController {
     	cb_meioPagamento.getItems().addAll(MeioPagamento.values());
 	}
 
-    public void adicionaDesconto(int valor, ActionEvent eventComanda) {
-    	tf_valorpagar.setText(Integer.toString(valor));
-    	this.eventComanda = eventComanda;
+    public void adicionaDesconto(float valor, Parent root) {
+    	tf_valorpagar.setText(Float.toString(valor));
+    	parent = root;
     	chb_valorsec.setDisable(true);
     	tf_valorsec.setDisable(true);
-    	modoDesconto = true;
+    	mode = 1;
     	txt_caixa.setText(String.format(txt_caixa.getText(), "Desconto"));
     }
 
-    public void adicionaPagamento(int valor, ActionEvent eventComanda) {
-    	tf_valorpagar.setText(Integer.toString(valor));
-    	this.eventComanda = eventComanda;
+    public void adicionaPagamento(float valor, Parent root) {
+    	tf_valorpagar.setText(Float.toString(valor));
+    	parent = root;
     	txt_caixa.setText(String.format(txt_caixa.getText(), "Pagamento"));
     }
+
+	public void adicionaProdutoPagamento(float valorPagar, Parent root) {
+		tf_valorpagar.setText(Float.toString(valorPagar));
+    	parent = root;
+    	mode = 2;
+    	txt_caixa.setText(String.format(txt_caixa.getText(), "Pagamento"));
+	}
 }

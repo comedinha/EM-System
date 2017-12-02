@@ -2,14 +2,19 @@ package controller;
 
 import org.controlsfx.control.textfield.TextFields;
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -102,16 +107,17 @@ public class ComandaController {
     		if (!cb_comid.isDisable())
     			throw new Exception("A comanda deve ter ao menos um produto.");
 
-    		int valorTotal = Integer.valueOf(ta_valorTotal.getText());
-    		int valorPago = Integer.valueOf(ta_valorPago.getText());
-	    	int valorPagar = valorTotal - valorPago;
+    		float valorTotal = Float.valueOf(ta_valorTotal.getText());
+    		float valorPago = Float.valueOf(ta_valorPago.getText());
+    		float valorPagar = valorTotal - valorPago;
 	    	if (valorPagar < 0)
 	    		throw new Exception("Produto pago.");
 
-	    	((Node) event.getSource()).getScene().getRoot().setDisable(true);
+	    	Parent root = ((Node) event.getSource()).getScene().getRoot();
+	    	root.setDisable(true);
 	    	Stages st = new Stages();
-	    	FXMLLoader pagamentoLoader = st.novoStage("Atribuir Desconto", "Pagamento");
-	    	pagamentoLoader.<PagamentoController>getController().adicionaDesconto(valorPagar, event);
+	    	FXMLLoader pagamentoLoader = st.novoStageEvent("Atribuir Desconto", "Pagamento", root);
+	    	pagamentoLoader.<PagamentoController>getController().adicionaDesconto(valorPagar, root);
     	} catch (Exception e) {
     		Stages.novoAlerta(e.getMessage(), "", true);
     	}
@@ -125,16 +131,17 @@ public class ComandaController {
     		if (!cb_comid.isDisable())
     			throw new Exception("A comanda deve ter ao menos um produto.");
 
-    		int valorTotal = Integer.valueOf(ta_valorTotal.getText());
-    		int valorPago = Integer.valueOf(ta_valorPago.getText());
-	    	int valorPagar = valorTotal - valorPago;
+    		float valorTotal = Float.valueOf(ta_valorTotal.getText());
+    		float valorPago = Float.valueOf(ta_valorPago.getText());
+    		float valorPagar = valorTotal - valorPago;
 	    	if (valorPagar < 0)
 	    		throw new Exception("Produto pago.");
 
-	    	((Node) event.getSource()).getScene().getRoot().setDisable(true);
+	    	Parent root = ((Node) event.getSource()).getScene().getRoot();
+	    	root.setDisable(true);
 	    	Stages st = new Stages();
-	    	FXMLLoader pagamentoLoader = st.novoStage("Atribuir Pagamento", "Pagamento");
-	    	pagamentoLoader.<PagamentoController>getController().adicionaPagamento(valorPagar, event);
+	    	FXMLLoader pagamentoLoader = st.novoStageEvent("Atribuir Pagamento", "Pagamento", root);
+	    	pagamentoLoader.<PagamentoController>getController().adicionaPagamento(valorPagar, root);
     	} catch (Exception e) {
     		Stages.novoAlerta(e.getMessage(), "", true);
     	}
@@ -178,8 +185,7 @@ public class ComandaController {
 			if(editMode) {
 				//não sei oq fazer
 			} else {
-				if (!tf_comid.getText().isEmpty())
-					Comanda.delete(Integer.valueOf(tf_comid.getText()));
+
 			}
 			((Node) event.getSource()).getScene().getWindow().hide();
 		} catch (Exception e) {
@@ -213,6 +219,45 @@ public class ComandaController {
 			cb_comid.setSelected(false);
 			cb_comid.setDisable(true);
 		}
+
+		tv_produtos.setRowFactory((TableView<TableViewComandaProduto> tableProdutoComanda) -> {
+			final TableRow<TableViewComandaProduto> row = new TableRow<>();
+			final ContextMenu rowMenu = new ContextMenu();
+			MenuItem pagarProduto = new MenuItem("Pagar produto");
+			MenuItem removerUm = new MenuItem("Remover um");
+			MenuItem removerTudo = new MenuItem("Remover tudo");
+
+			//Atualizar Produtos
+			pagarProduto.setOnAction((ActionEvent event) -> {
+				try {
+					float valorPago = row.getItem().getValorPago();
+					float valorTotal = row.getItem().getValorTotal();
+					float valorPagar = valorTotal - valorPago;
+
+					Parent root = row.getTableView().getScene().getRoot();
+			    	root.setDisable(true);
+			    	Stages st = new Stages();
+			    	FXMLLoader pagamentoLoader = st.novoStageEvent("Atribuir Pagamento", "Pagamento", root);
+			    	pagamentoLoader.<PagamentoController>getController().adicionaProdutoPagamento(valorPagar, root);
+				} catch (Exception e) {
+					Stages.novoAlerta(e.getMessage(), "", true);
+				}
+			});
+
+			//Remover Um Produto
+			removerUm.setOnAction((ActionEvent event) -> {
+				
+			});
+
+			//Remover Tudo
+			removerTudo.setOnAction((ActionEvent event) -> {
+				
+			});
+
+			rowMenu.getItems().addAll(pagarProduto, removerUm, removerTudo);
+			row.contextMenuProperty().bind(Bindings.when(Bindings.isNotNull(row.itemProperty())).then(rowMenu).otherwise((ContextMenu)null));
+			return row;
+		});
 	}
 	
 	private void valorTotal() {
@@ -237,5 +282,16 @@ public class ComandaController {
 		tv_produtos.setItems(Comanda.getAllProduto(Integer.valueOf(tf_comid.getText())));
 		valorTotal();
 		valorPago();
+	}
+
+	public void editaComanda(int id) {
+		try {
+			tf_comid.setText(Integer.toString(id));
+			cb_comid.setSelected(false);
+			cb_comid.setDisable(true);
+			refresh();
+		} catch (Exception e) {
+			Stages.novoAlerta(e.getMessage(), "", true);
+		}
 	}
 }

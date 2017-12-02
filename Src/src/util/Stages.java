@@ -1,6 +1,7 @@
 package util;
 
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -19,6 +20,26 @@ public class Stages {
 			Scene scene = new Scene(root);
 			stage.getIcons().add(new Image("file:icone.png"));
 			stage.setScene(scene);
+			stage.show();
+		} catch (Exception e) {
+			novoAlerta(e.getMessage(), "", true);
+		}
+		return loader;
+	}
+
+	public FXMLLoader novoStageEvent(String title, String dir, Parent parent) {
+		FXMLLoader loader = null;
+		try {
+			Stage stage = new Stage();
+			stage.setTitle(title);
+			loader = new FXMLLoader(getClass().getResource("/view/" + dir + ".fxml"));
+			BorderPane root = loader.load();
+			Scene scene = new Scene(root);
+			stage.getIcons().add(new Image("file:icone.png"));
+			stage.setScene(scene);
+			stage.setOnCloseRequest(e -> {
+				parent.setDisable(false);
+			});
 			stage.show();
 		} catch (Exception e) {
 			novoAlerta(e.getMessage(), "", true);

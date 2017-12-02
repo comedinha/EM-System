@@ -9,7 +9,7 @@ import util.Valores;
 public class Comanda {
 	public static int novaComanda() throws SQLException {
 		int id = -1;
-		String sql = "INSERT INTO comanda (mesa) VALUES ('MESA')";
+		String sql = "INSERT INTO comanda VALUES (DEFAULT)";
 
 		PreparedStatement ps;
 		ps = Valores.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -66,15 +66,6 @@ public class Comanda {
 		ps = Valores.getConnection().prepareStatement(sql);
 		ps.setString(1, mesa);
 		ps.setInt(2, id);
-		ps.executeUpdate();
-	}
-	
-	public static void delete(int id) throws SQLException {
-		String sql = "DELETE FROM comanda WHERE comandaId = ?";
-
-		PreparedStatement ps;
-		ps = Valores.getConnection().prepareStatement(sql);
-		ps.setInt(1, id);
 		ps.executeUpdate();
 	}
 

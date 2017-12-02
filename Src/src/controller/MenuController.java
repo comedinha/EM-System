@@ -216,39 +216,59 @@ public class MenuController {
     	
     	try {
 			tableComand.setItems(Comanda.getAllComanda());
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+			tableComand.setRowFactory((TableView<TableViewComandaLista> tableProduto) -> {
+    			final TableRow<TableViewComandaLista> row = new TableRow<>();
+    			final ContextMenu rowMenu = new ContextMenu();
+    			MenuItem editItem = new MenuItem("Editar");
 
-    	//Busca
-		txf_comandaBusca.textProperty().addListener(new InvalidationListener() {
-			@Override
-			public void invalidated(Observable observable) {
-				try {
-					if(txf_comandaBusca.textProperty().get().isEmpty()) {
-						tableComand.setItems(Comanda.getAllComanda());
-						return;
-					}
+    			//Atualizar Produtos
+    			editItem.setOnAction((ActionEvent event) -> {
+    				try {
+    					Stages st = new Stages();
+        		    	FXMLLoader comandaLoader = st.novoStage("Editar Comanda", "Comanda");
+        		    	comandaLoader.<ComandaController>getController().editaComanda(row.getItem().getId());
+    				} catch (Exception e) {
+    					Stages.novoAlerta(e.getMessage(), "", true);
+    				}
+    			});
 
-					ObservableList<TableViewComandaLista> tableItems = FXCollections.observableArrayList();
-					ObservableList<TableColumn<TableViewComandaLista, ?>> cols = tableComand.getColumns();
-					for (int i = 0; i < Comanda.getAllComanda().size(); i++) {
-						for (int j = 0; j < cols.size(); j++) {
-							TableColumn<TableViewComandaLista, ?> col = cols.get(j);
-							String cellValue = col.getCellData(Comanda.getAllComanda().get(i)).toString();
-							cellValue = cellValue.toLowerCase();
-							if(cellValue.contains(txf_comandaBusca.textProperty().get().toLowerCase())) {
-								tableItems.add(Comanda.getAllComanda().get(i));
-								break;
+    			rowMenu.getItems().addAll(editItem);
+    			row.contextMenuProperty().bind(Bindings.when(Bindings.isNotNull(row.itemProperty())).then(rowMenu).otherwise((ContextMenu)null));
+    			return row;
+    		});
+
+	    	//Busca
+			txf_comandaBusca.textProperty().addListener(new InvalidationListener() {
+				@Override
+				public void invalidated(Observable observable) {
+					try {
+						if (txf_comandaBusca.textProperty().get().isEmpty()) {
+							tableComand.setItems(Comanda.getAllComanda());
+							return;
+						}
+	
+						ObservableList<TableViewComandaLista> tableItems = FXCollections.observableArrayList();
+						ObservableList<TableColumn<TableViewComandaLista, ?>> cols = tableComand.getColumns();
+						for (int i = 0; i < Comanda.getAllComanda().size(); i++) {
+							for (int j = 0; j < cols.size(); j++) {
+								TableColumn<TableViewComandaLista, ?> col = cols.get(j);
+								String cellValue = col.getCellData(Comanda.getAllComanda().get(i)).toString();
+								cellValue = cellValue.toLowerCase();
+								if(cellValue.contains(txf_comandaBusca.textProperty().get().toLowerCase())) {
+									tableItems.add(Comanda.getAllComanda().get(i));
+									break;
+								}
 							}
 						}
+						tableComand.setItems(tableItems);
+					} catch (Exception e) {
+						Stages.novoAlerta(e.getMessage(), "", true);
 					}
-					tableComand.setItems(tableItems);
-				} catch (Exception e) {
-					Stages.novoAlerta(e.getMessage(), "", true);
 				}
-			}
-		});
+			});
+    	} catch (Exception e) {
+    		Stages.novoAlerta(e.getMessage(), "", true);
+    	}
     }
 
     private void iniciaProduto() {
