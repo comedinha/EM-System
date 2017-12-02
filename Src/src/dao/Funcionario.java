@@ -88,4 +88,17 @@ public class Funcionario {
 		ps.executeUpdate();	
 		return true;
 	}
+
+	public static String getNomebyId(int id) throws Exception {
+		String sql = "SELECT nome FROM funcionario WHERE funcionarioId = ?";
+
+		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
+		ps.setInt(1, id);
+
+		ResultSet result = ps.executeQuery();
+		if (result.next())
+			return result.getString("nome");
+
+		return null;
+	}
 }

@@ -36,6 +36,8 @@ import system.Configuracao;
 import system.Funcionario;
 import system.Funcionario.FuncionarioEnum;
 import system.Funcionario.TableViewFuncionario;
+import system.Pagamento.TableViewPagamento;
+
 import java.time.LocalDate;
 
 public class MenuController {
@@ -55,22 +57,22 @@ public class MenuController {
     private DatePicker dt_finbuscaate;
 
     @FXML
-    private TableView<?> tableFinanc;
+    private TableView<TableViewPagamento> tableFinanc;
 
     @FXML
-    private TableColumn<?, ?> tb_financid;
+    private TableColumn<TableViewPagamento, Integer> tb_financid;
 
     @FXML
-    private TableColumn<?, ?> tb_financfunc;
+    private TableColumn<TableViewPagamento, String> tb_financfunc;
 
     @FXML
-    private TableColumn<?, ?> tb_financdata;
+    private TableColumn<TableViewPagamento, String> tb_financdata;
 
     @FXML
-    private TableColumn<?, ?> tb_financperm;
+    private TableColumn<TableViewPagamento, ?> tb_financperm;
 
     @FXML
-    private TableColumn<?, ?> tb_financvlr;
+    private TableColumn<TableViewPagamento, Float> tb_financvlr;
 
     @FXML
     private TextField txf_comandaBusca;

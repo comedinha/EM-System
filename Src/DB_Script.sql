@@ -16,9 +16,9 @@ CREATE TABLE comanda(
 );
 
 CREATE TABLE pagamento (
-	pagamentoId int PRIMARY KEY NOT NULL,
+	pagamentoId SERIAL PRIMARY KEY NOT NULL,
 	valor int,
-	data date,
+	data date DEFAULT CURRENT_DATE,
 	funcionarioId int,
 	comandaId int,
 	dataComanda date,

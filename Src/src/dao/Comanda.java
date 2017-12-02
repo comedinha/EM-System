@@ -9,10 +9,11 @@ import util.Valores;
 public class Comanda {
 	public static int novaComanda() throws SQLException {
 		int id = -1;
-		String sql = "INSERT INTO comanda";
+		String sql = "INSERT INTO comanda (mesa) VALUES (?)";
 
 		PreparedStatement ps;
 		ps = Valores.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+		ps.setString(1, "Mesa 3");
 		ps.executeUpdate();
 		
 		ResultSet getId = ps.getGeneratedKeys();

@@ -8,6 +8,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import util.Stages;
 
 public class Funcionario {
 
@@ -69,6 +70,18 @@ public class Funcionario {
 				throw new Exception("Você não pode remover todos os gerentes!");
 			}
 		}
+	}
+
+	public static String getNomebyId(int id) {
+		String nome = "";
+		try {
+			nome = dao.Funcionario.getNomebyId(id);
+			if (nome.isEmpty())
+				throw new Exception("Funcionario não encontrado!");
+		} catch (Exception e) {
+			Stages.novoAlerta(e.getMessage(), "", true);
+		}
+		return nome;
 	}
 
 	public static class TableViewFuncionario {
