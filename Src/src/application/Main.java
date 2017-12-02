@@ -13,7 +13,7 @@ public class Main extends Application {
 			new ReadConfig(stage);
 			if (Valores.getConnection() != null) {
 				Stages st = new Stages();
-		    	st.novoStage("EMSystem Login", "Login");
+		    	st.novoStage("EMSystem Login", "Login", null);
 			}
 		} catch (Exception e) {
 			Stages.novoAlerta(e.getMessage(), "", true);

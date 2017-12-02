@@ -116,7 +116,7 @@ public class ComandaController {
 	    	Parent root = ((Node) event.getSource()).getScene().getRoot();
 	    	root.setDisable(true);
 	    	Stages st = new Stages();
-	    	FXMLLoader pagamentoLoader = st.novoStageEvent("Atribuir Desconto", "Pagamento", root);
+	    	FXMLLoader pagamentoLoader = st.novoStage("Atribuir Desconto", "Pagamento", root);
 	    	pagamentoLoader.<PagamentoController>getController().adicionaDesconto(valorPagar, root);
     	} catch (Exception e) {
     		Stages.novoAlerta(e.getMessage(), "", true);
@@ -140,7 +140,7 @@ public class ComandaController {
 	    	Parent root = ((Node) event.getSource()).getScene().getRoot();
 	    	root.setDisable(true);
 	    	Stages st = new Stages();
-	    	FXMLLoader pagamentoLoader = st.novoStageEvent("Atribuir Pagamento", "Pagamento", root);
+	    	FXMLLoader pagamentoLoader = st.novoStage("Atribuir Pagamento", "Pagamento", root);
 	    	pagamentoLoader.<PagamentoController>getController().adicionaPagamento(valorPagar, root);
     	} catch (Exception e) {
     		Stages.novoAlerta(e.getMessage(), "", true);
@@ -237,7 +237,7 @@ public class ComandaController {
 					Parent root = row.getTableView().getScene().getRoot();
 			    	root.setDisable(true);
 			    	Stages st = new Stages();
-			    	FXMLLoader pagamentoLoader = st.novoStageEvent("Atribuir Pagamento", "Pagamento", root);
+			    	FXMLLoader pagamentoLoader = st.novoStage("Atribuir Pagamento", "Pagamento", root);
 			    	pagamentoLoader.<PagamentoController>getController().adicionaProdutoPagamento(valorPagar, root);
 				} catch (Exception e) {
 					Stages.novoAlerta(e.getMessage(), "", true);

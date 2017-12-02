@@ -66,7 +66,7 @@ public class FuncionarioController {
 	    	((Node) event.getSource()).getScene().getWindow().hide();
 	    	if (inicial) {
 	    		Stages st = new Stages();
-	    		st.novoStage("EMSystem Login", "Login");
+	    		st.novoStage("EMSystem Login", "Login", null);
 	    	} else {
 	    		Valores.getController().refresh(2);
 	    	}

@@ -36,7 +36,6 @@ import system.Configuracao;
 import system.Funcionario;
 import system.Funcionario.FuncionarioEnum;
 import system.Funcionario.TableViewFuncionario;
-import system.Pagamento.TableViewPagamento;
 
 import java.time.LocalDate;
 
@@ -57,22 +56,22 @@ public class MenuController {
     private DatePicker dt_finbuscaate;
 
     @FXML
-    private TableView<TableViewPagamento> tableFinanc;
+    private TableView<TableViewComandaLista> tableFinanc;
 
     @FXML
-    private TableColumn<TableViewPagamento, Integer> tb_financid;
+    private TableColumn<TableViewComandaLista, Integer> tb_financid;
 
     @FXML
-    private TableColumn<TableViewPagamento, String> tb_financfunc;
+    private TableColumn<TableViewComandaLista, String> tb_financfunc;
 
     @FXML
-    private TableColumn<TableViewPagamento, String> tb_financdata;
+    private TableColumn<TableViewComandaLista, String> tb_financdata;
 
     @FXML
-    private TableColumn<TableViewPagamento, ?> tb_financperm;
+    private TableColumn<TableViewComandaLista, String> tb_financperm;
 
     @FXML
-    private TableColumn<TableViewPagamento, Float> tb_financvlr;
+    private TableColumn<TableViewComandaLista, Float> tb_financvlr;
 
     @FXML
     private TextField txf_comandaBusca;
@@ -142,19 +141,19 @@ public class MenuController {
     @FXML
     void btn_addComanda(ActionEvent event) throws SQLException {
     	Stages st = new Stages();
-    	st.novoStage("Adicionar Comanda", "Comanda");
+    	st.novoStage("Adicionar Comanda", "Comanda", null);
     }
 
     @FXML
     void btn_addFunc(ActionEvent event) {
     	Stages st = new Stages();
-    	st.novoStage("Adicionar Funcionário", "Funcionario");
+    	st.novoStage("Adicionar Funcionário", "Funcionario", null);
     }
 
     @FXML
     void btn_addProd(ActionEvent event) {
     	Stages st = new Stages();
-    	st.novoStage("Adicionar Produto", "Produto");
+    	st.novoStage("Adicionar Produto", "Produto", null);
     }
 
     @FXML
@@ -164,7 +163,7 @@ public class MenuController {
 	    Valores.setFuncionario(null);
 	    Configuracao.configDataClean();
 	    Stages st = new Stages();
-	    st.novoStage("EMSystem Login", "Login");
+	    st.novoStage("EMSystem Login", "Login", null);
     }
 
     @FXML
@@ -204,19 +203,52 @@ public class MenuController {
     }
 
     private void iniciaFinanc() {
-    	dt_finbuscade.setValue(LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), 1));
-    	dt_finbuscaate.setValue(LocalDate.now());
+    	try {
+	    	dt_finbuscade.setValue(LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), 1));
+	    	dt_finbuscaate.setValue(LocalDate.now());
+	
+	    	tb_financid.setCellValueFactory(new PropertyValueFactory<>("id"));
+	    	tb_financfunc.setCellValueFactory(new PropertyValueFactory<>("funcionario"));
+	    	tb_financdata.setCellValueFactory(new PropertyValueFactory<>("data"));
+	    	tb_financperm.setCellValueFactory(new PropertyValueFactory<>("permanencia"));
+	    	tb_financvlr.setCellValueFactory(new PropertyValueFactory<>("valor"));
+
+			tableFinanc.setItems(Comanda.getAllComanda());
+			tableFinanc.setRowFactory((TableView<TableViewComandaLista> tableComandaFinanc) -> {
+    			final TableRow<TableViewComandaLista> row = new TableRow<>();
+    			final ContextMenu rowMenu = new ContextMenu();
+    			MenuItem verComanda = new MenuItem("Visualizar Comanda");
+    			MenuItem verPagamento = new MenuItem("Visualizar Pagamentos");
+
+    			//Visualizar Comandas
+    			verComanda.setOnAction((ActionEvent event) -> {
+    				try {
+    					Stages st = new Stages();
+        		    	FXMLLoader comandaLoader = st.novoStage("Editar Comanda", "Comanda", null);
+        		    	comandaLoader.<ComandaController>getController().editaComanda(row.getItem().getId());
+    				} catch (Exception e) {
+    					Stages.novoAlerta(e.getMessage(), "", true);
+    				}
+    			});
+
+    			rowMenu.getItems().addAll(verComanda, verPagamento);
+    			row.contextMenuProperty().bind(Bindings.when(Bindings.isNotNull(row.itemProperty())).then(rowMenu).otherwise((ContextMenu)null));
+    			return row;
+    		});
+    	} catch (Exception e) {
+    		Stages.novoAlerta(e.getMessage(), "", true);
+    	}
     }
 
     private void iniciaComanda() {
-    	tb_comandId.setCellValueFactory(new PropertyValueFactory<>("id"));
-    	tb_comandMesa.setCellValueFactory(new PropertyValueFactory<>("mesa"));
-    	//tb_comandData ???
-    	tb_comandVlr.setCellValueFactory(new PropertyValueFactory<>("valor"));
-    	
     	try {
+	    	tb_comandId.setCellValueFactory(new PropertyValueFactory<>("id"));
+	    	tb_comandMesa.setCellValueFactory(new PropertyValueFactory<>("mesa"));
+	    	tb_comandData.setCellValueFactory(new PropertyValueFactory<>("data"));
+	    	tb_comandVlr.setCellValueFactory(new PropertyValueFactory<>("valor"));
+    	
 			tableComand.setItems(Comanda.getAllComanda());
-			tableComand.setRowFactory((TableView<TableViewComandaLista> tableProduto) -> {
+			tableComand.setRowFactory((TableView<TableViewComandaLista> tableComanda) -> {
     			final TableRow<TableViewComandaLista> row = new TableRow<>();
     			final ContextMenu rowMenu = new ContextMenu();
     			MenuItem editItem = new MenuItem("Editar");
@@ -225,7 +257,7 @@ public class MenuController {
     			editItem.setOnAction((ActionEvent event) -> {
     				try {
     					Stages st = new Stages();
-        		    	FXMLLoader comandaLoader = st.novoStage("Editar Comanda", "Comanda");
+        		    	FXMLLoader comandaLoader = st.novoStage("Editar Comanda", "Comanda", null);
         		    	comandaLoader.<ComandaController>getController().editaComanda(row.getItem().getId());
     				} catch (Exception e) {
     					Stages.novoAlerta(e.getMessage(), "", true);
@@ -272,11 +304,11 @@ public class MenuController {
     }
 
     private void iniciaProduto() {
-    	tb_prodid.setCellValueFactory(new PropertyValueFactory<>("id"));
-    	tb_prodnome.setCellValueFactory(new PropertyValueFactory<>("nome"));
-    	tb_prodvlr.setCellValueFactory(new PropertyValueFactory<>("valor"));
-
     	try {
+	    	tb_prodid.setCellValueFactory(new PropertyValueFactory<>("id"));
+	    	tb_prodnome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+	    	tb_prodvlr.setCellValueFactory(new PropertyValueFactory<>("valor"));
+
     		tableProd.setItems(Produto.getAllProduto());
     		
     		tableProd.setRowFactory((TableView<TableViewProduto> tableProduto) -> {
@@ -289,7 +321,7 @@ public class MenuController {
     			editItem.setOnAction((ActionEvent event) -> {
     				try {
     					Stages st = new Stages();
-        		    	FXMLLoader produtoLoader = st.novoStage("Edita Produto", "Produto");
+        		    	FXMLLoader produtoLoader = st.novoStage("Edita Produto", "Produto", null);
         		    	produtoLoader.<ProdutoController>getController().editaProduto(row.getItem().getId(), row.getItem().getNome(), row.getItem().getValor());
     				} catch (Exception e) {
     					Stages.novoAlerta(e.getMessage(), "", true);
@@ -348,12 +380,12 @@ public class MenuController {
     }
 
     private void iniciaFuncionario() {
-    	tb_funcid.setCellValueFactory(new PropertyValueFactory<>("id"));
-        tb_funcnome.setCellValueFactory(new PropertyValueFactory<>("nome"));
-        tb_funclogin.setCellValueFactory(new PropertyValueFactory<>("login"));
-        tb_funccargo.setCellValueFactory(new PropertyValueFactory<>("cargo"));
+    	try {
+	    	tb_funcid.setCellValueFactory(new PropertyValueFactory<>("id"));
+	        tb_funcnome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+	        tb_funclogin.setCellValueFactory(new PropertyValueFactory<>("login"));
+	        tb_funccargo.setCellValueFactory(new PropertyValueFactory<>("cargo"));
 
-        try {
         	tableFunc.setItems(Funcionario.getAllFuncionario());
         	tableFunc.setRowFactory((TableView<TableViewFuncionario> tableFuncionario) -> {
         		final TableRow<TableViewFuncionario> row = new TableRow<>();
@@ -365,7 +397,7 @@ public class MenuController {
         		editFuncionario.setOnAction((ActionEvent event) -> {
         			try {
         				Stages st = new Stages();
-        		    	FXMLLoader menuLoader = st.novoStage("Edita Funcionário", "Funcionario");
+        		    	FXMLLoader menuLoader = st.novoStage("Edita Funcionário", "Funcionario", null);
         				menuLoader.<FuncionarioController>getController().editaFuncionario(row.getItem().getId(), row.getItem().getNome(), row.getItem().getLogin(), row.getItem().getCargo());
         			} catch (Exception e) {
         				Stages.novoAlerta(e.getMessage(), "", true);

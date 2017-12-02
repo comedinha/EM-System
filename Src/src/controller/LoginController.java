@@ -29,7 +29,7 @@ public class LoginController {
     		if (Funcionario.login(txf_usr.getText(), txf_pass.getText())) {
 			    ((Node) event.getSource()).getScene().getWindow().hide();
 			    Stages st = new Stages();
-			    FXMLLoader menuLoader = st.novoStage("EMSystem Menu", "Menu");
+			    FXMLLoader menuLoader = st.novoStage("EMSystem Menu", "Menu", null);
 		    	Valores.setController(menuLoader.<MenuController>getController());
     		} else {
     			throw new Exception("Usuário ou senha incorreto.");
