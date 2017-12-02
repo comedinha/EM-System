@@ -9,13 +9,11 @@ import util.Valores;
 public class Comanda {
 	public static int novaComanda() throws SQLException {
 		int id = -1;
-		String sql = "INSERT INTO comanda (mesa) VALUES (?)";
+		String sql = "INSERT INTO comanda (mesa) VALUES ('MESA')";
 
 		PreparedStatement ps;
 		ps = Valores.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-		ps.setString(1, "Mesa 3");
 		ps.executeUpdate();
-		
 		ResultSet getId = ps.getGeneratedKeys();
 		getId.next();
 		id = getId.getInt(1);
@@ -65,8 +63,11 @@ public class Comanda {
 		return ps.executeQuery();
 	}
 	
-	public static ResultSet getAllProduto(int id) throws SQLException {
-		String sql = "SELECT * FROM produtoComanda WHERE comandaId = ?";
+	public static ResultSet getAllProduto(int id) throws SQLException {		
+		String sql = "SELECT produtoComanda.produtoId, produto.nome, produtoComanda.quantidade, "
+				+ "produto.valor, produtoComanda.valorPago FROM produtoComanda "
+				+ "JOIN produto ON produtoComanda.produtoId = produto.produtoId "
+				+ "WHERE produtoComanda.comandaId = ?";
 
 		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
 		ps.setInt(1, id);

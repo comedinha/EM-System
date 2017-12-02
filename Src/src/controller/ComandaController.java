@@ -184,7 +184,8 @@ public class ComandaController {
 	    			tf_comid.setDisable(!new_val);
 	            }
 	        });
-			cb_comid.setSelected(true);
+			cb_comid.setSelected(false);
+			tf_comid.setDisable(true);
 
     		TextFields.bindAutoCompletion(txf_produto, Produto.getProdutoNome());
     		iniciaTableView();
