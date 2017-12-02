@@ -1,7 +1,6 @@
 package controller;
 
 import org.controlsfx.control.textfield.TextFields;
-
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -71,6 +70,29 @@ public class ComandaController {
 
     @FXML
     private TextArea ta_valorPago;
+    
+    @FXML
+	public void initialize() {
+		try {
+			if (Valores.getConnection() == null || Valores.getUsuario() == null || Valores.getController() == null)
+	    		Platform.exit();
+	
+			txf_qtde.setText("1");
+			cb_comid.selectedProperty().addListener((ChangeListener<? super Boolean>) new ChangeListener<Boolean>() {
+	    		public void changed(ObservableValue<? extends Boolean> ov,
+	                Boolean old_val, Boolean new_val) {
+	    			tf_comid.setDisable(!new_val);
+	            }
+	        });
+			cb_comid.setSelected(false);
+			tf_comid.setDisable(true);
+
+    		TextFields.bindAutoCompletion(txf_produto, Produto.getProdutoNome());
+    		iniciaTableView();
+    	} catch (Exception e) {
+    		Stages.novoAlerta(e.getMessage(), "", true);
+    	}
+	}
 
     @FXML
     void act_addDesconto(ActionEvent event) {
@@ -132,15 +154,22 @@ public class ComandaController {
 					cb_comid.setDisable(true);
 				}
 			}
-
+			
 			int idProduto = Integer.parseInt(txf_produto.getText().substring(0, txf_produto.getText().indexOf(' ')));
-			Comanda.addProduto(Integer.valueOf(tf_comid.getText()), idProduto, Integer.parseInt(txf_qtde.getText()));
-			txf_produto.clear();
-			txf_qtde.setText("1");
-			refresh();
+			if(!Comanda.existeNaComanda(idProduto, Integer.valueOf(tf_comid.getText()))) {
+				Comanda.addProduto(Integer.valueOf(tf_comid.getText()), idProduto, Integer.parseInt(txf_qtde.getText()));
+				txf_produto.clear();
+				txf_qtde.setText("1");
+				refresh();
+			} else {
+				Comanda.updateQtde(idProduto, Integer.valueOf(tf_comid.getText()), Integer.parseInt(txf_qtde.getText()));
+				refresh();
+			}
 		} catch (Exception e) {
 			Stages.novoAlerta(e.getMessage(), "", true);
 		}
+		
+		
     }
 	
 	@FXML
@@ -169,29 +198,6 @@ public class ComandaController {
 		} catch (Exception e) {
 			Stages.novoAlerta(e.getMessage(), "", true);
 		}
-	}
-
-	@FXML
-	public void initialize() {
-		try {
-			if (Valores.getConnection() == null || Valores.getUsuario() == null || Valores.getController() == null)
-	    		Platform.exit();
-	
-			txf_qtde.setText("1");
-			cb_comid.selectedProperty().addListener((ChangeListener<? super Boolean>) new ChangeListener<Boolean>() {
-	    		public void changed(ObservableValue<? extends Boolean> ov,
-	                Boolean old_val, Boolean new_val) {
-	    			tf_comid.setDisable(!new_val);
-	            }
-	        });
-			cb_comid.setSelected(false);
-			tf_comid.setDisable(true);
-
-    		TextFields.bindAutoCompletion(txf_produto, Produto.getProdutoNome());
-    		iniciaTableView();
-    	} catch (Exception e) {
-    		Stages.novoAlerta(e.getMessage(), "", true);
-    	}
 	}
 	
 	private void iniciaTableView() throws Exception {

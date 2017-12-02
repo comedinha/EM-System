@@ -57,6 +57,14 @@ public class Comanda {
 		return ol;
 	}
 	
+	public static boolean existeNaComanda(int idProduto, int idComanda) throws SQLException {
+		return dao.Comanda.existeNaComanda(idProduto, idComanda);
+	}
+	
+	public static void updateQtde(int idProduto, int idComanda, int qtde) throws SQLException {
+		dao.Comanda.updateQtde(idProduto, idComanda, qtde);
+	}
+	
 	//Classe Interna modelo Comanda-Prdoutos
 	public static class TableViewComandaProduto {
     	private final SimpleIntegerProperty id;

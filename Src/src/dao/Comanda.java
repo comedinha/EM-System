@@ -21,6 +21,33 @@ public class Comanda {
 		return id;
 	}
 	
+	public static boolean existeNaComanda(int idProduto, int idComanda) throws SQLException {
+		String sql = "SELECT * FROM produtoComanda WHERE produtoId = ? AND comandaId = ?";
+		
+		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
+		ps.setInt(1, idProduto);
+		ps.setInt(2, idComanda);
+		return ps.executeQuery().next();
+	}
+	
+	public static void updateQtde(int idProduto, int idComanda, int qtde) throws SQLException {
+		String sql = "SELECT quantidade FROM produtoComanda WHERE produtoId = ? AND comandaId = ?";
+		
+		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
+		ps.setInt(1, idProduto);
+		ps.setInt(2, idComanda);
+		ResultSet result = ps.executeQuery();
+		result.next();
+		int quant = result.getInt(1);
+		
+		sql = "UPDATE produtoComanda SET quantidade = ? WHERE produtoId = ? AND comandaId = ?";
+		ps = Valores.getConnection().prepareStatement(sql);
+		ps.setInt(1, quant+qtde);
+		ps.setInt(2, idProduto);
+		ps.setInt(3, idComanda);
+		ps.executeUpdate();
+	}
+	
 	public static void addProduto(int comandaId, int produtoId, int qtde) throws SQLException {
 		String sql = "INSERT INTO produtoComanda (comandaId, produtoId, quantidade) VALUES (?, ?, ?)";
 
