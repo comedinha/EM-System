@@ -33,6 +33,7 @@ public class Comanda {
 
 	public static float getValorPagoComanda(int id) throws SQLException {
 		ResultSet result = dao.Comanda.getValorPagoComanda(id);
+		result.next();
 		return result.getFloat(1);
 	}
 
