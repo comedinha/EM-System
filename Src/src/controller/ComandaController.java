@@ -252,9 +252,7 @@ public class ComandaController {
 			//Atualizar Produtos
 			pagarProduto.setOnAction((ActionEvent event) -> {
 				try {
-					float valorPago = row.getItem().getValorPago();
-					float valorTotal = row.getItem().getValorTotal();
-					float valorPagar = valorTotal - valorPago;
+					float valorPagar = row.getItem().getValorTotal() - row.getItem().getValorPago();
 
 					Parent root = row.getTableView().getScene().getRoot();
 			    	root.setDisable(true);

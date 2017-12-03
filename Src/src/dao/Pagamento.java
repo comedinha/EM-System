@@ -3,14 +3,28 @@ package dao;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import util.Valores;
 
 public class Pagamento {
-	public static boolean inserir(float valor, int comanda, Date dataComanda) throws Exception {
+	public static boolean pagamentoComanda(float valor, int comanda, Date dataComanda) throws Exception {
 		String sql = "INSERT INTO pagamento (valor, funcionarioId, comandaId, dataComanda) VALUES (?, ?, ?, ?)";
 
-		PreparedStatement ps;
-		ps = Valores.getConnection().prepareStatement(sql);
+		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
+		ps.setFloat(1, valor);
+		ps.setInt(2, Valores.getUsuario().getId());
+		ps.setInt(3, comanda);
+		ps.setDate(4, dataComanda);
+
+		ps.executeUpdate();
+		return true;
+	}
+	
+	public static boolean pagamentoProduto(float valor, int comanda, Date dataComanda) throws SQLException {
+		String sql = "INSERT INTO pagamento (valor, funcionarioId, comandaId, dataComanda) VALUES (?, ?, ?, ?)";
+
+		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
 		ps.setFloat(1, valor);
 		ps.setInt(2, Valores.getUsuario().getId());
 		ps.setInt(3, comanda);
