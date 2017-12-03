@@ -26,6 +26,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import system.Comanda;
 import system.Comanda.TableViewComandaProduto;
 import system.Funcionario;
+import system.Pagamento;
 import system.Produto;
 import util.Stages;
 import util.Valores;
@@ -300,22 +301,23 @@ public class ComandaController {
 		});
 	}
 
-	private void valorTotal() {
+	private void valorTotal() throws Exception {
 		float somaValor = 0;
 		
 		for(TableViewComandaProduto lista : tv_produtos.getItems())
 			somaValor += lista.getValorTotal();
-		
+
+		somaValor -= Pagamento.getAllValor(Integer.parseInt(txf_comid.getText()), comandaTime, true);
 		ta_valorTotal.setText(Float.toString(somaValor));
 	}
 
 	private void valorPago() throws Exception {
 		float somaValor = 0;
 
-		for(TableViewComandaProduto lista : tv_produtos.getItems())
+		for (TableViewComandaProduto lista : tv_produtos.getItems())
 			somaValor += lista.getValorPago();
 		
-		somaValor += Comanda.getValorPagoComanda(Integer.parseInt((txf_comid.getText())));
+		somaValor += Pagamento.getAllValor(Integer.parseInt(txf_comid.getText()), comandaTime, false);
 		ta_valorPago.setText(Float.toString(somaValor));
 	}
 

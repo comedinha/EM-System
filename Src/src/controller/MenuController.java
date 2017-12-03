@@ -81,12 +81,15 @@ public class MenuController {
 
     @FXML
     private TableColumn<TableViewComandaLista, Integer> tb_comandId;
+
+    @FXML
+    private TableColumn<TableViewComandaLista, String> tb_comandFunc;
     
     @FXML
     private TableColumn<TableViewComandaLista, String> tb_comandMesa;
 
     @FXML
-    private TableColumn<?, ?> tb_comandData;
+    private TableColumn<TableViewComandaLista, String> tb_comandData;
 
     @FXML
     private TableColumn<TableViewComandaLista, Float> tb_comandVlr;
@@ -250,6 +253,7 @@ public class MenuController {
     private void iniciaComanda() {
     	try {
 	    	tb_comandId.setCellValueFactory(new PropertyValueFactory<>("id"));
+	    	tb_comandFunc.setCellValueFactory(new PropertyValueFactory<>("funcionario"));
 	    	tb_comandMesa.setCellValueFactory(new PropertyValueFactory<>("mesa"));
 	    	tb_comandData.setCellValueFactory(new PropertyValueFactory<>("data"));
 	    	tb_comandVlr.setCellValueFactory(new PropertyValueFactory<>("valor"));

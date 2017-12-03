@@ -49,7 +49,6 @@ CREATE TABLE produtoComanda(
 	comandaId int,
 	dataComanda timestamp,
 	quantidade int DEFAULT 1,
-	valorPago numeric(8,2) DEFAULT 0,
 	data timestamp DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY(produtoId, comandaId),
     foreign key (comandaId, dataComanda) references comanda(comandaId, data) ON DELETE NO ACTION ON UPDATE CASCADE

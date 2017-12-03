@@ -1,6 +1,5 @@
 package dao;
 
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -58,20 +57,22 @@ public class Pagamento {
 		ps.executeUpdate();
 	}
 
-	public static ResultSet getAll() throws Exception {
-		String sql = "SELECT * FROM pagamento"; 
+	public static ResultSet getAll(int id, Timestamp time, boolean desconto) throws Exception {
+		String sql = "SELECT p.pagamentoId, p.valor, p.data FROM pagamento p JOIN pagamentoComanda pc ON p.pagamentoId = pc.pagamentoId WHERE pc.comandaId = ? AND pc.dataComanda = ? AND pc.desconto = ?";
+		if (!desconto)
+			sql += " UNION SELECT p.pagamentoId, p.valor, p.data FROM pagamento p JOIN pagamentoProduto pp ON p.pagamentoId = pp.pagamentoId WHERE pp.comandaId = ? AND pp.dataComanda = ?";
 
-		PreparedStatement statement = Valores.getConnection().prepareStatement(sql);
-		ResultSet result = statement.executeQuery();
-		return result;
-	}
-	
-	public static ResultSet get(int id) throws Exception {
-		String sql = "SELECT * FROM pagamento WHERE pagamentoId = ?"; 
+		PreparedStatement p = Valores.getConnection().prepareStatement(sql);
+		p.setInt(1, id);
+		p.setTimestamp(2, time);
+		p.setBoolean(3, desconto);
 
-		PreparedStatement statement = Valores.getConnection().prepareStatement(sql);
-		statement.setInt(1, id);
-		ResultSet result = statement.executeQuery();
+		if (!desconto) {
+			p.setInt(4, id);
+			p.setTimestamp(5, time);
+		}
+
+		ResultSet result = p.executeQuery();
 		return result;
 	}
 }

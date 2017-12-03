@@ -108,7 +108,7 @@
                               <TableView fx:id="tableFinanc" prefHeight="200.0" prefWidth="200.0">
                                 <columns>
                                   <TableColumn fx:id="tb_financid" prefWidth="22.0" text="ID" />
-                                    <TableColumn fx:id="tb_financfunc" prefWidth="75.0" text="Funcionário" />
+                                    <TableColumn fx:id="tb_financfunc" prefWidth="75.0" text="Garçom" />
                                   <TableColumn fx:id="tb_financdata" minWidth="0.0" prefWidth="49.0" text="Data" />
                                     <TableColumn fx:id="tb_financperm" prefWidth="79.0" text="Permanência" />
                                     <TableColumn fx:id="tb_financvlr" prefWidth="83.0" text="Valor" />
@@ -138,10 +138,11 @@
                         </VBox>
                         <TableView fx:id="tableComand" prefHeight="200.0" prefWidth="200.0">
                           <columns>
-                            <TableColumn fx:id="tb_comandId" prefWidth="75.0" text="ID" />
-                              <TableColumn fx:id="tb_comandMesa" prefWidth="75.0" text="Mesa" />
-                              <TableColumn fx:id="tb_comandData" prefWidth="75.0" text="Data" />
-                            <TableColumn fx:id="tb_comandVlr" prefWidth="75.0" text="Valor" />
+                            <TableColumn fx:id="tb_comandId" prefWidth="39.0" text="ID" />
+                              <TableColumn fx:id="tb_comandFunc" prefWidth="76.0" text="Garçom" />
+                              <TableColumn fx:id="tb_comandMesa" prefWidth="61.0" text="Mesa" />
+                              <TableColumn fx:id="tb_comandData" prefWidth="94.0" text="Data" />
+                            <TableColumn fx:id="tb_comandVlr" prefWidth="71.0" text="Valor" />
                           </columns>
                         </TableView>
                      </items>

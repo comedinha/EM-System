@@ -20,9 +20,9 @@ public class Comanda {
 		ResultSet result = dao.Comanda.getAllComandas();
 		ObservableList<TableViewComandaLista> ol = FXCollections.observableArrayList();
 		
-		while (result.next()) {			
-			ol.add(new TableViewComandaLista(result.getInt(1), result.getTimestamp(2),
-					result.getString(3), result.getFloat(4)));
+		while (result.next()) {
+			ol.add(new TableViewComandaLista(result.getInt("comandaId"), result.getTimestamp("data"),
+					result.getString("mesa"), result.getInt("funcionarioId")));
 		}
 		
 		return ol;
@@ -126,16 +126,18 @@ public class Comanda {
 	//Classe Interna Modelo Lista de Comanda
 	public static class TableViewComandaLista {
 		private final SimpleIntegerProperty id;
-		private final SimpleStringProperty mesa;
 		private final SimpleStringProperty data;
+		private final SimpleStringProperty mesa;
+		private final SimpleStringProperty funcionario;
 		private final SimpleFloatProperty valor;
 		private final SimpleStringProperty timestamp;
 
-		public TableViewComandaLista(int id, Timestamp data, String mesa, float valor) {
+		public TableViewComandaLista(int id, Timestamp data, String mesa, int funcionario, float valor) {
 			this.id = new SimpleIntegerProperty(id);
 			DateFormat f = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 			this.data = new SimpleStringProperty(f.format(data));
 			this.mesa = new SimpleStringProperty(mesa);
+			this.funcionario = new SimpleStringProperty(Funcionario.getNomebyId(funcionario));
 			this.valor = new SimpleFloatProperty(valor);
 			this.timestamp = new SimpleStringProperty(data.toString());
 		}
@@ -144,12 +146,16 @@ public class Comanda {
 			return id.get();
 		}
 
+		public String getData() {
+			return data.get();
+		}
+
 		public String getMesa() {
 			return mesa.get();
 		}
 
-		public String getData() {
-			return data.get();
+		public String getFuncionario() {
+			return funcionario.get();
 		}
 
 		public float getValor() {
