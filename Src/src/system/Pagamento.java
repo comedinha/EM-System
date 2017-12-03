@@ -11,8 +11,14 @@ import javafx.collections.ObservableList;
 
 public class Pagamento {
 	
-	public static boolean adicionaProduto(float valor, int comanda, Date dataComanda) throws Exception {		
-		return dao.Pagamento.inserir(valor, comanda, dataComanda);
+	public static boolean pagamentoComanda(float valor, int comanda, Date dataComanda) throws Exception {		
+		dao.Comanda.setValorPagoComanda(comanda, valor);
+		return dao.Pagamento.pagamentoComanda(valor, comanda, dataComanda);
+	}
+	
+	public static boolean pagamentoProduto(float valor, int comanda, int produto, Date dataComanda) throws Exception {		
+		dao.Comanda.setValorPagoProduto(produto, comanda, valor);
+		return dao.Pagamento.pagamentoComanda(valor, comanda, dataComanda);
 	}
 	
 	public static ResultSet getProduto(int id) throws Exception {		

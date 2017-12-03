@@ -40,7 +40,7 @@ public class PagamentoController {
     private TextField tf_troco;
 
     @FXML
-    void btn_cancelar(ActionEvent event) {
+    void btn_cancelar(ActionEvent event) {    	
     	parent.setDisable(false);
     	((Node) event.getSource()).getScene().getWindow().hide();
     }

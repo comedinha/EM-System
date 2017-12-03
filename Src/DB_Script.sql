@@ -18,7 +18,7 @@ CREATE TABLE comanda(
 
 CREATE TABLE pagamento (
 	pagamentoId SERIAL PRIMARY KEY NOT NULL,
-	valor int,
+	valor numeric(8,2) DEFAULT 0,
 	data timestamp DEFAULT CURRENT_TIMESTAMP,
 	funcionarioId int,
 	comandaId int,

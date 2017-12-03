@@ -77,10 +77,28 @@ public class Comanda {
 	public static void atualizarNomeMesa(String mesa, int id) throws SQLException {
 		String sql = "UPDATE comanda SET mesa = ? WHERE comandaId = ?";
 
-		PreparedStatement ps;
-		ps = Valores.getConnection().prepareStatement(sql);
+		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
 		ps.setString(1, mesa);
 		ps.setInt(2, id);
+		ps.executeUpdate();
+	}
+	
+	public static void setValorPagoComanda(int idComanda, float valor) throws SQLException {
+		String sql = "UPDATE comanda SET valorPago = ? WHERE comandaId = ?";
+		
+		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
+		ps.setFloat(1, valor + system.Comanda.getValorPagoComanda(idComanda));
+		ps.setInt(2, idComanda);
+		ps.executeUpdate();
+	}
+	
+	public static void setValorPagoProduto(int idProduto, int idComanda, float valor) throws SQLException {
+		String sql = "UPDATE produtoComanda SET valorPago = ? WHERE produtoId = ? AND comandaId = ?";
+		
+		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
+		ps.setFloat(1, valor);
+		ps.setInt(2, idProduto);
+		ps.setInt(3, idComanda);
 		ps.executeUpdate();
 	}
 	
