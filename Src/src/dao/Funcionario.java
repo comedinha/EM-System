@@ -9,7 +9,7 @@ import util.Valores;
 public class Funcionario {
 	public static void inserir(int funcao, String nome, String login, String password, boolean garcom) throws Exception {
 		Crypto cr = new Crypto();
-		String sql = "INSERT INTO funcionario (username, password, nome, funcaoid, garcom)"
+		String sql = "INSERT INTO funcionario (login, password, nome, funcaoid, garcom)"
 				+ " VALUES (?, ?, ?, ?, ?)";
 
 		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);	
@@ -23,7 +23,7 @@ public class Funcionario {
 
 	public static boolean login(String username, String password) throws Exception {
 		Crypto cr = new Crypto();
-		String sql = "SELECT * FROM funcionario WHERE username = ? AND password = ?"; 
+		String sql = "SELECT * FROM funcionario WHERE login = ? AND password = ?"; 
 
 		PreparedStatement statement = Valores.getConnection().prepareStatement(sql);
 		statement.setString(1, username);
@@ -50,7 +50,7 @@ public class Funcionario {
 	}
 
 	public static boolean update(int id, String nome, String login, String password, boolean garcom) throws Exception {
-		String sql = "UPDATE funcionario SET username = ?, nome = ?, garcom = ?";
+		String sql = "UPDATE funcionario SET login = ?, nome = ?, garcom = ?";
 		if (!password.isEmpty())
 			sql += ", password = ? WHERE funcionarioId = ?";
 		else

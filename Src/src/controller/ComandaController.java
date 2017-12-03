@@ -31,6 +31,8 @@ import util.Stages;
 import util.Valores;
 
 public class ComandaController {
+	private Timestamp comandatime;
+
     @FXML
     private TableView<TableViewComandaProduto> tv_produtos;
 
@@ -126,7 +128,7 @@ public class ComandaController {
 	    	root.setDisable(true);
 	    	Stages st = new Stages();
 	    	FXMLLoader pagamentoLoader = st.novoStage("Atribuir Desconto", "Pagamento", root);
-	    	pagamentoLoader.<PagamentoController>getController().adicionaDesconto(valorPagar, root);
+	    	pagamentoLoader.<PagamentoController>getController().adicionaDesconto(Integer.valueOf(txf_comid.getText()), comandatime, valorPagar, root);
     	} catch (Exception e) {
     		Stages.novoAlerta(e.getMessage(), "", true);
     	}
@@ -150,7 +152,7 @@ public class ComandaController {
 	    	root.setDisable(true);
 	    	Stages st = new Stages();
 	    	FXMLLoader pagamentoLoader = st.novoStage("Atribuir Pagamento", "Pagamento", root);
-	    	pagamentoLoader.<PagamentoController>getController().adicionaPagamento(valorPagar, root);
+	    	pagamentoLoader.<PagamentoController>getController().adicionaPagamento(Integer.valueOf(txf_comid.getText()), comandatime, valorPagar, root);
     	} catch (Exception e) {
     		Stages.novoAlerta(e.getMessage(), "", true);
     	}
@@ -160,13 +162,16 @@ public class ComandaController {
 	private void addProduto(ActionEvent event) {
 		try {
 			if (txf_comid.getText().isEmpty()) {
-				txf_comid.setText(Integer.toString(Comanda.criaComanda(0, Valores.getUsuario().getId())));
+				ResultSet result = Comanda.criaComanda(0, Valores.getUsuario().getId());
+				this.comandatime = result.getTimestamp("data");
+				txf_comid.setText(Integer.toString(result.getInt("comandaId")));
 				chb_comid.setSelected(false);
 				chb_comid.setDisable(true);
 			} else {
 				if (!chb_comid.isDisable()) {
 					//Criar comanda com ID especificado
-					Comanda.criaComanda(Integer.parseInt(txf_comid.getText()), Valores.getUsuario().getId());
+					ResultSet result = Comanda.criaComanda(Integer.parseInt(txf_comid.getText()), Valores.getUsuario().getId());
+					this.comandatime = result.getTimestamp("data");
 					chb_comid.setSelected(false);
 					chb_comid.setDisable(true);
 				}
@@ -262,7 +267,7 @@ public class ComandaController {
 			    	root.setDisable(true);
 			    	Stages st = new Stages();
 			    	FXMLLoader pagamentoLoader = st.novoStage("Atribuir Pagamento", "Pagamento", root);
-			    	pagamentoLoader.<PagamentoController>getController().adicionaProdutoPagamento(valorPagar, root);
+			    	pagamentoLoader.<PagamentoController>getController().adicionaProdutoPagamento(row.getItem().getId(), valorPagar, root);
 				} catch (Exception e) {
 					Stages.novoAlerta(e.getMessage(), "", true);
 				}
@@ -322,6 +327,7 @@ public class ComandaController {
 
 	public void editaComanda(int id, Timestamp data) {
 		try {
+			this.comandatime = data;
 			ResultSet result = Comanda.getComanda(id, data);
 			if (result.next()) {
 				txf_comid.setText(Integer.toString(id));

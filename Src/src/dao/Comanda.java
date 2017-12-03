@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 import util.Valores;
 
 public class Comanda {
-	public static int novaComanda(int id, int funcionarioId) throws Exception {
+	public static ResultSet novaComanda(int id, int funcionarioId) throws Exception {
 		String sql = "INSERT INTO comanda (funcionarioId, comandaId) VALUES (?, ?)";
 		if (id == 0) {
 			sql = "INSERT INTO comanda (funcionarioId) VALUES (?)";
@@ -24,7 +24,7 @@ public class Comanda {
 
 		ResultSet getId = ps.getGeneratedKeys();
 		getId.next();
-		return getId.getInt(1);
+		return getId;
 	}
 	
 	public static boolean existeNaComanda(int idProduto, int idComanda) throws Exception {

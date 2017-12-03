@@ -71,7 +71,7 @@ public class Funcionario {
 		ObservableList<TableViewFuncionario> ol = FXCollections.observableArrayList();
 		
 		while(result.next()) {			
-			ol.add(new TableViewFuncionario(result.getInt("funcionarioId"), result.getString("nome"), result.getString("username"), result.getInt("funcaoId"), result.getBoolean("garcom")));
+			ol.add(new TableViewFuncionario(result.getInt("funcionarioId"), result.getString("nome"), result.getString("login"), result.getInt("funcaoId"), result.getBoolean("garcom")));
 		}
 	
 		return ol;

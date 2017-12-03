@@ -1,5 +1,7 @@
 package controller;
 
+import java.sql.Timestamp;
+
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -12,11 +14,14 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import util.MeioPagamento;
+import util.Stages;
 import util.Valores;
 
 public class PagamentoController {
-	private Parent parent;
 	private int mode = 0;
+	private int id;
+	Timestamp time;
+	private Parent parent;
 
     @FXML
     private TextField tf_valorpagar;
@@ -40,6 +45,20 @@ public class PagamentoController {
     private TextField tf_troco;
 
     @FXML
+    void act_alteravalor(ActionEvent event) {
+    	float troco = 0;
+    	if (!tf_valorsec.isDisable() && chb_valorsec.isSelected()) {
+    		troco = Float.valueOf(tf_valorsec.getText()) - Float.valueOf(tf_caixa.getText());
+    	} else
+    		troco = Float.valueOf(tf_caixa.getText()) - Float.valueOf(tf_valorpagar.getText());
+
+	    if (troco > 0)
+	    	tf_troco.setText(Float.toString(troco));
+	    else
+	    	tf_troco.setText("0");
+    }
+
+    @FXML
     void btn_cancelar(ActionEvent event) {    	
     	parent.setDisable(false);
     	((Node) event.getSource()).getScene().getWindow().hide();
@@ -47,8 +66,19 @@ public class PagamentoController {
 
     @FXML
     void btn_salvar(ActionEvent event) {
-    	parent.setDisable(false);
-    	((Node) event.getSource()).getScene().getWindow().hide();
+    	try {
+	    	if (mode == 0) {
+	    	} else if (mode == 1) {
+	    	} else if (mode == 2) {
+	    		
+	    	} else {
+	    		throw new Exception("Erro ao salvar produto!");
+	    	}
+	    	parent.setDisable(false);
+	    	((Node) event.getSource()).getScene().getWindow().hide();
+    	} catch (Exception e) {
+    		Stages.novoAlerta(e.getMessage(), "", true);
+    	}
     }
 
     @FXML
@@ -66,25 +96,30 @@ public class PagamentoController {
     	cb_meioPagamento.getItems().addAll(MeioPagamento.values());
 	}
 
-    public void adicionaDesconto(float valor, Parent root) {
+    public void adicionaDesconto(int id, Timestamp time, float valor, Parent root) {
+    	this.mode = 1;
+    	this.id = id;
+    	this.time = time;
+    	this.parent = root;
     	tf_valorpagar.setText(Float.toString(valor));
-    	parent = root;
     	chb_valorsec.setDisable(true);
     	tf_valorsec.setDisable(true);
-    	mode = 1;
     	txt_caixa.setText(String.format(txt_caixa.getText(), "Desconto"));
     }
 
-    public void adicionaPagamento(float valor, Parent root) {
+    public void adicionaPagamento(int id, Timestamp time, float valor, Parent root) {
+    	this.id = id;
+    	this.time = time;
+    	this.parent = root;
     	tf_valorpagar.setText(Float.toString(valor));
-    	parent = root;
     	txt_caixa.setText(String.format(txt_caixa.getText(), "Pagamento"));
     }
 
-	public void adicionaProdutoPagamento(float valorPagar, Parent root) {
+	public void adicionaProdutoPagamento(int id, float valorPagar, Parent root) {
+		this.mode = 2;
+    	this.id = id;
+    	this.parent = root;
 		tf_valorpagar.setText(Float.toString(valorPagar));
-    	parent = root;
-    	mode = 2;
     	txt_caixa.setText(String.format(txt_caixa.getText(), "Pagamento"));
 	}
 }

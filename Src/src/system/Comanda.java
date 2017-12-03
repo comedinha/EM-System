@@ -12,7 +12,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class Comanda {
-	public static int criaComanda(int id, int funcionarioId) throws Exception {
+	public static ResultSet criaComanda(int id, int funcionarioId) throws Exception {
 		return dao.Comanda.novaComanda(id, funcionarioId);
 	}
 

@@ -33,7 +33,7 @@
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Valor" />
                            </children>
                         </HBox>
-                        <TextField fx:id="tf_valorsec" disable="true" />
+                        <TextField fx:id="tf_valorsec" disable="true" onAction="#act_alteravalor" />
                      </children>
                   </VBox>
                </children>
@@ -52,7 +52,7 @@
                   <VBox prefHeight="50.0" prefWidth="110.0">
                      <children>
                         <Text fx:id="txt_caixa" strokeType="OUTSIDE" strokeWidth="0.0" text="\%s em caixa:" />
-                        <TextField fx:id="tf_caixa" />
+                        <TextField fx:id="tf_caixa" onAction="#act_alteravalor" />
                      </children>
                   </VBox>
                </children>
