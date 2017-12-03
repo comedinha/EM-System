@@ -37,13 +37,16 @@ public class ProdutoController {
 		
 		    	String nome = txf_nome.getText();
 		    	float valor = Float.parseFloat(txf_valor.getText());
-		
-		    	if(Produto.adicionaProduto(id, nome, valor)) {
-		    		((Node) event.getSource()).getScene().getWindow().hide();
+		    	
+		    	if((!txf_id.isDisable() && !txf_id.getText().isEmpty()) && Produto.verificaExistenciaProduto(id))
+		    		Produto.delete(id);
+		    	else {	    	
+		    		if(Produto.adicionaProduto(id, nome, valor)) {
+		    			((Node) event.getSource()).getScene().getWindow().hide();
 		    	} else {
 		    		throw new Exception("Erro no cadastro!");
 		    	}
-	    	} else if (type == 1) {
+	    	}} else if (type == 1) {
 	    		id = Integer.parseInt(txf_id.getText());
 	    		String nome = txf_nome.getText();
 		    	float valor = Float.parseFloat(txf_valor.getText());

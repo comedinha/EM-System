@@ -1,6 +1,8 @@
 package system;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -26,6 +28,10 @@ public class Produto {
 		}
 
 		return ol;
+	}
+	
+	public static boolean verificaExistenciaProduto(int id) throws SQLException {
+		return dao.Produto.verificaExistenciaProduto(id);
 	}
 	
 	public static ObservableList<TableViewProduto> getAllProduto() throws Exception {
