@@ -22,40 +22,27 @@ public class Comanda {
 		
 		while (result.next()) {
 			ol.add(new TableViewComandaLista(result.getInt("comandaId"), result.getTimestamp("data"),
-					result.getString("mesa"), result.getInt("funcionarioId")));
+					result.getString("mesa"), result.getInt("funcionarioId"), dao.Comanda.getPrecoComanda(result.getInt("comandaId"), result.getTimestamp("data"))));
 		}
 		
 		return ol;
-	}
-
-	public static float getValorPagoComanda(int id) throws Exception {
-		ResultSet result = dao.Comanda.getValorPagoComanda(id);
-		result.next();
-		return result.getFloat(1);
 	}
 
 	public static int finalizaComanda() {
 		return 0;
 	}
 
-	public static void addProduto(int comandaId, int produtoId, int qtde) throws Exception {
-		dao.Comanda.addProduto(comandaId, produtoId, qtde);
+	public static void addProduto(int comandaId, Timestamp data, int produtoId, int qtde) throws Exception {
+		dao.Comanda.addProduto(comandaId, data, produtoId, qtde);
 	}
 
-	public static ObservableList<TableViewComandaProduto> getAllProduto(int id) throws Exception {		
-		ResultSet result = dao.Comanda.getAllProduto(id);
+	public static ObservableList<TableViewComandaProduto> getAllProduto(int id, Timestamp dataComanda) throws Exception {		
+		ResultSet result = dao.Comanda.getAllProduto(id, dataComanda);
 		ObservableList<TableViewComandaProduto> ol = FXCollections.observableArrayList();
-		Timestamp dataComanda = dao.Comanda.getDataComanda(id);
 		
 		while (result.next()) {
-			if(dataComanda.after(dao.Comanda.getDataProduto(result.getInt(1)))) {
-				ol.add(new TableViewComandaProduto(result.getInt(1), result.getString(2), 
-						result.getInt(3), result.getFloat(4), result.getFloat(5)));
-			} else {
-				ol.add(new TableViewComandaProduto(result.getInt(1), result.getString(2), 
-						result.getInt(3), dao.Comanda.getPrecoVelho(result.getInt(1)), 
-						result.getFloat(5)));
-			}
+			ol.add(new TableViewComandaProduto(result.getInt(1), result.getString(2), 
+					result.getInt(3), result.getFloat(4), result.getFloat(5)));
 		}
 		return ol;
 	}

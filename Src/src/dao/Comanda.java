@@ -64,42 +64,16 @@ public class Comanda {
 		ps.executeUpdate();		
 	}
 	
-	public static void addProduto(int comandaId, int produtoId, int qtde) throws Exception {
-		String sql = "INSERT INTO produtoComanda (comandaId, produtoId, quantidade) VALUES (?, ?, ?)";
+	public static void addProduto(int comandaId, Timestamp data, int produtoId, int qtde) throws Exception {
+		String sql = "INSERT INTO produtoComanda (comandaId, dataComanda, produtoId, quantidade) VALUES (?, ?, ?, ?)";
 
 		PreparedStatement ps;
 		ps = Valores.getConnection().prepareStatement(sql);
 		ps.setInt(1, comandaId);
-		ps.setInt(2, produtoId);
-		ps.setInt(3, qtde);
+		ps.setTimestamp(2, data);
+		ps.setInt(3, produtoId);
+		ps.setInt(4, qtde);
 		ps.executeUpdate();
-	}
-	
-	public static void setValorPagoComanda(int idComanda, float valor) throws Exception {
-		String sql = "UPDATE comanda SET valorPago = ? WHERE comandaId = ?";
-		
-		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
-		ps.setFloat(1, valor + system.Comanda.getValorPagoComanda(idComanda));
-		ps.setInt(2, idComanda);
-		ps.executeUpdate();
-	}
-	
-	public static void setValorPagoProduto(int idProduto, int idComanda, float valor) throws Exception {
-		String sql = "UPDATE produtoComanda SET valorPago = ? WHERE produtoId = ? AND comandaId = ?";
-		
-		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
-		ps.setFloat(1, valor);
-		ps.setInt(2, idProduto);
-		ps.setInt(3, idComanda);
-		ps.executeUpdate();
-	}
-	
-	public static ResultSet getValorPagoComanda(int id) throws Exception {
-		String sql = "SELECT valorPago FROM comanda WHERE comandaId = ?";
-		
-		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
-		ps.setInt(1, id);
-		return ps.executeQuery();
 	}
 
 	public static ResultSet getComanda(int id, Timestamp data) throws Exception {
@@ -119,14 +93,12 @@ public class Comanda {
 		return ps.executeQuery();
 	}
 	
-	public static ResultSet getAllProduto(int id) throws Exception {		
-		String sql = "SELECT produtoComanda.produtoId, produto.nome, produtoComanda.quantidade, "
-				+ "produto.valor, produtoComanda.valorPago FROM produtoComanda "
-				+ "JOIN produto ON produtoComanda.produtoId = produto.produtoId "
-				+ "WHERE produtoComanda.comandaId = ?";
+	public static ResultSet getAllProduto(int id, Timestamp data) throws Exception {		
+		String sql = "SELECT pc.produtoId, p.nome, pc.quantidade, p.valor, pg.valor FROM produtoComanda pc LEFT JOIN pagamentoProduto pp ON pp.produtoId = pc.produtoId JOIN pagamento pg ON pg.pagamentoId = pp.pagamentoId JOIN produto p ON p.produtoId = pc.produtoId WHERE pc.comandaId = ? AND pc.dataComanda = ?";
 
 		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
 		ps.setInt(1, id);
+		ps.setTimestamp(2, data);
 		return ps.executeQuery();		
 	}
 
@@ -141,17 +113,7 @@ public class Comanda {
 		ps.executeUpdate();
 		return true;
 	}
-	
-	public static Timestamp getDataComanda(int id) throws SQLException {
-		String sql = "SELECT data FROM comanda WHERE id = ?";
-		
-		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
-		ps.setInt(1, id);
-		ResultSet result = ps.executeQuery();
-		result.next();
-		return result.getTimestamp(1);
-	}
-	
+
 	public static Timestamp getDataProduto(int id) throws SQLException {
 		String sql = "SELECT data FROM produtoAlterado WHERE id = ?";
 		
@@ -161,15 +123,21 @@ public class Comanda {
 		result.next();
 		return result.getTimestamp(1);
 	}
-	
-	public static float getPrecoVelho(int id) throws SQLException {
-		String sql = "SELECT valor FROM produtoAlterado WHERE id = ?";
-		
+
+	public static float getPrecoComanda(int comandaId, Timestamp date) throws Exception {
+		String sql = "SELECT cp.data, cp.quantidade, p.valor, pa.data, pa.valor FROM comanda c JOIN produtoComanda cp ON c.comandaId = cp.comandaId JOIN produto p ON p.produtoId = cp.produtoId LEFT JOIN produtoAlterado pa ON p.produtoId = pa.produtoId WHERE c.data = ? AND c.comandaId = ?";
+
 		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
-		ps.setInt(1, id);
+		ps.setTimestamp(1, date);
+		ps.setInt(2, comandaId);
+
+		float valor = 0;
 		ResultSet result = ps.executeQuery();
-		result.next();
-		return result.getFloat(1);
+		while (result.next()) {
+			valor += result.getFloat(3) * result.getInt(2);
+		}
+
+		return valor;
 	}
 }
 

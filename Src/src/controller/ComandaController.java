@@ -180,7 +180,7 @@ public class ComandaController {
 			
 			int idProduto = Integer.parseInt(txf_produto.getText().substring(0, txf_produto.getText().indexOf(' ')));
 			if(!Comanda.existeNaComanda(idProduto, Integer.valueOf(txf_comid.getText()))) {
-				Comanda.addProduto(Integer.valueOf(txf_comid.getText()), idProduto, Integer.parseInt(txf_qtde.getText()));
+				Comanda.addProduto(Integer.valueOf(txf_comid.getText()), comandaTime, idProduto, Integer.parseInt(txf_qtde.getText()));
 				txf_produto.clear();
 				txf_qtde.setText("1");
 				refresh();
@@ -248,7 +248,7 @@ public class ComandaController {
 		tc_valorTotal.setCellValueFactory(new PropertyValueFactory<>("valorTotal"));
 
 		if (!txf_comid.getText().isEmpty()) {
-			tv_produtos.setItems(Comanda.getAllProduto(Integer.valueOf(txf_comid.getText())));
+			tv_produtos.setItems(Comanda.getAllProduto(Integer.valueOf(txf_comid.getText()), comandaTime));
 			chb_comid.setSelected(false);
 			chb_comid.setDisable(true);
 		}
@@ -294,7 +294,7 @@ public class ComandaController {
 					Stages.novoAlerta(e.getMessage(), "", true);
 				}
 			});
-			
+
 			rowMenu.getItems().addAll(pagarProduto, removerUm, removerTudo);
 			row.contextMenuProperty().bind(Bindings.when(Bindings.isNotNull(row.itemProperty())).then(rowMenu).otherwise((ContextMenu)null));
 			return row;
@@ -322,7 +322,7 @@ public class ComandaController {
 	}
 
 	private void refresh() throws Exception {
-		tv_produtos.setItems(Comanda.getAllProduto(Integer.valueOf(txf_comid.getText())));
+		tv_produtos.setItems(Comanda.getAllProduto(Integer.valueOf(txf_comid.getText()), comandaTime));
 		valorTotal();
 		valorPago();
 	}

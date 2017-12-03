@@ -1,7 +1,6 @@
 package system;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -30,7 +29,7 @@ public class Produto {
 		return ol;
 	}
 	
-	public static boolean verificaExistenciaProduto(int id) throws SQLException {
+	public static boolean verificaExistenciaProduto(int id) throws Exception {
 		return dao.Produto.verificaExistenciaProduto(id);
 	}
 	

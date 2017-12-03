@@ -2,7 +2,7 @@ package dao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.Timestamp;
 
 import util.Valores;
 
@@ -52,7 +52,7 @@ public class Produto {
 		return result;
 	}
 	
-	public static boolean verificaExistenciaProduto(int id) throws SQLException {
+	public static boolean verificaExistenciaProduto(int id) throws Exception {
 		String sql = "SELECT produtoId FROM produto WHERE produtoId = ?";
 		
 		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
@@ -67,5 +67,15 @@ public class Produto {
 		ps.setInt(1, id);
 		ps.executeUpdate();			
 		return true;
+	}
+
+	public static ResultSet getPrecoProduto(Timestamp data) throws Exception {
+		String sql = "SELECT * FROM produto p LEFT JOIN produtoAlterado pa ON p.produtoId = pa.produtoId WHERE data <= ? ORDER BY (pa.data)";
+
+		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
+		ps.setTimestamp(1, data);
+
+		ResultSet result = ps.executeQuery();
+		return result;
 	}
 }
