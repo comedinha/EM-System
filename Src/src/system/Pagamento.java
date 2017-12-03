@@ -2,6 +2,7 @@ package system;
 
 import java.sql.Date;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -11,15 +12,13 @@ import javafx.collections.ObservableList;
 
 public class Pagamento {
 	
-	//public static boolean pagamentoComanda(float valor, int comanda, Date dataComanda) throws Exception {		
-		//dao.Comanda.setValorPagoComanda(comanda, valor);
-		//return dao.Pagamento.pagamentoComanda(valor, comanda, dataComanda);
-	//}
+	public static void pagamentoComanda(int id, Timestamp time, Float valor, int funcionarioId, boolean desconto) throws Exception {
+		dao.Pagamento.pagamentoComanda(id, time, valor, funcionarioId, desconto);
+	}
 	
-	//public static boolean pagamentoProduto(float valor, int comanda, int produto, Date dataComanda) throws Exception {		
-		//dao.Comanda.setValorPagoProduto(produto, comanda, valor);
-		//return dao.Pagamento.pagamentoComanda(valor, comanda, dataComanda);
-	//}
+	public static void pagamentoProduto(int id, int quantidade, int comandaId, Timestamp comandaTime, Float valor, int funcionarioId) throws Exception {		
+		dao.Pagamento.pagamentoProduto(id, quantidade, comandaId, comandaTime, valor, funcionarioId);
+	}
 	
 	public static ResultSet getProduto(int id) throws Exception {		
 		return dao.Pagamento.get(id);
@@ -79,5 +78,4 @@ public class Pagamento {
     		return comandaData.get();
     	}
     }
-
 }

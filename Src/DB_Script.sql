@@ -57,7 +57,7 @@ CREATE TABLE produtoComanda(
 
 CREATE TABLE pagamento(
 	pagamentoId SERIAL PRIMARY KEY NOT NULL,
-	valor int,
+	valor numeric(8,2),
 	data timestamp DEFAULT CURRENT_TIMESTAMP,
 	funcionarioId int
 );
@@ -66,6 +66,7 @@ CREATE TABLE pagamentoComanda(
 	pagamentoId SERIAL REFERENCES pagamento(pagamentoId) ON DELETE CASCADE ON UPDATE CASCADE,
 	comandaId int,
 	dataComanda timestamp,
+	desconto boolean,
     FOREIGN KEY (comandaId, dataComanda) references comanda(comandaId, data) ON DELETE NO ACTION ON UPDATE CASCADE,
 	PRIMARY KEY (pagamentoId, comandaId, dataComanda)
 );

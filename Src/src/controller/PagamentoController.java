@@ -2,6 +2,7 @@ package controller;
 
 import java.sql.Timestamp;
 
+import system.Pagamento;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -19,6 +20,8 @@ import util.Valores;
 
 public class PagamentoController {
 	private int mode = 0;
+	private int idproduto;
+	private int quantidade;
 	private int id;
 	Timestamp time;
 	private Parent parent;
@@ -68,9 +71,11 @@ public class PagamentoController {
     void btn_salvar(ActionEvent event) {
     	try {
 	    	if (mode == 0) {
+	    		Pagamento.pagamentoComanda(id, time, Float.valueOf(tf_caixa.getText()), Valores.getUsuario().getId(), false);
 	    	} else if (mode == 1) {
+	    		Pagamento.pagamentoComanda(id, time, Float.valueOf(tf_caixa.getText()), Valores.getUsuario().getId(), true);
 	    	} else if (mode == 2) {
-	    		
+	    		Pagamento.pagamentoProduto(idproduto, quantidade, id, time, Float.valueOf(tf_caixa.getText()), Valores.getUsuario().getId());
 	    	} else {
 	    		throw new Exception("Erro ao salvar produto!");
 	    	}
@@ -115,9 +120,12 @@ public class PagamentoController {
     	txt_caixa.setText(String.format(txt_caixa.getText(), "Pagamento"));
     }
 
-	public void adicionaProdutoPagamento(int id, float valorPagar, Parent root) {
+	public void adicionaProdutoPagamento(int id, int quantidade, int idComanda, Timestamp timeComanda, float valorPagar, Parent root) {
 		this.mode = 2;
-    	this.id = id;
+    	this.idproduto = id;
+    	this.quantidade = quantidade;
+    	this.id = idComanda;
+    	this.time = timeComanda;
     	this.parent = root;
 		tf_valorpagar.setText(Float.toString(valorPagar));
     	txt_caixa.setText(String.format(txt_caixa.getText(), "Pagamento"));
