@@ -2,6 +2,7 @@ package dao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 
@@ -131,7 +132,7 @@ public class Comanda {
 
 	public static boolean update(int id, String mesa, int funcionario, boolean pago) throws Exception {
 		String sql = "UPDATE comanda SET mesa = ?, funcionarioId = ?, pago = ? WHERE comandaId = ?";
-
+		
 		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
 		ps.setString(1, mesa);
 		ps.setInt(2, funcionario);
@@ -140,4 +141,36 @@ public class Comanda {
 		ps.executeUpdate();
 		return true;
 	}
+	
+	public static Timestamp getDataComanda(int id) throws SQLException {
+		String sql = "SELECT data FROM comanda WHERE id = ?";
+		
+		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
+		ps.setInt(1, id);
+		ResultSet result = ps.executeQuery();
+		result.next();
+		return result.getTimestamp(1);
+	}
+	
+	public static Timestamp getDataProduto(int id) throws SQLException {
+		String sql = "SELECT data FROM produtoAlterado WHERE id = ?";
+		
+		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
+		ps.setInt(1, id);
+		ResultSet result = ps.executeQuery();
+		result.next();
+		return result.getTimestamp(1);
+	}
+	
+	public static float getPrecoVelho(int id) throws SQLException {
+		String sql = "SELECT valor FROM produtoAlterado WHERE id = ?";
+		
+		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
+		ps.setInt(1, id);
+		ResultSet result = ps.executeQuery();
+		result.next();
+		return result.getFloat(1);
+	}
 }
+
+

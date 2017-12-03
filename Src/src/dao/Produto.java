@@ -2,6 +2,8 @@ package dao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import util.Valores;
 
 public class Produto {
@@ -48,6 +50,14 @@ public class Produto {
 		statement.setInt(1, id);
 		ResultSet result = statement.executeQuery();
 		return result;
+	}
+	
+	public static boolean verificaExistenciaProduto(int id) throws SQLException {
+		String sql = "SELECT produtoId FROM produto WHERE produtoId = ?";
+		
+		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
+		ps.setInt(1, id);
+		return ps.executeQuery().next();
 	}
 
 	public static boolean delete(int id) throws Exception {
