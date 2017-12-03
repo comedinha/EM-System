@@ -9,7 +9,7 @@ import javax.crypto.spec.DESedeKeySpec;
 import org.postgresql.util.Base64;  
 /** documento
  * 
- * @author Mateus
+ * @author MateusGay
  *
  */
 public class Crypto {
