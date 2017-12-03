@@ -35,7 +35,7 @@ CREATE TABLE produto(
 	status int DEFAULT 1
 );
 
-CREATE TABLE produtoAlterado(
+CREATE TABLE produtoAlterado (
 	produtoId SERIAL REFERENCES produto(produtoId) ON DELETE NO ACTION ON UPDATE CASCADE,
 	data timestamp DEFAULT CURRENT_TIMESTAMP,
 	nome varchar(30),

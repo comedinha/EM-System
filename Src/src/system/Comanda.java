@@ -42,13 +42,20 @@ public class Comanda {
 		dao.Comanda.addProduto(comandaId, produtoId, qtde);
 	}
 
-	public static ObservableList<TableViewComandaProduto> getAllProduto(int id) throws Exception {
+	public static ObservableList<TableViewComandaProduto> getAllProduto(int id) throws Exception {		
 		ResultSet result = dao.Comanda.getAllProduto(id);
 		ObservableList<TableViewComandaProduto> ol = FXCollections.observableArrayList();
+		Timestamp dataComanda = dao.Comanda.getDataComanda(id);
 		
-		while (result.next()) {			
-			ol.add(new TableViewComandaProduto(result.getInt(1), result.getString(2), 
-					result.getInt(3), result.getFloat(4), result.getFloat(5)));
+		while (result.next()) {
+			if(dataComanda.after(dao.Comanda.getDataProduto(result.getInt(1)))) {
+				ol.add(new TableViewComandaProduto(result.getInt(1), result.getString(2), 
+						result.getInt(3), result.getFloat(4), result.getFloat(5)));
+			} else {
+				ol.add(new TableViewComandaProduto(result.getInt(1), result.getString(2), 
+						result.getInt(3), dao.Comanda.getPrecoVelho(result.getInt(1)), 
+						result.getFloat(5)));
+			}
 		}
 		return ol;
 	}
