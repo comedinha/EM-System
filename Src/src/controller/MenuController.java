@@ -177,31 +177,35 @@ public class MenuController {
 
     @FXML
     public void initialize() {
-    	if (Valores.getConnection() == null || Valores.getUsuario() == null)
-    		Platform.exit();
-
-    	iniciaInicio();
-
-    	if (Valores.getUsuario().getFuncao() == 1) {
-    		iniciaFinanc();
-    	} else {
-    		ab_financeiro.setDisable(true);
+    	try {
+	    	if (Valores.getConnection() == null || Valores.getUsuario() == null)
+	    		Platform.exit();
+	
+	    	iniciaInicio();
+	
+	    	if (Valores.getUsuario().getFuncao() == 1) {
+	    		iniciaFinanc();
+	    	} else {
+	    		ab_financeiro.setDisable(true);
+	    	}
+	
+	    	iniciaComanda();
+	
+	    	if (Valores.getUsuario().getFuncao() == 1) {
+		    	iniciaProduto();
+		    	iniciaFuncionario();
+	    	} else {
+	    		ab_funcionarios.setDisable(true);
+	    		ab_produtos.setDisable(true);
+	    	}
+	
+	    	iniciaConfig();
+    	} catch (Exception e) {
+    		Stages.novoAlerta(e.getMessage(), "", true);
     	}
-
-    	iniciaComanda();
-
-    	if (Valores.getUsuario().getFuncao() == 1) {
-	    	iniciaProduto();
-	    	iniciaFuncionario();
-    	} else {
-    		ab_funcionarios.setDisable(true);
-    		ab_produtos.setDisable(true);
-    	}
-
-    	iniciaConfig();
     }
 
-    private void iniciaInicio() {
+    private void iniciaInicio() throws Exception {
     	ta_txtinicio.setText(String.format(ta_txtinicio.getText(), Valores.getUsuario().getNome(), FuncionarioCargoEnum.get(Valores.getUsuario().getFuncao()), null));
     }
 
@@ -228,7 +232,7 @@ public class MenuController {
     				try {
     					Stages st = new Stages();
         		    	FXMLLoader comandaLoader = st.novoStage("Editar Comanda", "Comanda", null);
-        		    	comandaLoader.<ComandaController>getController().editaComanda(row.getItem().getId());
+        		    	comandaLoader.<ComandaController>getController().editaComanda(row.getItem().getId(), row.getItem().getTimeStamp());
     				} catch (Exception e) {
     					Stages.novoAlerta(e.getMessage(), "", true);
     				}
@@ -261,7 +265,7 @@ public class MenuController {
     				try {
     					Stages st = new Stages();
         		    	FXMLLoader comandaLoader = st.novoStage("Editar Comanda", "Comanda", null);
-        		    	comandaLoader.<ComandaController>getController().editaComanda(row.getItem().getId());
+        		    	comandaLoader.<ComandaController>getController().editaComanda(row.getItem().getId(), row.getItem().getTimeStamp());
     				} catch (Exception e) {
     					Stages.novoAlerta(e.getMessage(), "", true);
     				}
@@ -459,7 +463,7 @@ public class MenuController {
         }
     }
 
-    private void iniciaConfig() {
+    private void iniciaConfig() throws Exception {
     	Configuracao.configDataPut("Global.Meio de Pagamento", MeioPagamento.Dinheiro);
 
     	if (Valores.getUsuario().getFuncao() == 1) {

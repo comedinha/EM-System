@@ -1,8 +1,9 @@
 package system;
 
-import java.sql.Date;
 import java.sql.ResultSet;
-import java.sql.Time;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -11,12 +12,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class Comanda {
-	public static int criaComanda() throws Exception {
-		return dao.Comanda.novaComanda();
-	}
-
-	public static void criaComandaId(int id) throws Exception {
-		dao.Comanda.novaComandaId(id);
+	public static int criaComanda(int id, int funcionarioId) throws Exception {
+		return dao.Comanda.novaComanda(id, funcionarioId);
 	}
 
 	public static ObservableList<TableViewComandaLista> getAllComanda() throws Exception {
@@ -24,7 +21,8 @@ public class Comanda {
 		ObservableList<TableViewComandaLista> ol = FXCollections.observableArrayList();
 		
 		while (result.next()) {			
-			ol.add(new TableViewComandaLista(result.getInt(1), result.getDate(2), result.getTime(2), result.getString(3), result.getFloat(4)));
+			ol.add(new TableViewComandaLista(result.getInt(1), result.getTimestamp(2),
+					result.getString(3), result.getFloat(4)));
 		}
 		
 		return ol;
@@ -42,10 +40,6 @@ public class Comanda {
 
 	public static void addProduto(int comandaId, int produtoId, int qtde) throws Exception {
 		dao.Comanda.addProduto(comandaId, produtoId, qtde);
-	}
-
-	public static void atualizarNomeMesa(String mesa, int id) throws Exception {
-		dao.Comanda.atualizarNomeMesa(mesa, id);
 	}
 
 	public static ObservableList<TableViewComandaProduto> getAllProduto(int id) throws Exception {
@@ -79,6 +73,10 @@ public class Comanda {
 
 	public static boolean updateComanda(int id, String mesa, int funcionario, boolean pago) throws Exception {
 		return dao.Comanda.update(id, mesa, funcionario, pago);
+	}
+
+	public static ResultSet getComanda(int id, Timestamp data) throws Exception {
+		return dao.Comanda.getComanda(id, data);
 	}
 
 	//Classe Interna modelo Comanda-Prdoutos
@@ -131,12 +129,15 @@ public class Comanda {
 		private final SimpleStringProperty mesa;
 		private final SimpleStringProperty data;
 		private final SimpleFloatProperty valor;
+		private final SimpleStringProperty timestamp;
 
-		public TableViewComandaLista(int id,  Date data, Time time, String mesa, float valor) {
+		public TableViewComandaLista(int id, Timestamp data, String mesa, float valor) {
 			this.id = new SimpleIntegerProperty(id);
-			this.data = new SimpleStringProperty(data.toString() + " " + time.toString());
+			DateFormat f = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+			this.data = new SimpleStringProperty(f.format(data));
 			this.mesa = new SimpleStringProperty(mesa);
 			this.valor = new SimpleFloatProperty(valor);
+			this.timestamp = new SimpleStringProperty(data.toString());
 		}
 		
 		public int getId() {
@@ -153,6 +154,10 @@ public class Comanda {
 
 		public float getValor() {
 			return valor.get();
+		}
+
+		public Timestamp getTimeStamp() {
+			return Timestamp.valueOf(timestamp.get());
 		}
 	}
 }

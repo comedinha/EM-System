@@ -3,7 +3,6 @@ package dao;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import util.Valores;
 
@@ -21,7 +20,7 @@ public class Pagamento {
 		return true;
 	}
 	
-	public static boolean pagamentoProduto(float valor, int comanda, Date dataComanda) throws SQLException {
+	public static boolean pagamentoProduto(float valor, int comanda, Date dataComanda) throws Exception {
 		String sql = "INSERT INTO pagamento (valor, funcionarioId, comandaId, dataComanda) VALUES (?, ?, ?, ?)";
 
 		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);

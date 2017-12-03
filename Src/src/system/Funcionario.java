@@ -12,27 +12,50 @@ import javafx.collections.ObservableList;
 import util.Stages;
 
 public class Funcionario {
-
-	private static String nome;
-	private static int funcionarioId;
-	private static int funcao;
+	private int id;
 	
-	public Funcionario(String nome, int id, int funcao) {
-		Funcionario.nome = nome;
-		Funcionario.funcionarioId = id;
-		Funcionario.funcao = funcao;
+	public Funcionario(int id) {
+		this.id = id;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getNome() throws Exception {
+		ResultSet result = dao.Funcionario.get(id);
+		if (result.next())
+			return result.getString("nome");
+
+		throw new Exception("Funcionário não encontrado");
 	}
 
-	public int getId() {
-		return funcionarioId;
+	public int getId() throws Exception {
+		ResultSet result = dao.Funcionario.get(id);
+		if (result.next())
+			return result.getInt("funcionarioId");
+
+		throw new Exception("Funcionário não encontrado");
 	}
 
-	public int getFuncao() {
-		return funcao;
+	public int getFuncao() throws Exception {
+		ResultSet result = dao.Funcionario.get(id);
+		if (result.next())
+			return result.getInt("funcaoId");
+
+		throw new Exception("Funcionário não encontrado");
+	}
+
+	public boolean getGarcom() throws Exception {
+		ResultSet result = dao.Funcionario.get(id);
+		if (result.next())
+			return result.getBoolean("garcom");
+
+		throw new Exception("Funcionário não encontrado");
+	}
+
+	public static boolean getGarcomById(int id) throws Exception {
+		ResultSet result = dao.Funcionario.get(id);
+		if (result.next())
+			return result.getBoolean("garcom");
+
+		throw new Exception("Funcionário não encontrado");
 	}
 
 	public static void criaUsuario(int func, String nome, String usr, String pass, boolean garcom) throws Exception {

@@ -1,5 +1,8 @@
 package controller;
 
+import java.sql.ResultSet;
+import java.sql.Timestamp;
+
 import org.controlsfx.control.textfield.TextFields;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
@@ -95,6 +98,7 @@ public class ComandaController {
 			chb_comid.setSelected(false);
 			txf_comid.setDisable(true);
 			cb_garcom.getItems().addAll(Funcionario.getFuncionariosNome());
+			txf_mesa.setText("-");
 			
     		TextFields.bindAutoCompletion(txf_produto, Produto.getProdutoNome());
     		
@@ -156,13 +160,13 @@ public class ComandaController {
 	private void addProduto(ActionEvent event) {
 		try {
 			if (txf_comid.getText().isEmpty()) {
-				txf_comid.setText(Integer.toString(Comanda.criaComanda()));
+				txf_comid.setText(Integer.toString(Comanda.criaComanda(0, Valores.getUsuario().getId())));
 				chb_comid.setSelected(false);
 				chb_comid.setDisable(true);
 			} else {
 				if (!chb_comid.isDisable()) {
 					//Criar comanda com ID especificado
-					Comanda.criaComandaId(Integer.parseInt(txf_comid.getText()));
+					Comanda.criaComanda(Integer.parseInt(txf_comid.getText()), Valores.getUsuario().getId());
 					chb_comid.setSelected(false);
 					chb_comid.setDisable(true);
 				}
@@ -202,13 +206,13 @@ public class ComandaController {
 			if (txf_mesa.getText().isEmpty())
 				throw new Exception("A mesa deve ser definida!");
 
-			int idGarcom = 0;
+			int idGarcom = Valores.getUsuario().getId();
 			if (!cb_garcom.getValue().isEmpty())
 				idGarcom = Integer.parseInt(cb_garcom.getValue().substring(0, cb_garcom.getValue().indexOf(' ')));
 
 			if (!chb_finalizar.isSelected()) {
-				if (Comanda.updateComanda(Integer.valueOf(txf_comid.getText()), txf_mesa.getText(), idGarcom, false)) {
-					
+				if (!Comanda.updateComanda(Integer.valueOf(txf_comid.getText()), txf_mesa.getText(), idGarcom, false)) {
+					throw new Exception("Erro ao atualizar comanda!");
 				}
 			} else {
 				float valorTotal = Float.valueOf(ta_valorTotal.getText());
@@ -217,8 +221,8 @@ public class ComandaController {
 		    	if (valorPagar > 0)
 		    		throw new Exception("A comanda deve estar paga.");
 
-				if (Comanda.updateComanda(Integer.valueOf(txf_comid.getText()), txf_mesa.getText(), idGarcom, true)) {
-					
+				if (!Comanda.updateComanda(Integer.valueOf(txf_comid.getText()), txf_mesa.getText(), idGarcom, true)) {
+					throw new Exception("Erro ao atualizar comanda!");
 				}
 			}
 
@@ -316,12 +320,19 @@ public class ComandaController {
 		valorPago();
 	}
 
-	public void editaComanda(int id) {
+	public void editaComanda(int id, Timestamp data) {
 		try {
-			txf_comid.setText(Integer.toString(id));
-			chb_comid.setSelected(false);
-			chb_comid.setDisable(true);
-			refresh();
+			ResultSet result = Comanda.getComanda(id, data);
+			if (result.next()) {
+				txf_comid.setText(Integer.toString(id));
+				chb_comid.setSelected(false);
+				chb_comid.setDisable(true);
+				txf_mesa.setText(result.getString("mesa"));
+				if (Funcionario.getGarcomById(result.getInt("funcionarioId")))
+					cb_garcom.setValue(result.getInt("funcionarioId") + " - " + Funcionario.getNomebyId(result.getInt("funcionarioId")));
+				refresh();
+			} else
+				throw new Exception("Essa comanda não existe!");
 		} catch (Exception e) {
 			Stages.novoAlerta(e.getMessage(), "", true);
 		}

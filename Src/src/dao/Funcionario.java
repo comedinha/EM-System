@@ -32,11 +32,21 @@ public class Funcionario {
 		ResultSet result = statement.executeQuery();
 
 		if (result.next()) {
-			Valores.setFuncionario(new system.Funcionario(result.getString("nome"), result.getInt("funcionarioId"), result.getInt("funcaoid")));
+			Valores.setFuncionario(new system.Funcionario(result.getInt("funcionarioId")));
 			return true;
 		}
 
 		return false;
+	}
+
+	public static ResultSet get(int id) throws Exception {
+		String sql = "SELECT * FROM funcionario WHERE funcionarioId = ?"; 
+
+		PreparedStatement statement = Valores.getConnection().prepareStatement(sql);
+		statement.setInt(1, id);
+
+		ResultSet result = statement.executeQuery();
+		return result;
 	}
 
 	public static boolean update(int id, String nome, String login, String password, boolean garcom) throws Exception {
