@@ -94,7 +94,7 @@ public class Comanda {
 	}
 	
 	public static ResultSet getAllProduto(int id, Timestamp data) throws Exception {		
-		String sql = "SELECT pc.produtoId, p.nome, pc.quantidade, p.valor, pg.valor FROM produtoComanda pc LEFT JOIN pagamentoProduto pp ON pp.produtoId = pc.produtoId JOIN pagamento pg ON pg.pagamentoId = pp.pagamentoId JOIN produto p ON p.produtoId = pc.produtoId WHERE pc.comandaId = ? AND pc.dataComanda = ?";
+		String sql = "SELECT pc.produtoId, p.nome, pc.quantidade, p.valor, pg.valor FROM produtoComanda pc LEFT JOIN pagamentoProduto pp ON pp.produtoId = pc.produtoId AND pp.comandaId = pc.comandaId AND pp.dataComanda = pc.dataComanda LEFT JOIN pagamento pg ON pg.pagamentoId = pp.pagamentoId JOIN produto p ON p.produtoId = pc.produtoId WHERE pc.comandaId = ? AND pc.dataComanda = ?";
 
 		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
 		ps.setInt(1, id);
