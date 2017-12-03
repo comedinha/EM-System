@@ -67,7 +67,7 @@
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Mesa:" textAlignment="CENTER" wrappingWidth="44.13671875" />
                   <TextField fx:id="txf_mesa" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" promptText="Digite a mesa..." GridPane.columnIndex="1" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Garçom:" textAlignment="CENTER" wrappingWidth="55.021484375" GridPane.rowIndex="1" />
-                  <ChoiceBox maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <ChoiceBox fx:id="cb_garcom" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#act_addDesconto" text="Desconto" GridPane.columnIndex="3" />
                   <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#act_addPagamento" text="Pagamento" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                </children>
@@ -78,7 +78,7 @@
    <bottom>
       <HBox alignment="CENTER_RIGHT" prefHeight="36.0" prefWidth="450.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-            <CheckBox fx:id="checkB_finalizar" mnemonicParsing="false" text="Finalizar" />
+            <CheckBox fx:id="chb_finalizar" mnemonicParsing="false" text="Finalizar" />
             <Button mnemonicParsing="false" onAction="#btnSalvar" text="Salvar" />
             <Button mnemonicParsing="false" onAction="#btnCancelar" text="Cancelar" />
          </children>
@@ -94,7 +94,7 @@
                <children>
                   <HBox prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <CheckBox fx:id="cb_comid" mnemonicParsing="false" />
+                        <CheckBox fx:id="chb_comid" mnemonicParsing="false" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ID" />
                      </children>
                   </HBox>

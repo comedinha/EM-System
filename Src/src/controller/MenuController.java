@@ -34,7 +34,7 @@ import util.Valores;
 import system.Comanda;
 import system.Configuracao;
 import system.Funcionario;
-import system.Funcionario.FuncionarioEnum;
+import system.Funcionario.FuncionarioCargoEnum;
 import system.Funcionario.TableViewFuncionario;
 
 import java.time.LocalDate;
@@ -131,6 +131,9 @@ public class MenuController {
     private TableColumn<TableViewFuncionario, String> tb_funccargo;
 
     @FXML
+    private TableColumn<TableViewFuncionario, Boolean> tb_funcgarcom;
+
+    @FXML
     private PropertySheet ps_configuracoes;
 
     @FXML
@@ -199,7 +202,7 @@ public class MenuController {
     }
 
     private void iniciaInicio() {
-    	ta_txtinicio.setText(String.format(ta_txtinicio.getText(), Valores.getUsuario().getNome(), FuncionarioEnum.get(Valores.getUsuario().getFuncao()), null));
+    	ta_txtinicio.setText(String.format(ta_txtinicio.getText(), Valores.getUsuario().getNome(), FuncionarioCargoEnum.get(Valores.getUsuario().getFuncao()), null));
     }
 
     private void iniciaFinanc() {
@@ -269,35 +272,35 @@ public class MenuController {
     			return row;
     		});
 
-	    	//Busca
-			txf_comandaBusca.textProperty().addListener(new InvalidationListener() {
-				@Override
-				public void invalidated(Observable observable) {
-					try {
-						if (txf_comandaBusca.textProperty().get().isEmpty()) {
-							tableComand.setItems(Comanda.getAllComanda());
-							return;
-						}
-	
-						ObservableList<TableViewComandaLista> tableItems = FXCollections.observableArrayList();
-						ObservableList<TableColumn<TableViewComandaLista, ?>> cols = tableComand.getColumns();
-						for (int i = 0; i < Comanda.getAllComanda().size(); i++) {
-							for (int j = 0; j < cols.size(); j++) {
-								TableColumn<TableViewComandaLista, ?> col = cols.get(j);
-								String cellValue = col.getCellData(Comanda.getAllComanda().get(i)).toString();
-								cellValue = cellValue.toLowerCase();
-								if(cellValue.contains(txf_comandaBusca.textProperty().get().toLowerCase())) {
-									tableItems.add(Comanda.getAllComanda().get(i));
-									break;
-								}
-							}
-						}
-						tableComand.setItems(tableItems);
-					} catch (Exception e) {
-						Stages.novoAlerta(e.getMessage(), "", true);
-					}
-				}
-			});
+			//Busca
+    		txf_comandaBusca.textProperty().addListener(new InvalidationListener() {
+    			@Override
+    			public void invalidated(Observable observable) {
+    				try {
+    					if(txf_comandaBusca.textProperty().get().isEmpty()) {
+    						tableComand.setItems(Comanda.getAllComanda());
+    						return;
+    					}
+
+    					ObservableList<TableViewComandaLista> tableItems = FXCollections.observableArrayList();
+    					ObservableList<TableColumn<TableViewComandaLista, ?>> cols = tableComand.getColumns();
+    					for (int i = 0; i < Comanda.getAllComanda().size(); i++) {
+    						for (int j = 0; j < cols.size(); j++) {
+    							TableColumn<TableViewComandaLista, ?> col = cols.get(j);
+    							String cellValue = col.getCellData(Comanda.getAllComanda().get(i)).toString();
+    							cellValue = cellValue.toLowerCase();
+    							if(cellValue.contains(txf_comandaBusca.textProperty().get().toLowerCase())) {
+    								tableItems.add(Comanda.getAllComanda().get(i));
+    								break;
+    							}
+    						}
+    					}
+    					tableComand.setItems(tableItems);
+    				} catch (Exception e) {
+    					Stages.novoAlerta(e.getMessage(), "", true);
+    				}
+    			}
+    		});
     	} catch (Exception e) {
     		Stages.novoAlerta(e.getMessage(), "", true);
     	}
@@ -385,6 +388,7 @@ public class MenuController {
 	        tb_funcnome.setCellValueFactory(new PropertyValueFactory<>("nome"));
 	        tb_funclogin.setCellValueFactory(new PropertyValueFactory<>("login"));
 	        tb_funccargo.setCellValueFactory(new PropertyValueFactory<>("cargo"));
+	        tb_funcgarcom.setCellValueFactory(new PropertyValueFactory<>("garcom"));
 
         	tableFunc.setItems(Funcionario.getAllFuncionario());
         	tableFunc.setRowFactory((TableView<TableViewFuncionario> tableFuncionario) -> {
@@ -398,7 +402,7 @@ public class MenuController {
         			try {
         				Stages st = new Stages();
         		    	FXMLLoader menuLoader = st.novoStage("Edita Funcionário", "Funcionario", null);
-        				menuLoader.<FuncionarioController>getController().editaFuncionario(row.getItem().getId(), row.getItem().getNome(), row.getItem().getLogin(), row.getItem().getCargo());
+        				menuLoader.<FuncionarioController>getController().editaFuncionario(row.getItem().getId(), row.getItem().getNome(), row.getItem().getLogin(), row.getItem().getCargo(), row.getItem().getGarcom());
         			} catch (Exception e) {
         				Stages.novoAlerta(e.getMessage(), "", true);
         			}

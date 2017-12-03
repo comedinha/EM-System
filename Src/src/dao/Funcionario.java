@@ -7,16 +7,17 @@ import util.Crypto;
 import util.Valores;
 
 public class Funcionario {
-	public static void inserir(int funcao, String nome, String login, String password) throws Exception {
+	public static void inserir(int funcao, String nome, String login, String password, boolean garcom) throws Exception {
 		Crypto cr = new Crypto();
-		String sql = "INSERT INTO funcionario (username, password, nome, funcaoid)"
-				+ " VALUES (?, ?, ?, ?)";
+		String sql = "INSERT INTO funcionario (username, password, nome, funcaoid, garcom)"
+				+ " VALUES (?, ?, ?, ?, ?)";
 
 		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);	
 		ps.setString(1, login);
 		ps.setString(2, cr.encrypt(password));
 		ps.setString(3, nome);
 		ps.setInt(4, funcao);
+		ps.setBoolean(5, garcom);
 		ps.executeUpdate();
 	}
 
@@ -38,8 +39,8 @@ public class Funcionario {
 		return false;
 	}
 
-	public static boolean update(int id, String nome, String login, String password) throws Exception {
-		String sql = "UPDATE funcionario SET username = ?, nome = ?";
+	public static boolean update(int id, String nome, String login, String password, boolean garcom) throws Exception {
+		String sql = "UPDATE funcionario SET username = ?, nome = ?, garcom = ?";
 		if (!password.isEmpty())
 			sql += ", password = ? WHERE funcionarioId = ?";
 		else
@@ -48,12 +49,13 @@ public class Funcionario {
 		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
 		ps.setString(1, login);
 		ps.setString(2, nome);
+		ps.setBoolean(3, garcom);
 		if (!password.isEmpty()) {
 			Crypto cr = new Crypto();
-			ps.setString(3, cr.encrypt(password));
-			ps.setInt(4, id);
+			ps.setString(4, cr.encrypt(password));
+			ps.setInt(5, id);
 		} else {
-			ps.setInt(3, id);
+			ps.setInt(4, id);
 		}
 			
 		ps.executeUpdate();
@@ -100,5 +102,14 @@ public class Funcionario {
 			return result.getString("nome");
 
 		return null;
+	}
+
+	public static ResultSet getAllGarcom() throws Exception {
+		String sql = "SELECT * FROM funcionario WHERE garcom = true";
+
+		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
+
+		ResultSet result = ps.executeQuery();
+		return result;
 	}
 }

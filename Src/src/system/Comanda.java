@@ -2,7 +2,6 @@ package system;
 
 import java.sql.Date;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Time;
 
 import javafx.beans.property.SimpleFloatProperty;
@@ -12,15 +11,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class Comanda {
-	public static int criaComanda() throws SQLException {
+	public static int criaComanda() throws Exception {
 		return dao.Comanda.novaComanda();
 	}
-	
-	public static void criaComandaId(int id) throws SQLException {
+
+	public static void criaComandaId(int id) throws Exception {
 		dao.Comanda.novaComandaId(id);
 	}
-	
-	public static ObservableList<TableViewComandaLista> getAllComanda() throws SQLException {
+
+	public static ObservableList<TableViewComandaLista> getAllComanda() throws Exception {
 		ResultSet result = dao.Comanda.getAllComandas();
 		ObservableList<TableViewComandaLista> ol = FXCollections.observableArrayList();
 		
@@ -31,7 +30,7 @@ public class Comanda {
 		return ol;
 	}
 
-	public static float getValorPagoComanda(int id) throws SQLException {
+	public static float getValorPagoComanda(int id) throws Exception {
 		ResultSet result = dao.Comanda.getValorPagoComanda(id);
 		result.next();
 		return result.getFloat(1);
@@ -40,15 +39,15 @@ public class Comanda {
 	public static int finalizaComanda() {
 		return 0;
 	}
-	
-	public static void addProduto(int comandaId, int produtoId, int qtde) throws SQLException {
+
+	public static void addProduto(int comandaId, int produtoId, int qtde) throws Exception {
 		dao.Comanda.addProduto(comandaId, produtoId, qtde);
 	}
-	
-	public static void atualizarNomeMesa(String mesa, int id) throws SQLException {
+
+	public static void atualizarNomeMesa(String mesa, int id) throws Exception {
 		dao.Comanda.atualizarNomeMesa(mesa, id);
 	}
-	
+
 	public static ObservableList<TableViewComandaProduto> getAllProduto(int id) throws Exception {
 		ResultSet result = dao.Comanda.getAllProduto(id);
 		ObservableList<TableViewComandaProduto> ol = FXCollections.observableArrayList();
@@ -59,25 +58,29 @@ public class Comanda {
 		}
 		return ol;
 	}
-	
-	public static boolean existeNaComanda(int idProduto, int idComanda) throws SQLException {
+
+	public static boolean existeNaComanda(int idProduto, int idComanda) throws Exception {
 		return dao.Comanda.existeNaComanda(idProduto, idComanda);
 	}
-	
-	public static void updateQtde(int idProduto, int idComanda, int qtde) throws SQLException {
+
+	public static void updateQtde(int idProduto, int idComanda, int qtde) throws Exception {
 		dao.Comanda.updateQtde(idProduto, idComanda, qtde);
 	}
-	
-	public static void removeProdutoComanda(int idProduto, int idComanda) throws SQLException {
+
+	public static void removeProdutoComanda(int idProduto, int idComanda) throws Exception {
 		dao.Comanda.removeProdutoComanda(idProduto, idComanda);
 	}
-	
-	public static int getQtdePrdoutoComanda(int idProduto, int idComanda) throws SQLException {
+
+	public static int getQtdePrdoutoComanda(int idProduto, int idComanda) throws Exception {
 		ResultSet result = dao.Comanda.getQtdeProdutoComanda(idProduto, idComanda);
 		result.next();
 		return result.getInt(1);
 	}
-	
+
+	public static boolean updateComanda(int id, String mesa, int funcionario, boolean pago) throws Exception {
+		return dao.Comanda.update(id, mesa, funcionario, pago);
+	}
+
 	//Classe Interna modelo Comanda-Prdoutos
 	public static class TableViewComandaProduto {
     	private final SimpleIntegerProperty id;

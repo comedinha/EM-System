@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.Map;
 
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -34,8 +35,8 @@ public class Funcionario {
 		return funcao;
 	}
 
-	public static void criaUsuario(int func, String nome, String usr, String pass) throws Exception {
-		dao.Funcionario.inserir(func, nome, usr, pass);
+	public static void criaUsuario(int func, String nome, String usr, String pass, boolean garcom) throws Exception {
+		dao.Funcionario.inserir(func, nome, usr, pass, garcom);
 	}
 
 	public static boolean login(String usr, String pass) throws Exception {
@@ -47,14 +48,14 @@ public class Funcionario {
 		ObservableList<TableViewFuncionario> ol = FXCollections.observableArrayList();
 		
 		while(result.next()) {			
-			ol.add(new TableViewFuncionario(result.getInt("funcionarioId"), result.getString("nome"), result.getString("username"), result.getInt("funcaoId")));
+			ol.add(new TableViewFuncionario(result.getInt("funcionarioId"), result.getString("nome"), result.getString("username"), result.getInt("funcaoId"), result.getBoolean("garcom")));
 		}
 	
 		return ol;
 	}
 	
-	public static boolean editaFuncionario(int id, String nome, String login, String password) throws Exception {
-		return dao.Funcionario.update(id, nome, login, password);
+	public static boolean editaFuncionario(int id, String nome, String login, String password, boolean garcom) throws Exception {
+		return dao.Funcionario.update(id, nome, login, password, garcom);
 	}
 	
 	public static boolean removeFuncionario(int id, String cargo) throws Exception {
@@ -84,17 +85,30 @@ public class Funcionario {
 		return nome;
 	}
 
+	public static ObservableList<String> getFuncionariosNome() throws Exception {
+		ResultSet result = dao.Funcionario.getAllGarcom();
+		ObservableList<String> ol = FXCollections.observableArrayList();
+		
+		while(result.next()) {			
+			ol.add(result.getInt("funcionarioId") + " - " + result.getString("nome"));
+		}
+	
+		return ol;
+	}
+
 	public static class TableViewFuncionario {
     	private final SimpleIntegerProperty id;
     	private final SimpleStringProperty nome;
     	private final SimpleStringProperty login;
     	private final SimpleStringProperty cargo;
+    	private final SimpleBooleanProperty garcom;
 
-    	public TableViewFuncionario(int id, String nome, String loginname, int cargo) {
+    	public TableViewFuncionario(int id, String nome, String loginname, int cargo, boolean garcom) {
     		this.id = new SimpleIntegerProperty(id);
     		this.nome = new SimpleStringProperty(nome);
     		this.login = new SimpleStringProperty(loginname);
-    		this.cargo = new SimpleStringProperty(FuncionarioEnum.get(cargo).toString());
+    		this.cargo = new SimpleStringProperty(FuncionarioCargoEnum.get(cargo).toString());
+    		this.garcom = new SimpleBooleanProperty(garcom);
     	}
 
     	public int getId() {
@@ -112,20 +126,24 @@ public class Funcionario {
     	public String getCargo() {
     		return cargo.get();
     	}
+
+    	public boolean getGarcom() {
+    		return garcom.get();
+    	}
     }
 
-	public enum FuncionarioEnum {
+	public enum FuncionarioCargoEnum {
 		Gerente(1), Usuário(2);
 
-		private static final Map<Integer, FuncionarioEnum> lookup = new HashMap<Integer, FuncionarioEnum>();
+		private static final Map<Integer, FuncionarioCargoEnum> lookup = new HashMap<Integer, FuncionarioCargoEnum>();
 	    static {
-	        for (FuncionarioEnum d : FuncionarioEnum.values()) {
+	        for (FuncionarioCargoEnum d : FuncionarioCargoEnum.values()) {
 	            lookup.put(d.getValor(), d);
 	        }
 	    }
 
 		private final int value;
-		FuncionarioEnum(int value) {
+		FuncionarioCargoEnum(int value) {
 			this.value = value;
 		}
 
@@ -133,7 +151,7 @@ public class Funcionario {
 			return value;
 		}
 
-		public static FuncionarioEnum get(int id) {
+		public static FuncionarioCargoEnum get(int id) {
 	        return lookup.get(id);
 	    }
 

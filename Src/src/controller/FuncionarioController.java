@@ -1,7 +1,7 @@
 package controller;
 
 import system.Funcionario;
-import system.Funcionario.FuncionarioEnum;
+import system.Funcionario.FuncionarioCargoEnum;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -21,8 +21,11 @@ public class FuncionarioController {
 	private int id = 0;
 	private boolean inicial = false;
 
+	@FXML
+    private ComboBox<FuncionarioCargoEnum> txf_cargo;
+
     @FXML
-    private ComboBox<FuncionarioEnum> txf_cargo;
+    private CheckBox chb_garcom;
 
     @FXML
     private TextField txf_name;
@@ -31,7 +34,7 @@ public class FuncionarioController {
     private TextField txf_login;
 
     @FXML
-    private CheckBox cb_senha;
+    private CheckBox chb_senha;
 
     @FXML
     private Label lbl_aviso;
@@ -50,16 +53,16 @@ public class FuncionarioController {
     			throw new Exception("Insira um nome!");
 	    	if (login.isEmpty())
 	    		throw new Exception("Insira um login!");
-	    	if (senha.isEmpty() && cb_senha.isSelected()) {
+	    	if (senha.isEmpty() && chb_senha.isSelected()) {
 	    		throw new Exception("Insira uma senha!");
 	    	}
 
 	    	//mode 0 = insirir novo funcionario
 	    	//mode 1 = editar funcionario
 	    	if (mode == 0) {
-		    	Funcionario.criaUsuario(txf_cargo.getValue().getValor(), nome, login, senha);
+		    	Funcionario.criaUsuario(txf_cargo.getValue().getValor(), nome, login, senha, chb_garcom.isSelected());
 	    	} else if (mode == 1) {
-	    		if (!Funcionario.editaFuncionario(id, nome, login, senha)) {
+	    		if (!Funcionario.editaFuncionario(id, nome, login, senha, chb_garcom.isSelected())) {
 	    			throw new Exception("Erro ao editar funcionário!");
 	    		}
 	    	}
@@ -85,37 +88,38 @@ public class FuncionarioController {
     	if (Valores.getConnection() == null)
     		Platform.exit();
 
-    	cb_senha.setDisable(true);
-    	cb_senha.setSelected(true);
-    	cb_senha.selectedProperty().addListener((ChangeListener<? super Boolean>) new ChangeListener<Boolean>() {
+    	chb_senha.setDisable(true);
+    	chb_senha.setSelected(true);
+    	chb_senha.selectedProperty().addListener((ChangeListener<? super Boolean>) new ChangeListener<Boolean>() {
     		public void changed(ObservableValue<? extends Boolean> ov,
                 Boolean old_val, Boolean new_val) {
     			txf_password.setDisable(!new_val);
             }
         });
 
-    	txf_cargo.getItems().addAll(FuncionarioEnum.values());
-    	txf_cargo.setValue(FuncionarioEnum.Usuário);
+    	txf_cargo.getItems().addAll(FuncionarioCargoEnum.values());
+    	txf_cargo.setValue(FuncionarioCargoEnum.Usuário);
     }
 
     void cadastroInicial() {
     	inicial = true;
 
-    	txf_cargo.setValue(FuncionarioEnum.Gerente);
+    	txf_cargo.setValue(FuncionarioCargoEnum.Gerente);
     	txf_cargo.setDisable(true);
     }
 
-    void editaFuncionario(int id, String nome, String login, String cargo) {
+    void editaFuncionario(int id, String nome, String login, String cargo, boolean garcom) {
     	mode = 1;
     	this.id = id;
-    	txf_cargo.setValue(FuncionarioEnum.valueOf(cargo));
+    	txf_cargo.setValue(FuncionarioCargoEnum.valueOf(cargo));
     	txf_cargo.setDisable(true);
 
     	txf_name.setText(nome);
     	txf_login.setText(login);
+    	chb_garcom.setSelected(garcom);
 
-    	cb_senha.setDisable(false);
-    	cb_senha.setSelected(false);
+    	chb_senha.setDisable(false);
+    	chb_senha.setSelected(false);
     	lbl_aviso.setVisible(true);
     }
 }
