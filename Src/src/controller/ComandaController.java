@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ContextMenu;
@@ -71,6 +72,12 @@ public class ComandaController {
     private ChoiceBox<String> cb_garcom;
 
     @FXML
+    private Button btn_desconto;
+
+    @FXML
+    private Button btn_pagamento;
+
+    @FXML
     private CheckBox chb_finalizar;
 
     @FXML
@@ -84,6 +91,9 @@ public class ComandaController {
 
     @FXML
     private TextField txf_qtde;
+
+    @FXML
+    private Button btn_adicionar;
     
     @FXML
 	public void initialize() {
@@ -262,13 +272,16 @@ public class ComandaController {
 			//Atualizar Produtos
 			pagarProduto.setOnAction((ActionEvent event) -> {
 				try {
-					float valorPagar = row.getItem().getValorTotal() - row.getItem().getValorPago();
-
-					Parent root = row.getTableView().getScene().getRoot();
-			    	root.setDisable(true);
-			    	Stages st = new Stages();
-			    	FXMLLoader pagamentoLoader = st.novoStage("Atribuir Pagamento", "Pagamento", root);
-			    	pagamentoLoader.<PagamentoController>getController().adicionaProdutoPagamento(row.getItem().getId(), row.getItem().getQtde(), Integer.parseInt(txf_comid.getText()), comandaTime, valorPagar, root);
+					if (!txf_produto.isDisable()) {
+						float valorPagar = row.getItem().getValorTotal() - row.getItem().getValorPago();
+	
+						Parent root = row.getTableView().getScene().getRoot();
+				    	root.setDisable(true);
+				    	Stages st = new Stages();
+				    	FXMLLoader pagamentoLoader = st.novoStage("Atribuir Pagamento", "Pagamento", root);
+				    	pagamentoLoader.<PagamentoController>getController().adicionaProdutoPagamento(row.getItem().getId(), row.getItem().getQtde(), Integer.parseInt(txf_comid.getText()), comandaTime, valorPagar, root);
+					} else
+						throw new Exception("Essa comanda está finalizada, não é possível fazer esta ação.");
 				} catch (Exception e) {
 					Stages.novoAlerta(e.getMessage(), "", true);
 				}
@@ -277,9 +290,12 @@ public class ComandaController {
 			//Remover Um Produto
 			removerUm.setOnAction((ActionEvent event) -> {
 				try {
-					int qtde = Comanda.getQtdePrdoutoComanda(row.getItem().getId(), Integer.valueOf(txf_comid.getText()));
-					Comanda.updateQtde(row.getItem().getId(), Integer.valueOf(txf_comid.getText()), qtde-1);
-					refresh();
+					if (!txf_produto.isDisable()) {
+						int qtde = Comanda.getQtdePrdoutoComanda(row.getItem().getId(), Integer.valueOf(txf_comid.getText()));
+						Comanda.updateQtde(row.getItem().getId(), Integer.valueOf(txf_comid.getText()), qtde-1);
+						refresh();
+					} else
+						throw new Exception("Essa comanda está finalizada, não é possível fazer esta ação.");
 				} catch (Exception e) {
 					Stages.novoAlerta(e.getMessage(), "", true);
 				}
@@ -288,8 +304,11 @@ public class ComandaController {
 			//Remover Tudo
 			removerTudo.setOnAction((ActionEvent event) -> {
 				try {
-					Comanda.removeProdutoComanda(row.getItem().getId(), Integer.valueOf(txf_comid.getText()));
-					refresh();
+					if (!txf_produto.isDisable()) {
+						Comanda.removeProdutoComanda(row.getItem().getId(), Integer.valueOf(txf_comid.getText()));
+						refresh();
+					} else
+						throw new Exception("Essa comanda está finalizada, não é possível fazer esta ação.");
 				} catch (Exception e) {
 					Stages.novoAlerta(e.getMessage(), "", true);
 				}
@@ -338,6 +357,33 @@ public class ComandaController {
 				txf_mesa.setText(result.getString("mesa"));
 				if (Funcionario.getGarcomById(result.getInt("funcionarioId")))
 					cb_garcom.setValue(result.getInt("funcionarioId") + " - " + Funcionario.getNomebyId(result.getInt("funcionarioId")));
+				refresh();
+			} else
+				throw new Exception("Essa comanda não existe!");
+		} catch (Exception e) {
+			Stages.novoAlerta(e.getMessage(), "", true);
+		}
+	}
+
+	public void visualizaComanda(int id, Timestamp data) {
+		try {
+			this.comandaTime = data;
+			ResultSet result = Comanda.getComanda(id, data);
+			if (result.next()) {
+				txf_comid.setText(Integer.toString(id));
+				chb_comid.setSelected(false);
+				chb_comid.setDisable(true);
+				txf_mesa.setText(result.getString("mesa"));
+				txf_mesa.setDisable(true);
+				if (Funcionario.getGarcomById(result.getInt("funcionarioId")))
+					cb_garcom.setValue(result.getInt("funcionarioId") + " - " + Funcionario.getNomebyId(result.getInt("funcionarioId")));
+				cb_garcom.setDisable(true);
+				btn_adicionar.setDisable(true);
+				btn_desconto.setDisable(true);
+				btn_pagamento.setDisable(true);
+				txf_produto.setDisable(true);
+				txf_qtde.setDisable(true);
+				chb_finalizar.setDisable(true);
 				refresh();
 			} else
 				throw new Exception("Essa comanda não existe!");

@@ -1,5 +1,6 @@
 package system;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -14,6 +15,18 @@ import javafx.collections.ObservableList;
 public class Comanda {
 	public static ResultSet criaComanda(int id, int funcionarioId) throws Exception {
 		return dao.Comanda.novaComanda(id, funcionarioId);
+	}
+
+	public static ObservableList<TableViewComandaLista> getAllComandaPaga(Date dataDe, Date dataAte) throws Exception {
+		ResultSet result = dao.Comanda.getAllComandasPagas(dataDe, dataAte);
+		ObservableList<TableViewComandaLista> ol = FXCollections.observableArrayList();
+		
+		while (result.next()) {
+			ol.add(new TableViewComandaLista(result.getInt("comandaId"), result.getTimestamp("data"),
+					result.getString("mesa"), result.getInt("funcionarioId"), dao.Comanda.getPrecoComanda(result.getInt("comandaId"), result.getTimestamp("data"))));
+		}
+		
+		return ol;
 	}
 
 	public static ObservableList<TableViewComandaLista> getAllComanda() throws Exception {

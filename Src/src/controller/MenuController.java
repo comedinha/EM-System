@@ -1,5 +1,6 @@
 package controller;
 
+import java.sql.Date;
 import java.sql.SQLException;
 
 import org.controlsfx.control.PropertySheet;
@@ -141,7 +142,15 @@ public class MenuController {
 
     @FXML
     void act_BuscaFinanceiro(ActionEvent event) {
-
+    	try {
+	    	if (Date.valueOf(dt_finbuscade.getValue()).before(Date.valueOf(dt_finbuscaate.getValue()))) {
+		    	tableFinanc.getItems().clear();
+		    	tableFinanc.setItems(Comanda.getAllComandaPaga(Date.valueOf(dt_finbuscade.getValue()), Date.valueOf(dt_finbuscaate.getValue())));
+	    	} else
+	    		throw new Exception("A data DE deve ser menor que a data ATÉ!");
+    	} catch (Exception e) {
+    		Stages.novoAlerta(e.getMessage(), "", true);
+    	}
     }
 
     @FXML
@@ -223,7 +232,7 @@ public class MenuController {
 	    	//tb_financperm.setCellValueFactory(new PropertyValueFactory<>("permanencia"));
 	    	tb_financvlr.setCellValueFactory(new PropertyValueFactory<>("valor"));
 
-			tableFinanc.setItems(Comanda.getAllComanda());
+			tableFinanc.setItems(Comanda.getAllComandaPaga(Date.valueOf(dt_finbuscade.getValue()), Date.valueOf(dt_finbuscaate.getValue())));
 			tableFinanc.setRowFactory((TableView<TableViewComandaLista> tableComandaFinanc) -> {
     			final TableRow<TableViewComandaLista> row = new TableRow<>();
     			final ContextMenu rowMenu = new ContextMenu();
@@ -234,8 +243,8 @@ public class MenuController {
     			verComanda.setOnAction((ActionEvent event) -> {
     				try {
     					Stages st = new Stages();
-        		    	FXMLLoader comandaLoader = st.novoStage("Editar Comanda", "Comanda", null);
-        		    	comandaLoader.<ComandaController>getController().editaComanda(row.getItem().getId(), row.getItem().getTimeStamp());
+        		    	FXMLLoader comandaLoader = st.novoStage("Visualizar Comanda", "Comanda", null);
+        		    	comandaLoader.<ComandaController>getController().visualizaComanda(row.getItem().getId(), row.getItem().getTimeStamp());
     				} catch (Exception e) {
     					Stages.novoAlerta(e.getMessage(), "", true);
     				}

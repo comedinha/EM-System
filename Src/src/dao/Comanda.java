@@ -1,10 +1,12 @@
 package dao;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.util.Calendar;
 
 import util.Valores;
 
@@ -86,9 +88,10 @@ public class Comanda {
 	}
 
 	public static ResultSet getAllComandas() throws Exception {
-		String sql = "SELECT * FROM comanda";
+		String sql = "SELECT * FROM comanda WHERE pago = ?";
 		
 		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
+		ps.setBoolean(1, false);
 		
 		return ps.executeQuery();
 	}
@@ -138,6 +141,24 @@ public class Comanda {
 		}
 
 		return valor;
+	}
+
+	public static ResultSet getAllComandasPagas(Date dataDe, Date dataAte) throws Exception {
+		String sql = "SELECT * FROM comanda WHERE pago = ? AND data >= ? AND data <= ?";
+		
+		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
+		ps.setBoolean(1, true);
+		ps.setTimestamp(2, new Timestamp(dataDe.getTime()));
+
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(dataAte);
+		cal.set(Calendar.HOUR, 23);
+		cal.set(Calendar.MINUTE, 59);
+		cal.set(Calendar.SECOND, 59);
+
+		ps.setTimestamp(3, new Timestamp(cal.getTimeInMillis()));
+		
+		return ps.executeQuery();
 	}
 }
 

@@ -68,8 +68,8 @@
                   <TextField fx:id="txf_mesa" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" promptText="Digite a mesa..." GridPane.columnIndex="1" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Garçom:" textAlignment="CENTER" wrappingWidth="55.021484375" GridPane.rowIndex="1" />
                   <ChoiceBox fx:id="cb_garcom" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#act_addDesconto" text="Desconto" GridPane.columnIndex="3" />
-                  <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#act_addPagamento" text="Pagamento" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                  <Button fx:id="btn_desconto" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#act_addDesconto" text="Desconto" GridPane.columnIndex="3" />
+                  <Button fx:id="btn_pagamento" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#act_addPagamento" text="Pagamento" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                </children>
             </GridPane>
          </children>
@@ -117,7 +117,7 @@
             <VBox prefHeight="43.0" prefWidth="76.0">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" />
-                  <Button mnemonicParsing="false" onAction="#addProduto" prefHeight="25.0" prefWidth="123.0" text="Adicionar" />
+                  <Button fx:id="btn_adicionar" mnemonicParsing="false" onAction="#addProduto" prefHeight="25.0" prefWidth="123.0" text="Adicionar" />
                </children>
             </VBox>
          </children>
