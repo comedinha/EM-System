@@ -78,7 +78,7 @@
    <bottom>
       <HBox alignment="CENTER_RIGHT" prefHeight="36.0" prefWidth="450.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox prefHeight="25.0" prefWidth="227.0">
+            <HBox prefHeight="25.0" prefWidth="223.0">
                <children>
                   <Button mnemonicParsing="false" onAction="#act_verPagamentos" prefWidth="112.0" text="Ver pagamentos" />
                </children>
