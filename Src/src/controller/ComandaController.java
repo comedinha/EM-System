@@ -2,7 +2,6 @@ package controller;
 
 import java.sql.ResultSet;
 import java.sql.Timestamp;
-
 import org.controlsfx.control.textfield.TextFields;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
@@ -285,7 +284,11 @@ public class ComandaController {
 			Stages.novoAlerta(e.getMessage(), "", true);
 		}
 	}
-
+	
+	/**
+	 * Inicia a tableView da inerface
+	 * @throws Exception
+	 */
 	private void iniciaTableView() throws Exception {
 		tc_id.setCellValueFactory(new PropertyValueFactory<>("id"));
 		tc_nome.setCellValueFactory(new PropertyValueFactory<>("nome"));
@@ -367,7 +370,11 @@ public class ComandaController {
 			return row;
 		});
 	}
-
+	
+	/**
+	 * Calcula o valor total da a ser pago na comanda
+	 * @throws Exception
+	 */
 	private void valorTotal() throws Exception {
 		float somaValor = 0;
 		
@@ -377,14 +384,21 @@ public class ComandaController {
 		somaValor -= Pagamento.getAllValor(Integer.parseInt(txf_comid.getText()), comandaTime, true);
 		ta_valorTotal.setText(Float.toString(somaValor));
 	}
-
+	
+	/**
+	 * Calcula o valor que já foi pago
+	 * @throws Exception
+	 */
 	private void valorPago() throws Exception {
 		float somaValor = 0;
 		
 		somaValor += Pagamento.getAllValor(Integer.parseInt(txf_comid.getText()), comandaTime, false);
 		ta_valorPago.setText(Float.toString(somaValor));
 	}
-
+	
+	/**
+	 * Atualiza a interface
+	 */
 	public void refresh() {
 		try {
 			tv_produtos.setItems(Comanda.getAllProduto(Integer.valueOf(txf_comid.getText()), comandaTime));
@@ -398,7 +412,13 @@ public class ComandaController {
 	public void iniciaComanda(FXMLLoader loader) {
 		this.loader = loader;
 	}
-
+	
+	/**
+	 * Metodo chamado quando se entra na interface no modo edição
+	 * @param id
+	 * @param data
+	 * @param loader
+	 */
 	public void editaComanda(int id, Timestamp data, FXMLLoader loader) {
 		try {
 			this.loader = loader;
@@ -418,7 +438,7 @@ public class ComandaController {
 			Stages.novoAlerta(e.getMessage(), "", true);
 		}
 	}
-
+	
 	public void visualizaComanda(int id, Timestamp data, FXMLLoader loader) {
 		try {
 			this.loader = loader;

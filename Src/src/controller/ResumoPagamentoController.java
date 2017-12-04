@@ -124,7 +124,11 @@ public class ResumoPagamentoController {
 			Stages.novoAlerta(e.getMessage(), "", false);
 		}
 	}
-
+	
+	/**
+	 * atualiza a interface
+	 * @throws Exception
+	 */
 	private void reload() throws Exception {
 		tv_pagamento.getItems().clear();
 		tv_pagamento.setItems(Pagamento.getAllPagamento(id, data));

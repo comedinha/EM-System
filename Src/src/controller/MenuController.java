@@ -2,10 +2,8 @@ package controller;
 
 import java.sql.Date;
 import java.sql.SQLException;
-
 import org.controlsfx.control.PropertySheet;
 import org.controlsfx.dialog.WizardPane;
-
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
@@ -40,7 +38,6 @@ import system.Comanda;
 import system.Configuracao;
 import system.Funcionario;
 import system.Funcionario.TableViewFuncionario;
-
 import java.time.LocalDate;
 import java.util.Optional;
 
@@ -221,11 +218,18 @@ public class MenuController {
     		Stages.novoAlerta(e.getMessage(), "", true);
     	}
     }
-
+    
+    /**
+     * Inicia a aba Inicio
+     * @throws Exception
+     */
     private void iniciaInicio() throws Exception {
     	ta_txtinicio.setText(String.format(ta_txtinicio.getText(), Valores.getUsuario().getNome(), FuncionarioEnum.get(Valores.getUsuario().getFuncao()), null));
     }
-
+    
+    /**
+     * Inicia a interface na aba Finaças
+     */
     private void iniciaFinanc() {
     	try {
 	    	dt_finbuscade.setValue(LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), 1));
@@ -262,7 +266,10 @@ public class MenuController {
     		Stages.novoAlerta(e.getMessage(), "", true);
     	}
     }
-
+    
+    /**
+     * Inicia interface na aba Comanda
+     */
     private void iniciaComanda() {
     	try {
 	    	tb_comandId.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -333,7 +340,10 @@ public class MenuController {
     		Stages.novoAlerta(e.getMessage(), "", true);
     	}
     }
-
+    
+    /**
+     * Inicia interface na aba Produto
+     */
     private void iniciaProduto() {
     	try {
 	    	tb_prodid.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -428,7 +438,10 @@ public class MenuController {
     		Stages.novoAlerta(e.getMessage(), "", true);
     	}
     }
-
+    
+    /**
+     * Inicia interface na aba Funcionario
+     */
     private void iniciaFuncionario() {
     	try {
 	    	tb_funcid.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -523,7 +536,11 @@ public class MenuController {
         	Stages.novoAlerta(e.getMessage(), "", true);
         }
     }
-
+    
+    /**
+     * Inicia interface na aba Configurações
+     * @throws Exception
+     */
     private void iniciaConfig() throws Exception {
     	Configuracao.configDataPut("Global.Meio de Pagamento", MeioPagamentoEnum.Dinheiro);
 

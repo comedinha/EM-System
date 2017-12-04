@@ -113,6 +113,14 @@ public class FuncionarioController {
     	txf_cargo.setDisable(true);
     }
 
+    /**
+     * Metodo chamado quando acessa-se a interface no modo edição
+     * @param id
+     * @param nome
+     * @param login
+     * @param cargo
+     * @param garcom
+     */
     void editaFuncionario(int id, String nome, String login, String cargo, boolean garcom) {
     	mode = 1;
     	this.id = id;
