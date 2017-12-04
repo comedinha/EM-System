@@ -9,7 +9,19 @@ import java.util.Calendar;
 
 import util.Valores;
 
+/**
+ * Classe que todas as operações de CRUD referente a Comanda.
+ * @author Bruno Carvalho, Luiz Eduardo, Mateus Tabaldi.
+ * @version 1.0
+ */
 public class Comanda {
+	/**
+	 * Cria uma nova comanda no BD.
+	 * @param id ID desejado da comanda a ser crida. Caso seja 0, o id será atribuido automaticamente
+	 * @param funcionarioId ID do funcionario que está crianco a comanda 
+	 * @return retorna o ID da comanda que foi criada
+	 * @throws Exception
+	 */
 	public static ResultSet novaComanda(int id, int funcionarioId) throws Exception {
 		String sql = "INSERT INTO comanda (funcionarioId, comandaId) VALUES (?, ?)";
 		if (id == 0) {
@@ -29,6 +41,14 @@ public class Comanda {
 		return getId;
 	}
 	
+	/**
+	 * Verifica a existencia de um produto na comanda
+	 * @param idComanda ID da comanda
+	 * @param data Data da criação da comanda
+	 * @param idProduto ID do Produto
+	 * @return	Retorna True caso exista, ou False caso não exista
+	 * @throws Exception
+	 */
 	public static boolean existeNaComanda(int idComanda, Timestamp data, int idProduto) throws Exception {
 		String sql = "SELECT * FROM produtoComanda WHERE produtoId = ? AND comandaId = ? AND comandaData = ?";
 		
@@ -39,6 +59,14 @@ public class Comanda {
 		return ps.executeQuery().next();
 	}
 	
+	/**
+	 * Atualiza a quantidade de um produto na 
+	 * @param idComanda
+	 * @param data
+	 * @param idProduto
+	 * @param qtde
+	 * @throws Exception
+	 */
 	public static void updateQtde(int idComanda, Timestamp data, int idProduto, int qtde) throws Exception {		
 		String sql = "UPDATE produtoComanda SET quantidade = ? WHERE produtoId = ? AND comandaId = ? AND comandaData = ?";
 		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);

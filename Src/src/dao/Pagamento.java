@@ -7,6 +7,12 @@ import java.sql.Timestamp;
 
 import util.Valores;
 
+/**
+ * Classe que todas as operações de CRUD referente a Pagamento.
+ * @author Bruno Carvalho, Luiz Eduardo, Mateus Tabaldi.
+ *
+ * @version 1.0
+ */
 public class Pagamento {
 	public static void pagamentoComanda(int id, Timestamp time, Float valor, int funcionarioId, int formaPagamento, boolean desconto) throws Exception {
 		String sql = "INSERT INTO pagamento (comandaId, comandaData, valor, funcionarioId, formaPagamento) VALUES (?, ?, ?, ?, ?)";

@@ -1,11 +1,19 @@
 package dao;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import util.Crypto;
 import util.Valores;
 
+/**
+ * Classe que todas as operações de CRUD referente a Funcionario.
+ * @author Bruno Carvalho, Luiz Eduardo, Mateus Tabaldi.
+ *
+ * @version 1.0
+ */
 public class Funcionario {
 	public static void inserir(int funcao, String nome, String login, String password, boolean garcom) throws Exception {
 		Crypto cr = new Crypto();
@@ -112,6 +120,20 @@ public class Funcionario {
 			return result.getString("nome");
 
 		return null;
+	}
+	
+	/**
+	 * Verifica a existencia de pelo menos um gerente no banco de dados
+	 * @param con
+	 * @return
+	 * @throws SQLException
+	 */
+	public static boolean verificaGerente(Connection con) throws SQLException {
+		String checkSql = "SELECT * FROM funcionario WHERE funcaoid = 1";
+		PreparedStatement stmt = con.prepareStatement(checkSql);
+		ResultSet rs =  stmt.executeQuery();
+
+		return rs.next();
 	}
 
 	public static ResultSet getAllGarcom() throws Exception {
