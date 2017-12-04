@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ConfigDatabaseController">
+<BorderPane xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ConfigDatabaseController">
    <top>
       <Label prefHeight="1.0" prefWidth="207.0" text="Cuidado! Contate um admin para isso." textAlignment="CENTER" BorderPane.alignment="CENTER">
          <BorderPane.margin>
@@ -22,7 +22,7 @@
       <VBox alignment="CENTER_LEFT" prefHeight="243.0" prefWidth="227.0" BorderPane.alignment="CENTER">
          <children>
             <Label text="Type:" />
-            <ComboBox fx:id="txf_sqltype" prefWidth="150.0"/>
+            <ComboBox fx:id="txf_sqltype" prefWidth="150.0" />
             <Label text="Host:" />
             <TextField fx:id="txf_sqlhost" />
             <Label text="Port:" />
@@ -33,8 +33,8 @@
             <PasswordField fx:id="txf_sqlpass" />
             <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="127.0" spacing="5.0">
                <children>
-                  <Button fx:id="btn_sqlok" mnemonicParsing="false" onAction="#btn_csqlok" text="OK" />
-                  <Button fx:id="btn_sqlquit" mnemonicParsing="false" onAction="#btn_csqlquit" text="Sair" />
+                  <Button fx:id="act_confirma" mnemonicParsing="false" onAction="#btn_csqlok" text="OK" />
+                  <Button fx:id="act_cancela" mnemonicParsing="false" onAction="#btn_csqlquit" text="Sair" />
                </children>
                <VBox.margin>
                   <Insets top="10.0" />

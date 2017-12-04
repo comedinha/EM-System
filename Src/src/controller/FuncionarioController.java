@@ -22,7 +22,7 @@ public class FuncionarioController {
 	private boolean inicial = false;
 
 	@FXML
-    private ComboBox<FuncionarioEnum> txf_cargo;
+    private ComboBox<FuncionarioEnum> cb_cargo;
 
     @FXML
     private CheckBox chb_garcom;
@@ -43,7 +43,7 @@ public class FuncionarioController {
     private PasswordField txf_password;
 
     @FXML
-    void btn_funcok(ActionEvent event) {
+    private void act_salvar(ActionEvent event) {
     	try {
 	    	String nome = txf_name.getText();
 	    	String login = txf_login.getText();
@@ -60,7 +60,7 @@ public class FuncionarioController {
 	    	//mode 0 = insirir novo funcionario
 	    	//mode 1 = editar funcionario
 	    	if (mode == 0) {
-		    	Funcionario.criaUsuario(txf_cargo.getValue().getValor(), nome, login, senha, chb_garcom.isSelected());
+		    	Funcionario.criaUsuario(cb_cargo.getValue().getValor(), nome, login, senha, chb_garcom.isSelected());
 	    	} else if (mode == 1) {
 	    		if (!Funcionario.editaFuncionario(id, nome, login, senha, chb_garcom.isSelected())) {
 	    			throw new Exception("Erro ao editar funcionário!");
@@ -82,7 +82,7 @@ public class FuncionarioController {
     }
 
     @FXML
-    void btn_funcquit(ActionEvent event) {
+    private void act_cancelar(ActionEvent event) {
     	Valores.editCheck().remove("Funcionario" + id);
 
     	((Node) event.getSource()).getScene().getWindow().hide();
@@ -102,22 +102,22 @@ public class FuncionarioController {
             }
         });
 
-    	txf_cargo.getItems().addAll(FuncionarioEnum.values());
-    	txf_cargo.setValue(FuncionarioEnum.Usuário);
+    	cb_cargo.getItems().addAll(FuncionarioEnum.values());
+    	cb_cargo.setValue(FuncionarioEnum.Usuário);
     }
 
     void cadastroInicial() {
     	inicial = true;
 
-    	txf_cargo.setValue(FuncionarioEnum.Gerente);
-    	txf_cargo.setDisable(true);
+    	cb_cargo.setValue(FuncionarioEnum.Gerente);
+    	cb_cargo.setDisable(true);
     }
 
     void editaFuncionario(int id, String nome, String login, String cargo, boolean garcom) {
     	mode = 1;
     	this.id = id;
-    	txf_cargo.setValue(FuncionarioEnum.valueOf(cargo));
-    	txf_cargo.setDisable(true);
+    	cb_cargo.setValue(FuncionarioEnum.valueOf(cargo));
+    	cb_cargo.setDisable(true);
 
     	txf_name.setText(nome);
     	txf_login.setText(login);

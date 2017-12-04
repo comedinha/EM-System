@@ -47,19 +47,7 @@ public class ConfigDatabaseController {
     private Button btn_sqlquit;
 
     @FXML
-    private void initialize() {
-    	txf_sqltype.setItems(cb_sqltypeList);
-    	txf_sqltype.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-    		if (newValue.toString() == "postgresql") {
-    			txf_sqlhost.setText("localhost");
-    			txf_sqlport.setText("5432");
-    			txf_sqlusr.setText("postgres");
-    		}
-    	});
-    }
-
-    @FXML
-    void btn_csqlok(ActionEvent event) throws SQLException {
+    private void act_confirma(ActionEvent event) throws SQLException {
 		try {
 			Crypto cr = new Crypto();
 			String encryptPass = cr.encrypt(txf_sqlpass.getText());
@@ -91,8 +79,19 @@ public class ConfigDatabaseController {
     }
 
     @FXML
-    void btn_csqlquit(ActionEvent event) {
+    private void act_cancela(ActionEvent event) {
     	Platform.exit();
     }
 
+    @FXML
+    private void initialize() {
+    	txf_sqltype.setItems(cb_sqltypeList);
+    	txf_sqltype.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+    		if (newValue.toString() == "postgresql") {
+    			txf_sqlhost.setText("localhost");
+    			txf_sqlport.setText("5432");
+    			txf_sqlusr.setText("postgres");
+    		}
+    	});
+    }
 }

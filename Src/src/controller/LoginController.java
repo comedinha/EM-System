@@ -17,15 +17,15 @@ public class LoginController {
     private TextField txf_usr;
 
     @FXML
-    private PasswordField txf_pass;
+    private PasswordField pf_pass;
 
     @FXML
-    private Button btn_enter;
+    private Button btn_entrar;
 
     @FXML
-    void btn_enterClick(ActionEvent event) {
+    private void act_entrar(ActionEvent event) {
     	try {
-    		if (Funcionario.login(txf_usr.getText(), txf_pass.getText())) {
+    		if (Funcionario.login(txf_usr.getText(), pf_pass.getText())) {
 			    ((Node) event.getSource()).getScene().getWindow().hide();
 			    Stages st = new Stages();
 			    st.novoStage("EMSystem Menu", "Menu");
@@ -39,12 +39,12 @@ public class LoginController {
     }
 
     @FXML
-    void btn_leaveClick(ActionEvent event) {
+    private void act_cancelar(ActionEvent event) {
     	Platform.exit();
     }
 
     @FXML
-    public void initialize() {
-    	btn_enter.setDefaultButton(true);
+    private void initialize() {
+    	btn_entrar.setDefaultButton(true);
     }
 }

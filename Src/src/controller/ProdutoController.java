@@ -32,7 +32,7 @@ public class ProdutoController {
     private VBox vbox_aviso;
 
     @FXML
-    void act_cadastro(ActionEvent event) {
+    private void act_cadastro(ActionEvent event) {
     	try {
 	    	int id = 0;
 	    	if (mode == 0) {
@@ -72,7 +72,7 @@ public class ProdutoController {
     }
 
     @FXML
-    void act_cancelar(ActionEvent event) {
+    private void act_cancelar(ActionEvent event) {
     	Valores.editCheck().remove("Produto" + Integer.valueOf(txf_id.getText()));
     	((Node) event.getSource()).getScene().getWindow().hide();
     }

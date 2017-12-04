@@ -52,7 +52,7 @@ public class ResumoPagamentoController {
     private TableColumn<TableViewPagamento, Float> tc_pagamentoValor;
 
     @FXML
-    void act_Fechar(ActionEvent event) {
+    private void act_Fechar(ActionEvent event) {
     	controller.refresh();
     	root.setDisable(false);
 
@@ -60,7 +60,7 @@ public class ResumoPagamentoController {
     }
 
     @FXML
-	public void initialize() {
+    private void initialize() {
 		try {
 			if (Valores.getConnection() == null || Valores.getUsuario() == null || Valores.getController() == null)
 	    		Platform.exit();

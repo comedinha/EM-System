@@ -18,11 +18,11 @@
             <Label text="Usuário:" />
             <TextField fx:id="txf_usr" />
             <Label text="Senha:" />
-            <PasswordField fx:id="txf_pass" />
+            <PasswordField fx:id="pf_pass" />
             <HBox alignment="TOP_RIGHT" prefHeight="20.0" prefWidth="308.0" spacing="10.0">
                <children>
-                  <Button fx:id="btn_enter" mnemonicParsing="false" onAction="#btn_enterClick" text="Entrar" />
-                  <Button mnemonicParsing="false" onAction="#btn_leaveClick" text="Sair" />
+                  <Button fx:id="btn_entrar" mnemonicParsing="false" onAction="#act_entrar" text="Entrar" />
+                  <Button mnemonicParsing="false" onAction="#act_cancelar" text="Sair" />
                </children>
                <VBox.margin>
                   <Insets top="10.0" />

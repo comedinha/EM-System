@@ -20,7 +20,7 @@
                   <VBox prefHeight="42.0" prefWidth="129.0">
                      <children>
                         <Label text="Cargo:" />
-                        <ComboBox fx:id="txf_cargo" prefWidth="150.0" />
+                        <ComboBox fx:id="cb_cargo" prefWidth="150.0" />
                      </children>
                   </VBox>
                   <VBox alignment="BOTTOM_CENTER" prefHeight="42.0" prefWidth="70.0">
@@ -63,8 +63,8 @@
             </VBox>
             <HBox alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="127.0" spacing="5.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#btn_funcok" text="OK" />
-                  <Button mnemonicParsing="false" onAction="#btn_funcquit" text="Cancelar" />
+                  <Button mnemonicParsing="false" onAction="#act_salvar" text="OK" />
+                  <Button mnemonicParsing="false" onAction="#act_cancelar" text="Cancelar" />
                </children>
                <VBox.margin>
                   <Insets top="10.0" />

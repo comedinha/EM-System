@@ -24,7 +24,7 @@ public class PagamentoController {
 	ComandaController controller;
 
     @FXML
-    private TextField tf_valorpagar;
+    private TextField txf_valorPagar;
 
     @FXML
     private ChoiceBox<MeioPagamentoEnum> cb_meioPagamento;
@@ -33,45 +33,45 @@ public class PagamentoController {
     private Text txt_caixa;
 
     @FXML
-    private TextField tf_caixa;
+    private TextField txf_caixa;
 
     @FXML
-    private TextField tf_troco;
+    private TextField txf_troco;
 
     @FXML
-    void act_alteravalor(ActionEvent event) {
-    	float troco = Float.valueOf(tf_caixa.getText()) - Float.valueOf(tf_valorpagar.getText());
+    private void act_alteravalor(ActionEvent event) {
+    	float troco = Float.valueOf(txf_caixa.getText()) - Float.valueOf(txf_valorPagar.getText());
 	    if (troco > 0)
-	    	tf_troco.setText(Float.toString(troco));
+	    	txf_troco.setText(Float.toString(troco));
 	    else
-	    	tf_troco.setText("0");
+	    	txf_troco.setText("0");
     }
 
     @FXML
-    void btn_cancelar(ActionEvent event) {
+    private void act_cancelar(ActionEvent event) {
     	controller.refresh();
     	parent.setDisable(false);
     	((Node) event.getSource()).getScene().getWindow().hide();
     }
 
     @FXML
-    void btn_salvar(ActionEvent event) {
+    private void act_salvar(ActionEvent event) {
     	try {
-    		float troco = Float.valueOf(tf_caixa.getText()) - Float.valueOf(tf_valorpagar.getText());
+    		float troco = Float.valueOf(txf_caixa.getText()) - Float.valueOf(txf_valorPagar.getText());
     	    if (troco > 0)
-    	    	tf_troco.setText(Float.toString(troco));
+    	    	txf_troco.setText(Float.toString(troco));
     	    else
-    	    	tf_troco.setText("0");
+    	    	txf_troco.setText("0");
 
-    		float valorPagar = Float.valueOf(tf_caixa.getText());
+    		float valorPagar = Float.valueOf(txf_caixa.getText());
 
-    		if (Float.valueOf(tf_troco.getText()) > 0)
-    			valorPagar -= Float.valueOf(tf_troco.getText());
+    		if (Float.valueOf(txf_troco.getText()) > 0)
+    			valorPagar -= Float.valueOf(txf_troco.getText());
 
 	    	if (mode == 0) {
 	    		Pagamento.pagamentoComanda(id, time, valorPagar, Valores.getUsuario().getId(), cb_meioPagamento.getValue().getValor(), false);
 	    	} else if (mode == 1) {
-	    		Pagamento.pagamentoComanda(id, time, Float.valueOf(tf_caixa.getText()), Valores.getUsuario().getId(), cb_meioPagamento.getValue().getValor(), true);
+	    		Pagamento.pagamentoComanda(id, time, Float.valueOf(txf_caixa.getText()), Valores.getUsuario().getId(), cb_meioPagamento.getValue().getValor(), true);
 	    	} else if (mode == 2) {
 	    		Pagamento.pagamentoProduto(idproduto, id, time, valorPagar, Valores.getUsuario().getId(), cb_meioPagamento.getValue().getValor());
 	    	} else {
@@ -87,7 +87,7 @@ public class PagamentoController {
     }
 
     @FXML
-	public void initialize() {
+    private void initialize() {
     	if (Valores.getConnection() == null || Valores.getUsuario() == null || Valores.getController() == null)
     		Platform.exit();
 
@@ -101,7 +101,7 @@ public class PagamentoController {
     	this.time = time;
     	this.parent = root;
     	this.controller = comandaController;
-    	tf_valorpagar.setText(Float.toString(valor));
+    	txf_valorPagar.setText(Float.toString(valor));
     	txt_caixa.setText(String.format(txt_caixa.getText(), "Desconto"));
     }
 
@@ -110,7 +110,7 @@ public class PagamentoController {
     	this.time = time;
     	this.parent = root;
     	this.controller = comandaController;
-    	tf_valorpagar.setText(Float.toString(valor));
+    	txf_valorPagar.setText(Float.toString(valor));
     	txt_caixa.setText(String.format(txt_caixa.getText(), "Pagamento"));
     }
 
@@ -121,7 +121,7 @@ public class PagamentoController {
     	this.time = timeComanda;
     	this.parent = root;
     	this.controller = comandaController;
-		tf_valorpagar.setText(Float.toString(valorPagar));
+		txf_valorPagar.setText(Float.toString(valorPagar));
     	txt_caixa.setText(String.format(txt_caixa.getText(), "Pagamento"));
 	}
 }
