@@ -47,21 +47,22 @@ CREATE OR REPLACE RULE updateProduto AS ON update TO produto DO (INSERT INTO pro
 CREATE TABLE produtoComanda(
 	produtoId int REFERENCES produto(produtoId) ON DELETE NO ACTION ON UPDATE CASCADE,
 	comandaId int,
-	dataComanda timestamp,
+	comandaData timestamp,
 	quantidade int DEFAULT 1,
 	data timestamp DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY(produtoId, comandaId),
-    foreign key (comandaId, dataComanda) references comanda(comandaId, data) ON DELETE NO ACTION ON UPDATE CASCADE
+    foreign key (comandaId, comandaData) references comanda(comandaId, data) ON DELETE NO ACTION ON UPDATE CASCADE
 );
 
 CREATE TABLE pagamento(
 	pagamentoId SERIAL PRIMARY KEY NOT NULL,
 	comandaId int,
-	dataComanda timestamp,
+	comandaData timestamp,
 	valor numeric(8,2),
 	data timestamp DEFAULT CURRENT_TIMESTAMP,
 	funcionarioId int,
-	FOREIGN KEY (comandaId, dataComanda) references comanda(comandaId, data) ON DELETE NO ACTION ON UPDATE CASCADE
+	formaPagamento int,
+	FOREIGN KEY (comandaId, comandaData) references comanda(comandaId, data) ON DELETE NO ACTION ON UPDATE CASCADE
 );
 
 CREATE TABLE pagamentoComanda(

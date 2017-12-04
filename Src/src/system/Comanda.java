@@ -78,8 +78,8 @@ public class Comanda {
 		return result.getInt(1);
 	}
 
-	public static boolean updateComanda(int id, String mesa, int funcionario, boolean pago) throws Exception {
-		return dao.Comanda.update(id, mesa, funcionario, pago);
+	public static boolean updateComanda(int id, Timestamp data, String mesa, int funcionario, boolean pago) throws Exception {
+		return dao.Comanda.update(id, data, mesa, funcionario, pago);
 	}
 
 	public static ResultSet getComanda(int id, Timestamp data) throws Exception {

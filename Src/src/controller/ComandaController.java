@@ -228,7 +228,7 @@ public class ComandaController {
 				idGarcom = Integer.parseInt(cb_garcom.getValue().substring(0, cb_garcom.getValue().indexOf(' ')));
 
 			if (!chb_finalizar.isSelected()) {
-				if (!Comanda.updateComanda(Integer.valueOf(txf_comid.getText()), txf_mesa.getText(), idGarcom, false)) {
+				if (!Comanda.updateComanda(Integer.valueOf(txf_comid.getText()), comandaTime, txf_mesa.getText(), idGarcom, false)) {
 					throw new Exception("Erro ao atualizar comanda!");
 				}
 			} else {
@@ -238,7 +238,7 @@ public class ComandaController {
 		    	if (valorPagar > 0)
 		    		throw new Exception("A comanda deve estar paga.");
 
-				if (!Comanda.updateComanda(Integer.valueOf(txf_comid.getText()), txf_mesa.getText(), idGarcom, true)) {
+				if (!Comanda.updateComanda(Integer.valueOf(txf_comid.getText()), comandaTime, txf_mesa.getText(), idGarcom, true)) {
 					throw new Exception("Erro ao atualizar comanda!");
 				}
 			}

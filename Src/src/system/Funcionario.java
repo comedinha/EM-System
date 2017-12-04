@@ -69,7 +69,7 @@ public class Funcionario {
 		ResultSet result = dao.Funcionario.getAll();
 		ObservableList<TableViewFuncionario> ol = FXCollections.observableArrayList();
 		
-		while(result.next()) {			
+		while(result.next()) {
 			ol.add(new TableViewFuncionario(result.getInt("funcionarioId"), result.getString("nome"), result.getString("login"), result.getInt("funcaoId"), result.getBoolean("garcom")));
 		}
 	

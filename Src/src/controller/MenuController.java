@@ -254,6 +254,17 @@ public class MenuController {
     				}
     			});
 
+    			//Visualizar Pagamentos
+    			verPagamento.setOnAction((ActionEvent event) -> {
+    				try {
+    					Stages st = new Stages();
+        		    	FXMLLoader resumoLoader = st.novoStage("Visualizar Pagamento", "ResumoPagamento", null);
+        		    	resumoLoader.<ResumoPagamentoController>getController().vizualizaPagamento(row.getItem().getId(), row.getItem().getTimeStamp());
+    				} catch (Exception e) {
+    					Stages.novoAlerta(e.getMessage(), "", true);
+    				}
+    			});
+
     			rowMenu.getItems().addAll(verComanda, verPagamento);
     			row.contextMenuProperty().bind(Bindings.when(Bindings.isNotNull(row.itemProperty())).then(rowMenu).otherwise((ContextMenu)null));
     			return row;
@@ -276,8 +287,9 @@ public class MenuController {
     			final TableRow<TableViewComandaLista> row = new TableRow<>();
     			final ContextMenu rowMenu = new ContextMenu();
     			MenuItem editItem = new MenuItem("Editar");
+    			MenuItem visualizaPagamento = new MenuItem("Visualizar Pagamentos");
 
-    			//Atualizar Produtos
+    			//Atualizar Comanda
     			editItem.setOnAction((ActionEvent event) -> {
     				try {
     					Stages st = new Stages();
@@ -287,8 +299,19 @@ public class MenuController {
     					Stages.novoAlerta(e.getMessage(), "", true);
     				}
     			});
+  
+    			//Visualizar Pagamentos
+    			visualizaPagamento.setOnAction((ActionEvent event) -> {
+    				try {
+    					Stages st = new Stages();
+        		    	FXMLLoader resumoLoader = st.novoStage("Visualizar Pagamento", "ResumoPagamento", null);
+        		    	resumoLoader.<ResumoPagamentoController>getController().vizualizaPagamento(row.getItem().getId(), row.getItem().getTimeStamp());
+    				} catch (Exception e) {
+    					Stages.novoAlerta(e.getMessage(), "", true);
+    				}
+    			});
 
-    			rowMenu.getItems().addAll(editItem);
+    			rowMenu.getItems().addAll(editItem, visualizaPagamento);
     			row.contextMenuProperty().bind(Bindings.when(Bindings.isNotNull(row.itemProperty())).then(rowMenu).otherwise((ContextMenu)null));
     			return row;
     		});

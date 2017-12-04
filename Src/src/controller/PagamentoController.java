@@ -67,11 +67,11 @@ public class PagamentoController {
     			valorPagar -= Float.valueOf(tf_troco.getText());
 
 	    	if (mode == 0) {
-	    		Pagamento.pagamentoComanda(id, time, valorPagar, Valores.getUsuario().getId(), false);
+	    		Pagamento.pagamentoComanda(id, time, valorPagar, Valores.getUsuario().getId(), cb_meioPagamento.getValue().getValor(), false);
 	    	} else if (mode == 1) {
-	    		Pagamento.pagamentoComanda(id, time, Float.valueOf(tf_caixa.getText()), Valores.getUsuario().getId(), true);
+	    		Pagamento.pagamentoComanda(id, time, Float.valueOf(tf_caixa.getText()), Valores.getUsuario().getId(), cb_meioPagamento.getValue().getValor(), true);
 	    	} else if (mode == 2) {
-	    		Pagamento.pagamentoProduto(idproduto, id, time, valorPagar, Valores.getUsuario().getId());
+	    		Pagamento.pagamentoProduto(idproduto, id, time, valorPagar, Valores.getUsuario().getId(), cb_meioPagamento.getValue().getValor());
 	    	} else {
 	    		throw new Exception("Erro ao salvar produto!");
 	    	}
@@ -88,6 +88,7 @@ public class PagamentoController {
     		Platform.exit();
 
     	cb_meioPagamento.getItems().addAll(MeioPagamentoEnum.values());
+    	cb_meioPagamento.setValue(MeioPagamentoEnum.Dinheiro);
 	}
 
     public void adicionaDesconto(int id, Timestamp time, float valor, Parent root) {
