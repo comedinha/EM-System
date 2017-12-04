@@ -14,6 +14,16 @@ import util.Valores;
  * @version 1.0
  */
 public class Pagamento {
+	/**
+	 * Adiciona pagamento a uma comanda
+	 * @param id ID da comanda
+	 * @param time Data do pagamento
+	 * @param valor Valor do pagamento
+	 * @param funcionarioId ID do funcionario
+	 * @param formaPagamento Forma do pagamento
+	 * @param desconto Valor do desconto
+	 * @throws Exception
+	 */
 	public static void pagamentoComanda(int id, Timestamp time, Float valor, int funcionarioId, int formaPagamento, boolean desconto) throws Exception {
 		String sql = "INSERT INTO pagamento (comandaId, comandaData, valor, funcionarioId, formaPagamento) VALUES (?, ?, ?, ?, ?)";
 
@@ -39,6 +49,16 @@ public class Pagamento {
 		ps.executeUpdate();
 	}
 	
+	/**
+	 * Adiciona um pagamento a um produto
+	 * @param id ID do produto
+	 * @param comandaId ID da comanda
+	 * @param comandaTime Data da comanda
+	 * @param valor Valor a ser pago
+	 * @param formaPagamento Forma de pagamento
+	 * @param funcionarioId ID do funcionario
+	 * @throws Exception
+	 */
 	public static void pagamentoProduto(int id, int comandaId, Timestamp comandaTime, Float valor, int formaPagamento, int funcionarioId) throws Exception {
 		String sql = "INSERT INTO pagamento (comandaId, comandaData, valor, funcionarioId, formaPagamento) VALUES (?, ?, ?, ?, ?)";
 
@@ -63,7 +83,13 @@ public class Pagamento {
 		ps.setInt(2, id);
 		ps.executeUpdate();
 	}
-
+	
+	/**
+	 * Remove um pagamento do BD
+	 * @param id ID do Pagamento
+	 * @return Retorna se ocorreu tudo bem
+	 * @throws Exception
+	 */
 	public static boolean remove(int id) throws Exception {
 		String sql = "DELETE FROM pagamento WHERE pagamentoId = ?";
 		
@@ -73,7 +99,15 @@ public class Pagamento {
 		ps.executeUpdate();	
 		return true;
 	}
-
+	
+	/**
+	 * Pesquisa todos os pagamentos do sistema
+	 * @param id ID do pagamento
+	 * @param time Data da comanda
+	 * @param desconto Valor do desconto
+	 * @return Retorna a pesquisa
+	 * @throws Exception
+	 */
 	public static ResultSet getAll(int id, Timestamp time, boolean desconto) throws Exception {
 		String sql = "SELECT p.pagamentoId, p.valor, p.data, p.funcionarioId, p.formaPagamento, CASE WHEN pc.desconto IS NULL THEN 'Desconto' ELSE 'Pagamento' END AS tipo FROM pagamento p JOIN pagamentoComanda pc ON p.pagamentoId = pc.pagamentoId WHERE p.comandaId = ? AND p.comandaData = ?"
 				+ " UNION SELECT p.pagamentoId, p.valor, p.data, p.funcionarioId, p.formaPagamento, pd.nome AS tipo FROM pagamento p JOIN pagamentoProduto pp ON p.pagamentoId = pp.pagamentoId JOIN produto pd ON pp.produtoId = pd.produtoId WHERE p.comandaId = ? AND p.comandaData = ?";
