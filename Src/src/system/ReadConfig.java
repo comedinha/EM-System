@@ -37,6 +37,6 @@ public class ReadConfig {
 
 	public void ConfigDatabase(Stage stage) throws Exception {
 		Stages st = new Stages();
-    	st.novoStage("EMSystem SQLConfig", "ConfigDatabase", null);
+    	st.novoStage("EMSystem SQLConfig", "ConfigDatabase");
 	}
 }

@@ -1,7 +1,6 @@
 package util;
 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -10,25 +9,32 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 public class Stages {
-	public FXMLLoader novoStage(String title, String dir, Parent parent) {
-		FXMLLoader loader = null;
+	FXMLLoader loader;
+	Stage stage;
+
+	public void novoStage(String title, String dir) {
 		try {
 			Stage stage = new Stage();
 			stage.setTitle(title);
-			loader = new FXMLLoader(getClass().getResource("/view/" + dir + ".fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/" + dir + ".fxml"));
 			BorderPane root = loader.load();
 			Scene scene = new Scene(root);
 			stage.getIcons().add(new Image("file:icone.png"));
 			stage.setScene(scene);
-			stage.setOnCloseRequest(e -> {
-				if (parent != null)
-					parent.setDisable(false);
-			});
 			stage.show();
+			this.loader = loader;
+			this.stage = stage;
 		} catch (Exception e) {
 			novoAlerta(e.getMessage(), "", true);
 		}
+	}
+
+	public FXMLLoader getLoader() {
 		return loader;
+	}
+
+	public Stage getStage() {
+		return stage;
 	}
 
 	public static Alert novoAlerta(String erro, String aviso, Boolean show) {

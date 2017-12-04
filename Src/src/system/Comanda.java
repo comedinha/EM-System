@@ -20,12 +20,12 @@ public class Comanda {
 	public static ObservableList<TableViewComandaPaga> getAllComandaPaga(Date dataDe, Date dataAte) throws Exception {
 		ResultSet result = dao.Comanda.getAllComandasPagas(dataDe, dataAte);
 		ObservableList<TableViewComandaPaga> ol = FXCollections.observableArrayList();
-		
+
 		while (result.next()) {
 			ol.add(new TableViewComandaPaga(result.getInt(1), result.getTimestamp(2),
 					result.getTimestamp(4), result.getInt(3), dao.Comanda.getPrecoComanda(result.getInt(1), result.getTimestamp(2))));
 		}
-		
+
 		return ol;
 	}
 

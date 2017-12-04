@@ -78,13 +78,15 @@ public class Pagamento {
 		String sql = "SELECT p.pagamentoId, p.valor, p.data, p.funcionarioId, p.formaPagamento, CASE WHEN pc.desconto IS NULL THEN 'Desconto' ELSE 'Pagamento' END AS tipo FROM pagamento p JOIN pagamentoComanda pc ON p.pagamentoId = pc.pagamentoId WHERE p.comandaId = ? AND p.comandaData = ?"
 				+ " UNION SELECT p.pagamentoId, p.valor, p.data, p.funcionarioId, p.formaPagamento, pd.nome AS tipo FROM pagamento p JOIN pagamentoProduto pp ON p.pagamentoId = pp.pagamentoId JOIN produto pd ON pp.produtoId = pd.produtoId WHERE p.comandaId = ? AND p.comandaData = ?";
 		if (desconto)
-			sql = "SELECT p.pagamentoId, p.valor, p.data, p.funcionarioId, p.formaPagamento, pc.desconto FROM pagamento p JOIN pagamentoComanda pc ON p.pagamentoId = pc.pagamentoId WHERE p.comandaId = ? AND p.comandaData = ?";
+			sql = "SELECT p.pagamentoId, p.valor, p.data, p.funcionarioId, p.formaPagamento, pc.desconto FROM pagamento p JOIN pagamentoComanda pc ON p.pagamentoId = pc.pagamentoId WHERE p.comandaId = ? AND p.comandaData = ? AND pc.desconto = ?";
 
 		PreparedStatement p = Valores.getConnection().prepareStatement(sql);
 		p.setInt(1, id);
 		p.setTimestamp(2, time);
 
-		if (!desconto) {
+		if (desconto)
+			p.setBoolean(3, desconto);
+		else {
 			p.setInt(3, id);
 			p.setTimestamp(4, time);
 		}

@@ -21,6 +21,7 @@ public class PagamentoController {
 	private int id;
 	Timestamp time;
 	private Parent parent;
+	ComandaController controller;
 
     @FXML
     private TextField tf_valorpagar;
@@ -47,7 +48,8 @@ public class PagamentoController {
     }
 
     @FXML
-    void btn_cancelar(ActionEvent event) {    	
+    void btn_cancelar(ActionEvent event) {
+    	controller.refresh();
     	parent.setDisable(false);
     	((Node) event.getSource()).getScene().getWindow().hide();
     }
@@ -75,6 +77,8 @@ public class PagamentoController {
 	    	} else {
 	    		throw new Exception("Erro ao salvar produto!");
 	    	}
+
+	    	controller.refresh();
 	    	parent.setDisable(false);
 	    	((Node) event.getSource()).getScene().getWindow().hide();
     	} catch (Exception e) {
@@ -91,29 +95,32 @@ public class PagamentoController {
     	cb_meioPagamento.setValue(MeioPagamentoEnum.Dinheiro);
 	}
 
-    public void adicionaDesconto(int id, Timestamp time, float valor, Parent root) {
+    public void adicionaDesconto(int id, Timestamp time, float valor, Parent root, ComandaController comandaController) {
     	this.mode = 1;
     	this.id = id;
     	this.time = time;
     	this.parent = root;
+    	this.controller = comandaController;
     	tf_valorpagar.setText(Float.toString(valor));
     	txt_caixa.setText(String.format(txt_caixa.getText(), "Desconto"));
     }
 
-    public void adicionaPagamento(int id, Timestamp time, float valor, Parent root) {
+    public void adicionaPagamento(int id, Timestamp time, float valor, Parent root, ComandaController comandaController) {
     	this.id = id;
     	this.time = time;
     	this.parent = root;
+    	this.controller = comandaController;
     	tf_valorpagar.setText(Float.toString(valor));
     	txt_caixa.setText(String.format(txt_caixa.getText(), "Pagamento"));
     }
 
-	public void adicionaProdutoPagamento(int id, int idComanda, Timestamp timeComanda, float valorPagar, Parent root) {
+	public void adicionaProdutoPagamento(int id, int idComanda, Timestamp timeComanda, float valorPagar, Parent root, ComandaController comandaController) {
 		this.mode = 2;
     	this.idproduto = id;
     	this.id = idComanda;
     	this.time = timeComanda;
     	this.parent = root;
+    	this.controller = comandaController;
 		tf_valorpagar.setText(Float.toString(valorPagar));
     	txt_caixa.setText(String.format(txt_caixa.getText(), "Pagamento"));
 	}

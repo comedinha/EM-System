@@ -28,6 +28,7 @@ public class ResumoPagamentoController {
 	Timestamp data;
 	boolean enable;
 	Parent root;
+	ComandaController controller;
 
     @FXML
     private TableView<TableViewPagamento> tv_pagamento;
@@ -52,8 +53,8 @@ public class ResumoPagamentoController {
 
     @FXML
     void act_Fechar(ActionEvent event) {
-    	if (root != null)
-    		root.setDisable(false);
+    	controller.refresh();
+    	root.setDisable(false);
 
     	((Node) event.getSource()).getScene().getWindow().hide();
     }
@@ -111,9 +112,10 @@ public class ResumoPagamentoController {
     	}
 	}
 
-	public void vizualizaPagamento(int id, Timestamp data, boolean enable, Parent root) {
+	public void vizualizaPagamento(int id, Timestamp data, boolean enable, Parent root, ComandaController comandaController) {
 		try {
 			this.root = root;
+			this.controller = comandaController;
 			this.enable = enable;
 			this.id = id;
 			this.data = data;

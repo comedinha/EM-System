@@ -3,7 +3,6 @@ package controller;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
@@ -29,8 +28,8 @@ public class LoginController {
     		if (Funcionario.login(txf_usr.getText(), txf_pass.getText())) {
 			    ((Node) event.getSource()).getScene().getWindow().hide();
 			    Stages st = new Stages();
-			    FXMLLoader menuLoader = st.novoStage("EMSystem Menu", "Menu", null);
-		    	Valores.setController(menuLoader.<MenuController>getController());
+			    st.novoStage("EMSystem Menu", "Menu");
+		    	Valores.setController(st.getLoader().<MenuController>getController());
     		} else {
     			throw new Exception("Usuário ou senha incorreto.");
     		}

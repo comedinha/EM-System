@@ -4,12 +4,12 @@ import java.io.FileWriter;
 import java.sql.SQLException;
 
 import dao.ConectaBanco;
+import dao.Funcionario;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -74,13 +74,17 @@ public class ConfigDatabaseController {
 			file.close();
 
 			((Node) event.getSource()).getScene().getWindow().hide();
+<<<<<<< HEAD
 			if (!dao.Funcionario.verificaGerente(Valores.getConnection())) {
+=======
+			if (!Funcionario.verificaGerente(Valores.getConnection())) {
+>>>>>>> c0fd24247f8f3e3a6e2443377a7533841a6e8fd9
 				Stages st = new Stages();
-		    	FXMLLoader funcionarioLoader = st.novoStage("Adicionar Gerente", "Funcionario", null);
-				funcionarioLoader.<FuncionarioController>getController().cadastroInicial();
+		    	st.novoStage("Adicionar Gerente", "Funcionario");
+		    	st.getLoader().<FuncionarioController>getController().cadastroInicial();
 			} else {
 				Stages st = new Stages();
-		    	st.novoStage("EMSystem Login", "Login", null);
+		    	st.novoStage("EMSystem Login", "Login");
 			}
 		} catch (Exception e) {
 			Alert alert = new Alert(AlertType.ERROR, e.getMessage());
