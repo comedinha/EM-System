@@ -93,10 +93,15 @@ public class Comanda {
 	public static ObservableList<TableViewComandaProduto> getAllProduto(int id, Timestamp dataComanda) throws Exception {		
 		ResultSet result = dao.Comanda.getAllProduto(id, dataComanda);
 		ObservableList<TableViewComandaProduto> ol = FXCollections.observableArrayList();
-		
+
 		while (result.next()) {
+			float preco = result.getFloat(4);
+			if (result.getTimestamp(6) != null) {
+				preco = dao.Comanda.getPrecoProdutoAlterado(result.getTimestamp(6));
+			}
+
 			ol.add(new TableViewComandaProduto(result.getInt(1), result.getString(2), 
-					result.getInt(3), result.getFloat(4), result.getFloat(5)));
+					result.getInt(3), preco, result.getFloat(5)));
 		}
 		return ol;
 	}

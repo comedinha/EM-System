@@ -170,7 +170,7 @@ public class Comanda {
 	 * @throws Exception
 	 */
 	public static ResultSet getAllProduto(int id, Timestamp data) throws Exception {		
-		String sql = "SELECT pc.produtoId, p.nome, pc.quantidade, p.valor, SUM(pg.valor) FROM produtoComanda pc LEFT JOIN pagamentoProduto pp ON pp.produtoId = pc.produtoId LEFT JOIN pagamento pg ON pg.pagamentoId = pp.pagamentoId AND pc.comandaId = pg.comandaId AND pc.comandaData = pg.comandaData JOIN produto p ON p.produtoId = pc.produtoId WHERE pc.comandaId = ? AND pc.comandaData = ? GROUP BY 1, 2, 3, 4";
+		String sql = "SELECT DISTINCT pc.produtoId, p.nome, pc.quantidade, p.valor, SUM(pg.valor), MIN(pa.data) FROM produtoComanda pc LEFT JOIN pagamentoProduto pp ON pp.produtoId = pc.produtoId LEFT JOIN pagamento pg ON pg.pagamentoId = pp.pagamentoId AND pc.comandaId = pg.comandaId AND pc.comandaData = pg.comandaData JOIN produto p ON p.produtoId = pc.produtoId LEFT JOIN produtoAlterado pa ON pa.produtoId = p.produtoId AND pa.data > pc.data WHERE pc.comandaId = ? AND pc.comandaData = ? GROUP BY 1, 2, 3, 4";
 
 		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
 		ps.setInt(1, id);
@@ -209,16 +209,48 @@ public class Comanda {
 	 * @throws Exception
 	 */
 	public static float getPrecoComanda(int comandaId, Timestamp date) throws Exception {
-		String sql = "SELECT cp.data, cp.quantidade, p.valor, pa.data, pa.valor FROM comanda c JOIN produtoComanda cp ON c.comandaId = cp.comandaId AND c.data = cp.comandaData JOIN produto p ON p.produtoId = cp.produtoId LEFT JOIN produtoAlterado pa ON p.produtoId = pa.produtoId WHERE c.data = ? AND c.comandaId = ?";
+		String sql = "SELECT DISTINCT p.produtoId, cp.quantidade, p.valor, MIN(pa.data) FROM comanda c JOIN produtoComanda cp ON c.comandaId = cp.comandaId AND c.data = cp.comandaData JOIN produto p ON p.produtoId = cp.produtoId LEFT JOIN produtoAlterado pa ON pa.produtoId = p.produtoId AND pa.data > cp.data WHERE c.comandaId = ? AND c.data = ? GROUP BY 1, 2, 3";
 
 		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
-		ps.setTimestamp(1, date);
-		ps.setInt(2, comandaId);
+		ps.setInt(1, comandaId);
+		ps.setTimestamp(2, date);
 
 		float valor = 0;
 		ResultSet result = ps.executeQuery();
 		while (result.next()) {
-			valor += result.getFloat(3) * result.getInt(2);
+			float preco = result.getFloat(3);
+			if (result.getTimestamp(4) != null) {
+				preco = getPrecoProdutoAlterado(result.getTimestamp(4));
+			}
+
+			valor += preco * result.getInt(2);
+		}
+
+		ResultSet desconto = Pagamento.getAllPagamentoDesconto(comandaId, date, true);
+		while (desconto.next()) {
+			valor -= desconto.getFloat(2);
+		}
+
+		return valor;
+	}
+
+	/**
+	 * Retorna o valor total da comanda
+	 * @param comandaId ID da comanda
+	 * @param date Data de criação da comanda
+	 * @return Retorna pesquisa
+	 * @throws Exception
+	 */
+	public static float getPrecoProdutoAlterado(Timestamp date) throws Exception {
+		String sql = "SELECT pa.valor FROM produtoAlterado pa WHERE pa.data = ?";
+
+		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
+		ps.setTimestamp(1, date);
+
+		float valor = 0;
+		ResultSet result = ps.executeQuery();
+		if (result.next()) {
+			valor = result.getFloat(1);
 		}
 
 		return valor;
