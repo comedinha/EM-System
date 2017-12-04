@@ -3,7 +3,6 @@ package controller;
 import java.sql.Date;
 import java.sql.SQLException;
 import org.controlsfx.control.PropertySheet;
-import org.controlsfx.dialog.WizardPane;
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
@@ -43,110 +42,107 @@ import java.util.Optional;
 
 public class MenuController {
 	@FXML
-    private WizardPane wp_tip1;
-
-	@FXML
-    private TextArea ta_txtinicio;
+    private TextArea ta_inicio;
 
 	@FXML
     private Tab ab_financeiro;
 
 	@FXML
-    private DatePicker dt_finbuscade;
+    private DatePicker dt_finBuscaDe;
 
     @FXML
-    private DatePicker dt_finbuscaate;
+    private DatePicker dt_finBuscaAte;
 
     @FXML
-    private TableView<TableViewComandaPaga> tableFinanc;
+    private TableView<TableViewComandaPaga> tv_financ;
 
     @FXML
-    private TableColumn<TableViewComandaPaga, Integer> tb_financid;
+    private TableColumn<TableViewComandaPaga, Integer> tc_financId;
 
     @FXML
-    private TableColumn<TableViewComandaPaga, String> tb_financfunc;
+    private TableColumn<TableViewComandaPaga, String> tc_financFunc;
 
     @FXML
-    private TableColumn<TableViewComandaPaga, String> tb_financdata;
+    private TableColumn<TableViewComandaPaga, String> tc_financData;
 
     @FXML
-    private TableColumn<TableViewComandaPaga, String> tb_financperm;
+    private TableColumn<TableViewComandaPaga, String> tc_financPerm;
 
     @FXML
-    private TableColumn<TableViewComandaPaga, Float> tb_financvlr;
+    private TableColumn<TableViewComandaPaga, Float> tc_financVlr;
 
     @FXML
     private TextField txf_comandaBusca;
 
     @FXML
-    private TableView<TableViewComandaLista> tableComand;
+    private TableView<TableViewComandaLista> tv_comand;
 
     @FXML
-    private TableColumn<TableViewComandaLista, Integer> tb_comandId;
+    private TableColumn<TableViewComandaLista, Integer> tc_comandId;
 
     @FXML
-    private TableColumn<TableViewComandaLista, String> tb_comandFunc;
+    private TableColumn<TableViewComandaLista, String> tc_comandFunc;
     
     @FXML
-    private TableColumn<TableViewComandaLista, String> tb_comandMesa;
+    private TableColumn<TableViewComandaLista, String> tc_comandMesa;
 
     @FXML
-    private TableColumn<TableViewComandaLista, String> tb_comandData;
+    private TableColumn<TableViewComandaLista, String> tc_comandData;
 
     @FXML
-    private TableColumn<TableViewComandaLista, Float> tb_comandVlr;
+    private TableColumn<TableViewComandaLista, Float> tc_comandVlr;
 
     @FXML
     private Tab ab_produtos;
 
     @FXML
-    private TextField txf_prodbusca;
+    private TextField txf_prodBusca;
 
     @FXML
-    private TableView<TableViewProduto> tableProd;
+    private TableView<TableViewProduto> tv_prod;
 
     @FXML
-    private TableColumn<TableViewProduto, Integer> tb_prodid;
+    private TableColumn<TableViewProduto, Integer> tc_prodId;
 
     @FXML
-    private TableColumn<TableViewProduto, String> tb_prodnome;
+    private TableColumn<TableViewProduto, String> tc_prodNome;
 
     @FXML
-    private TableColumn<TableViewProduto, Float> tb_prodvlr;
+    private TableColumn<TableViewProduto, Float> tc_prodVlr;
 
     @FXML
     private Tab ab_funcionarios;
 
     @FXML
-    private TextField txf_funcbusca;
+    private TextField txf_funcBusca;
 
     @FXML
-    private TableView<TableViewFuncionario> tableFunc;
+    private TableView<TableViewFuncionario> tv_func;
 
     @FXML
-    private TableColumn<TableViewFuncionario, Integer> tb_funcid;
+    private TableColumn<TableViewFuncionario, Integer> tc_funcId;
 
     @FXML
-    private TableColumn<TableViewFuncionario, String> tb_funcnome;
+    private TableColumn<TableViewFuncionario, String> tc_funcNome;
 
     @FXML
-    private TableColumn<TableViewFuncionario, String> tb_funclogin;
+    private TableColumn<TableViewFuncionario, String> tc_funcLogin;
 
     @FXML
-    private TableColumn<TableViewFuncionario, String> tb_funccargo;
+    private TableColumn<TableViewFuncionario, String> tc_funcCargo;
 
     @FXML
-    private TableColumn<TableViewFuncionario, Boolean> tb_funcgarcom;
+    private TableColumn<TableViewFuncionario, Boolean> tc_funcGarcom;
 
     @FXML
     private PropertySheet ps_configuracoes;
 
     @FXML
-    void act_BuscaFinanceiro(ActionEvent event) {
+    private void act_BuscaFinanceiro(ActionEvent event) {
     	try {
-	    	if (Date.valueOf(dt_finbuscade.getValue()).before(Date.valueOf(dt_finbuscaate.getValue()))) {
-		    	tableFinanc.getItems().clear();
-		    	tableFinanc.setItems(Comanda.getAllComandaPaga(Date.valueOf(dt_finbuscade.getValue()), Date.valueOf(dt_finbuscaate.getValue())));
+	    	if (Date.valueOf(dt_finBuscaDe.getValue()).before(Date.valueOf(dt_finBuscaAte.getValue()))) {
+		    	tv_financ.getItems().clear();
+		    	tv_financ.setItems(Comanda.getAllComandaPaga(Date.valueOf(dt_finBuscaDe.getValue()), Date.valueOf(dt_finBuscaAte.getValue())));
 	    	} else
 	    		throw new Exception("A data DE deve ser menor que a data ATÉ!");
     	} catch (Exception e) {
@@ -155,26 +151,26 @@ public class MenuController {
     }
 
     @FXML
-    void btn_addComanda(ActionEvent event) throws SQLException {
+    private void btn_addComanda(ActionEvent event) throws SQLException {
     	Stages st = new Stages();
     	st.novoStage("Adicionar Comanda", "Comanda");
     	st.getLoader().<ComandaController>getController().iniciaComanda(st.getLoader());
     }
 
     @FXML
-    void btn_addFunc(ActionEvent event) {
+    private void btn_addFunc(ActionEvent event) {
     	Stages st = new Stages();
     	st.novoStage("Adicionar Funcionário", "Funcionario");
     }
 
     @FXML
-    void btn_addProd(ActionEvent event) {
+    private void btn_addProd(ActionEvent event) {
     	Stages st = new Stages();
     	st.novoStage("Adicionar Produto", "Produto");
     }
 
     @FXML
-    void btn_desconecta(ActionEvent event) {
+    private void btn_desconecta(ActionEvent event) {
 	    ((Node) event.getSource()).getScene().getWindow().hide();
 	    Valores.setController(null);
 	    Valores.setFuncionario(null);
@@ -184,13 +180,13 @@ public class MenuController {
     }
 
     @FXML
-    void btn_salvaConfig(ActionEvent event) {
+    private void btn_salvaConfig(ActionEvent event) {
     	for (String key : Configuracao.configDataMapKeySet())
     		System.out.println(Configuracao.configDataGetValue(key));
     }
 
     @FXML
-    public void initialize() {
+    private void initialize() {
     	try {
 	    	if (Valores.getConnection() == null || Valores.getUsuario() == null)
 	    		Platform.exit();
@@ -224,7 +220,7 @@ public class MenuController {
      * @throws Exception
      */
     private void iniciaInicio() throws Exception {
-    	ta_txtinicio.setText(String.format(ta_txtinicio.getText(), Valores.getUsuario().getNome(), FuncionarioEnum.get(Valores.getUsuario().getFuncao()), null));
+    	ta_inicio.setText(String.format(ta_inicio.getText(), Valores.getUsuario().getNome(), FuncionarioEnum.get(Valores.getUsuario().getFuncao()), null));
     }
     
     /**
@@ -232,17 +228,17 @@ public class MenuController {
      */
     private void iniciaFinanc() {
     	try {
-	    	dt_finbuscade.setValue(LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), 1));
-	    	dt_finbuscaate.setValue(LocalDate.now());
+	    	dt_finBuscaDe.setValue(LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), 1));
+	    	dt_finBuscaAte.setValue(LocalDate.now());
 	
-	    	tb_financid.setCellValueFactory(new PropertyValueFactory<>("id"));
-	    	tb_financfunc.setCellValueFactory(new PropertyValueFactory<>("funcionario"));
-	    	tb_financdata.setCellValueFactory(new PropertyValueFactory<>("data"));
-	    	tb_financperm.setCellValueFactory(new PropertyValueFactory<>("permanencia"));
-	    	tb_financvlr.setCellValueFactory(new PropertyValueFactory<>("valor"));
+	    	tc_financId.setCellValueFactory(new PropertyValueFactory<>("id"));
+	    	tc_financFunc.setCellValueFactory(new PropertyValueFactory<>("funcionario"));
+	    	tc_financData.setCellValueFactory(new PropertyValueFactory<>("data"));
+	    	tc_financPerm.setCellValueFactory(new PropertyValueFactory<>("permanencia"));
+	    	tc_financVlr.setCellValueFactory(new PropertyValueFactory<>("valor"));
 
-			tableFinanc.setItems(Comanda.getAllComandaPaga(Date.valueOf(dt_finbuscade.getValue()), Date.valueOf(dt_finbuscaate.getValue())));
-			tableFinanc.setRowFactory((TableView<TableViewComandaPaga> tableComandaFinanc) -> {
+			tv_financ.setItems(Comanda.getAllComandaPaga(Date.valueOf(dt_finBuscaDe.getValue()), Date.valueOf(dt_finBuscaAte.getValue())));
+			tv_financ.setRowFactory((TableView<TableViewComandaPaga> tv_comandaFinanc) -> {
     			final TableRow<TableViewComandaPaga> row = new TableRow<>();
     			final ContextMenu rowMenu = new ContextMenu();
     			MenuItem verComanda = new MenuItem("Visualizar Comanda");
@@ -272,14 +268,14 @@ public class MenuController {
      */
     private void iniciaComanda() {
     	try {
-	    	tb_comandId.setCellValueFactory(new PropertyValueFactory<>("id"));
-	    	tb_comandFunc.setCellValueFactory(new PropertyValueFactory<>("funcionario"));
-	    	tb_comandMesa.setCellValueFactory(new PropertyValueFactory<>("mesa"));
-	    	tb_comandData.setCellValueFactory(new PropertyValueFactory<>("data"));
-	    	tb_comandVlr.setCellValueFactory(new PropertyValueFactory<>("valor"));
+	    	tc_comandId.setCellValueFactory(new PropertyValueFactory<>("id"));
+	    	tc_comandFunc.setCellValueFactory(new PropertyValueFactory<>("funcionario"));
+	    	tc_comandMesa.setCellValueFactory(new PropertyValueFactory<>("mesa"));
+	    	tc_comandData.setCellValueFactory(new PropertyValueFactory<>("data"));
+	    	tc_comandVlr.setCellValueFactory(new PropertyValueFactory<>("valor"));
     	
-			tableComand.setItems(Comanda.getAllComanda());
-			tableComand.setRowFactory((TableView<TableViewComandaLista> tableComanda) -> {
+			tv_comand.setItems(Comanda.getAllComanda());
+			tv_comand.setRowFactory((TableView<TableViewComandaLista> tv_comanda) -> {
     			final TableRow<TableViewComandaLista> row = new TableRow<>();
     			final ContextMenu rowMenu = new ContextMenu();
     			MenuItem editItem = new MenuItem("Editar");
@@ -313,12 +309,12 @@ public class MenuController {
     			public void invalidated(Observable observable) {
     				try {
     					if(txf_comandaBusca.textProperty().get().isEmpty()) {
-    						tableComand.setItems(Comanda.getAllComanda());
+    						tv_comand.setItems(Comanda.getAllComanda());
     						return;
     					}
 
     					ObservableList<TableViewComandaLista> tableItems = FXCollections.observableArrayList();
-    					ObservableList<TableColumn<TableViewComandaLista, ?>> cols = tableComand.getColumns();
+    					ObservableList<TableColumn<TableViewComandaLista, ?>> cols = tv_comand.getColumns();
     					for (int i = 0; i < Comanda.getAllComanda().size(); i++) {
     						for (int j = 0; j < cols.size(); j++) {
     							TableColumn<TableViewComandaLista, ?> col = cols.get(j);
@@ -330,7 +326,7 @@ public class MenuController {
     							}
     						}
     					}
-    					tableComand.setItems(tableItems);
+    					tv_comand.setItems(tableItems);
     				} catch (Exception e) {
     					Stages.novoAlerta(e.getMessage(), "", true);
     				}
@@ -346,13 +342,13 @@ public class MenuController {
      */
     private void iniciaProduto() {
     	try {
-	    	tb_prodid.setCellValueFactory(new PropertyValueFactory<>("id"));
-	    	tb_prodnome.setCellValueFactory(new PropertyValueFactory<>("nome"));
-	    	tb_prodvlr.setCellValueFactory(new PropertyValueFactory<>("valor"));
+	    	tc_prodId.setCellValueFactory(new PropertyValueFactory<>("id"));
+	    	tc_prodNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+	    	tc_prodVlr.setCellValueFactory(new PropertyValueFactory<>("valor"));
 
-    		tableProd.setItems(Produto.getAllProduto());
+    		tv_prod.setItems(Produto.getAllProduto());
     		
-    		tableProd.setRowFactory((TableView<TableViewProduto> tableProduto) -> {
+    		tv_prod.setRowFactory((TableView<TableViewProduto> tv_produto) -> {
     			final TableRow<TableViewProduto> row = new TableRow<>();
     			final ContextMenu rowMenu = new ContextMenu();
     			MenuItem editItem = new MenuItem("Editar");
@@ -406,29 +402,29 @@ public class MenuController {
     		});
 
 			//Busca
-    		txf_prodbusca.textProperty().addListener(new InvalidationListener() {
+    		txf_prodBusca.textProperty().addListener(new InvalidationListener() {
     			@Override
     			public void invalidated(Observable observable) {
     				try {
-    					if(txf_prodbusca.textProperty().get().isEmpty()) {
-    						tableProd.setItems(Produto.getAllProduto());
+    					if(txf_prodBusca.textProperty().get().isEmpty()) {
+    						tv_prod.setItems(Produto.getAllProduto());
     						return;
     					}
 
     					ObservableList<TableViewProduto> tableItems = FXCollections.observableArrayList();
-    					ObservableList<TableColumn<TableViewProduto, ?>> cols = tableProd.getColumns();
+    					ObservableList<TableColumn<TableViewProduto, ?>> cols = tv_prod.getColumns();
     					for (int i = 0; i < Produto.getAllProduto().size(); i++) {
     						for (int j = 0; j < cols.size(); j++) {
     							TableColumn<TableViewProduto, ?> col = cols.get(j);
     							String cellValue = col.getCellData(Produto.getAllProduto().get(i)).toString();
     							cellValue = cellValue.toLowerCase();
-    							if(cellValue.contains(txf_prodbusca.textProperty().get().toLowerCase())) {
+    							if(cellValue.contains(txf_prodBusca.textProperty().get().toLowerCase())) {
     								tableItems.add(Produto.getAllProduto().get(i));
     								break;
     							}
     						}
     					}
-    					tableProd.setItems(tableItems);
+    					tv_prod.setItems(tableItems);
     				} catch (Exception e) {
     					Stages.novoAlerta(e.getMessage(), "", true);
     				}
@@ -444,14 +440,14 @@ public class MenuController {
      */
     private void iniciaFuncionario() {
     	try {
-	    	tb_funcid.setCellValueFactory(new PropertyValueFactory<>("id"));
-	        tb_funcnome.setCellValueFactory(new PropertyValueFactory<>("nome"));
-	        tb_funclogin.setCellValueFactory(new PropertyValueFactory<>("login"));
-	        tb_funccargo.setCellValueFactory(new PropertyValueFactory<>("cargo"));
-	        tb_funcgarcom.setCellValueFactory(new PropertyValueFactory<>("garcom"));
+	    	tc_funcId.setCellValueFactory(new PropertyValueFactory<>("id"));
+	        tc_funcNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+	        tc_funcLogin.setCellValueFactory(new PropertyValueFactory<>("login"));
+	        tc_funcCargo.setCellValueFactory(new PropertyValueFactory<>("cargo"));
+	        tc_funcGarcom.setCellValueFactory(new PropertyValueFactory<>("garcom"));
 
-        	tableFunc.setItems(Funcionario.getAllFuncionario());
-        	tableFunc.setRowFactory((TableView<TableViewFuncionario> tableFuncionario) -> {
+        	tv_func.setItems(Funcionario.getAllFuncionario());
+        	tv_func.setRowFactory((TableView<TableViewFuncionario> tv_funcionario) -> {
         		final TableRow<TableViewFuncionario> row = new TableRow<>();
         		final ContextMenu rowMenu = new ContextMenu();
         		MenuItem editFuncionario = new MenuItem("Editar");
@@ -504,29 +500,29 @@ public class MenuController {
         	});
 
         	//Busca
-        	txf_funcbusca.textProperty().addListener(new InvalidationListener() {
+        	txf_funcBusca.textProperty().addListener(new InvalidationListener() {
         		@Override
         		public void invalidated(Observable observable) {
         			try {
-        				if(txf_funcbusca.textProperty().get().isEmpty()) {
-        					tableFunc.setItems(Funcionario.getAllFuncionario());
+        				if(txf_funcBusca.textProperty().get().isEmpty()) {
+        					tv_func.setItems(Funcionario.getAllFuncionario());
         					return;
         				}
 
         				ObservableList<TableViewFuncionario> tableItems = FXCollections.observableArrayList();
-        				ObservableList<TableColumn<TableViewFuncionario, ?>> cols = tableFunc.getColumns();
+        				ObservableList<TableColumn<TableViewFuncionario, ?>> cols = tv_func.getColumns();
         				for (int i = 0; i < Funcionario.getAllFuncionario().size(); i++) {
         					for (int j = 0; j < cols.size(); j++) {
         						TableColumn<TableViewFuncionario, ?> col = cols.get(j);
         						String cellValue = col.getCellData(Funcionario.getAllFuncionario().get(i)).toString();
         						cellValue = cellValue.toLowerCase();
-        						if(cellValue.contains(txf_funcbusca.textProperty().get().toLowerCase())) {
+        						if(cellValue.contains(txf_funcBusca.textProperty().get().toLowerCase())) {
         							tableItems.add(Funcionario.getAllFuncionario().get(i));
         							break;
         						}
         					}
         				}
-        				tableFunc.setItems(tableItems);
+        				tv_func.setItems(tableItems);
         			} catch (Exception e) {
         				Stages.novoAlerta(e.getMessage(), "", true);
         			}
@@ -552,23 +548,28 @@ public class MenuController {
     		ps_configuracoes.getItems().add(new Configuracao(key));
     }
 
-    void refresh(int type) throws Exception {
+    /**
+     * Atualiza os valores das tabelas
+     * @throws Exception
+     */
+    public void refresh(int type) throws Exception {
     	try {
 	    	if (type == 1) {
-	    		tableProd.getItems().clear();
-	    		tableProd.setItems(Produto.getAllProduto());
-	    		txf_prodbusca.setText(txf_prodbusca.getText());
+	    		tv_prod.getItems().clear();
+	    		tv_prod.setItems(Produto.getAllProduto());
+	    		txf_prodBusca.setText(txf_prodBusca.getText());
 	    	} else if (type == 2) {
-	    		tableFunc.getItems().clear();
-	    		tableFunc.setItems(Funcionario.getAllFuncionario());
-	    		txf_funcbusca.setText(txf_funcbusca.getText());
-	    	} else if (type == 3) {
-	    		tableComand.getItems().clear();
-	    		tableComand.setItems(Comanda.getAllComanda());
-	    		txf_comandaBusca.setText(txf_comandaBusca.getText());
-	    		tableFinanc.getItems().clear();
-	    		tableFinanc.setItems(Comanda.getAllComandaPaga(Date.valueOf(dt_finbuscade.getValue()), Date.valueOf(dt_finbuscaate.getValue())));
+	    		tv_func.getItems().clear();
+	    		tv_func.setItems(Funcionario.getAllFuncionario());
+	    		txf_funcBusca.setText(txf_funcBusca.getText());
+	    		iniciaInicio();
 	    	}
+
+	    	tv_comand.getItems().clear();
+	    	tv_comand.setItems(Comanda.getAllComanda());
+	    	txf_comandaBusca.setText(txf_comandaBusca.getText());
+	    	tv_financ.getItems().clear();
+	    	tv_financ.setItems(Comanda.getAllComandaPaga(Date.valueOf(dt_finBuscaDe.getValue()), Date.valueOf(dt_finBuscaAte.getValue())));
     	} catch (Exception e) {
     		throw new Exception("Erro ao atualizar tabelas.");
     	}

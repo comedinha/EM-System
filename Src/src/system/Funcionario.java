@@ -23,7 +23,7 @@ public class Funcionario {
 	}
 	
 	public String getNome() throws Exception {
-		ResultSet result = dao.Funcionario.get(id);
+		ResultSet result = dao.Funcionario.getFuncionario(id);
 		if (result.next())
 			return result.getString("nome");
 
@@ -31,7 +31,7 @@ public class Funcionario {
 	}
 
 	public int getId() throws Exception {
-		ResultSet result = dao.Funcionario.get(id);
+		ResultSet result = dao.Funcionario.getFuncionario(id);
 		if (result.next())
 			return result.getInt("funcionarioId");
 
@@ -39,7 +39,7 @@ public class Funcionario {
 	}
 
 	public int getFuncao() throws Exception {
-		ResultSet result = dao.Funcionario.get(id);
+		ResultSet result = dao.Funcionario.getFuncionario(id);
 		if (result.next())
 			return result.getInt("funcaoId");
 
@@ -47,7 +47,7 @@ public class Funcionario {
 	}
 
 	public boolean getGarcom() throws Exception {
-		ResultSet result = dao.Funcionario.get(id);
+		ResultSet result = dao.Funcionario.getFuncionario(id);
 		if (result.next())
 			return result.getBoolean("garcom");
 
@@ -55,7 +55,7 @@ public class Funcionario {
 	}
 
 	public static boolean getGarcomById(int id) throws Exception {
-		ResultSet result = dao.Funcionario.get(id);
+		ResultSet result = dao.Funcionario.getFuncionario(id);
 		if (result.next())
 			return result.getBoolean("garcom");
 
@@ -72,7 +72,7 @@ public class Funcionario {
 	 * @throws Exception
 	 */
 	public static void criaUsuario(int func, String nome, String usr, String pass, boolean garcom) throws Exception {
-		dao.Funcionario.inserir(func, nome, usr, pass, garcom);
+		dao.Funcionario.insereFuncionario(func, nome, usr, pass, garcom);
 	}
 	
 	/**
@@ -92,7 +92,7 @@ public class Funcionario {
 	 * @throws Exception
 	 */
 	public static ObservableList<TableViewFuncionario> getAllFuncionario() throws Exception {
-		ResultSet result = dao.Funcionario.getAll();
+		ResultSet result = dao.Funcionario.getAllFuncionarios();
 		ObservableList<TableViewFuncionario> ol = FXCollections.observableArrayList();
 		
 		while(result.next()) {
@@ -113,7 +113,7 @@ public class Funcionario {
 	 * @throws Exception
 	 */
 	public static boolean editaFuncionario(int id, String nome, String login, String password, boolean garcom) throws Exception {
-		return dao.Funcionario.update(id, nome, login, password, garcom);
+		return dao.Funcionario.updateFuncionario(id, nome, login, password, garcom);
 	}
 	
 	/**
@@ -128,11 +128,11 @@ public class Funcionario {
 		dao.Funcionario funcionario = new dao.Funcionario();
 		
 		if (!cargo.equals("Gerente")) {
-			return funcionario.delete(id);
+			return funcionario.deleteFuncionario(id);
 		} else {
 			ResultSet result = funcionario.getGerente(id);
 			if (result.next()) {				
-				return funcionario.delete(id);
+				return funcionario.deleteFuncionario(id);
 			} else {
 				throw new Exception("Você não pode remover todos os gerentes!");
 			}

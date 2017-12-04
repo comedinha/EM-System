@@ -53,7 +53,7 @@ public class Pagamento {
 	 * @throws Exception
 	 */
 	public static boolean removePagamento(int id) throws Exception {
-		return dao.Pagamento.remove(id);
+		return dao.Pagamento.removePagamento(id);
 	}
 	
 	/**
@@ -65,7 +65,7 @@ public class Pagamento {
 	 * @throws Exception
 	 */
 	public static float getAllValor(int id, Timestamp time, boolean desconto) throws Exception {
-		ResultSet result = dao.Pagamento.getAllDesconto(id, time, desconto);
+		ResultSet result = dao.Pagamento.getAllPagamentoDesconto(id, time, desconto);
 		float valor = 0;
 		while (result.next())
 			valor += result.getFloat("valor");
@@ -82,7 +82,7 @@ public class Pagamento {
 	 * @throws Exception
 	 */
 	public static ObservableList<TableViewPagamento> getAllPagamento(int id, Timestamp data) throws Exception {
-		ResultSet result = dao.Pagamento.getAll(id, data);
+		ResultSet result = dao.Pagamento.getAllPagamento(id, data);
 		ObservableList<TableViewPagamento> ol = FXCollections.observableArrayList();
 
 		while(result.next()) {

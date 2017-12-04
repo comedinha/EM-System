@@ -24,7 +24,7 @@ public class Funcionario {
 	 * @param garcom Se esse funcionario vai ser garçom ou não
 	 * @throws Exception
 	 */
-	public static void inserir(int funcao, String nome, String login, String password, boolean garcom) throws Exception {
+	public static void insereFuncionario(int funcao, String nome, String login, String password, boolean garcom) throws Exception {
 		Crypto cr = new Crypto();
 		String sql = "INSERT INTO funcionario (login, password, nome, funcaoid, garcom)"
 				+ " VALUES (?, ?, ?, ?, ?)";
@@ -69,7 +69,7 @@ public class Funcionario {
 	 * @return Retorna a pesquisa
 	 * @throws Exception
 	 */
-	public static ResultSet get(int id) throws Exception {
+	public static ResultSet getFuncionario(int id) throws Exception {
 		String sql = "SELECT * FROM funcionario WHERE funcionarioId = ?"; 
 
 		PreparedStatement statement = Valores.getConnection().prepareStatement(sql);
@@ -89,7 +89,7 @@ public class Funcionario {
 	 * @return Retorna se ocorreu o update corretamente
 	 * @throws Exception
 	 */
-	public static boolean update(int id, String nome, String login, String password, boolean garcom) throws Exception {
+	public static boolean updateFuncionario(int id, String nome, String login, String password, boolean garcom) throws Exception {
 		String sql = "UPDATE funcionario SET login = ?, nome = ?, garcom = ?";
 		if (!password.isEmpty())
 			sql += ", password = ? WHERE funcionarioId = ?";
@@ -117,7 +117,7 @@ public class Funcionario {
 	 * @return Retorna a pesquisa
 	 * @throws Exception
 	 */
-	public static ResultSet getAll() throws Exception {
+	public static ResultSet getAllFuncionarios() throws Exception {
 		String sql = "SELECT * FROM funcionario"; 
 
 		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
@@ -134,9 +134,12 @@ public class Funcionario {
 	 */
 	public ResultSet getGerente(int id) throws Exception {
 		String sql = "SELECT funcionarioId FROM funcionario WHERE funcionarioId != ?";
+		if (id == 0)
+			sql = "SELECT funcionarioId FROM funcionario";
 
 		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
-		ps.setInt(1, id);
+		if (id != 0)
+			ps.setInt(1, id);
 
 		ResultSet result = ps.executeQuery();
 		return result;
@@ -148,7 +151,7 @@ public class Funcionario {
 	 * @return Retorna True caso tenha ocorrido tudo  bem
 	 * @throws Exception
 	 */
-	public boolean delete(int id) throws Exception {
+	public boolean deleteFuncionario(int id) throws Exception {
 		String sql = "DELETE FROM funcionario WHERE funcionarioId = ?";
 		
 		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);

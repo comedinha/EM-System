@@ -188,7 +188,7 @@ public class Comanda {
 	 * @return Retorna true caso de certo o update, e flase caso contrario 
 	 * @throws Exception
 	 */
-	public static boolean update(int id, Timestamp data, String mesa, int funcionario, boolean pago) throws Exception {
+	public static boolean updateComanda(int id, Timestamp data, String mesa, int funcionario, boolean pago) throws Exception {
 		String sql = "UPDATE comanda SET mesa = ?, funcionarioId = ?, pago = ? WHERE comandaId = ? AND data = ?";
 		
 		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);

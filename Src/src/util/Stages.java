@@ -65,6 +65,11 @@ public class Stages {
 		return alert;
 	}
 
+	/**
+	 * Cria as mensagens de alerta
+	 * @param erro
+	 * @return
+	 */
 	public static Alert novoAviso(String erro) {
 		Alert alert = new Alert(AlertType.WARNING, erro);
 		alert.setTitle("Caixa de avisos!");

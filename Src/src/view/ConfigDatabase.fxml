@@ -22,19 +22,19 @@
       <VBox alignment="CENTER_LEFT" prefHeight="243.0" prefWidth="227.0" BorderPane.alignment="CENTER">
          <children>
             <Label text="Type:" />
-            <ComboBox fx:id="txf_sqltype" prefWidth="150.0" />
+            <ComboBox fx:id="txf_sqlType" prefWidth="150.0" />
             <Label text="Host:" />
-            <TextField fx:id="txf_sqlhost" />
+            <TextField fx:id="txf_sqlHost" />
             <Label text="Port:" />
-            <TextField fx:id="txf_sqlport" />
+            <TextField fx:id="txf_sqlPort" />
             <Label text="User:" />
-            <TextField fx:id="txf_sqlusr" />
+            <TextField fx:id="txf_sqlUsr" />
             <Label text="Pass:" />
-            <PasswordField fx:id="txf_sqlpass" />
+            <PasswordField fx:id="txf_sqlPass" />
             <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="127.0" spacing="5.0">
                <children>
-                  <Button fx:id="act_confirma" mnemonicParsing="false" onAction="#btn_csqlok" text="OK" />
-                  <Button fx:id="act_cancela" mnemonicParsing="false" onAction="#btn_csqlquit" text="Sair" />
+                  <Button mnemonicParsing="false" onAction="#act_confirma" text="OK" />
+                  <Button mnemonicParsing="false" onAction="#act_cancela" text="Sair" />
                </children>
                <VBox.margin>
                   <Insets top="10.0" />

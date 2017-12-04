@@ -31,7 +31,7 @@ public class ConectaBanco {
 			throw new Exception("Nenhum funcionário existente.");
 		Valores.setBanco(con);
 	}
-	
+
 	/**
 	 * Desconecta a aplicação do banco de dados
 	 * @throws SQLException

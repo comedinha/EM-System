@@ -17,7 +17,7 @@ public class ProdutoController {
 	private int mode = 0;
 
 	@FXML
-    private CheckBox chb_enableid;
+    private CheckBox chb_enableId;
 
     @FXML
     private TextField txf_nome;
@@ -41,6 +41,8 @@ public class ProdutoController {
 
 		    	String nome = txf_nome.getText();
 		    	float valor = Float.parseFloat(txf_valor.getText().replace(',', '.'));
+		    	if (valor < 0)
+		    		throw new Exception("O valor não pode ser menor que 0!");
 
 		    	if((!txf_id.isDisable() && !txf_id.getText().isEmpty()) && Produto.verificaExistenciaProduto(id))
 		    		Produto.delete(id);
@@ -83,7 +85,7 @@ public class ProdutoController {
     		Platform.exit();
 
     	txf_id.setDisable(true);
-    	chb_enableid.selectedProperty().addListener((ChangeListener<? super Boolean>) new ChangeListener<Boolean>() {
+    	chb_enableId.selectedProperty().addListener((ChangeListener<? super Boolean>) new ChangeListener<Boolean>() {
     		public void changed(ObservableValue<? extends Boolean> ov,
                 Boolean old_val, Boolean new_val) {
             	txf_id.setDisable(!new_val);
@@ -99,7 +101,7 @@ public class ProdutoController {
      */
     void editaProduto(int id, String nome, float valor) {
     	mode = 1;
-    	chb_enableid.setDisable(true);
+    	chb_enableId.setDisable(true);
     	txf_id.setText(Integer.toString(id));
     	txf_nome.setText(nome);
     	txf_valor.setText(Float.toString(valor));

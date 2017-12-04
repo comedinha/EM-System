@@ -37,7 +37,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <CheckBox fx:id="chb_enableid" mnemonicParsing="false" text="ID:" />
+            <CheckBox fx:id="chb_enableId" mnemonicParsing="false" text="ID:" />
             <Label text="Nome:" GridPane.rowIndex="1" />
             <TextField fx:id="txf_nome" maxHeight="-Infinity" maxWidth="-Infinity" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label prefWidth="46.0" text="Valor:" GridPane.rowIndex="2" />

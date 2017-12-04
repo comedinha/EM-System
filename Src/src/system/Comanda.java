@@ -161,7 +161,7 @@ public class Comanda {
 	 * @throws Exception
 	 */
 	public static boolean updateComanda(int id, Timestamp data, String mesa, int funcionario, boolean pago) throws Exception {
-		return dao.Comanda.update(id, data, mesa, funcionario, pago);
+		return dao.Comanda.updateComanda(id, data, mesa, funcionario, pago);
 	}
 	
 	/**

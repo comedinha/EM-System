@@ -21,7 +21,7 @@ public class Produto {
 	 * @return Retorna se ocorreu tudo bem
 	 * @throws Exception
 	 */
-	public static boolean inserir(int id, String nome, float valor) throws Exception {
+	public static boolean insereProduto(int id, String nome, float valor) throws Exception {
 		String sql = "INSERT INTO produto (nome, valor, produtoid) VALUES (?, ?, ?)";
 		if (id == 0)
 			sql = "INSERT INTO produto (nome, valor) VALUES (?, ?)";
@@ -46,7 +46,7 @@ public class Produto {
 	 * @return Retorna se ocorreu tudo bem
 	 * @throws Exception
 	 */
-	public static boolean atualizar(int id, String nome, float valor) throws Exception {
+	public static boolean updateProduto(int id, String nome, float valor) throws Exception {
 		String sql = "UPDATE produto SET nome = ?, valor = ? WHERE produtoid = ?";
 
 		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
@@ -57,7 +57,7 @@ public class Produto {
 		return true;
 	}
 	
-	public static ResultSet getAll() throws Exception {
+	public static ResultSet getAllProduto() throws Exception {
 		String sql = "SELECT * FROM produto WHERE status = 1"; 
 
 		PreparedStatement statement = Valores.getConnection().prepareStatement(sql);
@@ -71,7 +71,7 @@ public class Produto {
 	 * @return Retorna a pesquisa
 	 * @throws Exception
 	 */
-	public static ResultSet get(int id) throws Exception {
+	public static ResultSet getProduto(int id) throws Exception {
 		String sql = "SELECT * FROM produto WHERE produtoid = ?"; 
 
 		PreparedStatement statement = Valores.getConnection().prepareStatement(sql);
@@ -100,7 +100,7 @@ public class Produto {
 	 * @return
 	 * @throws Exception
 	 */
-	public static boolean delete(int id) throws Exception {
+	public static boolean deleteProduto(int id) throws Exception {
 		String sql = "UPDATE produto SET status = 0 WHERE produtoid = ?";
 		
 		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);

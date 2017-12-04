@@ -25,13 +25,13 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MenuController">
    <center>
-      <TabPane prefHeight="520.0" prefWidth="450.0" stylesheets="@../css/Menu.css" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+      <TabPane prefHeight="520.0" prefWidth="450.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
           <Tab text="Inicio">
           <content>
           	<VBox prefHeight="472.0" prefWidth="452.0">
                      <children>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" styleClass="image-hbox">
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                            <children>
                               <ImageView fitHeight="80.0" fitWidth="282.0">
                                  <image>
@@ -42,13 +42,13 @@
                         </HBox>
                         <VBox prefHeight="394.0" prefWidth="450.0">
                            <children>
-                              <TextArea fx:id="ta_txtinicio" editable="false" prefHeight="149.0" prefWidth="430.0" text="Olá %s!&#10;&#10;Bem vindo ao EMSystem, você tem o cargo de %s.&#10;&#10;Lugares onde você tem acesso: %s&#10;&#10;Para ter uma melhor experiência você também pode fazer algumas configurações de sua preferência." wrapText="true">
+                              <TextArea fx:id="ta_inicio" editable="false" prefHeight="149.0" prefWidth="430.0" text="Olá %s!&#10;&#10;Bem vindo ao EMSystem, você tem o cargo de %s.&#10;&#10;Lugares onde você tem acesso: %s&#10;&#10;Para ter uma melhor experiência você também pode fazer algumas configurações de sua preferência." wrapText="true">
                                  <VBox.margin>
                                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                  </VBox.margin>
                               </TextArea>
                               <Separator prefWidth="200.0" />
-                              <WizardPane fx:id="wp_tip1" prefHeight="224.0" prefWidth="450.0" viewOrder="1.0">
+                              <WizardPane prefHeight="224.0" prefWidth="450.0" viewOrder="1.0">
                                  <padding>
                                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                  </padding>
@@ -103,8 +103,8 @@
                                  <children>
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="De:" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ate:" GridPane.rowIndex="1" />
-                                    <DatePicker fx:id="dt_finbuscade" promptText="00/00/0000" GridPane.columnIndex="1" />
-                                    <DatePicker fx:id="dt_finbuscaate" promptText="00/00/0000" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <DatePicker fx:id="dt_finBuscaDe" promptText="00/00/0000" GridPane.columnIndex="1" />
+                                    <DatePicker fx:id="dt_finBuscaAte" promptText="00/00/0000" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                  </children>
                               </GridPane>
                               <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#act_BuscaFinanceiro" text="Buscar" />
@@ -112,13 +112,13 @@
                         </VBox>
                         <SplitPane dividerPositions="0.7296747967479674" orientation="VERTICAL" prefHeight="491.0" prefWidth="289.0">
                            <items>
-                              <TableView fx:id="tableFinanc" prefHeight="200.0" prefWidth="200.0">
+                              <TableView fx:id="tv_financ" prefHeight="200.0" prefWidth="200.0">
                                 <columns>
-                                  <TableColumn fx:id="tb_financid" prefWidth="22.0" text="ID" />
-                                    <TableColumn fx:id="tb_financfunc" prefWidth="75.0" text="Garçom" />
-                                  <TableColumn fx:id="tb_financdata" minWidth="0.0" prefWidth="49.0" text="Data" />
-                                    <TableColumn fx:id="tb_financperm" prefWidth="79.0" text="Permanência" />
-                                    <TableColumn fx:id="tb_financvlr" prefWidth="83.0" text="Valor" />
+                                  <TableColumn fx:id="tc_financId" prefWidth="22.0" text="ID" />
+                                    <TableColumn fx:id="tc_financFunc" prefWidth="75.0" text="Garçom" />
+                                  <TableColumn fx:id="tc_financData" minWidth="0.0" prefWidth="49.0" text="Data" />
+                                    <TableColumn fx:id="tc_financPerm" prefWidth="79.0" text="Permanência" />
+                                    <TableColumn fx:id="tc_financVlr" prefWidth="83.0" text="Valor" />
                                 </columns>
                               </TableView>
                               <TextArea editable="false" prefHeight="125.0" prefWidth="308.0" />
@@ -143,13 +143,13 @@
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </padding>
                         </VBox>
-                        <TableView fx:id="tableComand" prefHeight="200.0" prefWidth="200.0">
+                        <TableView fx:id="tv_comand" prefHeight="200.0" prefWidth="200.0">
                           <columns>
-                            <TableColumn fx:id="tb_comandId" prefWidth="39.0" text="ID" />
-                              <TableColumn fx:id="tb_comandFunc" prefWidth="76.0" text="Garçom" />
-                              <TableColumn fx:id="tb_comandMesa" prefWidth="61.0" text="Mesa" />
-                              <TableColumn fx:id="tb_comandData" prefWidth="94.0" text="Data" />
-                            <TableColumn fx:id="tb_comandVlr" prefWidth="71.0" text="Valor" />
+                            <TableColumn fx:id="tc_comandId" prefWidth="39.0" text="ID" />
+                              <TableColumn fx:id="tc_comandFunc" prefWidth="76.0" text="Garçom" />
+                              <TableColumn fx:id="tc_comandMesa" prefWidth="61.0" text="Mesa" />
+                              <TableColumn fx:id="tc_comandData" prefWidth="94.0" text="Data" />
+                            <TableColumn fx:id="tc_comandVlr" prefWidth="71.0" text="Valor" />
                           </columns>
                         </TableView>
                      </items>
@@ -165,17 +165,17 @@
                               <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn_addProd" text="Adicionar" />
                               <Separator prefWidth="200.0" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Busca" textAlignment="CENTER" wrappingWidth="82.41015625" />
-                              <TextField fx:id="txf_prodbusca" />
+                              <TextField fx:id="txf_prodBusca" />
                            </children>
                            <padding>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </padding>
                         </VBox>
-                        <TableView fx:id="tableProd" prefHeight="200.0" prefWidth="200.0">
+                        <TableView fx:id="tv_prod" prefHeight="200.0" prefWidth="200.0">
                           <columns>
-                            <TableColumn fx:id="tb_prodid" prefWidth="75.0" text="ID" />
-                            <TableColumn fx:id="tb_prodnome" prefWidth="177.0" text="Nome" />
-                              <TableColumn fx:id="tb_prodvlr" minWidth="2.0" prefWidth="89.0" text="Valor" />
+                            <TableColumn fx:id="tc_prodId" prefWidth="75.0" text="ID" />
+                            <TableColumn fx:id="tc_prodNome" prefWidth="177.0" text="Nome" />
+                              <TableColumn fx:id="tc_prodVlr" minWidth="2.0" prefWidth="89.0" text="Valor" />
                           </columns>
                         </TableView>
                      </items>
@@ -191,19 +191,19 @@
                               <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn_addFunc" text="Adicionar" />
                               <Separator prefWidth="200.0" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Busca" textAlignment="CENTER" wrappingWidth="82.41015625" />
-                              <TextField fx:id="txf_funcbusca" />
+                              <TextField fx:id="txf_funcBusca" />
                            </children>
                            <padding>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </padding>
                         </VBox>
-                        <TableView fx:id="tableFunc" prefHeight="200.0" prefWidth="200.0">
+                        <TableView fx:id="tv_func" prefHeight="200.0" prefWidth="200.0">
                           <columns>
-                            <TableColumn fx:id="tb_funcid" prefWidth="27.0" text="ID" />
-                            <TableColumn fx:id="tb_funcnome" prefWidth="103.0" text="Nome" />
-                              <TableColumn fx:id="tb_funclogin" prefWidth="84.0" text="Login" />
-                              <TableColumn fx:id="tb_funccargo" prefWidth="71.0" text="Cargo" />
-                              <TableColumn fx:id="tb_funcgarcom" prefWidth="56.0" text="Garçom" />
+                            <TableColumn fx:id="tc_funcId" prefWidth="27.0" text="ID" />
+                            <TableColumn fx:id="tc_funcNome" prefWidth="103.0" text="Nome" />
+                              <TableColumn fx:id="tc_funcLogin" prefWidth="84.0" text="Login" />
+                              <TableColumn fx:id="tc_funcCargo" prefWidth="71.0" text="Cargo" />
+                              <TableColumn fx:id="tc_funcGarcom" prefWidth="56.0" text="Garçom" />
                           </columns>
                         </TableView>
                      </items>
@@ -238,7 +238,7 @@
       </TabPane>
    </center>
    <bottom>
-      <HBox alignment="TOP_RIGHT" prefHeight="30.0" prefWidth="450.0" styleClass="background-general" stylesheets="@../css/Menu.css" BorderPane.alignment="CENTER">
+      <HBox alignment="TOP_RIGHT" prefHeight="30.0" prefWidth="450.0" BorderPane.alignment="CENTER">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Versão: 1.0" textAlignment="CENTER" wrappingWidth="57.556640625">
                <HBox.margin>

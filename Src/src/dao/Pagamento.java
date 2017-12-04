@@ -90,7 +90,7 @@ public class Pagamento {
 	 * @return Retorna se ocorreu tudo bem
 	 * @throws Exception
 	 */
-	public static boolean remove(int id) throws Exception {
+	public static boolean removePagamento(int id) throws Exception {
 		String sql = "DELETE FROM pagamento WHERE pagamentoId = ?";
 		
 		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
@@ -108,7 +108,7 @@ public class Pagamento {
 	 * @return Retorna a pesquisa
 	 * @throws Exception
 	 */
-	public static ResultSet getAllDesconto(int id, Timestamp time, boolean desconto) throws Exception {
+	public static ResultSet getAllPagamentoDesconto(int id, Timestamp time, boolean desconto) throws Exception {
 		String sql = "SELECT p.pagamentoId, p.valor, p.data, p.funcionarioId, p.formaPagamento, CASE WHEN pc.desconto THEN 'Desconto' ELSE 'Pagamento' END AS tipo FROM pagamento p JOIN pagamentoComanda pc ON p.pagamentoId = pc.pagamentoId WHERE p.comandaId = ? AND p.comandaData = ? AND pc.desconto = ?"
 				+ " UNION SELECT p.pagamentoId, p.valor, p.data, p.funcionarioId, p.formaPagamento, pd.nome AS tipo FROM pagamento p JOIN pagamentoProduto pp ON p.pagamentoId = pp.pagamentoId JOIN produto pd ON pp.produtoId = pd.produtoId WHERE p.comandaId = ? AND p.comandaData = ?";
 		if (desconto)
@@ -136,7 +136,7 @@ public class Pagamento {
 	 * @return Retorna a pesquisa
 	 * @throws Exception
 	 */
-	public static ResultSet getAll(int id, Timestamp time) throws Exception {
+	public static ResultSet getAllPagamento(int id, Timestamp time) throws Exception {
 		String sql = "SELECT p.pagamentoId, p.valor, p.data, p.funcionarioId, p.formaPagamento, CASE WHEN pc.desconto THEN 'Desconto' ELSE 'Pagamento' END AS tipo FROM pagamento p JOIN pagamentoComanda pc ON p.pagamentoId = pc.pagamentoId WHERE p.comandaId = ? AND p.comandaData = ?"
 				+ " UNION SELECT p.pagamentoId, p.valor, p.data, p.funcionarioId, p.formaPagamento, pd.nome AS tipo FROM pagamento p JOIN pagamentoProduto pp ON p.pagamentoId = pp.pagamentoId JOIN produto pd ON pp.produtoId = pd.produtoId WHERE p.comandaId = ? AND p.comandaData = ?";
 

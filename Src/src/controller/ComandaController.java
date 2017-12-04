@@ -2,6 +2,8 @@ package controller;
 
 import java.sql.ResultSet;
 import java.sql.Timestamp;
+import java.util.Optional;
+
 import org.controlsfx.control.textfield.TextFields;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
@@ -12,7 +14,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ContextMenu;
@@ -22,6 +26,7 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.cell.PropertyValueFactory;
 import system.Comanda;
 import system.Comanda.TableViewComandaProduto;
@@ -194,13 +199,39 @@ public class ComandaController {
 			
 			int idProduto = Integer.parseInt(txf_produto.getText().substring(0, txf_produto.getText().indexOf(' ')));
 			if(!Comanda.existeNaComanda(Integer.valueOf(txf_comid.getText()), comandaData, idProduto)) {
+				if (Integer.parseInt(txf_qtde.getText()) < 0)
+					throw new Exception("O valor não pode ser menor que 0!");
 				Comanda.addProduto(Integer.valueOf(txf_comid.getText()), comandaData, idProduto, Integer.parseInt(txf_qtde.getText()));
 				txf_produto.clear();
 				txf_qtde.setText("1");
 				refresh();
 			} else {
 				int qtde = Comanda.getQtdePrdoutoComanda(Integer.valueOf(txf_comid.getText()), comandaData, idProduto);
-				Comanda.updateQtde(Integer.valueOf(txf_comid.getText()), comandaData, idProduto, qtde + Integer.parseInt(txf_qtde.getText()));
+				if ((qtde + Integer.parseInt(txf_qtde.getText())) > 0)
+					if (Integer.parseInt(txf_qtde.getText()) > 0)
+						Comanda.updateQtde(Integer.valueOf(txf_comid.getText()), comandaData, idProduto, qtde + Integer.parseInt(txf_qtde.getText()));
+					else {
+						Alert alert = Stages.novoAviso("Você deseja remover o produto?");
+						ButtonType buttonConfirm = new ButtonType("Continuar", ButtonData.OK_DONE);
+						ButtonType buttonCancel = new ButtonType("Cancelar", ButtonData.CANCEL_CLOSE);
+						alert.getButtonTypes().setAll(buttonConfirm, buttonCancel);
+
+						Optional<ButtonType> result = alert.showAndWait();
+						if (result.get() == buttonConfirm) {
+							Comanda.updateQtde(Integer.valueOf(txf_comid.getText()), comandaData, idProduto, qtde + Integer.parseInt(txf_qtde.getText()));
+						}
+					}
+				else {
+					Alert alert = Stages.novoAviso("Você deseja remover o produto?");
+					ButtonType buttonConfirm = new ButtonType("Continuar", ButtonData.OK_DONE);
+					ButtonType buttonCancel = new ButtonType("Cancelar", ButtonData.CANCEL_CLOSE);
+					alert.getButtonTypes().setAll(buttonConfirm, buttonCancel);
+
+					Optional<ButtonType> result = alert.showAndWait();
+					if (result.get() == buttonConfirm) {
+						Comanda.removeProdutoComanda(Integer.valueOf(txf_comid.getText()), comandaData, idProduto);
+					}
+				}
 				refresh();
 			}
 			Valores.getController().refresh(3);
@@ -255,11 +286,7 @@ public class ComandaController {
 			Stages.novoAlerta(e.getMessage(), "", true);
 		}
 	}
-	
-	/**
-	 * Inicia a tableView da inerface
-	 * @throws Exception
-	 */
+
     @FXML
     private void initialize() {
 		try {
@@ -289,6 +316,10 @@ public class ComandaController {
     	}
 	}
 
+	/**
+	 * Inicia a tableView da inerface
+	 * @throws Exception
+	 */
 	private void iniciaTableProdutos() throws Exception {
 		tc_id.setCellValueFactory(new PropertyValueFactory<>("id"));
 		tc_nome.setCellValueFactory(new PropertyValueFactory<>("nome"));
@@ -309,6 +340,7 @@ public class ComandaController {
 			MenuItem pagarProduto = new MenuItem("Pagar produto");
 			MenuItem removerUm = new MenuItem("Remover um");
 			MenuItem removerTudo = new MenuItem("Remover tudo");
+
 			//Atualizar Produtos
 			pagarProduto.setOnAction((ActionEvent event) -> {
 				try {
@@ -339,11 +371,19 @@ public class ComandaController {
 			removerUm.setOnAction((ActionEvent event) -> {
 				try {
 					if (!txf_produto.isDisable()) {
-						int qtde = Comanda.getQtdePrdoutoComanda(Integer.valueOf(txf_comid.getText()), comandaData, row.getItem().getId());
-						if (qtde - 1 > 0)
-							Comanda.updateQtde(Integer.valueOf(txf_comid.getText()), comandaData, row.getItem().getId(), qtde - 1);
-						else
-							Comanda.removeProdutoComanda(Integer.valueOf(txf_comid.getText()), comandaData, row.getItem().getId());
+						Alert alert = Stages.novoAviso("Você deseja remover o produto?");
+    					ButtonType buttonConfirm = new ButtonType("Continuar", ButtonData.OK_DONE);
+    					ButtonType buttonCancel = new ButtonType("Cancelar", ButtonData.CANCEL_CLOSE);
+    					alert.getButtonTypes().setAll(buttonConfirm, buttonCancel);
+
+    					Optional<ButtonType> result = alert.showAndWait();
+    					if (result.get() == buttonConfirm) {
+    						int qtde = Comanda.getQtdePrdoutoComanda(Integer.valueOf(txf_comid.getText()), comandaData, row.getItem().getId());
+    						if (qtde - 1 > 0)
+    							Comanda.updateQtde(Integer.valueOf(txf_comid.getText()), comandaData, row.getItem().getId(), qtde - 1);
+    						else
+    							Comanda.removeProdutoComanda(Integer.valueOf(txf_comid.getText()), comandaData, row.getItem().getId());
+    					}
 						refresh();
 					} else
 						throw new Exception("Essa comanda está finalizada, não é possível fazer esta ação.");
@@ -356,7 +396,15 @@ public class ComandaController {
 			removerTudo.setOnAction((ActionEvent event) -> {
 				try {
 					if (!txf_produto.isDisable()) {
-						Comanda.removeProdutoComanda(Integer.valueOf(txf_comid.getText()), comandaData, row.getItem().getId());
+						Alert alert = Stages.novoAviso("Você deseja remover o produto?");
+    					ButtonType buttonConfirm = new ButtonType("Continuar", ButtonData.OK_DONE);
+    					ButtonType buttonCancel = new ButtonType("Cancelar", ButtonData.CANCEL_CLOSE);
+    					alert.getButtonTypes().setAll(buttonConfirm, buttonCancel);
+
+    					Optional<ButtonType> result = alert.showAndWait();
+    					if (result.get() == buttonConfirm) {
+    						Comanda.removeProdutoComanda(Integer.valueOf(txf_comid.getText()), comandaData, row.getItem().getId());
+    					}
 						refresh();
 					} else
 						throw new Exception("Essa comanda está finalizada, não é possível fazer esta ação.");
@@ -438,7 +486,13 @@ public class ComandaController {
 			Stages.novoAlerta(e.getMessage(), "", true);
 		}
 	}
-	
+
+	/**
+	 * Metodo chamado quando se entra na interface no modo visualização
+	 * @param id
+	 * @param data
+	 * @param loader
+	 */
 	public void visualizaComanda(int id, Timestamp data, FXMLLoader loader) {
 		try {
 			this.loader = loader;

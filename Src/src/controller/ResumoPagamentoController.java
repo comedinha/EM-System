@@ -53,10 +53,15 @@ public class ResumoPagamentoController {
 
     @FXML
     private void act_Fechar(ActionEvent event) {
-    	controller.refresh();
-    	root.setDisable(false);
-
-    	((Node) event.getSource()).getScene().getWindow().hide();
+    	try {
+	    	Valores.getController().refresh(3);
+	    	controller.refresh();
+	    	root.setDisable(false);
+	
+	    	((Node) event.getSource()).getScene().getWindow().hide();
+    	} catch (Exception e) {
+    		Stages.novoAlerta(e.getMessage(), "", true);
+    	}
     }
 
     @FXML
@@ -92,6 +97,8 @@ public class ResumoPagamentoController {
 		    						if (!Pagamento.removePagamento(row.getItem().getId())) {
 		            					throw new Exception("Erro ao remover pagamento");
 		            				}
+		    						Valores.getController().refresh(3);
+		    						controller.refresh();
 		    						reload();
 		    					}
 		        			} else
@@ -112,6 +119,9 @@ public class ResumoPagamentoController {
     	}
 	}
 
+    /**
+	 * Metodo que inicializa a visualização dos pagamentos
+	 */
 	public void vizualizaPagamento(int id, Timestamp data, boolean enable, Parent root, ComandaController comandaController) {
 		try {
 			this.root = root;

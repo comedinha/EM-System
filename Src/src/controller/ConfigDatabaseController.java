@@ -16,48 +16,41 @@ import javafx.scene.control.Alert.AlertType;
 import util.Crypto;
 import util.Stages;
 import util.Valores;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 public class ConfigDatabaseController {
-	ObservableList<String> cb_sqltypeList = FXCollections
+	ObservableList<String> cb_sqlTypeList = FXCollections
 			.observableArrayList("postgresql");
 
 	@FXML
-    private ComboBox<String> txf_sqltype;
+    private ComboBox<String> txf_sqlType;
 
     @FXML
-    private TextField txf_sqlhost;
+    private TextField txf_sqlHost;
 
     @FXML
-    private TextField txf_sqlport;
+    private TextField txf_sqlPort;
 
     @FXML
-    private TextField txf_sqlusr;
+    private TextField txf_sqlUsr;
 
     @FXML
-    private PasswordField txf_sqlpass;
-
-    @FXML
-    private Button btn_sqlok;
-
-    @FXML
-    private Button btn_sqlquit;
+    private PasswordField txf_sqlPass;
 
     @FXML
     private void act_confirma(ActionEvent event) throws SQLException {
 		try {
 			Crypto cr = new Crypto();
-			String encryptPass = cr.encrypt(txf_sqlpass.getText());
-			ConectaBanco.conectaBanco(txf_sqltype.getValue(), txf_sqlhost.getText(), txf_sqlport.getText(), txf_sqlusr.getText(), encryptPass, false);
+			String encryptPass = cr.encrypt(txf_sqlPass.getText());
+			ConectaBanco.conectaBanco(txf_sqlType.getValue(), txf_sqlHost.getText(), txf_sqlPort.getText(), txf_sqlUsr.getText(), encryptPass, false);
 
 			FileWriter file = new FileWriter("database.ini");
-			file.append("DBtype=" + txf_sqltype.getValue() + "\n");
-			file.append("DBaddr=" + txf_sqlhost.getText() + "\n");
-			file.append("DBport=" + txf_sqlport.getText() + "\n");
-			file.append("DBuser=" + txf_sqlusr.getText() + "\n");
+			file.append("DBtype=" + txf_sqlType.getValue() + "\n");
+			file.append("DBaddr=" + txf_sqlHost.getText() + "\n");
+			file.append("DBport=" + txf_sqlPort.getText() + "\n");
+			file.append("DBuser=" + txf_sqlUsr.getText() + "\n");
 			file.append("DBpassword=" + encryptPass + "\n");
 			file.close();
 
@@ -85,12 +78,12 @@ public class ConfigDatabaseController {
 
     @FXML
     private void initialize() {
-    	txf_sqltype.setItems(cb_sqltypeList);
-    	txf_sqltype.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+    	txf_sqlType.setItems(cb_sqlTypeList);
+    	txf_sqlType.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
     		if (newValue.toString() == "postgresql") {
-    			txf_sqlhost.setText("localhost");
-    			txf_sqlport.setText("5432");
-    			txf_sqlusr.setText("postgres");
+    			txf_sqlHost.setText("localhost");
+    			txf_sqlPort.setText("5432");
+    			txf_sqlUsr.setText("postgres");
     		}
     	});
     }

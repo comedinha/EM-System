@@ -64,6 +64,8 @@ public class PagamentoController {
     	    	txf_troco.setText("0");
 
     		float valorPagar = Float.valueOf(txf_caixa.getText());
+    		if (valorPagar < 0)
+    			throw new Exception("O valor não pode ser menor que 0!");
 
     		if (Float.valueOf(txf_troco.getText()) > 0)
     			valorPagar -= Float.valueOf(txf_troco.getText());

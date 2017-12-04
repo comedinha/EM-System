@@ -23,7 +23,7 @@ public class Produto {
 	 * @throws Exception
 	 */
 	public static boolean adicionaProduto(int id, String nome, float valor) throws Exception {		
-		return dao.Produto.inserir(id, nome, valor);
+		return dao.Produto.insereProduto(id, nome, valor);
 	}
 	
 	/**
@@ -33,7 +33,7 @@ public class Produto {
 	 * @throws Exception
 	 */
 	public static ResultSet getProduto(int id) throws Exception {		
-		return dao.Produto.get(id);
+		return dao.Produto.getProduto(id);
 	}
 	
 	/**
@@ -42,7 +42,7 @@ public class Produto {
 	 * @throws Exception
 	 */
 	public static ObservableList<String> getProdutoNome() throws Exception {
-		ResultSet result = dao.Produto.getAll();
+		ResultSet result = dao.Produto.getAllProduto();
 		ObservableList<String> ol = FXCollections.observableArrayList();
 
 		while (result.next()) {
@@ -68,7 +68,7 @@ public class Produto {
 	 * @throws Exception
 	 */
 	public static ObservableList<TableViewProduto> getAllProduto() throws Exception {
-		ResultSet result = dao.Produto.getAll();
+		ResultSet result = dao.Produto.getAllProduto();
 		ObservableList<TableViewProduto> ol = FXCollections.observableArrayList();
 		
 		while (result.next()) {
@@ -87,7 +87,7 @@ public class Produto {
 	 * @throws Exception
 	 */
 	public static boolean editaProduto(int id, String nome, float valor) throws Exception {
-		return dao.Produto.atualizar(id, nome, valor);
+		return dao.Produto.updateProduto(id, nome, valor);
 	}
 	
 	/**
@@ -97,7 +97,7 @@ public class Produto {
 	 * @throws Exception
 	 */
 	public static boolean delete(int id) throws Exception {
-		return dao.Produto.delete(id);
+		return dao.Produto.deleteProduto(id);
 	}
 	
 	/**

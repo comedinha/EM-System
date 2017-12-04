@@ -38,7 +38,7 @@ public class ReadConfig {
 
 			Optional<ButtonType> result = alert.showAndWait();
 			if (result.get() == buttonConfirm) {
-				ConfigDatabase(stage);
+				configDatabase(stage);
 			} else if (result.get() == buttonCancel) {
 				Platform.exit();
 			}
@@ -51,7 +51,7 @@ public class ReadConfig {
 	 * @param stage
 	 * @throws Exception
 	 */
-	public void ConfigDatabase(Stage stage) throws Exception {
+	public void configDatabase(Stage stage) throws Exception {
 		Stages st = new Stages();
     	st.novoStage("EMSystem SQLConfig", "ConfigDatabase");
 	}
