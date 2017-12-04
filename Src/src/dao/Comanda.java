@@ -3,7 +3,6 @@ package dao;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.Calendar;
@@ -30,40 +29,44 @@ public class Comanda {
 		return getId;
 	}
 	
-	public static boolean existeNaComanda(int idProduto, int idComanda) throws Exception {
-		String sql = "SELECT * FROM produtoComanda WHERE produtoId = ? AND comandaId = ?";
+	public static boolean existeNaComanda(int idComanda, Timestamp data, int idProduto) throws Exception {
+		String sql = "SELECT * FROM produtoComanda WHERE produtoId = ? AND comandaId = ? AND dataComanda = ?";
 		
 		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
 		ps.setInt(1, idProduto);
 		ps.setInt(2, idComanda);
+		ps.setTimestamp(3, data);
 		return ps.executeQuery().next();
 	}
 	
-	public static void updateQtde(int idProduto, int idComanda, int qtde) throws Exception {		
-		String sql = "UPDATE produtoComanda SET quantidade = ? WHERE produtoId = ? AND comandaId = ?";
+	public static void updateQtde(int idComanda, Timestamp data, int idProduto, int qtde) throws Exception {		
+		String sql = "UPDATE produtoComanda SET quantidade = ? WHERE produtoId = ? AND comandaId = ? AND dataComanda = ?";
 		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
 		ps.setInt(1, qtde);
 		ps.setInt(2, idProduto);
 		ps.setInt(3, idComanda);
+		ps.setTimestamp(4, data);
 		ps.executeUpdate();
 	}
-	
-	public static ResultSet getQtdeProdutoComanda(int idProduto, int idComanda) throws Exception {
-		String sql = "SELECT quantidade FROM produtoComanda WHERE produtoId = ? AND comandaId = ?";
+
+	public static ResultSet getQtdeProdutoComanda(int idComanda, Timestamp data, int idProduto) throws Exception {
+		String sql = "SELECT quantidade FROM produtoComanda WHERE produtoId = ? AND comandaId = ? AND dataComanda = ?";
 		
 		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
 		ps.setInt(1, idProduto);
 		ps.setInt(2, idComanda);
+		ps.setTimestamp(3, data);
 		return ps.executeQuery();
 	}
 	
-	public static void removeProdutoComanda(int idProduto, int idComanda) throws Exception {
-		String sql = "DELETE FROM produtoComanda WHERE produtoId = ? AND comandaId = ?";
+	public static void removeProdutoComanda(int idComanda, Timestamp data, int idProduto) throws Exception {
+		String sql = "DELETE FROM produtoComanda WHERE produtoId = ? AND comandaId = ? AND dataComanda = ?";
 		
 		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
 		ps.setInt(1, idProduto);
 		ps.setInt(2, idComanda);
-		ps.executeUpdate();		
+		ps.setTimestamp(3, data);
+		ps.executeUpdate();
 	}
 	
 	public static void addProduto(int comandaId, Timestamp data, int produtoId, int qtde) throws Exception {
@@ -95,9 +98,9 @@ public class Comanda {
 		
 		return ps.executeQuery();
 	}
-	
+
 	public static ResultSet getAllProduto(int id, Timestamp data) throws Exception {		
-		String sql = "SELECT pc.produtoId, p.nome, pc.quantidade, p.valor, pg.valor FROM produtoComanda pc LEFT JOIN pagamentoProduto pp ON pp.produtoId = pc.produtoId LEFT JOIN pagamento pg ON pg.pagamentoId = pp.pagamentoId AND pc.comandaId = pg.comandaId AND pc.dataComanda = pg.dataComanda JOIN produto p ON p.produtoId = pc.produtoId WHERE pc.comandaId = ? AND pc.dataComanda = ?";
+		String sql = "SELECT pc.produtoId, p.nome, pc.quantidade, p.valor, SUM(pg.valor) FROM produtoComanda pc LEFT JOIN pagamentoProduto pp ON pp.produtoId = pc.produtoId LEFT JOIN pagamento pg ON pg.pagamentoId = pp.pagamentoId AND pc.comandaId = pg.comandaId AND pc.dataComanda = pg.dataComanda JOIN produto p ON p.produtoId = pc.produtoId WHERE pc.comandaId = ? AND pc.dataComanda = ? GROUP BY 1, 2, 3, 4";
 
 		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
 		ps.setInt(1, id);
@@ -117,18 +120,8 @@ public class Comanda {
 		return true;
 	}
 
-	public static Timestamp getDataProduto(int id) throws SQLException {
-		String sql = "SELECT data FROM produtoAlterado WHERE id = ?";
-		
-		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
-		ps.setInt(1, id);
-		ResultSet result = ps.executeQuery();
-		result.next();
-		return result.getTimestamp(1);
-	}
-
 	public static float getPrecoComanda(int comandaId, Timestamp date) throws Exception {
-		String sql = "SELECT cp.data, cp.quantidade, p.valor, pa.data, pa.valor FROM comanda c JOIN produtoComanda cp ON c.comandaId = cp.comandaId JOIN produto p ON p.produtoId = cp.produtoId LEFT JOIN produtoAlterado pa ON p.produtoId = pa.produtoId WHERE c.data = ? AND c.comandaId = ?";
+		String sql = "SELECT cp.data, cp.quantidade, p.valor, pa.data, pa.valor FROM comanda c JOIN produtoComanda cp ON c.comandaId = cp.comandaId AND c.data = cp.dataComanda JOIN produto p ON p.produtoId = cp.produtoId LEFT JOIN produtoAlterado pa ON p.produtoId = pa.produtoId WHERE c.data = ? AND c.comandaId = ?";
 
 		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
 		ps.setTimestamp(1, date);

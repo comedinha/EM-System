@@ -60,20 +60,20 @@ public class Comanda {
 		return ol;
 	}
 
-	public static boolean existeNaComanda(int idProduto, int idComanda) throws Exception {
-		return dao.Comanda.existeNaComanda(idProduto, idComanda);
+	public static boolean existeNaComanda(int idComanda, Timestamp data, int idProduto) throws Exception {
+		return dao.Comanda.existeNaComanda(idComanda, data, idProduto);
 	}
 
-	public static void updateQtde(int idProduto, int idComanda, int qtde) throws Exception {
-		dao.Comanda.updateQtde(idProduto, idComanda, qtde);
+	public static void updateQtde(int idComanda, Timestamp data, int idProduto, int qtde) throws Exception {
+		dao.Comanda.updateQtde(idComanda, data, idProduto, qtde);
 	}
 
-	public static void removeProdutoComanda(int idProduto, int idComanda) throws Exception {
-		dao.Comanda.removeProdutoComanda(idProduto, idComanda);
+	public static void removeProdutoComanda(int idComanda, Timestamp data, int idProduto) throws Exception {
+		dao.Comanda.removeProdutoComanda(idComanda, data, idProduto);
 	}
 
-	public static int getQtdePrdoutoComanda(int idProduto, int idComanda) throws Exception {
-		ResultSet result = dao.Comanda.getQtdeProdutoComanda(idProduto, idComanda);
+	public static int getQtdePrdoutoComanda(int idComanda, Timestamp data, int idProduto) throws Exception {
+		ResultSet result = dao.Comanda.getQtdeProdutoComanda(idComanda, data, idProduto);
 		result.next();
 		return result.getInt(1);
 	}

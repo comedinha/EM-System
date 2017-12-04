@@ -4,13 +4,10 @@ import java.sql.Timestamp;
 
 import system.Pagamento;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
@@ -29,12 +26,6 @@ public class PagamentoController {
     private TextField tf_valorpagar;
 
     @FXML
-    private CheckBox chb_valorsec;
-
-    @FXML
-    private TextField tf_valorsec;
-
-    @FXML
     private ChoiceBox<MeioPagamentoEnum> cb_meioPagamento;
 
     @FXML
@@ -48,12 +39,7 @@ public class PagamentoController {
 
     @FXML
     void act_alteravalor(ActionEvent event) {
-    	float troco = 0;
-    	if (!tf_valorsec.isDisable() && chb_valorsec.isSelected()) {
-    		troco = Float.valueOf(tf_valorsec.getText()) - Float.valueOf(tf_caixa.getText());
-    	} else
-    		troco = Float.valueOf(tf_caixa.getText()) - Float.valueOf(tf_valorpagar.getText());
-
+    	float troco = Float.valueOf(tf_caixa.getText()) - Float.valueOf(tf_valorpagar.getText());
 	    if (troco > 0)
 	    	tf_troco.setText(Float.toString(troco));
 	    else
@@ -69,12 +55,23 @@ public class PagamentoController {
     @FXML
     void btn_salvar(ActionEvent event) {
     	try {
+    		float troco = Float.valueOf(tf_caixa.getText()) - Float.valueOf(tf_valorpagar.getText());
+    	    if (troco > 0)
+    	    	tf_troco.setText(Float.toString(troco));
+    	    else
+    	    	tf_troco.setText("0");
+
+    		float valorPagar = Float.valueOf(tf_caixa.getText());
+
+    		if (Float.valueOf(tf_troco.getText()) > 0)
+    			valorPagar -= Float.valueOf(tf_troco.getText());
+
 	    	if (mode == 0) {
-	    		Pagamento.pagamentoComanda(id, time, Float.valueOf(tf_caixa.getText()), Valores.getUsuario().getId(), false);
+	    		Pagamento.pagamentoComanda(id, time, valorPagar, Valores.getUsuario().getId(), false);
 	    	} else if (mode == 1) {
 	    		Pagamento.pagamentoComanda(id, time, Float.valueOf(tf_caixa.getText()), Valores.getUsuario().getId(), true);
 	    	} else if (mode == 2) {
-	    		Pagamento.pagamentoProduto(idproduto, id, time, Float.valueOf(tf_caixa.getText()), Valores.getUsuario().getId());
+	    		Pagamento.pagamentoProduto(idproduto, id, time, valorPagar, Valores.getUsuario().getId());
 	    	} else {
 	    		throw new Exception("Erro ao salvar produto!");
 	    	}
@@ -90,13 +87,6 @@ public class PagamentoController {
     	if (Valores.getConnection() == null || Valores.getUsuario() == null || Valores.getController() == null)
     		Platform.exit();
 
-    	chb_valorsec.selectedProperty().addListener((ChangeListener<? super Boolean>) new ChangeListener<Boolean>() {
-    		public void changed(ObservableValue<? extends Boolean> ov,
-                Boolean old_val, Boolean new_val) {
-    			tf_valorsec.setDisable(!new_val);
-            }
-        });
-
     	cb_meioPagamento.getItems().addAll(MeioPagamentoEnum.values());
 	}
 
@@ -106,8 +96,6 @@ public class PagamentoController {
     	this.time = time;
     	this.parent = root;
     	tf_valorpagar.setText(Float.toString(valor));
-    	chb_valorsec.setDisable(true);
-    	tf_valorsec.setDisable(true);
     	txt_caixa.setText(String.format(txt_caixa.getText(), "Desconto"));
     }
 

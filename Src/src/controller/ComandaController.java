@@ -189,13 +189,14 @@ public class ComandaController {
 			}
 			
 			int idProduto = Integer.parseInt(txf_produto.getText().substring(0, txf_produto.getText().indexOf(' ')));
-			if(!Comanda.existeNaComanda(idProduto, Integer.valueOf(txf_comid.getText()))) {
+			if(!Comanda.existeNaComanda(Integer.valueOf(txf_comid.getText()), comandaTime, idProduto)) {
 				Comanda.addProduto(Integer.valueOf(txf_comid.getText()), comandaTime, idProduto, Integer.parseInt(txf_qtde.getText()));
 				txf_produto.clear();
 				txf_qtde.setText("1");
 				refresh();
 			} else {
-				Comanda.updateQtde(idProduto, Integer.valueOf(txf_comid.getText()), Integer.parseInt(txf_qtde.getText()));
+				int qtde = Comanda.getQtdePrdoutoComanda(Integer.valueOf(txf_comid.getText()), comandaTime, idProduto);
+				Comanda.updateQtde(Integer.valueOf(txf_comid.getText()), comandaTime, idProduto, qtde + Integer.parseInt(txf_qtde.getText()));
 				refresh();
 			}
 			Valores.getController().refresh(3);
@@ -293,8 +294,11 @@ public class ComandaController {
 			removerUm.setOnAction((ActionEvent event) -> {
 				try {
 					if (!txf_produto.isDisable()) {
-						int qtde = Comanda.getQtdePrdoutoComanda(row.getItem().getId(), Integer.valueOf(txf_comid.getText()));
-						Comanda.updateQtde(row.getItem().getId(), Integer.valueOf(txf_comid.getText()), qtde-1);
+						int qtde = Comanda.getQtdePrdoutoComanda(Integer.valueOf(txf_comid.getText()), comandaTime, row.getItem().getId());
+						if (qtde - 1 > 0)
+							Comanda.updateQtde(Integer.valueOf(txf_comid.getText()), comandaTime, row.getItem().getId(), qtde - 1);
+						else
+							Comanda.removeProdutoComanda(Integer.valueOf(txf_comid.getText()), comandaTime, row.getItem().getId());
 						refresh();
 					} else
 						throw new Exception("Essa comanda está finalizada, não é possível fazer esta ação.");
@@ -307,7 +311,7 @@ public class ComandaController {
 			removerTudo.setOnAction((ActionEvent event) -> {
 				try {
 					if (!txf_produto.isDisable()) {
-						Comanda.removeProdutoComanda(row.getItem().getId(), Integer.valueOf(txf_comid.getText()));
+						Comanda.removeProdutoComanda(Integer.valueOf(txf_comid.getText()), comandaTime, row.getItem().getId());
 						refresh();
 					} else
 						throw new Exception("Essa comanda está finalizada, não é possível fazer esta ação.");
