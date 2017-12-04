@@ -226,7 +226,7 @@ public class Comanda {
 	
 	/**
 	 * Classe interna, que é utilizada como referencia para a TableView que lista todas as 
-	 * comandas.
+	 * comandas, ainda não pagas.
 	 * @author Bruno Carvalho, Luiz Eduardo, Mateus Machado
 	 * @version 1.0
 	 */
@@ -272,7 +272,13 @@ public class Comanda {
 			return Timestamp.valueOf(timestamp.get());
 		}
 	}
-
+	
+	/**
+	 * Classe interna, que é utilizada como referencia para a TableView que lista todas as 
+	 * comandas já pagas.
+	 * @author Bruno Carvalho, Luiz Eduardo, Mateus Machado
+	 * @version 1.0
+	 */
 	public static class TableViewComandaPaga {
 		private final SimpleIntegerProperty id;
 		private final SimpleStringProperty data;

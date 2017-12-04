@@ -18,19 +18,52 @@ import util.MeioPagamentoEnum;
  * @version 1.0
  */
 public class Pagamento {
-	
+	/**
+	 * Adiciona pagamento a uma comanda
+	 * @param id ID da comanda
+	 * @param time Data do pagamento
+	 * @param valor Valor do pagamento
+	 * @param funcionarioId ID do funcionario
+	 * @param formaPagamento Forma do pagamento
+	 * @param desconto Valor do desconto
+	 * @throws Exception
+	 */
 	public static void pagamentoComanda(int id, Timestamp time, Float valor, int funcionarioId, int formaPagamento, boolean desconto) throws Exception {
 		dao.Pagamento.pagamentoComanda(id, time, valor, funcionarioId, formaPagamento, desconto);
 	}
 	
+	/**
+	 * Adiciona um pagamento a um produto
+	 * @param id ID do produto
+	 * @param comandaId ID da comanda
+	 * @param comandaTime Data da comanda
+	 * @param valor Valor a ser pago
+	 * @param formaPagamento Forma de pagamento
+	 * @param funcionarioId ID do funcionario
+	 * @throws Exception
+	 */
 	public static void pagamentoProduto(int id, int comandaId, Timestamp comandaTime, Float valor, int formaPagamento, int funcionarioId) throws Exception {		
 		dao.Pagamento.pagamentoProduto(id, comandaId, comandaTime, valor, funcionarioId, formaPagamento);
 	}
-
+	
+	/**
+	 * Remove um pagamento do BD
+	 * @param id ID do Pagamento
+	 * @return Retorna se ocorreu tudo bem
+	 * @throws Exception
+	 */
 	public static boolean removePagamento(int id) throws Exception {
 		return dao.Pagamento.remove(id);
 	}
-
+	
+	/**
+	 * Calcula o valor total do pagamento
+	 * @param id ID do pagamento
+	 * @param time Data da comanda
+	 * @param desconto Valor do desconto
+	 * @return Retorna a pesquisa
+	 * @throws Exception
+	 */
 	public static float getAllValor(int id, Timestamp time, boolean desconto) throws Exception {
 		ResultSet result = dao.Pagamento.getAll(id, time, desconto);
 		float valor = 0;
@@ -39,7 +72,15 @@ public class Pagamento {
 
 		return valor;
 	}
-
+	
+	/**
+	 * Pesquisa todos os pagamentos do sistema
+	 * @param id ID do pagamento
+	 * @param time Data da comanda
+	 * @param desconto Valor do desconto
+	 * @return Retorna a pesquisa
+	 * @throws Exception
+	 */
 	public static ObservableList<TableViewPagamento> getAllPagamento(int id, Timestamp data) throws Exception {
 		ResultSet result = dao.Pagamento.getAll(id, data, false);
 		ObservableList<TableViewPagamento> ol = FXCollections.observableArrayList();
@@ -50,7 +91,13 @@ public class Pagamento {
 
 		return ol;
 	}
-
+	
+	/**
+	 * Classe interna, que é utilizada como referencia para a TableView que lista os pagamentos 
+	 * efetuados.
+	 * @author Bruno Carvalho, Luiz Eduardo, Mateus Machado
+	 * @version 1.0
+	 */
 	public static class TableViewPagamento {
     	private final SimpleIntegerProperty id;
     	private final SimpleStringProperty descricao;

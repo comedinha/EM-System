@@ -10,11 +10,6 @@ import java.util.Set;
 import org.controlsfx.control.PropertySheet;
 import org.controlsfx.property.editor.PropertyEditor;
 
-/**
- * Possui toda parte lógica referente a Comanda
- * @author Bruno Carvalho, Luiz Eduardo, Mateus Machado
- * @version 1.0
- */
 public class Configuracao implements PropertySheet.Item {
     private static Map<String, Object> configDataMap = new LinkedHashMap<>();
 

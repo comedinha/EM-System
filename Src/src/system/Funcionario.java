@@ -21,7 +21,7 @@ public class Funcionario {
 	public Funcionario(int id) {
 		this.id = id;
 	}
-
+	
 	public String getNome() throws Exception {
 		ResultSet result = dao.Funcionario.get(id);
 		if (result.next())
@@ -61,15 +61,36 @@ public class Funcionario {
 
 		throw new Exception("Funcionário não encontrado");
 	}
-
+	
+	/**
+	 * Adiciona um novo funcionario ao sistema
+	 * @param funcao Função do funcionario
+	 * @param nome Nome do funcionario
+	 * @param login Nome de usuario do funcionario
+	 * @param password Senha
+	 * @param garcom Se esse funcionario vai ser garçom ou não
+	 * @throws Exception
+	 */
 	public static void criaUsuario(int func, String nome, String usr, String pass, boolean garcom) throws Exception {
 		dao.Funcionario.inserir(func, nome, usr, pass, garcom);
 	}
-
+	
+	/**
+	 * Verifica se o nome de usuario existe no sistema, e se a senha está correta
+	 * @param username Nome usuario
+	 * @param password Senha
+	 * @return Retorna True caso esteja tudo certo, e False caso contrario
+	 * @throws Exception
+	 */
 	public static boolean login(String usr, String pass) throws Exception {
 		return dao.Funcionario.login(usr, pass);
 	}
-
+	
+	/**
+	 * Pesquisa todos os funcionarios dos sistema
+	 * @return Retorna a pesquisa
+	 * @throws Exception
+	 */
 	public static ObservableList<TableViewFuncionario> getAllFuncionario() throws Exception {
 		ResultSet result = dao.Funcionario.getAll();
 		ObservableList<TableViewFuncionario> ol = FXCollections.observableArrayList();
@@ -81,10 +102,28 @@ public class Funcionario {
 		return ol;
 	}
 	
+	/**
+	 * Faz atualizações das informações do funcionario
+	 * @param id ID do funcionario
+	 * @param nome Nome do funcionario
+	 * @param login Nome de usuario
+	 * @param password Senha
+	 * @param garcom Se é garçom
+	 * @return Retorna se ocorreu o update corretamente
+	 * @throws Exception
+	 */
 	public static boolean editaFuncionario(int id, String nome, String login, String password, boolean garcom) throws Exception {
 		return dao.Funcionario.update(id, nome, login, password, garcom);
 	}
 	
+	/**
+	 * Remove um funcionario. Caso seja um gerente tentando remover ele mesmo, ele verifica se há
+	 * outro gerente cadastrado no sistema
+	 * @param id ID do funcioanrio
+	 * @param cargo Cargo do funcionario
+	 * @return True ou false caso de certo ou errado
+	 * @throws Exception
+	 */
 	public static boolean removeFuncionario(int id, String cargo) throws Exception {
 		dao.Funcionario funcionario = new dao.Funcionario();
 		
@@ -99,7 +138,13 @@ public class Funcionario {
 			}
 		}
 	}
-
+	
+	/**
+	 * Pesquisa o nome de um funcionario apartir de seu ID
+	 * @param id ID do funcionario
+	 * @return Retorna o nome do funcionario
+	 * @throws Exception
+	 */
 	public static String getNomebyId(int id) {
 		String nome = "";
 		try {
@@ -111,7 +156,12 @@ public class Funcionario {
 		}
 		return nome;
 	}
-
+	
+	/**
+	 * Pesquisa todos os garçons cadastrados no sistema
+	 * @return
+	 * @throws Exception
+	 */
 	public static ObservableList<String> getFuncionariosNome() throws Exception {
 		ResultSet result = dao.Funcionario.getAllGarcom();
 		ObservableList<String> ol = FXCollections.observableArrayList();
@@ -122,7 +172,13 @@ public class Funcionario {
 	
 		return ol;
 	}
-
+	
+	/**
+	 * Classe interna, que é utilizada como referencia para a TableView que lista todos os 
+	 * funcionarios.
+	 * @author Bruno Carvalho, Luiz Eduardo, Mateus Machado
+	 * @version 1.0
+	 */
 	public static class TableViewFuncionario {
     	private final SimpleIntegerProperty id;
     	private final SimpleStringProperty nome;
