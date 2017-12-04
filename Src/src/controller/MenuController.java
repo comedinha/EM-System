@@ -14,7 +14,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -161,19 +160,20 @@ public class MenuController {
     @FXML
     void btn_addComanda(ActionEvent event) throws SQLException {
     	Stages st = new Stages();
-    	st.novoStage("Adicionar Comanda", "Comanda", null);
+    	st.novoStage("Adicionar Comanda", "Comanda");
+    	st.getLoader().<ComandaController>getController().iniciaComanda(st.getLoader());
     }
 
     @FXML
     void btn_addFunc(ActionEvent event) {
     	Stages st = new Stages();
-    	st.novoStage("Adicionar Funcionário", "Funcionario", null);
+    	st.novoStage("Adicionar Funcionário", "Funcionario");
     }
 
     @FXML
     void btn_addProd(ActionEvent event) {
     	Stages st = new Stages();
-    	st.novoStage("Adicionar Produto", "Produto", null);
+    	st.novoStage("Adicionar Produto", "Produto");
     }
 
     @FXML
@@ -183,7 +183,7 @@ public class MenuController {
 	    Valores.setFuncionario(null);
 	    Configuracao.configDataClean();
 	    Stages st = new Stages();
-	    st.novoStage("EMSystem Login", "Login", null);
+	    st.novoStage("EMSystem Login", "Login");
     }
 
     @FXML
@@ -247,8 +247,8 @@ public class MenuController {
     			verComanda.setOnAction((ActionEvent event) -> {
     				try {
     					Stages st = new Stages();
-        		    	FXMLLoader comandaLoader = st.novoStage("Visualizar Comanda", "Comanda", null);
-        		    	comandaLoader.<ComandaController>getController().visualizaComanda(row.getItem().getId(), row.getItem().getTimeStamp());
+        		    	st.novoStage("Visualizar Comanda", "Comanda");
+        		    	st.getLoader().<ComandaController>getController().visualizaComanda(row.getItem().getId(), row.getItem().getTimeStamp(), st.getLoader());
     				} catch (Exception e) {
     					Stages.novoAlerta(e.getMessage(), "", true);
     				}
@@ -281,8 +281,8 @@ public class MenuController {
     			editItem.setOnAction((ActionEvent event) -> {
     				try {
     					Stages st = new Stages();
-        		    	FXMLLoader comandaLoader = st.novoStage("Editar Comanda", "Comanda", null);
-        		    	comandaLoader.<ComandaController>getController().editaComanda(row.getItem().getId(), row.getItem().getTimeStamp());
+        		    	st.novoStage("Editar Comanda", "Comanda");
+        		    	st.getLoader().<ComandaController>getController().editaComanda(row.getItem().getId(), row.getItem().getTimeStamp(), st.getLoader());
     				} catch (Exception e) {
     					Stages.novoAlerta(e.getMessage(), "", true);
     				}
@@ -345,8 +345,8 @@ public class MenuController {
     			editItem.setOnAction((ActionEvent event) -> {
     				try {
     					Stages st = new Stages();
-        		    	FXMLLoader produtoLoader = st.novoStage("Edita Produto", "Produto", null);
-        		    	produtoLoader.<ProdutoController>getController().editaProduto(row.getItem().getId(), row.getItem().getNome(), row.getItem().getValor());
+        		    	st.novoStage("Edita Produto", "Produto");
+        		    	st.getLoader().<ProdutoController>getController().editaProduto(row.getItem().getId(), row.getItem().getNome(), row.getItem().getValor());
     				} catch (Exception e) {
     					Stages.novoAlerta(e.getMessage(), "", true);
     				}
@@ -431,8 +431,8 @@ public class MenuController {
         		editFuncionario.setOnAction((ActionEvent event) -> {
         			try {
         				Stages st = new Stages();
-        		    	FXMLLoader menuLoader = st.novoStage("Edita Funcionário", "Funcionario", null);
-        				menuLoader.<FuncionarioController>getController().editaFuncionario(row.getItem().getId(), row.getItem().getNome(), row.getItem().getLogin(), row.getItem().getCargo(), row.getItem().getGarcom());
+        		    	st.novoStage("Edita Funcionário", "Funcionario");
+        		    	st.getLoader().<FuncionarioController>getController().editaFuncionario(row.getItem().getId(), row.getItem().getNome(), row.getItem().getLogin(), row.getItem().getCargo(), row.getItem().getGarcom());
         			} catch (Exception e) {
         				Stages.novoAlerta(e.getMessage(), "", true);
         			}

@@ -34,6 +34,7 @@ import util.Valores;
 
 public class ComandaController {
 	private Timestamp comandaTime;
+	private FXMLLoader loader;
 
     @FXML
     private TableView<TableViewComandaProduto> tv_produtos;
@@ -110,7 +111,10 @@ public class ComandaController {
 	        });
 			chb_comid.setSelected(false);
 			txf_comid.setDisable(true);
+			if (!Valores.getUsuario().getGarcom())
+				cb_garcom.getItems().add(Valores.getUsuario().getId() + " - " + Valores.getUsuario().getNome());
 			cb_garcom.getItems().addAll(Funcionario.getFuncionariosNome());
+			cb_garcom.setValue(Valores.getUsuario().getId() + " - " + Valores.getUsuario().getNome());
 			txf_mesa.setText("-");
 			
     		TextFields.bindAutoCompletion(txf_produto, Produto.getProdutoNome());
@@ -138,8 +142,12 @@ public class ComandaController {
 	    	Parent root = ((Node) event.getSource()).getScene().getRoot();
 	    	root.setDisable(true);
 	    	Stages st = new Stages();
-	    	FXMLLoader pagamentoLoader = st.novoStage("Atribuir Desconto", "Pagamento", root);
-	    	pagamentoLoader.<PagamentoController>getController().adicionaDesconto(Integer.valueOf(txf_comid.getText()), comandaTime, valorPagar, root);
+	    	st.novoStage("Atribuir Desconto", "Pagamento");
+	    	st.getStage().setOnCloseRequest(e -> {
+	    		root.setDisable(false);
+	    		refresh();
+			});
+	    	st.getLoader().<PagamentoController>getController().adicionaDesconto(Integer.valueOf(txf_comid.getText()), comandaTime, valorPagar, root, loader.<ComandaController>getController());
     	} catch (Exception e) {
     		Stages.novoAlerta(e.getMessage(), "", true);
     	}
@@ -162,8 +170,12 @@ public class ComandaController {
 	    	Parent root = ((Node) event.getSource()).getScene().getRoot();
 	    	root.setDisable(true);
 	    	Stages st = new Stages();
-	    	FXMLLoader pagamentoLoader = st.novoStage("Atribuir Pagamento", "Pagamento", root);
-	    	pagamentoLoader.<PagamentoController>getController().adicionaPagamento(Integer.valueOf(txf_comid.getText()), comandaTime, valorPagar, root);
+	    	st.novoStage("Atribuir Pagamento", "Pagamento");
+	    	st.getStage().setOnCloseRequest(e -> {
+				root.setDisable(false);
+				refresh();
+			});
+	    	st.getLoader().<PagamentoController>getController().adicionaPagamento(Integer.valueOf(txf_comid.getText()), comandaTime, valorPagar, root, loader.<ComandaController>getController());
     	} catch (Exception e) {
     		Stages.novoAlerta(e.getMessage(), "", true);
     	}
@@ -180,8 +192,12 @@ public class ComandaController {
 	    	Parent root = ((Node) event.getSource()).getScene().getRoot();
 	    	root.setDisable(true);
 	    	Stages st = new Stages();
-	    	FXMLLoader resumoLoader = st.novoStage("Visualizar Pagamento", "ResumoPagamento", root);
-	    	resumoLoader.<ResumoPagamentoController>getController().vizualizaPagamento(Integer.valueOf(txf_comid.getText()), comandaTime, btn_pagamento.isDisable(), root);
+	    	st.novoStage("Visualizar Pagamento", "ResumoPagamento");
+	    	st.getStage().setOnCloseRequest(e -> {
+				root.setDisable(false);
+				refresh();
+			});
+	    	st.getLoader().<ResumoPagamentoController>getController().vizualizaPagamento(Integer.valueOf(txf_comid.getText()), comandaTime, btn_pagamento.isDisable(), root, loader.<ComandaController>getController());
     	} catch (Exception e) {
     		Stages.novoAlerta(e.getMessage(), "", true);
     	}
@@ -299,8 +315,12 @@ public class ComandaController {
 						Parent root = row.getTableView().getScene().getRoot();
 				    	root.setDisable(true);
 				    	Stages st = new Stages();
-				    	FXMLLoader pagamentoLoader = st.novoStage("Atribuir Pagamento", "Pagamento", root);
-				    	pagamentoLoader.<PagamentoController>getController().adicionaProdutoPagamento(row.getItem().getId(), Integer.parseInt(txf_comid.getText()), comandaTime, valorPagar, root);
+				    	st.novoStage("Atribuir Pagamento", "Pagamento");
+				    	st.getStage().setOnCloseRequest(e -> {
+							root.setDisable(false);
+							refresh();
+						});
+				    	st.getLoader().<PagamentoController>getController().adicionaProdutoPagamento(row.getItem().getId(), Integer.parseInt(txf_comid.getText()), comandaTime, valorPagar, root, loader.<ComandaController>getController());
 					} else
 						throw new Exception("Essa comanda está finalizada, não é possível fazer esta ação.");
 				} catch (Exception e) {
@@ -361,14 +381,23 @@ public class ComandaController {
 		ta_valorPago.setText(Float.toString(somaValor));
 	}
 
-	private void refresh() throws Exception {
-		tv_produtos.setItems(Comanda.getAllProduto(Integer.valueOf(txf_comid.getText()), comandaTime));
-		valorTotal();
-		valorPago();
+	public void refresh() {
+		try {
+			tv_produtos.setItems(Comanda.getAllProduto(Integer.valueOf(txf_comid.getText()), comandaTime));
+			valorTotal();
+			valorPago();
+		} catch (Exception e) {
+			Stages.novoAlerta(e.getMessage(), "", true);
+		}
 	}
 
-	public void editaComanda(int id, Timestamp data) {
+	public void iniciaComanda(FXMLLoader loader) {
+		this.loader = loader;
+	}
+
+	public void editaComanda(int id, Timestamp data, FXMLLoader loader) {
 		try {
+			this.loader = loader;
 			this.comandaTime = data;
 			ResultSet result = Comanda.getComanda(id, data);
 			if (result.next()) {
@@ -386,8 +415,9 @@ public class ComandaController {
 		}
 	}
 
-	public void visualizaComanda(int id, Timestamp data) {
+	public void visualizaComanda(int id, Timestamp data, FXMLLoader loader) {
 		try {
+			this.loader = loader;
 			this.comandaTime = data;
 			ResultSet result = Comanda.getComanda(id, data);
 			if (result.next()) {
