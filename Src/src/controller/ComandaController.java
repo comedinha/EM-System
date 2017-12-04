@@ -134,7 +134,9 @@ public class ComandaController {
     			throw new Exception("A comanda deve ter ao menos um produto.");
 
     		float valorTotal = Float.valueOf(ta_valorTotal.getText());
-	    	if (valorTotal <= 0)
+    		float valorPago = Float.valueOf(ta_valorPago.getText());
+    		float valorPagar = valorTotal - valorPago;
+	    	if (valorPagar <= 0)
 	    		throw new Exception("Produto pago.");
 
 	    	Parent root = ((Node) event.getSource()).getScene().getRoot();
@@ -145,7 +147,7 @@ public class ComandaController {
 	    		root.setDisable(false);
 	    		refresh();
 			});
-	    	st.getLoader().<PagamentoController>getController().adicionaDesconto(Integer.valueOf(txf_comid.getText()), comandaTime, valorTotal, root, loader.<ComandaController>getController());
+	    	st.getLoader().<PagamentoController>getController().adicionaDesconto(Integer.valueOf(txf_comid.getText()), comandaTime, valorPagar, root, loader.<ComandaController>getController());
     	} catch (Exception e) {
     		Stages.novoAlerta(e.getMessage(), "", true);
     	}
@@ -160,7 +162,9 @@ public class ComandaController {
     			throw new Exception("A comanda deve ter ao menos um produto.");
 
     		float valorTotal = Float.valueOf(ta_valorTotal.getText());
-	    	if (valorTotal <= 0)
+    		float valorPago = Float.valueOf(ta_valorPago.getText());
+    		float valorPagar = valorTotal - valorPago;
+	    	if (valorPagar <= 0)
 	    		throw new Exception("Produto pago.");
 
 	    	Parent root = ((Node) event.getSource()).getScene().getRoot();
@@ -171,7 +175,7 @@ public class ComandaController {
 				root.setDisable(false);
 				refresh();
 			});
-	    	st.getLoader().<PagamentoController>getController().adicionaPagamento(Integer.valueOf(txf_comid.getText()), comandaTime, valorTotal, root, loader.<ComandaController>getController());
+	    	st.getLoader().<PagamentoController>getController().adicionaPagamento(Integer.valueOf(txf_comid.getText()), comandaTime, valorPagar, root, loader.<ComandaController>getController());
     	} catch (Exception e) {
     		Stages.novoAlerta(e.getMessage(), "", true);
     	}
@@ -307,6 +311,8 @@ public class ComandaController {
 						float valorPagar = row.getItem().getValorTotal() - row.getItem().getValorPago();
 						if (valorPagar <= 0)
 							throw new Exception("O produto já está pago!");
+						if (valorPagar > (Float.valueOf(ta_valorTotal.getText()) - Float.valueOf(ta_valorPago.getText())))
+							throw new Exception("O valor necessário para pagamento é menor que o deste produto.");
 	
 						Parent root = row.getTableView().getScene().getRoot();
 				    	root.setDisable(true);
