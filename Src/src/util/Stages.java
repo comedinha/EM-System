@@ -41,4 +41,11 @@ public class Stages {
 
 		return alert;
 	}
+
+	public static Alert novoAviso(String erro) {
+		Alert alert = new Alert(AlertType.WARNING, erro);
+		alert.setTitle("Caixa de avisos!");
+		alert.setHeaderText("Precisamos da sua confirmação.\n");
+		return alert;
+	}
 }

@@ -34,10 +34,10 @@ public class ProdutoController {
 	    	if (type == 0) {
 		    	if (!txf_id.isDisable() && !txf_id.getText().isEmpty())
 		    		id = Integer.parseInt(txf_id.getText());
-		
+
 		    	String nome = txf_nome.getText();
-		    	float valor = Float.parseFloat(txf_valor.getText());
-		    	
+		    	float valor = Float.parseFloat(txf_valor.getText().replace(',', '.'));
+
 		    	if((!txf_id.isDisable() && !txf_id.getText().isEmpty()) && Produto.verificaExistenciaProduto(id))
 		    		Produto.delete(id);
 		    	else {	    	
@@ -58,6 +58,8 @@ public class ProdutoController {
 		    	}
 	    	}
 	    	Valores.getController().refresh(1);
+    	} catch (NumberFormatException e) {
+    		Stages.novoAlerta("Valor digitado inválido. Não utilize valores como '1.000,00'\n Utilize '1000,00'", "", true);
     	} catch (Exception e) {
     		Stages.novoAlerta(e.getMessage(), "", true);
     	}

@@ -16,6 +16,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.MenuItem;
@@ -25,6 +27,7 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.cell.PropertyValueFactory;
 import system.Produto;
 import system.Comanda.TableViewComandaLista;
@@ -39,6 +42,7 @@ import system.Funcionario.FuncionarioCargoEnum;
 import system.Funcionario.TableViewFuncionario;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 public class MenuController {
 	@FXML
@@ -351,9 +355,18 @@ public class MenuController {
     			//Remover Produtos
     			removeItem.setOnAction((ActionEvent event) -> {
     				try {
-	    				if (!Produto.delete(row.getItem().getId())) {
-	    					throw new Exception("Erro ao remover produto!");
-	    				}
+    					Alert alert = Stages.novoAviso("Você deseja remover o produto?");
+    					ButtonType buttonConfirm = new ButtonType("Continuar", ButtonData.OK_DONE);
+    					ButtonType buttonCancel = new ButtonType("Cancelar", ButtonData.CANCEL_CLOSE);
+    					alert.getButtonTypes().setAll(buttonConfirm, buttonCancel);
+
+    					Optional<ButtonType> result = alert.showAndWait();
+    					if (result.get() == buttonConfirm) {
+    						if (!Produto.delete(row.getItem().getId())) {
+    							refresh(1);
+    	    					throw new Exception("Erro ao remover produto!");
+    	    				}
+    					}
 	    				refresh(1);
     				} catch (Exception e) {
     					Stages.novoAlerta(e.getMessage(), "", true);
@@ -428,10 +441,18 @@ public class MenuController {
         		//Remover Funcionários
         		removeFuncionario.setOnAction((ActionEvent event) -> {
         			try {
-        				if (!Funcionario.removeFuncionario(row.getItem().getId(), row.getItem().getCargo())) {
-        					refresh(2);
-        					throw new Exception("Erro ao remover funcionário");
-        				}
+        				Alert alert = Stages.novoAviso("Você deseja remover o produto?");
+    					ButtonType buttonConfirm = new ButtonType("Continuar", ButtonData.OK_DONE);
+    					ButtonType buttonCancel = new ButtonType("Cancelar", ButtonData.CANCEL_CLOSE);
+    					alert.getButtonTypes().setAll(buttonConfirm, buttonCancel);
+
+    					Optional<ButtonType> result = alert.showAndWait();
+    					if (result.get() == buttonConfirm) {
+    						if (!Funcionario.removeFuncionario(row.getItem().getId(), row.getItem().getCargo())) {
+            					refresh(2);
+            					throw new Exception("Erro ao remover funcionário");
+            				}
+    					}
         				refresh(2);
         			} catch (Exception e) {
         				Stages.novoAlerta(e.getMessage(), "", true);
@@ -490,14 +511,19 @@ public class MenuController {
     void refresh(int type) throws Exception {
     	try {
 	    	if (type == 1) {
+	    		tableProd.getItems().clear();
 	    		tableProd.setItems(Produto.getAllProduto());
 	    		txf_prodbusca.setText(txf_prodbusca.getText());
 	    	} else if (type == 2) {
+	    		tableFunc.getItems().clear();
 	    		tableFunc.setItems(Funcionario.getAllFuncionario());
 	    		txf_funcbusca.setText(txf_funcbusca.getText());
 	    	} else if (type == 3) {
+	    		tableComand.getItems().clear();
 	    		tableComand.setItems(Comanda.getAllComanda());
 	    		txf_comandaBusca.setText(txf_comandaBusca.getText());
+	    		tableFinanc.getItems().clear();
+	    		tableFinanc.setItems(Comanda.getAllComandaPaga(Date.valueOf(dt_finbuscade.getValue()), Date.valueOf(dt_finbuscaate.getValue())));
 	    	}
     	} catch (Exception e) {
     		throw new Exception("Erro ao atualizar tabelas.");
