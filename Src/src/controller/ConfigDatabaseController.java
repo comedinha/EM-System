@@ -74,7 +74,11 @@ public class ConfigDatabaseController {
 			file.close();
 
 			((Node) event.getSource()).getScene().getWindow().hide();
+<<<<<<< HEAD
+			if (!dao.Funcionario.verificaGerente(Valores.getConnection())) {
+=======
 			if (!Funcionario.verificaGerente(Valores.getConnection())) {
+>>>>>>> c0fd24247f8f3e3a6e2443377a7533841a6e8fd9
 				Stages st = new Stages();
 		    	st.novoStage("Adicionar Gerente", "Funcionario");
 		    	st.getLoader().<FuncionarioController>getController().cadastroInicial();
