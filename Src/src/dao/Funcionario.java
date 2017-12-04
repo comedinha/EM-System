@@ -15,6 +15,15 @@ import util.Valores;
  * @version 1.0
  */
 public class Funcionario {
+	/**
+	 * Adiciona um novo funcionario ao sistema
+	 * @param funcao Função do funcionario
+	 * @param nome Nome do funcionario
+	 * @param login Nome de usuario do funcionario
+	 * @param password Senha
+	 * @param garcom Se esse funcionario vai ser garçom ou não
+	 * @throws Exception
+	 */
 	public static void inserir(int funcao, String nome, String login, String password, boolean garcom) throws Exception {
 		Crypto cr = new Crypto();
 		String sql = "INSERT INTO funcionario (login, password, nome, funcaoid, garcom)"
@@ -28,7 +37,14 @@ public class Funcionario {
 		ps.setBoolean(5, garcom);
 		ps.executeUpdate();
 	}
-
+	
+	/**
+	 * Verifica se o nome de usuario existe no sistema, e se a senha está correta
+	 * @param username Nome usuario
+	 * @param password Senha
+	 * @return Retorna True caso esteja tudo certo, e False caso contrario
+	 * @throws Exception
+	 */
 	public static boolean login(String username, String password) throws Exception {
 		Crypto cr = new Crypto();
 		String sql = "SELECT * FROM funcionario WHERE login = ? AND password = ?"; 
@@ -46,7 +62,13 @@ public class Funcionario {
 
 		return false;
 	}
-
+	
+	/**
+	 * Pesquisa um funcionario pelo seu ID
+	 * @param id ID do funcionario
+	 * @return Retorna a pesquisa
+	 * @throws Exception
+	 */
 	public static ResultSet get(int id) throws Exception {
 		String sql = "SELECT * FROM funcionario WHERE funcionarioId = ?"; 
 
@@ -56,7 +78,17 @@ public class Funcionario {
 		ResultSet result = statement.executeQuery();
 		return result;
 	}
-
+	
+	/**
+	 * Faz atualizações das informações do funcionario
+	 * @param id ID do funcionario
+	 * @param nome Nome do funcionario
+	 * @param login Nome de usuario
+	 * @param password Senha
+	 * @param garcom Se é garçom
+	 * @return Retorna se ocorreu o update corretamente
+	 * @throws Exception
+	 */
 	public static boolean update(int id, String nome, String login, String password, boolean garcom) throws Exception {
 		String sql = "UPDATE funcionario SET login = ?, nome = ?, garcom = ?";
 		if (!password.isEmpty())
@@ -79,7 +111,12 @@ public class Funcionario {
 		ps.executeUpdate();
 		return true;
 	}
-
+	
+	/**
+	 * Pesquisa todos os funcionarios dos sistema
+	 * @return Retorna a pesquisa
+	 * @throws Exception
+	 */
 	public static ResultSet getAll() throws Exception {
 		String sql = "SELECT * FROM funcionario"; 
 
@@ -89,6 +126,12 @@ public class Funcionario {
 		return result;
 	}
 	
+	/**
+	 * Verifica se existe algum Gerente, diferente do que já está logado no sistema
+	 * @param id Id do funcionario
+	 * @return Retorna a pesquisa
+	 * @throws Exception
+	 */
 	public ResultSet getGerente(int id) throws Exception {
 		String sql = "SELECT funcionarioId FROM funcionario WHERE funcionarioId != ?";
 
@@ -99,6 +142,12 @@ public class Funcionario {
 		return result;
 	}
 	
+	/**
+	 * Delete um funcinario do sistema
+	 * @param id ID do funcionario a ser deletado
+	 * @return Retorna True caso tenha ocorrido tudo  bem
+	 * @throws Exception
+	 */
 	public boolean delete(int id) throws Exception {
 		String sql = "DELETE FROM funcionario WHERE funcionarioId = ?";
 		
@@ -108,7 +157,13 @@ public class Funcionario {
 		ps.executeUpdate();	
 		return true;
 	}
-
+	
+	/**
+	 * Pesquisa o nome de um funcionario apartir de seu ID
+	 * @param id ID do funcionario
+	 * @return Retorna o nome do funcionario
+	 * @throws Exception
+	 */
 	public static String getNomebyId(int id) throws Exception {
 		String sql = "SELECT nome FROM funcionario WHERE funcionarioId = ?";
 
