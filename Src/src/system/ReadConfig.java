@@ -12,7 +12,18 @@ import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.stage.Stage;
 import util.Stages;
 
+/**
+ * Possui toda parte lógica referente a leitura das configurações do BD
+ * @author Bruno Carvalho, Luiz Eduardo, Mateus Machado
+ * @version 1.0
+ */
 public class ReadConfig {
+	/**
+	 * Verifica a existencia do arquivo, e faz e leitura, caso não exista ou contenha informações 
+	 * incorretadas, ele chama a função ConfigDatabase
+	 * @param stage
+	 * @throws Exception
+	 */
 	public ReadConfig(Stage stage) throws Exception {
 		try {
 			Properties p = new Properties();
@@ -34,7 +45,12 @@ public class ReadConfig {
 			return;
 		}
 	}
-
+	
+	/**
+	 * Abre a interface de configuração de BD 
+	 * @param stage
+	 * @throws Exception
+	 */
 	public void ConfigDatabase(Stage stage) throws Exception {
 		Stages st = new Stages();
     	st.novoStage("EMSystem SQLConfig", "ConfigDatabase");

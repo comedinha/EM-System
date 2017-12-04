@@ -190,7 +190,12 @@ public class Funcionario {
 
 		return rs.next();
 	}
-
+	
+	/**
+	 * Pesquisa todos os garçons cadastrados no sistema
+	 * @return
+	 * @throws Exception
+	 */
 	public static ResultSet getAllGarcom() throws Exception {
 		String sql = "SELECT * FROM funcionario WHERE garcom = true";
 

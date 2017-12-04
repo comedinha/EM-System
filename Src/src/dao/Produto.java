@@ -57,11 +57,6 @@ public class Produto {
 		return true;
 	}
 	
-	/**
-	 * Pega todos os produtos cadastrados no sistema, e que estão disponíveis 
-	 * @return Retorna o resultado da pesquisa
-	 * @throws Exception
-	 */
 	public static ResultSet getAll() throws Exception {
 		String sql = "SELECT * FROM produto WHERE status = 1"; 
 
