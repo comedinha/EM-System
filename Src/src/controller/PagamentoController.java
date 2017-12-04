@@ -94,7 +94,15 @@ public class PagamentoController {
     	cb_meioPagamento.getItems().addAll(MeioPagamentoEnum.values());
     	cb_meioPagamento.setValue(MeioPagamentoEnum.Dinheiro);
 	}
-
+    
+    /**
+     * Metodo chamado quando acessa-se a interface no modo edição
+     * @param id
+     * @param time
+     * @param valor
+     * @param root
+     * @param comandaController
+     */
     public void adicionaDesconto(int id, Timestamp time, float valor, Parent root, ComandaController comandaController) {
     	this.mode = 1;
     	this.id = id;
@@ -104,7 +112,15 @@ public class PagamentoController {
     	txf_valorPagar.setText(Float.toString(valor));
     	txt_caixa.setText(String.format(txt_caixa.getText(), "Desconto"));
     }
-
+    
+    /**
+     * Metodo chamado quando acessa-se a interface no modo adição de pagamento da comanda
+     * @param id
+     * @param time
+     * @param valor
+     * @param root
+     * @param comandaController
+     */
     public void adicionaPagamento(int id, Timestamp time, float valor, Parent root, ComandaController comandaController) {
     	this.id = id;
     	this.time = time;
@@ -113,7 +129,16 @@ public class PagamentoController {
     	txf_valorPagar.setText(Float.toString(valor));
     	txt_caixa.setText(String.format(txt_caixa.getText(), "Pagamento"));
     }
-
+    
+    /**
+     * Metodo chamado quando acessa-se a interface no modo adição de pagamento do produto
+     * @param id
+     * @param idComanda
+     * @param timeComanda
+     * @param valorPagar
+     * @param root
+     * @param comandaController
+     */
 	public void adicionaProdutoPagamento(int id, int idComanda, Timestamp timeComanda, float valorPagar, Parent root, ComandaController comandaController) {
 		this.mode = 2;
     	this.idproduto = id;

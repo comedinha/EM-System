@@ -90,7 +90,13 @@ public class ProdutoController {
             }
         });
     }
-
+    
+    /**
+     * Metodo chamado quando acessa-se a interface no modo edição
+     * @param id ID do produto a ser editado
+     * @param nome Nome do produto a ser editado
+     * @param valor Valor do produto a ser editado
+     */
     void editaProduto(int id, String nome, float valor) {
     	mode = 1;
     	chb_enableid.setDisable(true);
