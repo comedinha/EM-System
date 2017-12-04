@@ -5,6 +5,11 @@ import java.sql.Connection;
 import controller.MenuController;
 import system.Funcionario;
 
+/**
+ * Possui as variaveis globais necessarias para o sistema.
+ * @author Bruno Carvalho, Luiz Eduardo, Mateus Tabaldi
+ * @version 1.0
+ */
 public class Valores {
 
 	private static Connection database;

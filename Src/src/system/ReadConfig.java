@@ -14,7 +14,7 @@ import util.Stages;
 
 /**
  * Possui toda parte lógica referente a leitura das configurações do BD
- * @author Bruno Carvalho, Luiz Eduardo, Mateus Machado
+ * @author Bruno Carvalho, Luiz Eduardo, Mateus Tabaldi
  * @version 1.0
  */
 public class ReadConfig {

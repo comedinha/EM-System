@@ -3,6 +3,11 @@ package util;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Enum com os cargos disponiveis
+ * @author Bruno Carvalho, Luiz Eduardo, Mateus Tabaldi
+ *
+ */
 public enum FuncionarioEnum {
 		Gerente(1), Usuário(2);
 

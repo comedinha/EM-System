@@ -8,10 +8,20 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+/**
+ * Faz a criação e admnistração das Stages.
+ * @author Bruno Carvalho, Luiz Eduardo, Mateus Tabaldi
+ * @version 1.0
+ */
 public class Stages {
 	FXMLLoader loader;
 	Stage stage;
-
+	
+	/**
+	 * Cria um novo Stage
+	 * @param title Título
+	 * @param dir Localização do arquivo.fxml
+	 */
 	public void novoStage(String title, String dir) {
 		try {
 			Stage stage = new Stage();
@@ -28,7 +38,7 @@ public class Stages {
 			novoAlerta(e.getMessage(), "", true);
 		}
 	}
-
+	
 	public FXMLLoader getLoader() {
 		return loader;
 	}
@@ -36,7 +46,14 @@ public class Stages {
 	public Stage getStage() {
 		return stage;
 	}
-
+	
+	/**
+	 * Cria as mensagens de erro
+	 * @param erro
+	 * @param aviso
+	 * @param show
+	 * @return
+	 */
 	public static Alert novoAlerta(String erro, String aviso, Boolean show) {
 		Alert alert = new Alert(AlertType.ERROR, "Mensagem de erro: " + erro);
 		alert.setTitle("Caixa de avisos!");

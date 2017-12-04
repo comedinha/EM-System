@@ -10,7 +10,7 @@ import javafx.collections.ObservableList;
 
 /**
  * Possui toda parte lógica referente a Produto
- * @author Bruno Carvalho, Luiz Eduardo, Mateus Machado
+ * @author Bruno Carvalho, Luiz Eduardo, Mateus Tabaldi
  * @version 1.0
  */
 public class Produto {

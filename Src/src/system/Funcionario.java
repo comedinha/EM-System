@@ -12,7 +12,7 @@ import util.Stages;
 
 /**
  * Possui toda parte lógica referente a Comanda
- * @author Bruno Carvalho, Luiz Eduardo, Mateus Machado
+ * @author Bruno Carvalho, Luiz Eduardo, Mateus Tabaldi
  * @version 1.0
  */
 public class Funcionario {

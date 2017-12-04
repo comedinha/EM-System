@@ -3,6 +3,11 @@ package util;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Enum com os meios de pagamento disponiveis
+ * @author Bruno Carvalho, Luiz Eduardo, Mateus Tabaldi
+ *
+ */
 public enum MeioPagamentoEnum {
 	Dinheiro(1), Cartao1(2), Cartao2(3);
 
