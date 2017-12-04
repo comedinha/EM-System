@@ -32,13 +32,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import system.Produto;
 import system.Comanda.TableViewComandaLista;
 import system.Produto.TableViewProduto;
-import util.MeioPagamento;
+import util.FuncionarioEnum;
+import util.MeioPagamentoEnum;
 import util.Stages;
 import util.Valores;
 import system.Comanda;
 import system.Configuracao;
 import system.Funcionario;
-import system.Funcionario.FuncionarioCargoEnum;
 import system.Funcionario.TableViewFuncionario;
 
 import java.time.LocalDate;
@@ -222,7 +222,7 @@ public class MenuController {
     }
 
     private void iniciaInicio() throws Exception {
-    	ta_txtinicio.setText(String.format(ta_txtinicio.getText(), Valores.getUsuario().getNome(), FuncionarioCargoEnum.get(Valores.getUsuario().getFuncao()), null));
+    	ta_txtinicio.setText(String.format(ta_txtinicio.getText(), Valores.getUsuario().getNome(), FuncionarioEnum.get(Valores.getUsuario().getFuncao()), null));
     }
 
     private void iniciaFinanc() {
@@ -498,7 +498,7 @@ public class MenuController {
     }
 
     private void iniciaConfig() throws Exception {
-    	Configuracao.configDataPut("Global.Meio de Pagamento", MeioPagamento.Dinheiro);
+    	Configuracao.configDataPut("Global.Meio de Pagamento", MeioPagamentoEnum.Dinheiro);
 
     	if (Valores.getUsuario().getFuncao() == 1) {
     		Configuracao.configDataPut("Sistema.Permitir descontos", true);

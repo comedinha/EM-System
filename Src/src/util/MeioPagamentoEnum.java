@@ -1,10 +1,10 @@
 package util;
 
-public enum MeioPagamento {
+public enum MeioPagamentoEnum {
 	Dinheiro(1), Cartao(2);
 
 	private final int value;
-	MeioPagamento(int value){
+	MeioPagamentoEnum(int value){
 		this.value = value;
 	}
 

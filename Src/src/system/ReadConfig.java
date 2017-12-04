@@ -1,4 +1,4 @@
-package util;
+package system;
 
 import java.io.FileInputStream;
 import java.util.Optional;
@@ -10,6 +10,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.stage.Stage;
+import util.Stages;
 
 public class ReadConfig {
 	public ReadConfig(Stage stage) throws Exception {

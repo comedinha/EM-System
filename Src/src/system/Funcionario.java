@@ -1,14 +1,13 @@
 package system;
 
 import java.sql.ResultSet;
-import java.util.HashMap;
-import java.util.Map;
 
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import util.FuncionarioEnum;
 import util.Stages;
 
 public class Funcionario {
@@ -130,7 +129,7 @@ public class Funcionario {
     		this.id = new SimpleIntegerProperty(id);
     		this.nome = new SimpleStringProperty(nome);
     		this.login = new SimpleStringProperty(loginname);
-    		this.cargo = new SimpleStringProperty(FuncionarioCargoEnum.get(cargo).toString());
+    		this.cargo = new SimpleStringProperty(FuncionarioEnum.get(cargo).toString());
     		this.garcom = new SimpleBooleanProperty(garcom);
     	}
 
@@ -154,40 +153,4 @@ public class Funcionario {
     		return garcom.get();
     	}
     }
-
-	public enum FuncionarioCargoEnum {
-		Gerente(1), Usuário(2);
-
-		private static final Map<Integer, FuncionarioCargoEnum> lookup = new HashMap<Integer, FuncionarioCargoEnum>();
-	    static {
-	        for (FuncionarioCargoEnum d : FuncionarioCargoEnum.values()) {
-	            lookup.put(d.getValor(), d);
-	        }
-	    }
-
-		private final int value;
-		FuncionarioCargoEnum(int value) {
-			this.value = value;
-		}
-
-		public int getValor() {
-			return value;
-		}
-
-		public static FuncionarioCargoEnum get(int id) {
-	        return lookup.get(id);
-	    }
-
-		@Override
-		public String toString() {
-			switch (value) {
-				case 1 :
-					return "Gerente";
-				case 2 :
-					return "Usuário";
-				default :
-					return "Error";
-			}
-		}
-	}
 }

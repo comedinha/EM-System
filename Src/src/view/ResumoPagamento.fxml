@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import org.controlsfx.control.MasterDetailPane?>
+
+
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/9.0.1" fx:controller="controller.ResumoPagamentoController">
+   <center>
+      <VBox prefHeight="317.0" prefWidth="313.0" BorderPane.alignment="CENTER">
+         <children>
+            <MasterDetailPane fx:id="md_Pagamentos" detailSide="BOTTOM" prefHeight="317.0" prefWidth="291.0" />
+         </children>
+      </VBox>
+   </center>
+</BorderPane>

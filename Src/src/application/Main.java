@@ -2,7 +2,7 @@ package application;
 	
 import javafx.application.Application;
 import javafx.stage.Stage;
-import util.ReadConfig;
+import system.ReadConfig;
 import util.Stages;
 import util.Valores;
 

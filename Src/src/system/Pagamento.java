@@ -9,8 +9,8 @@ public class Pagamento {
 		dao.Pagamento.pagamentoComanda(id, time, valor, funcionarioId, desconto);
 	}
 	
-	public static void pagamentoProduto(int id, int quantidade, int comandaId, Timestamp comandaTime, Float valor, int funcionarioId) throws Exception {		
-		dao.Pagamento.pagamentoProduto(id, quantidade, comandaId, comandaTime, valor, funcionarioId);
+	public static void pagamentoProduto(int id, int comandaId, Timestamp comandaTime, Float valor, int funcionarioId) throws Exception {		
+		dao.Pagamento.pagamentoProduto(id, comandaId, comandaTime, valor, funcionarioId);
 	}
 
 	public static float getAllValor(int id, Timestamp time, boolean desconto) throws Exception {

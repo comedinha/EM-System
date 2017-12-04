@@ -56,26 +56,20 @@ CREATE TABLE produtoComanda(
 
 CREATE TABLE pagamento(
 	pagamentoId SERIAL PRIMARY KEY NOT NULL,
+	comandaId int,
+	dataComanda timestamp,
 	valor numeric(8,2),
 	data timestamp DEFAULT CURRENT_TIMESTAMP,
-	funcionarioId int
+	funcionarioId int,
+	FOREIGN KEY (comandaId, dataComanda) references comanda(comandaId, data) ON DELETE NO ACTION ON UPDATE CASCADE
 );
 
 CREATE TABLE pagamentoComanda(
-	pagamentoId SERIAL REFERENCES pagamento(pagamentoId) ON DELETE CASCADE ON UPDATE CASCADE,
-	comandaId int,
-	dataComanda timestamp,
-	desconto boolean,
-    FOREIGN KEY (comandaId, dataComanda) references comanda(comandaId, data) ON DELETE NO ACTION ON UPDATE CASCADE,
-	PRIMARY KEY (pagamentoId, comandaId, dataComanda)
+	pagamentoId SERIAL PRIMARY KEY REFERENCES pagamento(pagamentoId) ON DELETE CASCADE ON UPDATE CASCADE,
+	desconto boolean
 );
 
 CREATE TABLE pagamentoProduto(
-	pagamentoId SERIAL REFERENCES pagamento(pagamentoId) ON DELETE CASCADE ON UPDATE CASCADE,
-	comandaId int,
-	dataComanda timestamp,
-	produtoId SERIAL REFERENCES produto(produtoId) ON DELETE NO ACTION ON UPDATE CASCADE,
-	quantidade int,
-	FOREIGN KEY (comandaId, dataComanda) references comanda(comandaId, data) ON DELETE NO ACTION ON UPDATE CASCADE,
-	PRIMARY KEY (pagamentoId, comandaId, dataComanda)
+	pagamentoId SERIAL PRIMARY KEY REFERENCES pagamento(pagamentoId) ON DELETE CASCADE ON UPDATE CASCADE,
+	produtoId SERIAL REFERENCES produto(produtoId) ON DELETE NO ACTION ON UPDATE CASCADE
 );

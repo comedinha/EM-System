@@ -14,14 +14,13 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import util.MeioPagamento;
+import util.MeioPagamentoEnum;
 import util.Stages;
 import util.Valores;
 
 public class PagamentoController {
 	private int mode = 0;
 	private int idproduto;
-	private int quantidade;
 	private int id;
 	Timestamp time;
 	private Parent parent;
@@ -36,7 +35,7 @@ public class PagamentoController {
     private TextField tf_valorsec;
 
     @FXML
-    private ChoiceBox<MeioPagamento> cb_meioPagamento;
+    private ChoiceBox<MeioPagamentoEnum> cb_meioPagamento;
 
     @FXML
     private Text txt_caixa;
@@ -75,7 +74,7 @@ public class PagamentoController {
 	    	} else if (mode == 1) {
 	    		Pagamento.pagamentoComanda(id, time, Float.valueOf(tf_caixa.getText()), Valores.getUsuario().getId(), true);
 	    	} else if (mode == 2) {
-	    		Pagamento.pagamentoProduto(idproduto, quantidade, id, time, Float.valueOf(tf_caixa.getText()), Valores.getUsuario().getId());
+	    		Pagamento.pagamentoProduto(idproduto, id, time, Float.valueOf(tf_caixa.getText()), Valores.getUsuario().getId());
 	    	} else {
 	    		throw new Exception("Erro ao salvar produto!");
 	    	}
@@ -98,7 +97,7 @@ public class PagamentoController {
             }
         });
 
-    	cb_meioPagamento.getItems().addAll(MeioPagamento.values());
+    	cb_meioPagamento.getItems().addAll(MeioPagamentoEnum.values());
 	}
 
     public void adicionaDesconto(int id, Timestamp time, float valor, Parent root) {
@@ -120,10 +119,9 @@ public class PagamentoController {
     	txt_caixa.setText(String.format(txt_caixa.getText(), "Pagamento"));
     }
 
-	public void adicionaProdutoPagamento(int id, int quantidade, int idComanda, Timestamp timeComanda, float valorPagar, Parent root) {
+	public void adicionaProdutoPagamento(int id, int idComanda, Timestamp timeComanda, float valorPagar, Parent root) {
 		this.mode = 2;
     	this.idproduto = id;
-    	this.quantidade = quantidade;
     	this.id = idComanda;
     	this.time = timeComanda;
     	this.parent = root;

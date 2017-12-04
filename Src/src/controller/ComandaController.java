@@ -274,12 +274,14 @@ public class ComandaController {
 				try {
 					if (!txf_produto.isDisable()) {
 						float valorPagar = row.getItem().getValorTotal() - row.getItem().getValorPago();
+						if (valorPagar <= 0)
+							throw new Exception("O produto já está pago!");
 	
 						Parent root = row.getTableView().getScene().getRoot();
 				    	root.setDisable(true);
 				    	Stages st = new Stages();
 				    	FXMLLoader pagamentoLoader = st.novoStage("Atribuir Pagamento", "Pagamento", root);
-				    	pagamentoLoader.<PagamentoController>getController().adicionaProdutoPagamento(row.getItem().getId(), row.getItem().getQtde(), Integer.parseInt(txf_comid.getText()), comandaTime, valorPagar, root);
+				    	pagamentoLoader.<PagamentoController>getController().adicionaProdutoPagamento(row.getItem().getId(), Integer.parseInt(txf_comid.getText()), comandaTime, valorPagar, root);
 					} else
 						throw new Exception("Essa comanda está finalizada, não é possível fazer esta ação.");
 				} catch (Exception e) {
@@ -332,9 +334,6 @@ public class ComandaController {
 
 	private void valorPago() throws Exception {
 		float somaValor = 0;
-
-		for (TableViewComandaProduto lista : tv_produtos.getItems())
-			somaValor += lista.getValorPago();
 		
 		somaValor += Pagamento.getAllValor(Integer.parseInt(txf_comid.getText()), comandaTime, false);
 		ta_valorPago.setText(Float.toString(somaValor));

@@ -1,7 +1,6 @@
 package controller;
 
 import system.Funcionario;
-import system.Funcionario.FuncionarioCargoEnum;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -13,6 +12,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import util.FuncionarioEnum;
 import util.Stages;
 import util.Valores;
 
@@ -22,7 +22,7 @@ public class FuncionarioController {
 	private boolean inicial = false;
 
 	@FXML
-    private ComboBox<FuncionarioCargoEnum> txf_cargo;
+    private ComboBox<FuncionarioEnum> txf_cargo;
 
     @FXML
     private CheckBox chb_garcom;
@@ -97,21 +97,21 @@ public class FuncionarioController {
             }
         });
 
-    	txf_cargo.getItems().addAll(FuncionarioCargoEnum.values());
-    	txf_cargo.setValue(FuncionarioCargoEnum.Usuário);
+    	txf_cargo.getItems().addAll(FuncionarioEnum.values());
+    	txf_cargo.setValue(FuncionarioEnum.Usuário);
     }
 
     void cadastroInicial() {
     	inicial = true;
 
-    	txf_cargo.setValue(FuncionarioCargoEnum.Gerente);
+    	txf_cargo.setValue(FuncionarioEnum.Gerente);
     	txf_cargo.setDisable(true);
     }
 
     void editaFuncionario(int id, String nome, String login, String cargo, boolean garcom) {
     	mode = 1;
     	this.id = id;
-    	txf_cargo.setValue(FuncionarioCargoEnum.valueOf(cargo));
+    	txf_cargo.setValue(FuncionarioEnum.valueOf(cargo));
     	txf_cargo.setDisable(true);
 
     	txf_name.setText(nome);
