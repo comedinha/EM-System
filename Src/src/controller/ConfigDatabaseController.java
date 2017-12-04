@@ -74,7 +74,7 @@ public class ConfigDatabaseController {
 			file.close();
 
 			((Node) event.getSource()).getScene().getWindow().hide();
-			if (!ConectaBanco.verificaGerente(Valores.getConnection())) {
+			if (!dao.Funcionario.verificaGerente(Valores.getConnection())) {
 				Stages st = new Stages();
 		    	FXMLLoader funcionarioLoader = st.novoStage("Adicionar Gerente", "Funcionario", null);
 				funcionarioLoader.<FuncionarioController>getController().cadastroInicial();
