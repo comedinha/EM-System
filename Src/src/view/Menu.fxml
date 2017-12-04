@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ButtonType?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SplitPane?>
@@ -41,36 +40,44 @@
                               </ImageView>
                            </children>
                         </HBox>
-                        <BorderPane prefHeight="391.0" prefWidth="450.0">
-                           <center>
-                              <VBox prefHeight="394.0" prefWidth="450.0" BorderPane.alignment="CENTER">
-                                 <children>
-                                    <WizardPane fx:id="wp_tip1" prefHeight="400.0" prefWidth="450.0" viewOrder="1.0">
-                                       <buttonTypes>
-                                          <ButtonType fx:constant="NEXT" />
-                                       </buttonTypes>
-                                       <padding>
-                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                       </padding>
-                                       <header>
-                                          <TextArea fx:id="ta_txtinicio" editable="false" prefHeight="147.0" prefWidth="430.0" text="Olá %s!&#10;&#10;Bem vindo ao EMSystem, você tem o cargo de %s.&#10;&#10;Lugares onde você tem acesso: %s&#10;&#10;Para ter uma melhor experiência você também pode fazer algumas configurações de sua preferência." wrapText="true" />
-                                       </header>
-                                       <VBox.margin>
-                                          <Insets />
-                                       </VBox.margin>
-                                       <content>
-                                          <BorderPane prefHeight="200.0" prefWidth="200.0">
-                                             <top>
-                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Aqui temos algumas dicas" BorderPane.alignment="CENTER" />
-                                             </top>
-                                          </BorderPane>
-                                       </content>
-                                    </WizardPane>
-                                    <Separator prefWidth="200.0" />
-                                 </children>
-                              </VBox>
-                           </center>
-                        </BorderPane>
+                        <VBox prefHeight="394.0" prefWidth="450.0">
+                           <children>
+                              <TextArea fx:id="ta_txtinicio" editable="false" prefHeight="149.0" prefWidth="430.0" text="Olá %s!&#10;&#10;Bem vindo ao EMSystem, você tem o cargo de %s.&#10;&#10;Lugares onde você tem acesso: %s&#10;&#10;Para ter uma melhor experiência você também pode fazer algumas configurações de sua preferência." wrapText="true">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </TextArea>
+                              <Separator prefWidth="200.0" />
+                              <WizardPane fx:id="wp_tip1" prefHeight="224.0" prefWidth="450.0" viewOrder="1.0">
+                                 <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </padding>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                                 <content>
+                                    <BorderPane prefHeight="200.0" prefWidth="200.0">
+                                       <center>
+                                          <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+                                             <children>
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="» Clique com o botão direito em cima das tableas" />
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="» Para verificar o troco pressione enter ao entrar o valor no caixa" />
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="» Você pode criar produtos e escolher um ID" />
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="» Você pode criar comandas de mesmo ID" />
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="» O tempo de permanência é dado baseado no último pagamento" />
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="» Você pode excluir pagamentos efeutados" />
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="» Produtos de valores alterados não irão mudar produtos adicionados" />
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="» Todas as senhas do sistema são criptografadas" />
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="» Um desconto irá alterar o valor a pagar do produto" />
+                                             </children>
+                                          </VBox>
+                                       </center>
+                                    </BorderPane>
+                                 </content>
+                              </WizardPane>
+                              <Separator prefWidth="200.0" />
+                           </children>
+                        </VBox>
                      </children></VBox>
           </content>
           </Tab>

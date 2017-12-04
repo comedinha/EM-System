@@ -101,15 +101,15 @@ public class Pagamento {
 	}
 	
 	/**
-	 * Pesquisa todos os pagamentos do sistema
+	 * Pesquisa todos os pagamentos do sistema separando os descontos de produtos
 	 * @param id ID do pagamento
 	 * @param time Data da comanda
 	 * @param desconto Valor do desconto
 	 * @return Retorna a pesquisa
 	 * @throws Exception
 	 */
-	public static ResultSet getAll(int id, Timestamp time, boolean desconto) throws Exception {
-		String sql = "SELECT p.pagamentoId, p.valor, p.data, p.funcionarioId, p.formaPagamento, CASE WHEN pc.desconto THEN 'Pagamento' ELSE 'Desconto' END AS tipo FROM pagamento p JOIN pagamentoComanda pc ON p.pagamentoId = pc.pagamentoId WHERE p.comandaId = ? AND p.comandaData = ? AND pc.desconto = ?"
+	public static ResultSet getAllDesconto(int id, Timestamp time, boolean desconto) throws Exception {
+		String sql = "SELECT p.pagamentoId, p.valor, p.data, p.funcionarioId, p.formaPagamento, CASE WHEN pc.desconto THEN 'Desconto' ELSE 'Pagamento' END AS tipo FROM pagamento p JOIN pagamentoComanda pc ON p.pagamentoId = pc.pagamentoId WHERE p.comandaId = ? AND p.comandaData = ? AND pc.desconto = ?"
 				+ " UNION SELECT p.pagamentoId, p.valor, p.data, p.funcionarioId, p.formaPagamento, pd.nome AS tipo FROM pagamento p JOIN pagamentoProduto pp ON p.pagamentoId = pp.pagamentoId JOIN produto pd ON pp.produtoId = pd.produtoId WHERE p.comandaId = ? AND p.comandaData = ?";
 		if (desconto)
 			sql = "SELECT p.pagamentoId, p.valor, p.data, p.funcionarioId, p.formaPagamento, pc.desconto FROM pagamento p JOIN pagamentoComanda pc ON p.pagamentoId = pc.pagamentoId WHERE p.comandaId = ? AND p.comandaData = ? AND pc.desconto = ?";
@@ -123,6 +123,28 @@ public class Pagamento {
 			p.setInt(4, id);
 			p.setTimestamp(5, time);
 		}
+
+		ResultSet result = p.executeQuery();
+		return result;
+	}
+
+	/**
+	 * Pesquisa todos os pagamentos do sistema
+	 * @param id ID do pagamento
+	 * @param time Data da comanda
+	 * @param desconto Valor do desconto
+	 * @return Retorna a pesquisa
+	 * @throws Exception
+	 */
+	public static ResultSet getAll(int id, Timestamp time) throws Exception {
+		String sql = "SELECT p.pagamentoId, p.valor, p.data, p.funcionarioId, p.formaPagamento, CASE WHEN pc.desconto THEN 'Desconto' ELSE 'Pagamento' END AS tipo FROM pagamento p JOIN pagamentoComanda pc ON p.pagamentoId = pc.pagamentoId WHERE p.comandaId = ? AND p.comandaData = ?"
+				+ " UNION SELECT p.pagamentoId, p.valor, p.data, p.funcionarioId, p.formaPagamento, pd.nome AS tipo FROM pagamento p JOIN pagamentoProduto pp ON p.pagamentoId = pp.pagamentoId JOIN produto pd ON pp.produtoId = pd.produtoId WHERE p.comandaId = ? AND p.comandaData = ?";
+
+		PreparedStatement p = Valores.getConnection().prepareStatement(sql);
+		p.setInt(1, id);
+		p.setTimestamp(2, time);
+		p.setInt(3, id);
+		p.setTimestamp(4, time);
 
 		ResultSet result = p.executeQuery();
 		return result;
