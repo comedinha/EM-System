@@ -78,6 +78,11 @@
    <bottom>
       <HBox alignment="CENTER_RIGHT" prefHeight="36.0" prefWidth="450.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
+            <HBox prefHeight="25.0" prefWidth="227.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#act_verPagamentos" prefWidth="112.0" text="Ver pagamentos" />
+               </children>
+            </HBox>
             <CheckBox fx:id="chb_finalizar" mnemonicParsing="false" text="Finalizar" />
             <Button mnemonicParsing="false" onAction="#btnSalvar" text="Salvar" />
             <Button mnemonicParsing="false" onAction="#btnCancelar" text="Cancelar" />

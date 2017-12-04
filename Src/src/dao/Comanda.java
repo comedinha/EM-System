@@ -138,7 +138,7 @@ public class Comanda {
 	}
 
 	public static ResultSet getAllComandasPagas(Date dataDe, Date dataAte) throws Exception {
-		String sql = "SELECT * FROM comanda WHERE pago = ? AND data >= ? AND data <= ?";
+		String sql = "SELECT c.comandaid, c.data, c.funcionarioid, MAX(p.data) FROM comanda c JOIN Pagamento p ON c.comandaId = p.comandaId AND p.comandaData = c.data WHERE pago = ? AND c.data >= ? AND c.data <= ? GROUP BY 1, 2, 3";
 		
 		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
 		ps.setBoolean(1, true);

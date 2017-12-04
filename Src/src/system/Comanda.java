@@ -17,13 +17,13 @@ public class Comanda {
 		return dao.Comanda.novaComanda(id, funcionarioId);
 	}
 
-	public static ObservableList<TableViewComandaLista> getAllComandaPaga(Date dataDe, Date dataAte) throws Exception {
+	public static ObservableList<TableViewComandaPaga> getAllComandaPaga(Date dataDe, Date dataAte) throws Exception {
 		ResultSet result = dao.Comanda.getAllComandasPagas(dataDe, dataAte);
-		ObservableList<TableViewComandaLista> ol = FXCollections.observableArrayList();
+		ObservableList<TableViewComandaPaga> ol = FXCollections.observableArrayList();
 		
 		while (result.next()) {
-			ol.add(new TableViewComandaLista(result.getInt("comandaId"), result.getTimestamp("data"),
-					result.getString("mesa"), result.getInt("funcionarioId"), dao.Comanda.getPrecoComanda(result.getInt("comandaId"), result.getTimestamp("data"))));
+			ol.add(new TableViewComandaPaga(result.getInt(1), result.getTimestamp(2),
+					result.getTimestamp(4), result.getInt(3), dao.Comanda.getPrecoComanda(result.getInt(1), result.getTimestamp(2))));
 		}
 		
 		return ol;
@@ -159,6 +159,50 @@ public class Comanda {
 
 		public String getMesa() {
 			return mesa.get();
+		}
+
+		public String getFuncionario() {
+			return funcionario.get();
+		}
+
+		public float getValor() {
+			return valor.get();
+		}
+
+		public Timestamp getTimeStamp() {
+			return Timestamp.valueOf(timestamp.get());
+		}
+	}
+
+	public static class TableViewComandaPaga {
+		private final SimpleIntegerProperty id;
+		private final SimpleStringProperty data;
+		private final SimpleStringProperty funcionario;
+		private final SimpleStringProperty permanencia;
+		private final SimpleFloatProperty valor;
+		private final SimpleStringProperty timestamp;
+
+		public TableViewComandaPaga(int id, Timestamp data, Timestamp permanencia, int funcionario, float valor) {
+			this.id = new SimpleIntegerProperty(id);
+			DateFormat f = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+			this.data = new SimpleStringProperty(f.format(data));
+			f = new SimpleDateFormat("mm:ss");
+			this.permanencia = new SimpleStringProperty(f.format(permanencia.getTime() - data.getTime()));
+			this.funcionario = new SimpleStringProperty(Funcionario.getNomebyId(funcionario));
+			this.valor = new SimpleFloatProperty(valor);
+			this.timestamp = new SimpleStringProperty(data.toString());
+		}
+		
+		public int getId() {
+			return id.get();
+		}
+
+		public String getData() {
+			return data.get();
+		}
+
+		public String getPermanencia() {
+			return permanencia.get();
 		}
 
 		public String getFuncionario() {

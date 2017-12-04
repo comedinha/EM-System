@@ -58,6 +58,16 @@ public class Pagamento {
 		ps.executeUpdate();
 	}
 
+	public static boolean remove(int id) throws Exception {
+		String sql = "DELETE FROM pagamento WHERE pagamentoId = ?";
+		
+		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
+		ps.setInt(1, id);
+
+		ps.executeUpdate();	
+		return true;
+	}
+
 	public static ResultSet getAll(int id, Timestamp time, boolean desconto) throws Exception {
 		String sql = "SELECT p.pagamentoId, p.valor, p.data, p.funcionarioId, p.formaPagamento, CASE WHEN pc.desconto IS NULL THEN 'Desconto' ELSE 'Pagamento' END AS tipo FROM pagamento p JOIN pagamentoComanda pc ON p.pagamentoId = pc.pagamentoId WHERE p.comandaId = ? AND p.comandaData = ?"
 				+ " UNION SELECT p.pagamentoId, p.valor, p.data, p.funcionarioId, p.formaPagamento, pd.nome AS tipo FROM pagamento p JOIN pagamentoProduto pp ON p.pagamentoId = pp.pagamentoId JOIN produto pd ON pp.produtoId = pd.produtoId WHERE p.comandaId = ? AND p.comandaData = ?";
