@@ -134,9 +134,7 @@ public class ComandaController {
     			throw new Exception("A comanda deve ter ao menos um produto.");
 
     		float valorTotal = Float.valueOf(ta_valorTotal.getText());
-    		float valorPago = Float.valueOf(ta_valorPago.getText());
-    		float valorPagar = valorTotal - valorPago;
-	    	if (valorPagar <= 0)
+	    	if (valorTotal <= 0)
 	    		throw new Exception("Produto pago.");
 
 	    	Parent root = ((Node) event.getSource()).getScene().getRoot();
@@ -147,7 +145,7 @@ public class ComandaController {
 	    		root.setDisable(false);
 	    		refresh();
 			});
-	    	st.getLoader().<PagamentoController>getController().adicionaDesconto(Integer.valueOf(txf_comid.getText()), comandaTime, valorPagar, root, loader.<ComandaController>getController());
+	    	st.getLoader().<PagamentoController>getController().adicionaDesconto(Integer.valueOf(txf_comid.getText()), comandaTime, valorTotal, root, loader.<ComandaController>getController());
     	} catch (Exception e) {
     		Stages.novoAlerta(e.getMessage(), "", true);
     	}
@@ -162,9 +160,7 @@ public class ComandaController {
     			throw new Exception("A comanda deve ter ao menos um produto.");
 
     		float valorTotal = Float.valueOf(ta_valorTotal.getText());
-    		float valorPago = Float.valueOf(ta_valorPago.getText());
-    		float valorPagar = valorTotal - valorPago;
-	    	if (valorPagar <= 0)
+	    	if (valorTotal <= 0)
 	    		throw new Exception("Produto pago.");
 
 	    	Parent root = ((Node) event.getSource()).getScene().getRoot();
@@ -175,7 +171,7 @@ public class ComandaController {
 				root.setDisable(false);
 				refresh();
 			});
-	    	st.getLoader().<PagamentoController>getController().adicionaPagamento(Integer.valueOf(txf_comid.getText()), comandaTime, valorPagar, root, loader.<ComandaController>getController());
+	    	st.getLoader().<PagamentoController>getController().adicionaPagamento(Integer.valueOf(txf_comid.getText()), comandaTime, valorTotal, root, loader.<ComandaController>getController());
     	} catch (Exception e) {
     		Stages.novoAlerta(e.getMessage(), "", true);
     	}
