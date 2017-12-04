@@ -12,6 +12,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import util.MeioPagamentoEnum;
 
+/**
+ * Possui toda parte lógica referente a Comanda
+ * @author Bruno Carvalho, Luiz Eduardo, Mateus Machado
+ * @version 1.0
+ */
 public class Pagamento {
 	
 	public static void pagamentoComanda(int id, Timestamp time, Float valor, int funcionarioId, int formaPagamento, boolean desconto) throws Exception {

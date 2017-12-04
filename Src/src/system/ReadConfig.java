@@ -12,6 +12,11 @@ import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.stage.Stage;
 import util.Stages;
 
+/**
+ * Possui toda parte lógica referente a Comanda
+ * @author Bruno Carvalho, Luiz Eduardo, Mateus Machado
+ * @version 1.0
+ */
 public class ReadConfig {
 	public ReadConfig(Stage stage) throws Exception {
 		try {

@@ -10,6 +10,11 @@ import javafx.collections.ObservableList;
 import util.FuncionarioEnum;
 import util.Stages;
 
+/**
+ * Possui toda parte lógica referente a Comanda
+ * @author Bruno Carvalho, Luiz Eduardo, Mateus Machado
+ * @version 1.0
+ */
 public class Funcionario {
 	private int id;
 	

@@ -8,6 +8,11 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+/**
+ * Possui toda parte lógica referente a Comanda
+ * @author Bruno Carvalho, Luiz Eduardo, Mateus Machado
+ * @version 1.0
+ */
 public class Produto {
 	
 	public static boolean adicionaProduto(int id, String nome, float valor) throws Exception {		
