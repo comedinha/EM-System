@@ -7,7 +7,11 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESedeKeySpec;
 
 import org.postgresql.util.Base64;  
-
+/** documento
+ * 
+ * @author MateusGay
+ *
+ */
 public class Crypto {
 	private static Cipher cipher;
     private static SecretKey secretKey;
