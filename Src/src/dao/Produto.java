@@ -6,6 +6,12 @@ import java.sql.Timestamp;
 
 import util.Valores;
 
+/**
+ * Classe que todas as operações de CRUD referente a Produto
+ * @author Bruno Carvalho, Luiz Eduardo, Mateus Tabaldi.
+ *
+ * @version 1.0
+ */
 public class Produto {
 	public static boolean inserir(int id, String nome, float valor) throws Exception {
 		String sql = "INSERT INTO produto (nome, valor, produtoid) VALUES (?, ?, ?)";
