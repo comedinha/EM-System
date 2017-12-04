@@ -65,7 +65,10 @@ public class FuncionarioController {
 	    		if (!Funcionario.editaFuncionario(id, nome, login, senha, chb_garcom.isSelected())) {
 	    			throw new Exception("Erro ao editar funcionário!");
 	    		}
+
+		    	Valores.editCheck().remove("Funcionario" + id);
 	    	}
+
 	    	((Node) event.getSource()).getScene().getWindow().hide();
 	    	if (inicial) {
 	    		Stages st = new Stages();
@@ -80,6 +83,8 @@ public class FuncionarioController {
 
     @FXML
     void btn_funcquit(ActionEvent event) {
+    	Valores.editCheck().remove("Funcionario" + id);
+
     	((Node) event.getSource()).getScene().getWindow().hide();
     }
 

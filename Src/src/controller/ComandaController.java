@@ -243,6 +243,7 @@ public class ComandaController {
 	private void btnCancelar(ActionEvent event) {
 		try {
 			Valores.getController().refresh(3);
+	    	Valores.editCheck().remove("Comanda" + Integer.valueOf(txf_comid.getText()));
 			((Node) event.getSource()).getScene().getWindow().hide();
 		} catch (Exception e) {
 			Stages.novoAlerta(e.getMessage(), "", true);
@@ -278,6 +279,7 @@ public class ComandaController {
 			}
 
 			Valores.getController().refresh(3);
+	    	Valores.editCheck().remove("Comanda" + Integer.valueOf(txf_comid.getText()));
 			((Node) event.getSource()).getScene().getWindow().hide();
 		} catch (Exception e) {
 			Stages.novoAlerta(e.getMessage(), "", true);

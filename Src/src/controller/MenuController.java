@@ -280,8 +280,15 @@ public class MenuController {
     			//Atualizar Comanda
     			editItem.setOnAction((ActionEvent event) -> {
     				try {
+    					if (Valores.editCheck().contains(("Comanda" + row.getItem().getId())))
+    						throw new Exception("Esta comanda está sendo editada!");
+
+    					Valores.editCheck().add("Comanda" + row.getItem().getId());
     					Stages st = new Stages();
         		    	st.novoStage("Editar Comanda", "Comanda");
+        		    	st.getStage().setOnCloseRequest(e -> {
+        		    		Valores.editCheck().remove("Comanda" + row.getItem().getId());
+						});
         		    	st.getLoader().<ComandaController>getController().editaComanda(row.getItem().getId(), row.getItem().getTimeStamp(), st.getLoader());
     				} catch (Exception e) {
     					Stages.novoAlerta(e.getMessage(), "", true);
@@ -344,8 +351,15 @@ public class MenuController {
     			//Atualizar Produtos
     			editItem.setOnAction((ActionEvent event) -> {
     				try {
+    					if (Valores.editCheck().contains(("Produto" + row.getItem().getId())))
+    						throw new Exception("Este produto está sendo editado!");
+
+    					Valores.editCheck().add("Produto" + row.getItem().getId());
     					Stages st = new Stages();
         		    	st.novoStage("Edita Produto", "Produto");
+        		    	st.getStage().setOnCloseRequest(e -> {
+        		    		Valores.editCheck().remove("Produto" + row.getItem().getId());
+						});
         		    	st.getLoader().<ProdutoController>getController().editaProduto(row.getItem().getId(), row.getItem().getNome(), row.getItem().getValor());
     				} catch (Exception e) {
     					Stages.novoAlerta(e.getMessage(), "", true);
@@ -355,6 +369,9 @@ public class MenuController {
     			//Remover Produtos
     			removeItem.setOnAction((ActionEvent event) -> {
     				try {
+    					if (Valores.editCheck().contains(("Produto" + row.getItem().getId())))
+    						throw new Exception("Este produto já está sendo editado!");
+
     					Alert alert = Stages.novoAviso("Você deseja remover o produto?");
     					ButtonType buttonConfirm = new ButtonType("Continuar", ButtonData.OK_DONE);
     					ButtonType buttonCancel = new ButtonType("Cancelar", ButtonData.CANCEL_CLOSE);
@@ -430,8 +447,15 @@ public class MenuController {
         		//Editar Funcionários
         		editFuncionario.setOnAction((ActionEvent event) -> {
         			try {
+        				if (Valores.editCheck().contains(("Funcionario" + row.getItem().getId())))
+    						throw new Exception("Este funcionário está sendo editado!");
+
+        				Valores.editCheck().add("Funcionario" + row.getItem().getId());
         				Stages st = new Stages();
         		    	st.novoStage("Edita Funcionário", "Funcionario");
+        		    	st.getStage().setOnCloseRequest(e -> {
+        		    		Valores.editCheck().remove("Funcionario" + row.getItem().getId());
+						});
         		    	st.getLoader().<FuncionarioController>getController().editaFuncionario(row.getItem().getId(), row.getItem().getNome(), row.getItem().getLogin(), row.getItem().getCargo(), row.getItem().getGarcom());
         			} catch (Exception e) {
         				Stages.novoAlerta(e.getMessage(), "", true);
@@ -441,6 +465,9 @@ public class MenuController {
         		//Remover Funcionários
         		removeFuncionario.setOnAction((ActionEvent event) -> {
         			try {
+        				if (Valores.editCheck().contains(("Funcionario" + row.getItem().getId())))
+    						throw new Exception("Este funcionário já está sendo editado!");
+
         				Alert alert = Stages.novoAviso("Você deseja remover o produto?");
     					ButtonType buttonConfirm = new ButtonType("Continuar", ButtonData.OK_DONE);
     					ButtonType buttonCancel = new ButtonType("Cancelar", ButtonData.CANCEL_CLOSE);
