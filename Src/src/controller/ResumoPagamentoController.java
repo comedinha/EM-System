@@ -8,6 +8,7 @@ import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ContextMenu;
@@ -25,6 +26,8 @@ import util.Valores;
 public class ResumoPagamentoController {
 	int id;
 	Timestamp data;
+	boolean enable;
+	Parent root;
 
     @FXML
     private TableView<TableViewPagamento> tv_pagamento;
@@ -49,6 +52,9 @@ public class ResumoPagamentoController {
 
     @FXML
     void act_Fechar(ActionEvent event) {
+    	if (root != null)
+    		root.setDisable(false);
+
     	((Node) event.getSource()).getScene().getWindow().hide();
     }
 
@@ -74,17 +80,21 @@ public class ResumoPagamentoController {
 	        		//Remover Pagamento
 	        		removePagamento.setOnAction((ActionEvent event) -> {
 	        			try {
-	        				Alert alert = Stages.novoAviso("Você deseja remover o pagamento?");
-	    					ButtonType buttonConfirm = new ButtonType("Continuar", ButtonData.OK_DONE);
-	    					ButtonType buttonCancel = new ButtonType("Cancelar", ButtonData.CANCEL_CLOSE);
-	    					alert.getButtonTypes().setAll(buttonConfirm, buttonCancel);
-
-	    					Optional<ButtonType> result = alert.showAndWait();
-	    					if (result.get() == buttonConfirm) {
-	    						//if (!Pagamento.removePagamento(row.getItem().getId())) {
-	            				//	throw new Exception("Erro ao remover pagamento");
-	            				//}
-	    					}
+	        				if (!enable) {
+		        				Alert alert = Stages.novoAviso("Você deseja remover o pagamento?");
+		    					ButtonType buttonConfirm = new ButtonType("Continuar", ButtonData.OK_DONE);
+		    					ButtonType buttonCancel = new ButtonType("Cancelar", ButtonData.CANCEL_CLOSE);
+		    					alert.getButtonTypes().setAll(buttonConfirm, buttonCancel);
+	
+		    					Optional<ButtonType> result = alert.showAndWait();
+		    					if (result.get() == buttonConfirm) {
+		    						if (!Pagamento.removePagamento(row.getItem().getId())) {
+		            					throw new Exception("Erro ao remover pagamento");
+		            				}
+		    						reload();
+		    					}
+		        			} else
+								throw new Exception("Essa comanda está finalizada, não é possível fazer esta ação.");
 	        			} catch (Exception e) {
 	        				Stages.novoAlerta(e.getMessage(), "", true);
 	        			}
@@ -101,13 +111,20 @@ public class ResumoPagamentoController {
     	}
 	}
 
-	public void vizualizaPagamento(int id, Timestamp data) {
+	public void vizualizaPagamento(int id, Timestamp data, boolean enable, Parent root) {
 		try {
+			this.root = root;
+			this.enable = enable;
 			this.id = id;
 			this.data = data;
 			tv_pagamento.setItems(Pagamento.getAllPagamento(id, data));
 		} catch (Exception e) {
 			Stages.novoAlerta(e.getMessage(), "", false);
 		}
+	}
+
+	private void reload() throws Exception {
+		tv_pagamento.getItems().clear();
+		tv_pagamento.setItems(Pagamento.getAllPagamento(id, data));
 	}
 }

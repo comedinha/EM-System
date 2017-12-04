@@ -74,3 +74,5 @@ CREATE TABLE pagamentoProduto(
 	pagamentoId SERIAL PRIMARY KEY REFERENCES pagamento(pagamentoId) ON DELETE CASCADE ON UPDATE CASCADE,
 	produtoId SERIAL REFERENCES produto(produtoId) ON DELETE NO ACTION ON UPDATE CASCADE
 );
+
+CREATE OR REPLACE RULE deletaProdutoComanda AS ON delete TO produtoComanda DO (DELETE FROM pagamento WHERE pagamentoId IN (SELECT p.pagamentoId FROM pagamento p JOIN pagamentoProduto pp ON pp.pagamentoId = p.pagamentoId WHERE p.comandaId = old.comandaId AND p.comandaData = old.comandaData AND pp.produtoId = old.produtoId));

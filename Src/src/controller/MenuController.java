@@ -31,6 +31,7 @@ import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.cell.PropertyValueFactory;
 import system.Produto;
 import system.Comanda.TableViewComandaLista;
+import system.Comanda.TableViewComandaPaga;
 import system.Produto.TableViewProduto;
 import util.FuncionarioEnum;
 import util.MeioPagamentoEnum;
@@ -61,22 +62,22 @@ public class MenuController {
     private DatePicker dt_finbuscaate;
 
     @FXML
-    private TableView<TableViewComandaLista> tableFinanc;
+    private TableView<TableViewComandaPaga> tableFinanc;
 
     @FXML
-    private TableColumn<TableViewComandaLista, Integer> tb_financid;
+    private TableColumn<TableViewComandaPaga, Integer> tb_financid;
 
     @FXML
-    private TableColumn<TableViewComandaLista, String> tb_financfunc;
+    private TableColumn<TableViewComandaPaga, String> tb_financfunc;
 
     @FXML
-    private TableColumn<TableViewComandaLista, String> tb_financdata;
+    private TableColumn<TableViewComandaPaga, String> tb_financdata;
 
     @FXML
-    private TableColumn<TableViewComandaLista, String> tb_financperm;
+    private TableColumn<TableViewComandaPaga, String> tb_financperm;
 
     @FXML
-    private TableColumn<TableViewComandaLista, Float> tb_financvlr;
+    private TableColumn<TableViewComandaPaga, Float> tb_financvlr;
 
     @FXML
     private TextField txf_comandaBusca;
@@ -231,17 +232,16 @@ public class MenuController {
 	    	dt_finbuscaate.setValue(LocalDate.now());
 	
 	    	tb_financid.setCellValueFactory(new PropertyValueFactory<>("id"));
-	    	//tb_financfunc.setCellValueFactory(new PropertyValueFactory<>("funcionario"));
+	    	tb_financfunc.setCellValueFactory(new PropertyValueFactory<>("funcionario"));
 	    	tb_financdata.setCellValueFactory(new PropertyValueFactory<>("data"));
-	    	//tb_financperm.setCellValueFactory(new PropertyValueFactory<>("permanencia"));
+	    	tb_financperm.setCellValueFactory(new PropertyValueFactory<>("permanencia"));
 	    	tb_financvlr.setCellValueFactory(new PropertyValueFactory<>("valor"));
 
 			tableFinanc.setItems(Comanda.getAllComandaPaga(Date.valueOf(dt_finbuscade.getValue()), Date.valueOf(dt_finbuscaate.getValue())));
-			tableFinanc.setRowFactory((TableView<TableViewComandaLista> tableComandaFinanc) -> {
-    			final TableRow<TableViewComandaLista> row = new TableRow<>();
+			tableFinanc.setRowFactory((TableView<TableViewComandaPaga> tableComandaFinanc) -> {
+    			final TableRow<TableViewComandaPaga> row = new TableRow<>();
     			final ContextMenu rowMenu = new ContextMenu();
     			MenuItem verComanda = new MenuItem("Visualizar Comanda");
-    			MenuItem verPagamento = new MenuItem("Visualizar Pagamentos");
 
     			//Visualizar Comandas
     			verComanda.setOnAction((ActionEvent event) -> {
@@ -254,18 +254,7 @@ public class MenuController {
     				}
     			});
 
-    			//Visualizar Pagamentos
-    			verPagamento.setOnAction((ActionEvent event) -> {
-    				try {
-    					Stages st = new Stages();
-        		    	FXMLLoader resumoLoader = st.novoStage("Visualizar Pagamento", "ResumoPagamento", null);
-        		    	resumoLoader.<ResumoPagamentoController>getController().vizualizaPagamento(row.getItem().getId(), row.getItem().getTimeStamp());
-    				} catch (Exception e) {
-    					Stages.novoAlerta(e.getMessage(), "", true);
-    				}
-    			});
-
-    			rowMenu.getItems().addAll(verComanda, verPagamento);
+    			rowMenu.getItems().addAll(verComanda);
     			row.contextMenuProperty().bind(Bindings.when(Bindings.isNotNull(row.itemProperty())).then(rowMenu).otherwise((ContextMenu)null));
     			return row;
     		});
@@ -287,7 +276,6 @@ public class MenuController {
     			final TableRow<TableViewComandaLista> row = new TableRow<>();
     			final ContextMenu rowMenu = new ContextMenu();
     			MenuItem editItem = new MenuItem("Editar");
-    			MenuItem visualizaPagamento = new MenuItem("Visualizar Pagamentos");
 
     			//Atualizar Comanda
     			editItem.setOnAction((ActionEvent event) -> {
@@ -299,19 +287,8 @@ public class MenuController {
     					Stages.novoAlerta(e.getMessage(), "", true);
     				}
     			});
-  
-    			//Visualizar Pagamentos
-    			visualizaPagamento.setOnAction((ActionEvent event) -> {
-    				try {
-    					Stages st = new Stages();
-        		    	FXMLLoader resumoLoader = st.novoStage("Visualizar Pagamento", "ResumoPagamento", null);
-        		    	resumoLoader.<ResumoPagamentoController>getController().vizualizaPagamento(row.getItem().getId(), row.getItem().getTimeStamp());
-    				} catch (Exception e) {
-    					Stages.novoAlerta(e.getMessage(), "", true);
-    				}
-    			});
 
-    			rowMenu.getItems().addAll(editItem, visualizaPagamento);
+    			rowMenu.getItems().addAll(editItem);
     			row.contextMenuProperty().bind(Bindings.when(Bindings.isNotNull(row.itemProperty())).then(rowMenu).otherwise((ContextMenu)null));
     			return row;
     		});

@@ -169,6 +169,24 @@ public class ComandaController {
     	}
     }
 
+    @FXML
+    void act_verPagamentos(ActionEvent event) {
+    	try {
+    		if (txf_comid.getText().isEmpty())
+    			throw new Exception("Você não tem uma comanda criada.");
+    		if (!chb_comid.isDisable())
+    			throw new Exception("A comanda deve ter ao menos um produto.");
+
+	    	Parent root = ((Node) event.getSource()).getScene().getRoot();
+	    	root.setDisable(true);
+	    	Stages st = new Stages();
+	    	FXMLLoader resumoLoader = st.novoStage("Visualizar Pagamento", "ResumoPagamento", root);
+	    	resumoLoader.<ResumoPagamentoController>getController().vizualizaPagamento(Integer.valueOf(txf_comid.getText()), comandaTime, btn_pagamento.isDisable(), root);
+    	} catch (Exception e) {
+    		Stages.novoAlerta(e.getMessage(), "", true);
+    	}
+    }
+
 	@FXML
 	private void addProduto(ActionEvent event) {
 		try {

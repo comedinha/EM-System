@@ -22,6 +22,10 @@ public class Pagamento {
 		dao.Pagamento.pagamentoProduto(id, comandaId, comandaTime, valor, funcionarioId, formaPagamento);
 	}
 
+	public static boolean removePagamento(int id) throws Exception {
+		return dao.Pagamento.remove(id);
+	}
+
 	public static float getAllValor(int id, Timestamp time, boolean desconto) throws Exception {
 		ResultSet result = dao.Pagamento.getAll(id, time, desconto);
 		float valor = 0;
