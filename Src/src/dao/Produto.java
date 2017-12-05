@@ -37,7 +37,7 @@ public class Produto {
 		ps.executeUpdate();
 		return true;
 	}
-	
+
 	/**
 	 * Atualiza as informações do produto
 	 * @param id ID do produto
@@ -53,18 +53,18 @@ public class Produto {
 		ps.setString(1, nome);
 		ps.setFloat(2, valor);
 		ps.setInt(3, id);
-		ps.executeUpdate();			
+		ps.executeUpdate();
 		return true;
 	}
-	
+
 	public static ResultSet getAllProduto() throws Exception {
-		String sql = "SELECT * FROM produto WHERE status = 1"; 
+		String sql = "SELECT * FROM produto WHERE status = 1";
 
 		PreparedStatement statement = Valores.getConnection().prepareStatement(sql);
 		ResultSet result = statement.executeQuery();
 		return result;
 	}
-	
+
 	/**
 	 * Pesquisa por um determinada produto apartir de seu ID
 	 * @param id ID do produto
@@ -72,28 +72,46 @@ public class Produto {
 	 * @throws Exception
 	 */
 	public static ResultSet getProduto(int id) throws Exception {
-		String sql = "SELECT * FROM produto WHERE produtoid = ?"; 
+		String sql = "SELECT * FROM produto WHERE produtoid = ?";
 
 		PreparedStatement statement = Valores.getConnection().prepareStatement(sql);
 		statement.setInt(1, id);
 		ResultSet result = statement.executeQuery();
 		return result;
 	}
-	
+
 	/**
 	 * Verefica se um produto existe no sistema
 	 * @param id ID do produto
 	 * @return Se existir, retorna True, caso contrario, False
 	 * @throws Exception
 	 */
-	public static boolean verificaExistenciaProduto(int id) throws Exception {
-		String sql = "SELECT produtoId FROM produto WHERE produtoId = ?";
+	public static ResultSet verificaExistenciaProduto(int id) throws Exception {
+		String sql = "SELECT status FROM produto WHERE produtoId = ?";
 		
 		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
 		ps.setInt(1, id);
-		return ps.executeQuery().next();
+		return ps.executeQuery();
 	}
-	
+
+	/**
+	 * Reativa um produto no sistema
+	 * @param id ID do produto
+	 * @return Se existir, retorna True, caso contrario, False
+	 * @throws Exception 
+	 * @throws Exception
+	 */
+	public static void reativaProduto(int id, String nome, float valor) throws Exception {
+		String sql = "UPDATE produto SET nome = ?, valor = ?, status = ? WHERE produtoid = ?";
+
+		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
+		ps.setString(1, nome);
+		ps.setFloat(2, valor);
+		ps.setInt(3, 1);
+		ps.setInt(4, id);
+		ps.executeUpdate();
+	}
+
 	/**
 	 * Remove um produto do sistema
 	 * @param ID do produto
@@ -102,27 +120,11 @@ public class Produto {
 	 */
 	public static boolean deleteProduto(int id) throws Exception {
 		String sql = "UPDATE produto SET status = 0 WHERE produtoid = ?";
-		
+
 		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
 		ps.setInt(1, id);
-		ps.executeUpdate();			
+		ps.executeUpdate();
 		return true;
-	}
-	
-	/**
-	 * Pega o preço de um produto, verificando a data
-	 * @param data Data da comanda
-	 * @return Retorna a consulta
-	 * @throws Exception
-	 */
-	public static ResultSet getPrecoProduto(Timestamp data) throws Exception {
-		String sql = "SELECT * FROM produto p LEFT JOIN produtoAlterado pa ON p.produtoId = pa.produtoId WHERE data <= ? ORDER BY (pa.data)";
-
-		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
-		ps.setTimestamp(1, data);
-
-		ResultSet result = ps.executeQuery();
-		return result;
 	}
 
 	/**

@@ -290,7 +290,7 @@ public class MenuController {
     					Stages st = new Stages();
         		    	st.novoStage("Editar Comanda", "Comanda");
         		    	st.getStage().setOnCloseRequest(e -> {
-        		    		Valores.editCheck().remove("Comanda" + row.getItem().getId());
+        		    		st.getLoader().<ComandaController>getController().fecharComanda();
 						});
         		    	st.getLoader().<ComandaController>getController().editaComanda(row.getItem().getId(), row.getItem().getTimeStamp(), st.getLoader());
     				} catch (Exception e) {
@@ -364,7 +364,7 @@ public class MenuController {
     					Stages st = new Stages();
         		    	st.novoStage("Edita Produto", "Produto");
         		    	st.getStage().setOnCloseRequest(e -> {
-        		    		Valores.editCheck().remove("Produto" + row.getItem().getId());
+        		    		st.getLoader().<ProdutoController>getController().fecharProduto();
 						});
         		    	st.getLoader().<ProdutoController>getController().editaProduto(row.getItem().getId(), row.getItem().getNome(), row.getItem().getValor());
     				} catch (Exception e) {
@@ -463,7 +463,7 @@ public class MenuController {
         				Stages st = new Stages();
         		    	st.novoStage("Edita Funcionário", "Funcionario");
         		    	st.getStage().setOnCloseRequest(e -> {
-        		    		Valores.editCheck().remove("Funcionario" + row.getItem().getId());
+        		    		st.getLoader().<FuncionarioController>getController().fecharFuncionario();
 						});
         		    	st.getLoader().<FuncionarioController>getController().editaFuncionario(row.getItem().getId(), row.getItem().getNome(), row.getItem().getLogin(), row.getItem().getCargo(), row.getItem().getGarcom());
         			} catch (Exception e) {

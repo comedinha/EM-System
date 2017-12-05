@@ -1,5 +1,7 @@
 package controller;
 
+import java.sql.ResultSet;
+
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -35,37 +37,32 @@ public class ProdutoController {
     private void act_cadastro(ActionEvent event) {
     	try {
 	    	int id = 0;
-	    	if (mode == 0) {
-		    	if (!txf_id.isDisable() && !txf_id.getText().isEmpty())
-		    		id = Integer.parseInt(txf_id.getText());
-
-		    	String nome = txf_nome.getText();
-		    	float valor = Float.parseFloat(txf_valor.getText().replace(',', '.'));
-		    	if (valor < 0)
-		    		throw new Exception("O valor não pode ser menor que 0!");
-
-		    	if((!txf_id.isDisable() && !txf_id.getText().isEmpty()) && Produto.verificaExistenciaProduto(id))
-		    		Produto.delete(id);
-		    	else {	    	
-		    		if(Produto.adicionaProduto(id, nome, valor)) {
-		    			((Node) event.getSource()).getScene().getWindow().hide();
-		    	} else {
-		    		throw new Exception("Erro no cadastro!");
-		    	}
-	    	}} else if (mode == 1) {
+	    	if (!txf_id.isDisable() && !txf_id.getText().isEmpty())
 	    		id = Integer.parseInt(txf_id.getText());
-	    		String nome = txf_nome.getText();
-		    	float valor = Float.parseFloat(txf_valor.getText());
-		    	
-		    	if(Produto.editaProduto(id, nome, valor)) {
-		    		((Node) event.getSource()).getScene().getWindow().hide();
-		    	} else {
-		    		throw new Exception("Erro na edição!");
-		    	}
 
-		    	Valores.editCheck().remove("Produto" + id);
+	    	String nome = txf_nome.getText();
+	    	float valor = Float.parseFloat(txf_valor.getText().replace(',', '.'));
+
+	    	if (valor < 0)
+	    		throw new Exception("O valor não pode ser menor que 0!");
+
+	    	if (mode == 0) {
+	    		ResultSet existe = Produto.verificaExistenciaProduto(id);
+	    		if (existe.next()) {
+	    			if (existe.getInt(1) == 1)
+		    			throw new Exception("Produto já cadastrado!");
+	    			else
+	    				Produto.reativaProduto(id, nome, valor);
+	    		} else
+		    		if (!Produto.adicionaProduto(id, nome, valor))
+		    			throw new Exception("Erro no cadastro!");
+	    	} else if (mode == 1) {
+		    	if (!Produto.editaProduto(id, nome, valor))
+		    		throw new Exception("Erro na edição!");
 	    	}
-	    	Valores.getController().refresh(1);
+
+	    	fecharProduto();
+		    ((Node) event.getSource()).getScene().getWindow().hide();
     	} catch (NumberFormatException e) {
     		Stages.novoAlerta("Valor digitado inválido. Não utilize valores como '1.000,00'\n Utilize '1000,00'", "", true);
     	} catch (Exception e) {
@@ -75,7 +72,7 @@ public class ProdutoController {
 
     @FXML
     private void act_cancelar(ActionEvent event) {
-    	Valores.editCheck().remove("Produto" + Integer.valueOf(txf_id.getText()));
+    	fecharProduto();
     	((Node) event.getSource()).getScene().getWindow().hide();
     }
 
@@ -107,4 +104,17 @@ public class ProdutoController {
     	txf_valor.setText(Float.toString(valor));
     	vbox_aviso.setVisible(false);
     }
+
+    /**
+	 * Metodo chamado para fechar a janela de produto de maneira segura
+	 */
+	public void fecharProduto() {
+		try {
+			if (!txf_id.isDisable() && !txf_id.getText().isEmpty())
+				Valores.editCheck().remove("Produto" + Integer.valueOf(txf_id.getText()));
+	    	Valores.getController().refresh(1);
+		} catch (Exception e) {
+			Stages.novoAlerta(e.getMessage(), "", true);
+		}
+	}
 }

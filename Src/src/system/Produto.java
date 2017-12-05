@@ -58,7 +58,7 @@ public class Produto {
 	 * @return Se existir, retorna True, caso contrario, False
 	 * @throws Exception
 	 */
-	public static boolean verificaExistenciaProduto(int id) throws Exception {
+	public static ResultSet verificaExistenciaProduto(int id) throws Exception {
 		return dao.Produto.verificaExistenciaProduto(id);
 	}
 	
@@ -99,7 +99,17 @@ public class Produto {
 	public static boolean delete(int id) throws Exception {
 		return dao.Produto.deleteProduto(id);
 	}
-	
+
+	/**
+	 * Reativa um produto no sistema
+	 * @param id ID do produto
+	 * @return
+	 * @throws Exception
+	 */
+	public static void reativaProduto(int id, String nome, float valor) throws Exception {
+		dao.Produto.reativaProduto(id, nome, valor);
+	}
+
 	/**
 	 * Classe interna, que é utilizada como referencia para a TableView que lista os produtos 
 	 * cadastrados no sistema

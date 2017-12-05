@@ -242,13 +242,8 @@ public class ComandaController {
 
 	@FXML
 	private void act_cancelar(ActionEvent event) {
-		try {
-			Valores.getController().refresh(3);
-	    	Valores.editCheck().remove("Comanda" + Integer.valueOf(txf_comid.getText()));
-			((Node) event.getSource()).getScene().getWindow().hide();
-		} catch (Exception e) {
-			Stages.novoAlerta(e.getMessage(), "", true);
-		}
+		fecharComanda();
+		((Node) event.getSource()).getScene().getWindow().hide();
 	}
 
 	@FXML
@@ -516,6 +511,18 @@ public class ComandaController {
 				refresh();
 			} else
 				throw new Exception("Essa comanda não existe!");
+		} catch (Exception e) {
+			Stages.novoAlerta(e.getMessage(), "", true);
+		}
+	}
+
+	/**
+	 * Metodo chamado para fechar a janela da comanda de maneira segura
+	 */
+	public void fecharComanda() {
+		try {
+			Valores.getController().refresh(3);
+	    	Valores.editCheck().remove("Comanda" + Integer.valueOf(txf_comid.getText()));
 		} catch (Exception e) {
 			Stages.novoAlerta(e.getMessage(), "", true);
 		}

@@ -65,10 +65,9 @@ public class FuncionarioController {
 	    		if (!Funcionario.editaFuncionario(id, nome, login, senha, chb_garcom.isSelected())) {
 	    			throw new Exception("Erro ao editar funcionário!");
 	    		}
-
-		    	Valores.editCheck().remove("Funcionario" + id);
 	    	}
 
+	    	fecharFuncionario();
 	    	((Node) event.getSource()).getScene().getWindow().hide();
 	    	if (inicial) {
 	    		Stages st = new Stages();
@@ -83,8 +82,7 @@ public class FuncionarioController {
 
     @FXML
     private void act_cancelar(ActionEvent event) {
-    	Valores.editCheck().remove("Funcionario" + id);
-
+    	fecharFuncionario();
     	((Node) event.getSource()).getScene().getWindow().hide();
     }
 
@@ -135,4 +133,16 @@ public class FuncionarioController {
     	chb_senha.setSelected(false);
     	lbl_aviso.setVisible(true);
     }
+
+    /**
+	 * Metodo chamado para fechar a janela de funcionario de maneira segura
+	 */
+	public void fecharFuncionario() {
+		try {
+			Valores.editCheck().remove("Funcionario" + id);
+	    	Valores.getController().refresh(2);
+		} catch (Exception e) {
+			Stages.novoAlerta(e.getMessage(), "", true);
+		}
+	}
 }
