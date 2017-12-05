@@ -97,6 +97,8 @@ public class Produto {
 	/**
 	 * Reativa um produto no sistema
 	 * @param id ID do produto
+	 * @param nome Nome do produto
+	 * @param valor Valor do produto 
 	 * @return Se existir, retorna True, caso contrario, False
 	 * @throws Exception 
 	 * @throws Exception
