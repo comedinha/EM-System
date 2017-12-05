@@ -54,6 +54,9 @@ public class MenuController {
     private DatePicker dt_finBuscaAte;
 
     @FXML
+    private TextField txf_financBusca;
+
+    @FXML
     private TableView<TableViewComandaPaga> tv_financ;
 
     @FXML
@@ -70,6 +73,9 @@ public class MenuController {
 
     @FXML
     private TableColumn<TableViewComandaPaga, Float> tc_financVlr;
+
+    @FXML
+    private TextArea ta_financInfo;
 
     @FXML
     private TextField txf_comandaBusca;
@@ -139,10 +145,15 @@ public class MenuController {
 
     @FXML
     private void act_BuscaFinanceiro(ActionEvent event) {
-    	try {
+    	try {			
 	    	if (Date.valueOf(dt_finBuscaDe.getValue()).before(Date.valueOf(dt_finBuscaAte.getValue()))) {
 		    	tv_financ.getItems().clear();
 		    	tv_financ.setItems(Comanda.getAllComandaPaga(Date.valueOf(dt_finBuscaDe.getValue()), Date.valueOf(dt_finBuscaAte.getValue())));
+		    	float valorTotal = 0;
+				for (TableViewComandaPaga comanda : tv_financ.getItems()) {
+					valorTotal += comanda.getValor();
+				}
+				ta_financInfo.setText(String.format(ta_financInfo.getText(), Float.toString(valorTotal)));
 	    	} else
 	    		throw new Exception("A data DE deve ser menor que a data ATÉ!");
     	} catch (Exception e) {
@@ -238,6 +249,11 @@ public class MenuController {
 	    	tc_financVlr.setCellValueFactory(new PropertyValueFactory<>("valor"));
 
 			tv_financ.setItems(Comanda.getAllComandaPaga(Date.valueOf(dt_finBuscaDe.getValue()), Date.valueOf(dt_finBuscaAte.getValue())));
+			float valorTotal = 0;
+			for (TableViewComandaPaga comanda : tv_financ.getItems()) {
+				valorTotal += comanda.getValor();
+			}
+			ta_financInfo.setText(String.format(ta_financInfo.getText(), Float.toString(valorTotal)));
 			tv_financ.setRowFactory((TableView<TableViewComandaPaga> tv_comandaFinanc) -> {
     			final TableRow<TableViewComandaPaga> row = new TableRow<>();
     			final ContextMenu rowMenu = new ContextMenu();
@@ -257,6 +273,38 @@ public class MenuController {
     			rowMenu.getItems().addAll(verComanda);
     			row.contextMenuProperty().bind(Bindings.when(Bindings.isNotNull(row.itemProperty())).then(rowMenu).otherwise((ContextMenu)null));
     			return row;
+    		});
+
+			//Busca
+    		txf_financBusca.textProperty().addListener(new InvalidationListener() {
+    			@Override
+    			public void invalidated(Observable observable) {
+    				try {
+    					if (Date.valueOf(dt_finBuscaDe.getValue()).before(Date.valueOf(dt_finBuscaAte.getValue()))) {
+	    					if(txf_financBusca.textProperty().get().isEmpty()) {
+	    						tv_financ.setItems(Comanda.getAllComandaPaga(Date.valueOf(dt_finBuscaDe.getValue()), Date.valueOf(dt_finBuscaAte.getValue())));
+	    						return;
+	    					}
+	
+	    					ObservableList<TableViewComandaPaga> tableItems = FXCollections.observableArrayList();
+	    					ObservableList<TableColumn<TableViewComandaPaga, ?>> cols = tv_financ.getColumns();
+	    					for (int i = 0; i < Comanda.getAllComandaPaga(Date.valueOf(dt_finBuscaDe.getValue()), Date.valueOf(dt_finBuscaAte.getValue())).size(); i++) {
+	    						for (int j = 0; j < cols.size(); j++) {
+	    							TableColumn<TableViewComandaPaga, ?> col = cols.get(j);
+	    							String cellValue = col.getCellData(Comanda.getAllComandaPaga(Date.valueOf(dt_finBuscaDe.getValue()), Date.valueOf(dt_finBuscaAte.getValue())).get(i)).toString();
+	    							cellValue = cellValue.toLowerCase();
+	    							if(cellValue.contains(txf_financBusca.textProperty().get().toLowerCase())) {
+	    								tableItems.add(Comanda.getAllComandaPaga(Date.valueOf(dt_finBuscaDe.getValue()), Date.valueOf(dt_finBuscaAte.getValue())).get(i));
+	    								break;
+	    							}
+	    						}
+	    					tv_financ.setItems(tableItems);
+	    					}
+    					}
+    				} catch (Exception e) {
+    					Stages.novoAlerta(e.getMessage(), "", true);
+    				}
+    			}
     		});
     	} catch (Exception e) {
     		Stages.novoAlerta(e.getMessage(), "", true);

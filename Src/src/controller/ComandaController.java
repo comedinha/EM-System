@@ -322,6 +322,7 @@ public class ComandaController {
 		tc_valorIndividual.setCellValueFactory(new PropertyValueFactory<>("valorIndividual"));
 		tc_valorPago.setCellValueFactory(new PropertyValueFactory<>("valorPago"));
 		tc_valorTotal.setCellValueFactory(new PropertyValueFactory<>("valorTotal"));
+		tc_data.setCellValueFactory(new PropertyValueFactory<>("data"));
 
 		if (!txf_comid.getText().isEmpty()) {
 			tv_produtos.setItems(Comanda.getAllProduto(Integer.valueOf(txf_comid.getText()), comandaData));

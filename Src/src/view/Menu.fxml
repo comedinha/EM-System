@@ -108,9 +108,11 @@
                                  </children>
                               </GridPane>
                               <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#act_BuscaFinanceiro" text="Buscar" />
+                              <Separator prefWidth="200.0" />
+                              <TextField fx:id="txf_financBusca" />
                            </children>
                         </VBox>
-                        <SplitPane dividerPositions="0.7296747967479674" orientation="VERTICAL" prefHeight="491.0" prefWidth="289.0">
+                        <SplitPane dividerPositions="0.9063136456211812" orientation="VERTICAL" prefHeight="491.0" prefWidth="289.0">
                            <items>
                               <TableView fx:id="tv_financ" prefHeight="200.0" prefWidth="200.0">
                                 <columns>
@@ -121,7 +123,7 @@
                                     <TableColumn fx:id="tc_financVlr" prefWidth="83.0" text="Valor" />
                                 </columns>
                               </TableView>
-                              <TextArea editable="false" prefHeight="125.0" prefWidth="308.0" />
+                              <TextArea fx:id="ta_financInfo" editable="false" prefHeight="125.0" prefWidth="294.0" text="Informações do período:&#10;Total ganho: %s" />
                            </items>
                         </SplitPane>
                      </items>

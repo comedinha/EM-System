@@ -28,7 +28,7 @@ public class Comanda {
 	public static ResultSet criaComanda(int id, int funcionarioId) throws Exception {
 		return dao.Comanda.novaComanda(id, funcionarioId);
 	}
-	
+
 	/**
 	 * Retorna uma lista com as comandas que já foram pagas em determinado período de tempo.
 	 * @param dataDe Data inicial da pesquisa
@@ -47,7 +47,7 @@ public class Comanda {
 
 		return ol;
 	}
-	
+
 	/**
 	 * Cria uma lista com todas as comandas no DB
 	 * @return Lista com as comandas
@@ -63,7 +63,7 @@ public class Comanda {
 		}		
 		return ol;
 	}
-	
+
 	/**Adiciona produto em uma comanda
 	 * @param comandaId ID da comanda
 	 * @param data Data da criação da comanda
@@ -74,7 +74,7 @@ public class Comanda {
 	public static void addProduto(int comandaId, Timestamp data, int produtoId, int qtde) throws Exception {
 		dao.Comanda.addProduto(comandaId, data, produtoId, qtde);
 	}
-	
+
 	/**
 	 * Cria uma lista de todos os produtos de uma determinada comanda
 	 * @param id ID da comanda
@@ -98,11 +98,11 @@ public class Comanda {
 			}
 
 			ol.add(new TableViewComandaProduto(result.getInt(1), nome, 
-					result.getInt(3), preco, result.getFloat(5)));
+					result.getInt(3), preco, result.getFloat(5), result.getTimestamp(7)));
 		}
 		return ol;
 	}
-	
+
 	/**
 	 * Verifica a existencia de um produto na comanda.
 	 * @param idComanda ID da comanda
@@ -114,7 +114,7 @@ public class Comanda {
 	public static boolean existeNaComanda(int idComanda, Timestamp data, int idProduto) throws Exception {
 		return dao.Comanda.existeNaComanda(idComanda, data, idProduto);
 	}
-	
+
 	/**
 	 * Atualiza a quantidade de um produto na comanda.
 	 * @param idComanda ID da comanda
@@ -126,7 +126,7 @@ public class Comanda {
 	public static void updateQtde(int idComanda, Timestamp data, int idProduto, int qtde) throws Exception {
 		dao.Comanda.updateQtde(idComanda, data, idProduto, qtde);
 	}
-	
+
 	/**
 	 * Remove um produto da comanda
 	 * @param idComanda ID da comanda
@@ -190,15 +190,17 @@ public class Comanda {
     	private final SimpleFloatProperty valorIndividual;
     	private final SimpleFloatProperty valorTotal;
     	private final SimpleFloatProperty valorPago;
+    	private final SimpleStringProperty data;
 		
-    	public TableViewComandaProduto(int id, String nome, int qtde, float valorIndividual,
-    			float valorPago) {
+    	public TableViewComandaProduto(int id, String nome, int qtde, float valorIndividual, float valorPago, Timestamp dataProduto) {
 			this.id = new SimpleIntegerProperty(id);
 			this.qtde = new SimpleIntegerProperty(qtde);
 			this.nome = new SimpleStringProperty(nome);
 			this.valorIndividual = new SimpleFloatProperty(valorIndividual);
 			this.valorTotal = new SimpleFloatProperty(getQtde() * getValorIndividual());
 			this.valorPago = new SimpleFloatProperty(valorPago);
+			DateFormat f = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+			this.data = new SimpleStringProperty(f.format(dataProduto));
 		}
 
 		public int getId() {
@@ -223,6 +225,10 @@ public class Comanda {
 
 		public float getValorPago() {
 			return valorPago.get();
+		}
+
+		public String getData() {
+			return data.get();
 		}
     }
 	
