@@ -124,4 +124,19 @@ public class Produto {
 		ResultSet result = ps.executeQuery();
 		return result;
 	}
+
+	/**
+	 * Retorna o produto alterado pesquisado
+	 * @param date Data do produto
+	 * @throws Exception
+	 */
+	public static ResultSet getProdutoAlterado(Timestamp date) throws Exception {
+		String sql = "SELECT pa.nome, pa.valor FROM produtoAlterado pa WHERE pa.data = ?";
+
+		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
+		ps.setTimestamp(1, date);
+
+		ResultSet result = ps.executeQuery();
+		return result;
+	}
 }

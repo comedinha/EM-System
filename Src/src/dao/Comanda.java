@@ -220,7 +220,9 @@ public class Comanda {
 		while (result.next()) {
 			float preco = result.getFloat(3);
 			if (result.getTimestamp(4) != null) {
-				preco = getPrecoProdutoAlterado(result.getTimestamp(4));
+				ResultSet produtoAlterado = dao.Produto.getProdutoAlterado(result.getTimestamp(4));
+				if (produtoAlterado.next())
+					preco = produtoAlterado.getFloat(2);
 			}
 
 			valor += preco * result.getInt(2);
@@ -229,28 +231,6 @@ public class Comanda {
 		ResultSet desconto = Pagamento.getAllPagamentoDesconto(comandaId, date, true);
 		while (desconto.next()) {
 			valor -= desconto.getFloat(2);
-		}
-
-		return valor;
-	}
-
-	/**
-	 * Retorna o valor total da comanda
-	 * @param comandaId ID da comanda
-	 * @param date Data de criação da comanda
-	 * @return Retorna pesquisa
-	 * @throws Exception
-	 */
-	public static float getPrecoProdutoAlterado(Timestamp date) throws Exception {
-		String sql = "SELECT pa.valor FROM produtoAlterado pa WHERE pa.data = ?";
-
-		PreparedStatement ps = Valores.getConnection().prepareStatement(sql);
-		ps.setTimestamp(1, date);
-
-		float valor = 0;
-		ResultSet result = ps.executeQuery();
-		if (result.next()) {
-			valor = result.getFloat(1);
 		}
 
 		return valor;

@@ -96,11 +96,16 @@ public class Comanda {
 
 		while (result.next()) {
 			float preco = result.getFloat(4);
+			String nome = result.getString(2);
 			if (result.getTimestamp(6) != null) {
-				preco = dao.Comanda.getPrecoProdutoAlterado(result.getTimestamp(6));
+				ResultSet produtoAlterado = dao.Produto.getProdutoAlterado(result.getTimestamp(6));
+				if (produtoAlterado.next()) {
+					nome = produtoAlterado.getString(1);
+					preco = produtoAlterado.getFloat(2);
+				}
 			}
 
-			ol.add(new TableViewComandaProduto(result.getInt(1), result.getString(2), 
+			ol.add(new TableViewComandaProduto(result.getInt(1), nome, 
 					result.getInt(3), preco, result.getFloat(5)));
 		}
 		return ol;
