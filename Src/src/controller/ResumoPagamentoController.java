@@ -126,6 +126,11 @@ public class ResumoPagamentoController {
 
     /**
 	 * Metodo que inicializa a visualização dos pagamentos
+	 * @param id id da comanda
+	 * @param data data da comanda
+	 * @param enable permitir remover pagamentos
+	 * @param root root do controller
+	 * @param comandaController controlador da comanda
 	 */
 	public void vizualizaPagamento(int id, Timestamp data, boolean enable, Parent root, ComandaController comandaController) {
 		try {

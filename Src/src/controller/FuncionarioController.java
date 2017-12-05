@@ -129,11 +129,11 @@ public class FuncionarioController {
 
     /**
      * Metodo chamado quando acessa-se a interface no modo edição
-     * @param id
-     * @param nome
-     * @param login
-     * @param cargo
-     * @param garcom
+     * @param id do funcionário
+     * @param nome nome do funcionário
+     * @param login login do funcionário
+     * @param cargo cargo do funcionário
+     * @param garcom verificação se funcionário é garçom
      */
     void editaFuncionario(int id, String nome, String login, String cargo, boolean garcom) {
     	mode = 1;

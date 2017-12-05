@@ -37,7 +37,7 @@ public enum FuncionarioEnum {
 				case 1 :
 					return "Gerente";
 				case 2 :
-					return "Usuário";
+					return "Usuario";
 				default :
 					return "Error";
 			}
