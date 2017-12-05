@@ -20,6 +20,11 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
+/**
+ * Classe define o controller da configuração do banco de dados
+ * @author Bruno Carvalho, Luiz Eduardo, Mateus Tabaldi.
+ * @version 1.0
+ */
 public class ConfigDatabaseController {
 	ObservableList<String> cb_sqlTypeList = FXCollections
 			.observableArrayList("postgresql");

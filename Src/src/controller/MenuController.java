@@ -41,6 +41,11 @@ import system.Funcionario.TableViewFuncionario;
 import java.time.LocalDate;
 import java.util.Optional;
 
+/**
+ * Classe define o controller do menu
+ * @author Bruno Carvalho, Luiz Eduardo, Mateus Tabaldi.
+ * @version 1.0
+ */
 public class MenuController {
 	@FXML
     private TextArea ta_inicio;

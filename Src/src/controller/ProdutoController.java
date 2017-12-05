@@ -15,6 +15,11 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
+/**
+ * Classe define o controller do produto
+ * @author Bruno Carvalho, Luiz Eduardo, Mateus Tabaldi.
+ * @version 1.0
+ */
 public class ProdutoController {
 	private int mode = 0;
 

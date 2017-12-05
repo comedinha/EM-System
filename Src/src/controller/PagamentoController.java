@@ -17,6 +17,11 @@ import util.MeioPagamentoEnum;
 import util.Stages;
 import util.Valores;
 
+/**
+ * Classe define o controller do pagamento
+ * @author Bruno Carvalho, Luiz Eduardo, Mateus Tabaldi.
+ * @version 1.0
+ */
 public class PagamentoController {
 	private int mode = 0;
 	private int idproduto;

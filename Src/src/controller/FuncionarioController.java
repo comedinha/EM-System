@@ -19,6 +19,11 @@ import util.FuncionarioEnum;
 import util.Stages;
 import util.Valores;
 
+/**
+ * Classe define o controller dos funcionarios
+ * @author Bruno Carvalho, Luiz Eduardo, Mateus Tabaldi.
+ * @version 1.0
+ */
 public class FuncionarioController {
 	private int mode = 0;
 	private int id = 0;
@@ -112,6 +117,9 @@ public class FuncionarioController {
     	cb_cargo.setValue(FuncionarioEnum.Usuario);
     }
 
+    /**
+	 * Metodo executado ao cadastrar o primeiro usuário
+	 */
     void cadastroInicial() {
     	inicial = true;
 

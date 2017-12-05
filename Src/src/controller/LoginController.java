@@ -11,6 +11,11 @@ import system.Funcionario;
 import util.Stages;
 import util.Valores;
 
+/**
+ * Classe define o controller do login
+ * @author Bruno Carvalho, Luiz Eduardo, Mateus Tabaldi.
+ * @version 1.0
+ */
 public class LoginController {
 
     @FXML

@@ -23,6 +23,11 @@ import system.Pagamento.TableViewPagamento;
 import util.Stages;
 import util.Valores;
 
+/**
+ * Classe define o controller do resumo de pagamentos
+ * @author Bruno Carvalho, Luiz Eduardo, Mateus Tabaldi.
+ * @version 1.0
+ */
 public class ResumoPagamentoController {
 	int id;
 	Timestamp data;

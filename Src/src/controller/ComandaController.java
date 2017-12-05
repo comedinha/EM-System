@@ -38,6 +38,11 @@ import system.Produto;
 import util.Stages;
 import util.Valores;
 
+/**
+ * Classe define o controller da comanda
+ * @author Bruno Carvalho, Luiz Eduardo, Mateus Tabaldi.
+ * @version 1.0
+ */
 public class ComandaController {
 	private Timestamp comandaData;
 	private FXMLLoader loader;
@@ -457,15 +462,19 @@ public class ComandaController {
 		}
 	}
 
+	/**
+	 * Metodo executado ao iniciar a comanda
+	 * @param loader loader da comanda
+	 */
 	public void iniciaComanda(FXMLLoader loader) {
 		this.loader = loader;
 	}
 	
 	/**
 	 * Metodo chamado quando se entra na interface no modo edição
-	 * @param id
-	 * @param data
-	 * @param loader
+	 * @param id id da comanda
+	 * @param data data da comanda
+	 * @param loader loader da comanda
 	 */
 	public void editaComanda(int id, Timestamp data, FXMLLoader loader) {
 		try {
@@ -489,9 +498,9 @@ public class ComandaController {
 
 	/**
 	 * Metodo chamado quando se entra na interface no modo visualização
-	 * @param id
-	 * @param data
-	 * @param loader
+	 * @param id id da comanda
+	 * @param data data da comanda
+	 * @param loader loader da comanda
 	 */
 	public void visualizaComanda(int id, Timestamp data, FXMLLoader loader) {
 		try {
