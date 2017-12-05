@@ -70,42 +70,95 @@ public class Configuracao implements PropertySheet.Item {
         return Optional.empty();
     }
 
+    /**
+	 * Adiciona uma configuração ao mapa de configurações.
+	 * @param key chave da configuração
+	 * @param value coloca o valor da configuração
+	 */
     public static void configDataPut(String key, Object value) {
     	configDataMap.put(key, value);
     }
 
+    /**
+	 * Busca uma configuração ao mapa de configurações.
+	 */
     public static Set<String> configDataMapKeySet() {
     	return configDataMap.keySet();
     }
 
+    /**
+	 * Exclui o mapa de configurações
+	 */
     public static void configDataClean() {
     	configDataMap.clear();
     }
 
+    /**
+	 * Busca uma configuração ao mapa de configurações baseada no valor.
+	 * @param key chave da configuração
+	 */
     public static String configDataGetValue(String key) {
     	return configDataMap.get(key).toString();
     }
 
+    /**
+	 * Adiciona uma configuração ao funcionário
+	 * @param id id do funcionário
+	 * @param key chave da configuração
+	 * @param value valor da chave da configuração
+	 * @throws Exception
+	 */
     public static void adicionaConfiguracaoFuncionario(int id, String key, String value) throws Exception {
     	dao.Configuracao.adicionaConfiguracaoFuncionario(id, key, value);
     }
 
+    /**
+	 * Adiciona uma configuração global
+	 * @param key chave da configuração
+	 * @param value valor da chave da configuração
+	 * @throws Exception
+	 */
     public static void adicionaConfiguracaoGlobal(String key, String value) throws Exception {
     	dao.Configuracao.adicionaConfiguracaoGlobal(key, value);
     }
 
+    /**
+	 * Atualiza uma configuração ao funcionário
+	 * @param id id do funcionário
+	 * @param key chave da configuração
+	 * @param value valor da chave da configuração
+	 * @throws Exception
+	 */
     public static void updateConfiguracaoFuncionario(int id, String key, String value) throws Exception {
     	dao.Configuracao.updateConfiguracaoFuncionario(id, key, value);
     }
 
+    /**
+	 * Atualiza uma configuração global
+	 * @param key chave da configuração
+	 * @param value valor da chave da configuração
+	 * @throws Exception
+	 */
     public static void updateConfiguracaoGlobal(String key, String value) throws Exception {
     	dao.Configuracao.updateConfiguracaoGlobal(key, value);
     }
 
+    /**
+	 * Busca uma configuração ao funcionário
+	 * @param id id do funcionário
+	 * @param key chave da configuração
+	 * @throws Exception
+	 */
     public static ResultSet getConfiguracaoFuncionario(int id, String key) throws Exception {
     	return dao.Configuracao.getConfigFuncionario(id, key);
     }
 
+    /**
+	 * Busca uma configuração global
+	 * @param key chave da configuração
+	 * @param value valor da chave da configuração
+	 * @throws Exception
+	 */
     public static ResultSet getConfiguracaoGlobal(String key) throws Exception {
     	return dao.Configuracao.getConfigGlobal(key);
     }
