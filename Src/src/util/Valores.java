@@ -17,11 +17,19 @@ public class Valores {
 	private static Connection database;
 	private static Funcionario funcionario;
 	private static MenuController controller;
-
+	
+	/**
+	 * Salva o funcionario logado no sistema no atual momento
+	 * @param funcionario Objeto funcioanario
+	 */
 	public static void setFuncionario(Funcionario funcionario) {
 		Valores.funcionario = funcionario;
 	}
-
+	
+	/**
+	 * Salva a conexão com o BD
+	 * @param db Objeto do BD salvo
+	 */
 	public static boolean setBanco(Connection db) {
 		if (db != null) {
 			database = db;
@@ -30,11 +38,15 @@ public class Valores {
 			return false;
 		}
 	}
-
+	
+	/**
+	 * Salva o Stage do menuController
+	 * @param funcionario
+	 */
 	public static void setController(MenuController controller) {
 		Valores.controller = controller;
 	}
-
+	
 	public static Funcionario getUsuario() {
 		return funcionario;
 	}

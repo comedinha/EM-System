@@ -10,6 +10,11 @@ import java.util.Set;
 import org.controlsfx.control.PropertySheet;
 import org.controlsfx.property.editor.PropertyEditor;
 
+/**
+ * Configurações do sistema
+ * @author Bruno Carvalho, Luiz Eduardo, Mateus Tabaldi
+ *@version 1.0
+ */
 public class Configuracao implements PropertySheet.Item {
     private static Map<String, Object> configDataMap = new LinkedHashMap<>();
 

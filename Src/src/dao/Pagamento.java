@@ -132,7 +132,6 @@ public class Pagamento {
 	 * Pesquisa todos os pagamentos do sistema
 	 * @param id ID do pagamento
 	 * @param time Data da comanda
-	 * @param desconto Valor do desconto
 	 * @return Retorna a pesquisa
 	 * @throws Exception
 	 */

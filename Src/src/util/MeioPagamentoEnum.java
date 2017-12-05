@@ -37,9 +37,9 @@ public enum MeioPagamentoEnum {
 			case 1 :
 				return "Dinheiro";
 			case 2 :
-				return "Cartão de Debito";
+				return "Cartao de Debito";
 			case 3 :
-				return "Cartão de Crédito";
+				return "Cartao de Credito";
 			default :
 				return "Error";
 		}

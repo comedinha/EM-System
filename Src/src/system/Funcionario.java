@@ -64,10 +64,10 @@ public class Funcionario {
 	
 	/**
 	 * Adiciona um novo funcionario ao sistema
-	 * @param funcao Função do funcionario
+	 * @param func Função do funcionario
 	 * @param nome Nome do funcionario
-	 * @param login Nome de usuario do funcionario
-	 * @param password Senha
+	 * @param usr Nome de usuario do funcionario
+	 * @param pass Senha
 	 * @param garcom Se esse funcionario vai ser garçom ou não
 	 * @throws Exception
 	 */
@@ -77,8 +77,8 @@ public class Funcionario {
 	
 	/**
 	 * Verifica se o nome de usuario existe no sistema, e se a senha está correta
-	 * @param username Nome usuario
-	 * @param password Senha
+	 * @param usr Nome usuario
+	 * @param passSenha
 	 * @return Retorna True caso esteja tudo certo, e False caso contrario
 	 * @throws Exception
 	 */

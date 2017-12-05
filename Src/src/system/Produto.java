@@ -103,6 +103,8 @@ public class Produto {
 	/**
 	 * Reativa um produto no sistema
 	 * @param id ID do produto
+	 * @param nome nome do produto
+	 * @param valor valor do produto
 	 * @return
 	 * @throws Exception
 	 */
