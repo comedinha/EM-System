@@ -9,7 +9,7 @@ import java.util.Map;
  *
  */
 public enum FuncionarioEnum {
-		Gerente(1), Usuário(2);
+		Gerente(1), Usuario(2);
 
 		private static final Map<Integer, FuncionarioEnum> lookup = new HashMap<Integer, FuncionarioEnum>();
 	    static {

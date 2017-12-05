@@ -1,6 +1,9 @@
 package controller;
 
 import system.Funcionario;
+
+import java.util.regex.Pattern;
+
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -53,9 +56,14 @@ public class FuncionarioController {
     			throw new Exception("Insira um nome!");
 	    	if (login.isEmpty())
 	    		throw new Exception("Insira um login!");
-	    	if (senha.isEmpty() && chb_senha.isSelected()) {
+	    	if (senha.isEmpty() && chb_senha.isSelected())
 	    		throw new Exception("Insira uma senha!");
-	    	}
+
+	    	Pattern digit = Pattern.compile("[0-9]");
+	    	Pattern special = Pattern.compile("[!@#$%&*()_+=|<>?{}\\[\\]~-]");
+	    	if (digit.matcher(nome).find() || special.matcher(nome).find())
+	    		throw new Exception("O nome não pode conter números ou caracteres especiais!");
+	    	
 
 	    	//mode 0 = insirir novo funcionario
 	    	//mode 1 = editar funcionario
@@ -101,7 +109,7 @@ public class FuncionarioController {
         });
 
     	cb_cargo.getItems().addAll(FuncionarioEnum.values());
-    	cb_cargo.setValue(FuncionarioEnum.Usuário);
+    	cb_cargo.setValue(FuncionarioEnum.Usuario);
     }
 
     void cadastroInicial() {

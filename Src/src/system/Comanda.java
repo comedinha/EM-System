@@ -64,14 +64,6 @@ public class Comanda {
 		return ol;
 	}
 	
-	/**
-	 * Finaliza a comanda
-	 * @return 
-	 */
-	public static int finalizaComanda() {
-		return 0;
-	}
-	
 	/**Adiciona produto em uma comanda
 	 * @param comandaId ID da comanda
 	 * @param data Data da criação da comanda
