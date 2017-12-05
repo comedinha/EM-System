@@ -1,7 +1,9 @@
 package controller;
 
+import java.sql.ResultSet;
 import java.sql.Timestamp;
 
+import dao.Configuracao;
 import system.Pagamento;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -90,11 +92,19 @@ public class PagamentoController {
 
     @FXML
     private void initialize() {
+    	try {
     	if (Valores.getConnection() == null || Valores.getUsuario() == null || Valores.getController() == null)
     		Platform.exit();
 
     	cb_meioPagamento.getItems().addAll(MeioPagamentoEnum.values());
-    	cb_meioPagamento.setValue(MeioPagamentoEnum.Dinheiro);
+    	ResultSet result = Configuracao.getConfigFuncionario(Valores.getUsuario().getId(), "Global.Meio de Pagamento");
+    	if (result.next()) {
+    		cb_meioPagamento.setValue(MeioPagamentoEnum.getKey(result.getString("value")));
+    	} else
+    		cb_meioPagamento.setValue(MeioPagamentoEnum.Dinheiro);
+    	} catch (Exception e) {
+    		Stages.novoAlerta(e.getMessage(), "", true);
+    	}
 	}
     
     /**

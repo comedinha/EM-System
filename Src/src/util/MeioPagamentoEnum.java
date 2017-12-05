@@ -11,10 +11,10 @@ import java.util.Map;
 public enum MeioPagamentoEnum {
 	Dinheiro(1), Cartao1(2), Cartao2(3);
 
-	private static final Map<Integer, MeioPagamentoEnum> lookup = new HashMap<Integer, MeioPagamentoEnum>();
+	private static final Map<Integer, MeioPagamentoEnum> Lookup = new HashMap<Integer, MeioPagamentoEnum>();
     static {
         for (MeioPagamentoEnum d : MeioPagamentoEnum.values()) {
-            lookup.put(d.getValor(), d);
+        	Lookup.put(d.getValor(), d);
         }
     }
 
@@ -28,8 +28,18 @@ public enum MeioPagamentoEnum {
 	}
 
 	public static MeioPagamentoEnum get(int id) {
-        return lookup.get(id);
+        return Lookup.get(id);
     }
+
+	public static MeioPagamentoEnum getKey(String key) {
+		if (key.contains("Dinheiro"))
+			return Dinheiro;
+		else if (key.contains("Cartao de Debito"))
+			return Cartao1;
+		else if (key.contains("Cartao de Credito"))
+			return Cartao2;
+		return null;
+	}
 
 	@Override
 	public String toString() {

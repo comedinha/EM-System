@@ -1,6 +1,7 @@
 package controller;
 
 import java.sql.Date;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.controlsfx.control.PropertySheet;
 import javafx.application.Platform;
@@ -192,8 +193,26 @@ public class MenuController {
 
     @FXML
     private void btn_salvaConfig(ActionEvent event) {
-    	for (String key : Configuracao.configDataMapKeySet())
-    		System.out.println(Configuracao.configDataGetValue(key));
+    	try {
+	    	for (String key : Configuracao.configDataMapKeySet()) {
+	    		if (key.contains("Sistema")) {
+	    			ResultSet result = Configuracao.getConfiguracaoGlobal(key);
+	    			if (result.next())
+	    				Configuracao.updateConfiguracaoGlobal(key, Configuracao.configDataGetValue(key));
+	    			else
+	    				Configuracao.adicionaConfiguracaoGlobal(key, Configuracao.configDataGetValue(key));
+	    		} else {
+	    			int id = Valores.getUsuario().getId();
+	    			ResultSet result = Configuracao.getConfiguracaoFuncionario(id, key);
+	    			if (result.next())
+	    				Configuracao.updateConfiguracaoFuncionario(id, key, Configuracao.configDataGetValue(key));
+	    			else
+	    				Configuracao.adicionaConfiguracaoFuncionario(id, key, Configuracao.configDataGetValue(key));
+	    		}
+	    	}
+    	} catch (Exception e) {
+    		Stages.novoAlerta(e.getMessage(), "", true);
+    	}
     }
 
     @FXML
@@ -433,7 +452,7 @@ public class MenuController {
 
     					Optional<ButtonType> result = alert.showAndWait();
     					if (result.get() == buttonConfirm) {
-    						if (!Produto.delete(row.getItem().getId())) {
+    						if (!Produto.deleteProduto(row.getItem().getId())) {
     							refresh(1);
     	    					throw new Exception("Erro ao remover produto!");
     	    				}
@@ -592,8 +611,17 @@ public class MenuController {
     		Configuracao.configDataPut("Sistema.Permitir descontos", true);
     	}
 
-    	for (String key : Configuracao.configDataMapKeySet())
+    	for (String key : Configuracao.configDataMapKeySet()) {
     		ps_configuracoes.getItems().add(new Configuracao(key));
+    	}
+
+		ResultSet resultDesconto = Configuracao.getConfiguracaoGlobal("Sistema.Permitir descontos");
+		if (resultDesconto.next())
+			Configuracao.configDataPut("Sistema.Permitir descontos", Boolean.parseBoolean(resultDesconto.getString("value")));
+
+		ResultSet resultPagamento = Configuracao.getConfiguracaoFuncionario(Valores.getUsuario().getId(), "Global.Meio de Pagamento");
+		if (resultPagamento.next())
+			Configuracao.configDataPut("Sistema.Permitir descontos", MeioPagamentoEnum.getKey(resultPagamento.getString("value")));
     }
 
     /**

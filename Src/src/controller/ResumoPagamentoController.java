@@ -99,7 +99,7 @@ public class ResumoPagamentoController {
 		            				}
 		    						Valores.getController().refresh(3);
 		    						controller.refresh();
-		    						reload();
+		    						refresh();
 		    					}
 		        			} else
 								throw new Exception("Essa comanda está finalizada, não é possível fazer esta ação.");
@@ -139,7 +139,7 @@ public class ResumoPagamentoController {
 	 * atualiza a interface
 	 * @throws Exception
 	 */
-	private void reload() throws Exception {
+	private void refresh() throws Exception {
 		tv_pagamento.getItems().clear();
 		tv_pagamento.setItems(Pagamento.getAllPagamento(id, data));
 	}

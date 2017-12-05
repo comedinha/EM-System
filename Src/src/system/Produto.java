@@ -96,7 +96,7 @@ public class Produto {
 	 * @return
 	 * @throws Exception
 	 */
-	public static boolean delete(int id) throws Exception {
+	public static boolean deleteProduto(int id) throws Exception {
 		return dao.Produto.deleteProduto(id);
 	}
 
