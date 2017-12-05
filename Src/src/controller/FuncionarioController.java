@@ -80,12 +80,12 @@ public class FuncionarioController {
 	    		}
 	    	}
 
-	    	fecharFuncionario();
 	    	((Node) event.getSource()).getScene().getWindow().hide();
 	    	if (inicial) {
 	    		Stages st = new Stages();
 	    		st.novoStage("EMSystem Login", "Login");
 	    	} else {
+	    		fecharFuncionario();
 	    		Valores.getController().refresh(2);
 	    	}
     	} catch (Exception e) {
@@ -123,8 +123,8 @@ public class FuncionarioController {
     void cadastroInicial() {
     	inicial = true;
 
-    	cb_cargo.setValue(FuncionarioEnum.Gerente);
     	cb_cargo.setDisable(true);
+    	cb_cargo.setValue(FuncionarioEnum.Gerente);
     }
 
     /**

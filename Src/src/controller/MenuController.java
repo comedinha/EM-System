@@ -638,16 +638,18 @@ public class MenuController {
      */
     public void refresh(int type) throws Exception {
     	try {
-	    	if (type == 1) {
-	    		tv_prod.getItems().clear();
-	    		tv_prod.setItems(Produto.getAllProduto());
-	    		txf_prodBusca.setText(txf_prodBusca.getText());
-	    	} else if (type == 2) {
-	    		tv_func.getItems().clear();
-	    		tv_func.setItems(Funcionario.getAllFuncionario());
-	    		txf_funcBusca.setText(txf_funcBusca.getText());
-	    		iniciaInicio();
-	    	}
+    		if (Valores.getUsuario().getFuncao() == 1) {
+		    	if (type == 1) {
+		    		tv_prod.getItems().clear();
+		    		tv_prod.setItems(Produto.getAllProduto());
+		    		txf_prodBusca.setText(txf_prodBusca.getText());
+		    	} else if (type == 2) {
+		    		tv_func.getItems().clear();
+		    		tv_func.setItems(Funcionario.getAllFuncionario());
+		    		txf_funcBusca.setText(txf_funcBusca.getText());
+		    		iniciaInicio();
+		    	}
+    		}
 
 	    	tv_comand.getItems().clear();
 	    	tv_comand.setItems(Comanda.getAllComanda());

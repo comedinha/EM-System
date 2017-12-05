@@ -47,11 +47,18 @@ public class PagamentoController {
 
     @FXML
     private void act_alteravalor(ActionEvent event) {
-    	float troco = Float.valueOf(txf_caixa.getText()) - Float.valueOf(txf_valorPagar.getText());
-	    if (troco > 0)
-	    	txf_troco.setText(Float.toString(troco));
-	    else
-	    	txf_troco.setText("0");
+    	try {
+    		if (mode == 1)
+    			return;
+
+	    	float troco = Float.valueOf(txf_caixa.getText()) - Float.valueOf(txf_valorPagar.getText().replace(',', '.'));
+		    if (troco > 0)
+		    	txf_troco.setText(Float.toString(troco));
+		    else
+		    	txf_troco.setText("0");
+    	} catch (Exception e) {
+    		Stages.novoAlerta(e.getMessage(), "", true);
+    	}
     }
 
     @FXML
@@ -64,18 +71,20 @@ public class PagamentoController {
     @FXML
     private void act_salvar(ActionEvent event) {
     	try {
-    		float troco = Float.valueOf(txf_caixa.getText()) - Float.valueOf(txf_valorPagar.getText());
-    	    if (troco > 0)
-    	    	txf_troco.setText(Float.toString(troco));
-    	    else
-    	    	txf_troco.setText("0");
+    		if (mode != 1) {
+	    		float troco = Float.valueOf(txf_caixa.getText()) - Float.valueOf(txf_valorPagar.getText().replace(',', '.'));
+	    	    if (troco > 0)
+	    	    	txf_troco.setText(Float.toString(troco));
+	    	    else
+	    	    	txf_troco.setText("0");
+    		}
 
-    		float valorPagar = Float.valueOf(txf_caixa.getText());
+    		float valorPagar = Float.valueOf(txf_caixa.getText().replace(',', '.'));
     		if (valorPagar < 0)
     			throw new Exception("O valor não pode ser menor que 0!");
 
-    		if (Float.valueOf(txf_troco.getText()) > 0)
-    			valorPagar -= Float.valueOf(txf_troco.getText());
+	    	if (Float.valueOf(txf_troco.getText()) > 0)
+	    		valorPagar -= Float.valueOf(txf_troco.getText());
 
 	    	if (mode == 0) {
 	    		Pagamento.pagamentoComanda(id, time, valorPagar, Valores.getUsuario().getId(), cb_meioPagamento.getValue().getValor(), false);
@@ -128,6 +137,9 @@ public class PagamentoController {
     	this.controller = comandaController;
     	txf_valorPagar.setText(Float.toString(valor));
     	txt_caixa.setText(String.format(txt_caixa.getText(), "Desconto"));
+    	txf_troco.setDisable(true);
+    	cb_meioPagamento.setDisable(true);
+    	txf_troco.setText("0");
     }
     
     /**
