@@ -2,7 +2,6 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 
 import util.Crypto;
 import util.Valores;
@@ -30,13 +29,5 @@ public class ConectaBanco {
 		if (checkFunc && !Funcionario.verificaGerente(con))
 			throw new Exception("Nenhum funcionário existente.");
 		Valores.setBanco(con);
-	}
-
-	/**
-	 * Desconecta a aplicação do banco de dados
-	 * @throws SQLException
-	 */
-	public static void desconectaBanco() throws SQLException {
-		Valores.getConnection().close();
 	}
 }

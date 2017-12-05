@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import java.util.Optional;
 
 import org.controlsfx.control.textfield.TextFields;
+
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
@@ -30,6 +31,7 @@ import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.cell.PropertyValueFactory;
 import system.Comanda;
 import system.Comanda.TableViewComandaProduto;
+import system.Configuracao;
 import system.Funcionario;
 import system.Pagamento;
 import system.Produto;
@@ -287,7 +289,9 @@ public class ComandaController {
 		try {
 			if (Valores.getConnection() == null || Valores.getUsuario() == null || Valores.getController() == null)
 	    		Platform.exit();
-			
+
+			btn_desconto.setDisable(!Boolean.parseBoolean(Configuracao.configDataGetValue("Sistema.Permitir descontos")));
+
 			txf_qtde.setText("1");
 			chb_comid.selectedProperty().addListener((ChangeListener<? super Boolean>) new ChangeListener<Boolean>() {
 	    		public void changed(ObservableValue<? extends Boolean> ov,

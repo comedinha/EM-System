@@ -2,6 +2,7 @@ package system;
 
 import javafx.beans.value.ObservableValue;
 
+import java.sql.ResultSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -83,5 +84,29 @@ public class Configuracao implements PropertySheet.Item {
 
     public static String configDataGetValue(String key) {
     	return configDataMap.get(key).toString();
+    }
+
+    public static void adicionaConfiguracaoFuncionario(int id, String key, String value) throws Exception {
+    	dao.Configuracao.adicionaConfiguracaoFuncionario(id, key, value);
+    }
+
+    public static void adicionaConfiguracaoGlobal(String key, String value) throws Exception {
+    	dao.Configuracao.adicionaConfiguracaoGlobal(key, value);
+    }
+
+    public static void updateConfiguracaoFuncionario(int id, String key, String value) throws Exception {
+    	dao.Configuracao.updateConfiguracaoFuncionario(id, key, value);
+    }
+
+    public static void updateConfiguracaoGlobal(String key, String value) throws Exception {
+    	dao.Configuracao.updateConfiguracaoGlobal(key, value);
+    }
+
+    public static ResultSet getConfiguracaoFuncionario(int id, String key) throws Exception {
+    	return dao.Configuracao.getConfigFuncionario(id, key);
+    }
+
+    public static ResultSet getConfiguracaoGlobal(String key) throws Exception {
+    	return dao.Configuracao.getConfigGlobal(key);
     }
 }

@@ -30,7 +30,7 @@ CREATE TABLE comanda(
 
 CREATE TABLE produto(
 	produtoId SERIAL PRIMARY KEY NOT NULL,
-	nome varchar(30),
+	nome varchar(30) UNIQUE,
 	valor numeric(8,2),
 	status int DEFAULT 1
 );
