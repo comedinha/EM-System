@@ -184,14 +184,16 @@ public class Funcionario {
     	private final SimpleStringProperty nome;
     	private final SimpleStringProperty login;
     	private final SimpleStringProperty cargo;
-    	private final SimpleBooleanProperty garcom;
+    	private final SimpleStringProperty garcom;
+    	private final SimpleBooleanProperty garcomBool;
 
     	public TableViewFuncionario(int id, String nome, String loginname, int cargo, boolean garcom) {
     		this.id = new SimpleIntegerProperty(id);
     		this.nome = new SimpleStringProperty(nome);
     		this.login = new SimpleStringProperty(loginname);
     		this.cargo = new SimpleStringProperty(FuncionarioEnum.get(cargo).toString());
-    		this.garcom = new SimpleBooleanProperty(garcom);
+    		this.garcom = new SimpleStringProperty(garcom ? "Sim" : "Não");
+    		this.garcomBool = new SimpleBooleanProperty(garcom);
     	}
 
     	public int getId() {
@@ -210,8 +212,12 @@ public class Funcionario {
     		return cargo.get();
     	}
 
-    	public boolean getGarcom() {
+    	public String getGarcomTexto() {
     		return garcom.get();
+    	}
+
+    	public boolean getGarcom() {
+    		return garcomBool.get();
     	}
     }
 }

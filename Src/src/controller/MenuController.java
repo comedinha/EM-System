@@ -250,7 +250,10 @@ public class MenuController {
      * @throws Exception
      */
     private void iniciaInicio() throws Exception {
-    	ta_inicio.setText(String.format(ta_inicio.getText(), Valores.getUsuario().getNome(), FuncionarioEnum.get(Valores.getUsuario().getFuncao()), null));
+    	String text = "Comandas e configurações.";
+    	if (Valores.getUsuario().getFuncao() == 1)
+    		text = "Todo o sistema";
+    	ta_inicio.setText(String.format(ta_inicio.getText(), Valores.getUsuario().getNome(), FuncionarioEnum.get(Valores.getUsuario().getFuncao()), text));
     }
     
     /**
@@ -511,7 +514,7 @@ public class MenuController {
 	        tc_funcNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
 	        tc_funcLogin.setCellValueFactory(new PropertyValueFactory<>("login"));
 	        tc_funcCargo.setCellValueFactory(new PropertyValueFactory<>("cargo"));
-	        tc_funcGarcom.setCellValueFactory(new PropertyValueFactory<>("garcom"));
+	        tc_funcGarcom.setCellValueFactory(new PropertyValueFactory<>("garcomTexto"));
 
         	tv_func.setItems(Funcionario.getAllFuncionario());
         	tv_func.setRowFactory((TableView<TableViewFuncionario> tv_funcionario) -> {
@@ -621,7 +624,7 @@ public class MenuController {
 
 		ResultSet resultPagamento = Configuracao.getConfiguracaoFuncionario(Valores.getUsuario().getId(), "Global.Meio de Pagamento");
 		if (resultPagamento.next())
-			Configuracao.configDataPut("Sistema.Permitir descontos", MeioPagamentoEnum.getKey(resultPagamento.getString("value")));
+			Configuracao.configDataPut("Global.Meio de Pagamento", MeioPagamentoEnum.getKey(resultPagamento.getString("value")));
     }
 
     /**
@@ -644,8 +647,18 @@ public class MenuController {
 	    	tv_comand.getItems().clear();
 	    	tv_comand.setItems(Comanda.getAllComanda());
 	    	txf_comandaBusca.setText(txf_comandaBusca.getText());
-	    	tv_financ.getItems().clear();
-	    	tv_financ.setItems(Comanda.getAllComandaPaga(Date.valueOf(dt_finBuscaDe.getValue()), Date.valueOf(dt_finBuscaAte.getValue())));
+
+	    	if (Valores.getUsuario().getFuncao() == 1) {
+	    		if (Date.valueOf(dt_finBuscaDe.getValue()).before(Date.valueOf(dt_finBuscaAte.getValue()))) {
+	    			tv_financ.getItems().clear();
+		    		tv_financ.setItems(Comanda.getAllComandaPaga(Date.valueOf(dt_finBuscaDe.getValue()), Date.valueOf(dt_finBuscaAte.getValue())));
+		    		float valorTotal = 0;
+					for (TableViewComandaPaga comanda : tv_financ.getItems()) {
+						valorTotal += comanda.getValor();
+					}
+					ta_financInfo.setText(String.format(ta_financInfo.getText(), Float.toString(valorTotal)));
+	    		}
+	    	}
     	} catch (Exception e) {
     		throw new Exception("Erro ao atualizar tabelas.");
     	}
