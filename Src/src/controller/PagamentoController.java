@@ -113,12 +113,12 @@ public class PagamentoController {
 	}
     
     /**
-     * Metodo chamado quando acessa-se a interface no modo edição
-     * @param id
-     * @param time
-     * @param valor
-     * @param root
-     * @param comandaController
+     * Metodo chamado quando acessa-se a interface no modo edição para dar descontos a comanda
+     * @param id da comanda
+     * @param time data da comanda
+     * @param valor valor do pagamento
+     * @param root root da comanda
+     * @param comandaController controlador da comanda
      */
     public void adicionaDesconto(int id, Timestamp time, float valor, Parent root, ComandaController comandaController) {
     	this.mode = 1;
@@ -132,11 +132,11 @@ public class PagamentoController {
     
     /**
      * Metodo chamado quando acessa-se a interface no modo adição de pagamento da comanda
-     * @param id
-     * @param time
-     * @param valor
-     * @param root
-     * @param comandaController
+     * @param id id da comanda
+     * @param time data da comanda
+     * @param valor valor do pagamento
+     * @param root root da comanda
+     * @param comandaController controlador da comanda
      */
     public void adicionaPagamento(int id, Timestamp time, float valor, Parent root, ComandaController comandaController) {
     	this.id = id;
@@ -149,12 +149,12 @@ public class PagamentoController {
     
     /**
      * Metodo chamado quando acessa-se a interface no modo adição de pagamento do produto
-     * @param id
-     * @param idComanda
-     * @param timeComanda
-     * @param valorPagar
-     * @param root
-     * @param comandaController
+     * @param id id do pagamento
+     * @param idComanda id da comanda
+     * @param timeComanda data da comanda
+     * @param valorPagar valor a pagar
+     * @param root root da comanda
+     * @param comandaController controlador da comanda
      */
 	public void adicionaProdutoPagamento(int id, int idComanda, Timestamp timeComanda, float valorPagar, Parent root, ComandaController comandaController) {
 		this.mode = 2;

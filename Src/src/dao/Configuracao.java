@@ -5,7 +5,19 @@ import java.sql.ResultSet;
 
 import util.Valores;
 
+/**
+ * Classe referente configuração do sistema.
+ * @author Bruno Carvalho, Luiz Eduardo, Mateus Tabaldi.
+ * @version 1.0
+ */
 public class Configuracao {
+	/**
+	 * Realiza a adição da configuração de funcionário no banco de dados.
+	 * @param id id do funcionário
+	 * @param key chave da configuração
+	 * @param value valor da configuração
+	 * @throws Exception
+	 */
 	public static void adicionaConfiguracaoFuncionario(int id, String key, String value) throws Exception {
 		String sql = "INSERT INTO configuracaoFuncionario (configKey, funcionarioId, value) VALUES (?, ?, ?)";
 
@@ -16,6 +28,12 @@ public class Configuracao {
 		ps.executeUpdate();
 	}
 
+	/**
+	 * Realiza a adição da configuração global no banco de dados.
+	 * @param key chave da configuração
+	 * @param value valor da configuração
+	 * @throws Exception
+	 */
 	public static void adicionaConfiguracaoGlobal(String key, String value) throws Exception {
 		String sql = "INSERT INTO configuracao (configKey, value) VALUES (?, ?)";
 
@@ -25,6 +43,13 @@ public class Configuracao {
 		ps.executeUpdate();
 	}
 
+	/**
+	 * Realiza a atualização da configuração de funcionário no banco de dados.
+	 * @param id id do funcionário
+	 * @param key chave da configuração
+	 * @param value valor da configuração
+	 * @throws Exception
+	 */
 	public static void updateConfiguracaoFuncionario(int id, String key, String value) throws Exception {		
 		String sql = "UPDATE configuracaoFuncionario SET value = ? WHERE funcionarioId = ? AND configKey = ?";
 
@@ -35,6 +60,12 @@ public class Configuracao {
 		ps.executeUpdate();
 	}
 
+	/**
+	 * Realiza a atualização da configuração global no banco de dados.
+	 * @param key chave da configuração
+	 * @param value valor da configuração
+	 * @throws Exception
+	 */
 	public static void updateConfiguracaoGlobal(String key, String value) throws Exception {		
 		String sql = "UPDATE configuracao SET value = ? WHERE configKey = ?";
 
@@ -44,6 +75,12 @@ public class Configuracao {
 		ps.executeUpdate();
 	}
 
+	/**
+	 * Realiza a busca da configuração de funcionário no banco de dados.
+	 * @param id id do funcionário
+	 * @param key chave da configuração
+	 * @throws Exception
+	 */
 	public static ResultSet getConfigFuncionario(int id, String key) throws Exception {
 		String sql = "SELECT * FROM configuracaoFuncionario WHERE configKey = ? AND funcionarioId = ?";
 
@@ -54,6 +91,11 @@ public class Configuracao {
 		return ps.executeQuery();
 	}
 
+	/**
+	 * Realiza a busca da configuração global no banco de dados.
+	 * @param key chave da configuração
+	 * @throws Exception
+	 */
 	public static ResultSet getConfigGlobal(String key) throws Exception {
 		String sql = "SELECT * FROM configuracao WHERE configKey = ?";
 
