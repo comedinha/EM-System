@@ -71,7 +71,7 @@ public class PagamentoController {
     @FXML
     private void act_salvar(ActionEvent event) {
     	try {
-    		float troco = Float.valueOf(txf_caixa.getText()) - Float.valueOf(txf_valorPagar.getText().replace(',', '.'));
+    		float troco = Float.valueOf(txf_caixa.getText().replace(',', '.')) - Float.valueOf(txf_valorPagar.getText());
     		if (troco > 0)
     			txf_troco.setText(Float.toString(troco));
     		else
