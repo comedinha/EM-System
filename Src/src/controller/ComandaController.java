@@ -257,9 +257,9 @@ public class ComandaController {
 	private void act_salvar(ActionEvent event) {
 		try {
 			if (txf_comid.getText().isEmpty())
-				throw new Exception("A comanda não tem um id.\nAdicione ao menos um produto.");
+				throw new Exception("Não é possível salvar a comanda.\nA comanda não tem um id.\nAdicione ao menos um produto.");
 			if (txf_mesa.getText().isEmpty())
-				throw new Exception("A mesa deve ser definida!");
+				throw new Exception("Não é possível salvar a comanda.\nA mesa deve ser definida!");
 
 			int idGarcom = Valores.getUsuario().getId();
 			if (!cb_garcom.getValue().isEmpty())
@@ -267,17 +267,17 @@ public class ComandaController {
 
 			if (!chb_finalizar.isSelected()) {
 				if (!Comanda.updateComanda(Integer.valueOf(txf_comid.getText()), comandaData, txf_mesa.getText(), idGarcom, false)) {
-					throw new Exception("Erro ao atualizar comanda!");
+					throw new Exception("Não é possível salvar a comanda.\nErro ao atualizar comanda!");
 				}
 			} else {
 				float valorTotal = Float.valueOf(ta_valorTotal.getText());
 	    		float valorPago = Float.valueOf(ta_valorPago.getText());
 	    		float valorPagar = valorTotal - valorPago;
 		    	if (valorPagar > 0)
-		    		throw new Exception("A comanda deve estar paga.");
+		    		throw new Exception("Não é possível salvar a comanda.\nA comanda deve estar paga.");
 
 				if (!Comanda.updateComanda(Integer.valueOf(txf_comid.getText()), comandaData, txf_mesa.getText(), idGarcom, true)) {
-					throw new Exception("Erro ao atualizar comanda!");
+					throw new Exception("Não é possível salvar a comanda.\nErro ao atualizar comanda!");
 				}
 			}
 
@@ -295,7 +295,9 @@ public class ComandaController {
 			if (Valores.getConnection() == null || Valores.getUsuario() == null || Valores.getController() == null)
 	    		Platform.exit();
 
-			btn_desconto.setDisable(!Boolean.parseBoolean(Configuracao.configDataGetValue("Sistema.Permitir descontos")));
+			ResultSet permitirDesconto = Configuracao.getConfiguracaoGlobal("Sistema.Permitir descontos");
+			if (permitirDesconto.next())
+				btn_desconto.setDisable(!Boolean.parseBoolean(permitirDesconto.getString("value")));
 
 			txf_qtde.setText("1");
 			chb_comid.selectedProperty().addListener((ChangeListener<? super Boolean>) new ChangeListener<Boolean>() {
@@ -354,7 +356,7 @@ public class ComandaController {
 						if (valorPagar <= 0)
 							throw new Exception("O produto já está pago!");
 						if (valorPagar > (Float.valueOf(ta_valorTotal.getText()) - Float.valueOf(ta_valorPago.getText())))
-							throw new Exception("O valor necessário para pagamento é menor que o deste produto.");
+							valorPagar = (Float.valueOf(ta_valorTotal.getText()) - Float.valueOf(ta_valorPago.getText()));
 	
 						Parent root = row.getTableView().getScene().getRoot();
 				    	root.setDisable(true);
