@@ -71,13 +71,11 @@ public class PagamentoController {
     @FXML
     private void act_salvar(ActionEvent event) {
     	try {
-    		if (mode != 1) {
-	    		float troco = Float.valueOf(txf_caixa.getText()) - Float.valueOf(txf_valorPagar.getText().replace(',', '.'));
-	    	    if (troco > 0)
-	    	    	txf_troco.setText(Float.toString(troco));
-	    	    else
-	    	    	txf_troco.setText("0");
-    		}
+    		float troco = Float.valueOf(txf_caixa.getText()) - Float.valueOf(txf_valorPagar.getText().replace(',', '.'));
+    		if (troco > 0)
+    			txf_troco.setText(Float.toString(troco));
+    		else
+    			txf_troco.setText("0");
 
     		float valorPagar = Float.valueOf(txf_caixa.getText().replace(',', '.'));
     		if (valorPagar < 0)
