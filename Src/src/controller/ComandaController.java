@@ -192,12 +192,14 @@ public class ComandaController {
 				ResultSet result = Comanda.criaComanda(0, Valores.getUsuario().getId());
 				this.comandaData = result.getTimestamp("data");
 				txf_comid.setText(Integer.toString(result.getInt("comandaId")));
+				Valores.editCheck().add("Comanda" + Integer.parseInt(txf_comid.getText()));
 				chb_comid.setSelected(false);
 				chb_comid.setDisable(true);
 			} else {
 				if (!chb_comid.isDisable()) {
 					//Criar comanda com ID especificado
 					ResultSet result = Comanda.criaComanda(Integer.parseInt(txf_comid.getText()), Valores.getUsuario().getId());
+					Valores.editCheck().add("Comanda" + Integer.parseInt(txf_comid.getText()));
 					this.comandaData = result.getTimestamp("data");
 					chb_comid.setSelected(false);
 					chb_comid.setDisable(true);
