@@ -62,6 +62,7 @@ public class ProdutoController {
 		    		if (!Produto.adicionaProduto(id, nome, valor))
 		    			throw new Exception("Erro no cadastro!");
 	    	} else if (mode == 1) {
+	    		id = Integer.parseInt(txf_id.getText());
 		    	if (!Produto.editaProduto(id, nome, valor))
 		    		throw new Exception("Erro na edição!");
 	    	}
@@ -115,7 +116,7 @@ public class ProdutoController {
 	 */
 	public void fecharProduto() {
 		try {
-			if (!txf_id.isDisable() && !txf_id.getText().isEmpty())
+			if (txf_id.isDisable() && !txf_id.getText().isEmpty())
 				Valores.editCheck().remove("Produto" + Integer.valueOf(txf_id.getText()));
 	    	Valores.getController().refresh(1);
 		} catch (Exception e) {

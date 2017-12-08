@@ -47,6 +47,9 @@ import java.util.Optional;
  * @version 1.0
  */
 public class MenuController {
+	private String mensagemInicio;
+	private String mensagemFinanc;
+
 	@FXML
     private TextArea ta_inicio;
 
@@ -159,7 +162,7 @@ public class MenuController {
 				for (TableViewComandaPaga comanda : tv_financ.getItems()) {
 					valorTotal += comanda.getValor();
 				}
-				ta_financInfo.setText(String.format(ta_financInfo.getText(), Float.toString(valorTotal)));
+				ta_financInfo.setText(String.format(mensagemFinanc, Float.toString(valorTotal)));
 	    	} else
 	    		throw new Exception("A data DE deve ser menor que a data ATÉ!");
     	} catch (Exception e) {
@@ -225,7 +228,9 @@ public class MenuController {
     	try {
 	    	if (Valores.getConnection() == null || Valores.getUsuario() == null)
 	    		Platform.exit();
-	
+
+	    	mensagemInicio = ta_inicio.getText();
+	    	mensagemFinanc = ta_financInfo.getText();
 	    	iniciaInicio();
 	
 	    	if (Valores.getUsuario().getFuncao() == 1) {
@@ -257,8 +262,8 @@ public class MenuController {
     private void iniciaInicio() throws Exception {
     	String text = "Comandas e configurações.";
     	if (Valores.getUsuario().getFuncao() == 1)
-    		text = "Todo o sistema";
-    	ta_inicio.setText(String.format(ta_inicio.getText(), Valores.getUsuario().getNome(), FuncionarioEnum.get(Valores.getUsuario().getFuncao()), text));
+    		text = "Todo o sistema.";
+    	ta_inicio.setText(String.format(mensagemInicio, Valores.getUsuario().getNome(), FuncionarioEnum.get(Valores.getUsuario().getFuncao()), text));
     }
     
     /**
@@ -280,7 +285,7 @@ public class MenuController {
 			for (TableViewComandaPaga comanda : tv_financ.getItems()) {
 				valorTotal += comanda.getValor();
 			}
-			ta_financInfo.setText(String.format(ta_financInfo.getText(), Float.toString(valorTotal)));
+			ta_financInfo.setText(String.format(mensagemFinanc, Float.toString(valorTotal)));
 			tv_financ.setRowFactory((TableView<TableViewComandaPaga> tv_comandaFinanc) -> {
     			final TableRow<TableViewComandaPaga> row = new TableRow<>();
     			final ContextMenu rowMenu = new ContextMenu();
@@ -552,7 +557,7 @@ public class MenuController {
         				if (Valores.editCheck().contains(("Funcionario" + row.getItem().getId())))
     						throw new Exception("Este funcionário já está sendo editado!");
 
-        				Alert alert = Stages.novoAviso("Você deseja remover o produto?");
+        				Alert alert = Stages.novoAviso("Você deseja remover o funcionario?");
     					ButtonType buttonConfirm = new ButtonType("Continuar", ButtonData.OK_DONE);
     					ButtonType buttonCancel = new ButtonType("Cancelar", ButtonData.CANCEL_CLOSE);
     					alert.getButtonTypes().setAll(buttonConfirm, buttonCancel);
@@ -663,7 +668,7 @@ public class MenuController {
 					for (TableViewComandaPaga comanda : tv_financ.getItems()) {
 						valorTotal += comanda.getValor();
 					}
-					ta_financInfo.setText(String.format(ta_financInfo.getText(), Float.toString(valorTotal)));
+					ta_financInfo.setText(String.format(mensagemFinanc, Float.toString(valorTotal)));
 	    		}
 	    	}
     	} catch (Exception e) {
